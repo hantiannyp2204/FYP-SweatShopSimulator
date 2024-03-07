@@ -20,15 +20,7 @@ public class PlayerInventory : MonoBehaviour, ISubscribeEvents<Iinventory>
     public int GetInventorySize() => items.Length;
     public int GetAmountOfItemsInInvenotry() => itemsIn;
 
-    public void CallAddItem(Item item)
-    {
-        //item.Interact();
-        Debug.Log(item);
-
-        AddItem(item);
-
-    }
-    void AddItem(Item item)
+    public void AddItem(Item item)
     {
         if (IsFull()) return;
         item.ChangeState(ITEM_STATE.PICKED_UP);
@@ -61,17 +53,9 @@ public class PlayerInventory : MonoBehaviour, ISubscribeEvents<Iinventory>
             RemoveItem(i, disable, dropItem);
 
     }
-   
-    public void CallRemoveItem(int n, bool disable = false, bool dropItem = true)
-    {
-        if (items[n] == null) return;
-
-        RemoveItem(n, disable, dropItem);
-
-    }
 
     // Remove item at index
-    void RemoveItem(int n, bool disable = false, bool dropItem = true)
+    public void RemoveItem(int n, bool disable = false, bool dropItem = true)
     {
         // Return if out of range
         if (n >= items.Length) return;
@@ -130,7 +114,7 @@ public class PlayerInventory : MonoBehaviour, ISubscribeEvents<Iinventory>
     // Remove item at current select
     public void RemoveAtCurrentSlot(bool disable = false, bool dropItem = true)
     {
-        CallRemoveItem(currentSelect, disable, dropItem);
+        RemoveItem(currentSelect, disable, dropItem);
     }
 
     public void CallChangeSelect(int n)
@@ -192,7 +176,7 @@ public class PlayerInventory : MonoBehaviour, ISubscribeEvents<Iinventory>
         return itemsIn >= items.Length;
     }
 
-    public void UpdateComponent()
+    public void UpdateInventory()
     {
         // Input for changing slots
         if (Input.mouseScrollDelta.y > 0)

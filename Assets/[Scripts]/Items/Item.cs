@@ -30,9 +30,6 @@ public class Item : MonoBehaviour, Iinteractable
         }
     }
 
-
-
-
     public string GetInteractName() => "Interact with: " + data.GetName();
 
 

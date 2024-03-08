@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Scriptable/Event/E Data", fileName = "E_")]
+[CreateAssetMenu(menuName = "Event Data", fileName = "E_")]
 public class FeedbackEventData : ScriptableObject
 {
     public string feedbackName;

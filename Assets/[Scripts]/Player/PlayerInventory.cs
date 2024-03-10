@@ -6,7 +6,7 @@ using static Item;
 public class PlayerInventory : MonoBehaviour, ISubscribeEvents<Iinventory>
 {
     [SerializeField] private LayerMask ignoreLayer;
-    [SerializeField] private Item[] items = new Item[4];
+    [SerializeField] private Item[] itemList = new Item[4];
     [SerializeField] int itemsIn = 0;
     [SerializeField] int currentSelect = 0;
     [SerializeField] float inventoryDropOffset = 0;
@@ -17,23 +17,24 @@ public class PlayerInventory : MonoBehaviour, ISubscribeEvents<Iinventory>
     System.Action<int, int> OnChangeSelect;
     System.Action<int, Item> OnAddItem;
     System.Action<int, Item> OnRemoveItem;
-    public int GetInventorySize() => items.Length;
+    public int GetInventorySize() => itemList.Length;
     public int GetAmountOfItemsInInvenotry() => itemsIn;
 
+    public Item GetCurrentItem() => itemList[currentSelect];
     public void AddItem(Item item)
     {
         if (IsFull()) return;
         item.ChangeState(ITEM_STATE.PICKED_UP);
-        for (int i = 0; i < items.Length; i++)
+        for (int i = 0; i < itemList.Length; i++)
         {
-            if (items[i] == null)
+            if (itemList[i] == null)
             {
-                items[i] = item;
+                itemList[i] = item;
 
-                items[i].transform.SetParent(playerHandPosition);
+                itemList[i].transform.SetParent(playerHandPosition);
                 // Reset position + their off sets
-                items[i].transform.localPosition = (items[i].Data.GetPosOffset());
-                items[i].transform.localRotation = (items[i].Data.GetRotationOffset());
+                itemList[i].transform.localPosition = (itemList[i].Data.GetPosOffset());
+                itemList[i].transform.localRotation = (itemList[i].Data.GetRotationOffset());
 
 
 
@@ -49,7 +50,7 @@ public class PlayerInventory : MonoBehaviour, ISubscribeEvents<Iinventory>
 
     public void CallRemoveAll(bool disable = false, bool dropItem = true)
     {
-        for (int i = 0; i < items.Length; i++)
+        for (int i = 0; i < itemList.Length; i++)
             RemoveItem(i, disable, dropItem);
 
     }
@@ -58,9 +59,9 @@ public class PlayerInventory : MonoBehaviour, ISubscribeEvents<Iinventory>
     public void RemoveItem(int n, bool disable = false, bool dropItem = true)
     {
         // Return if out of range
-        if (n >= items.Length) return;
+        if (n >= itemList.Length) return;
 
-        Item itemRemove = items[n];
+        Item itemRemove = itemList[n];
         // Return if item does not exist in array
         if (itemRemove == null) return;
 
@@ -107,7 +108,7 @@ public class PlayerInventory : MonoBehaviour, ISubscribeEvents<Iinventory>
             itemRemove.gameObject.SetActive(false);
 
         OnRemoveItem?.Invoke(n, itemRemove);
-        items[n] = null;
+        itemList[n] = null;
     }
 
 
@@ -132,14 +133,14 @@ public class PlayerInventory : MonoBehaviour, ISubscribeEvents<Iinventory>
 
 
         if (currentSelect < 0)
-            currentSelect = items.Length - 1;
-        else if (currentSelect >= items.Length)
+            currentSelect = itemList.Length - 1;
+        else if (currentSelect >= itemList.Length)
             currentSelect = 0;
 
         // Loop all items
-        for (int i = 0; i < items.Length; i++)
+        for (int i = 0; i < itemList.Length; i++)
         {
-            if (items[i] != null)
+            if (itemList[i] != null)
             {
                 // Enable current item
                 if (currentSelect == i)
@@ -147,14 +148,14 @@ public class PlayerInventory : MonoBehaviour, ISubscribeEvents<Iinventory>
                     //theres item, lock the bone for right hand
                     hasItem = true;
 
-                    items[i].gameObject.SetActive(true);
+                    itemList[i].gameObject.SetActive(true);
                     //disables his collider
-                    items[i].GetComponent<Collider>().enabled = false;
+                    itemList[i].GetComponent<Collider>().enabled = false;
                 }
 
                 // Disable item
                 else
-                    items[i].gameObject.SetActive(false);
+                    itemList[i].gameObject.SetActive(false);
             }
         }
       
@@ -166,15 +167,8 @@ public class PlayerInventory : MonoBehaviour, ISubscribeEvents<Iinventory>
     public void ChangeSelectDown() => CallChangeSelect(currentSelect - 1);
 
 
-    public Item GetCurrentItem()
-    {
-        return items[currentSelect];
-    }
     // Check if its full
-    public bool IsFull()
-    {
-        return itemsIn >= items.Length;
-    }
+    public bool IsFull() => itemsIn >= itemList.Length;
 
     public void UpdateInventory()
     {

@@ -1,3 +1,5 @@
+
+//Inspired by Raqib
 public interface ISubscribeEvents<T>
 {
     public void SubcribeEvents(T action);

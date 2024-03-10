@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+
+//Inspired by Raqib
 public class GameFeedback : MonoBehaviour
 {
     [SerializeField] private List<FeedbackEventData> feedbackDatas = new List<FeedbackEventData>();

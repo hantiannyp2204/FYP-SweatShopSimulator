@@ -6,7 +6,7 @@ using static Item;
 public class GameManager : MonoBehaviour, Iinteracted
 {
     [SerializeField] PlayerMovement playerMovement;
-    [SerializeField] PlayerInventory playerInventory;
+    public PlayerInventory playerInventory;
     [SerializeField] PlayerInteraction playerInteraction;
     [SerializeField] GameFeedback gameFeedback;
 

@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//Inspired by Raqib
 [CreateAssetMenu(menuName = "Event Data", fileName = "E_")]
 public class FeedbackEventData : ScriptableObject
 {

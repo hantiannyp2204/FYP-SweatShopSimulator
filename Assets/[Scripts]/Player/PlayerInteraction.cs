@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Timeline.Actions.MenuPriority;
 
+
+//Inspired by Raqib
 public class PlayerInteraction : MonoBehaviour
     , ISubscribeEvents<Iinteracted>
     , ISubscribeEvents<IinteractableInteracting>
@@ -127,7 +129,7 @@ public class PlayerInteraction : MonoBehaviour
     {
 
         if (currentInteractable == null || currentInteractable != null && !currentInteractable.CanInteract()) return;
-        Debug.Log(currentInteractable.GetInteractName());
+        Debug.Log("Press E to " + currentInteractable.GetInteractName());
         interacted = true;
         currentInteractable.Interact(targetPlayer);
         OnInteracted?.Invoke(interactObj);

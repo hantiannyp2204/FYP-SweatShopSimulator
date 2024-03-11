@@ -12,7 +12,6 @@ public class GameManager : MonoBehaviour, Iinteracted
 
     public void OnInteracted(GameObject obj)
     {
-        Debug.Log("RUNS");
         Item item = obj.GetComponent<Item>();
         //bool itemCanBePicked = item.GetCanBePicked();
         if (item != null)

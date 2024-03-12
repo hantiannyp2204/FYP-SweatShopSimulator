@@ -102,10 +102,16 @@ public class MachineShredder : MonoBehaviour, Iinteractable
 
         if (chargeValue >= 1)
         {
+            _initShredding = false;
+            chargeValue = 0;
             foreach (ItemData a in _productToShred.Data.productContainable)
             {
                 Instantiate(a.GetPrefab(), spawnPoint.transform.position, Quaternion.identity);
             }
+        }
+        else
+        {
+            Debug.Log("Shredding");
         }
     }
 

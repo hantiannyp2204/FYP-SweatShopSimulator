@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using UnityEngine;
 using static UnityEditor.Timeline.Actions.MenuPriority;
 
@@ -29,6 +30,7 @@ public class PlayerInteraction : MonoBehaviour
 
     bool interacted = false;
 
+    [SerializeField] private FeedbackEventData e_interactError;
     public void UpdateInteraction()
     {
         if (Physics.Raycast(head.transform.position, head.transform.forward, out RaycastHit hit, range, ~ignoreLayer))
@@ -128,7 +130,14 @@ public class PlayerInteraction : MonoBehaviour
     void Interact()
     {
 
-        if (currentInteractable == null || currentInteractable != null && !currentInteractable.CanInteract()) return;
+        if (currentInteractable == null || currentInteractable != null && !currentInteractable.CanInteract())
+        {
+            //play interact error sound
+            e_interactError?.InvokeEvent(transform.position, Quaternion.identity, transform);
+            return;
+        }
+
+
         Debug.Log("Press E to " + currentInteractable.GetInteractName());
         interacted = true;
         currentInteractable.Interact(targetPlayer);

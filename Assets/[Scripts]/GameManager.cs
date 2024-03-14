@@ -9,7 +9,8 @@ public class GameManager : MonoBehaviour, Iinteracted
     public PlayerInventory playerInventory;
     [SerializeField] PlayerInteraction playerInteraction;
     [SerializeField] GameFeedback gameFeedback;
-
+    public Objective playerObjective;
+    [SerializeField] CustomerTable customerTable;
     public void OnInteracted(GameObject obj)
     {
         Item item = obj.GetComponent<Item>();
@@ -33,6 +34,7 @@ public class GameManager : MonoBehaviour, Iinteracted
     {
         playerMovement.Init();
         gameFeedback.InIt();
+        playerObjective.Init();
     }
 
     // Update is called once per frame
@@ -45,9 +47,11 @@ public class GameManager : MonoBehaviour, Iinteracted
     private void OnEnable()
     {
         playerInteraction.SubcribeEvents(this);
+        customerTable.SubcribeEvents();
     }
     private void OnDisable()
     {
         playerInteraction.UnsubcribeEvents(this);
+        customerTable.UnsubcribeEvents();
     }
 }

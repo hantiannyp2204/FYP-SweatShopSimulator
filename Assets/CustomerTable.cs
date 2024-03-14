@@ -27,11 +27,6 @@ public class CustomerTable : MonoBehaviour
             {
                 RequestOrder();
             }
-            else
-            {
-                SendOrder();
-            }
-            isRequest = !isRequest;
 
 
         }
@@ -43,12 +38,14 @@ public class CustomerTable : MonoBehaviour
         requestBox.SetRequestedItem(posibleRequests[randomRequest]);
         //animate box upwards
         StartCoroutine(MoveBoxCoroutine());
+        isRequest = false;
     }
     public void SendOrder()
     {
         //animate box downwards
         StartCoroutine(MoveBoxCoroutine());
         //check item quality (how long it takes to complete)
+        isRequest= true;
     }
     IEnumerator MoveBoxCoroutine()
     {
@@ -90,4 +87,6 @@ public class CustomerTable : MonoBehaviour
         currentPosition.y = boxSendYPosition;
         requestBox.transform.localPosition = currentPosition;
     }
+    public void SubcribeEvents() => RequestBox.OnOrderProcessed += SendOrder;
+    public void UnsubcribeEvents() => RequestBox.OnOrderProcessed -= SendOrder;
 }

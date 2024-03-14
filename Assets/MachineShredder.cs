@@ -20,6 +20,10 @@ public class MachineShredder : MonoBehaviour, Iinteractable
     [SerializeField] private float distToStop;
     [SerializeField] private Transform spawnPoint;
 
+    [Header("Sound Effects / Feedback")]
+    [SerializeField] private FeedbackEventData e_interactShredder;
+    [SerializeField] private FeedbackEventData e_shredderFinish;
+
 
     private Item _productToShred;
     private bool _initShredding = false;
@@ -44,6 +48,8 @@ public class MachineShredder : MonoBehaviour, Iinteractable
 
     public void Interact(GameManager player)
     {
+        e_interactShredder?.InvokeEvent(transform.position, Quaternion.identity, transform);
+
         if (player.playerInventory.GetCurrentItem() == null)
         {
             return;
@@ -98,6 +104,8 @@ public class MachineShredder : MonoBehaviour, Iinteractable
   
         if (_chargeValue >= 1)
         {
+            e_shredderFinish?.InvokeEvent(transform.position, Quaternion.identity, transform);
+
             _initShredding = false;
             _chargeValue = 0;
 
@@ -112,11 +120,6 @@ public class MachineShredder : MonoBehaviour, Iinteractable
                 Instantiate(a.GetPrefab(), spawnPointBound.center + new Vector3(x, 0f, z), Quaternion.identity);
             }
         }
-    }
-
-    void ResetText(string toReset)
-    {
-        
     }
 
     void UpdateProgressBar()

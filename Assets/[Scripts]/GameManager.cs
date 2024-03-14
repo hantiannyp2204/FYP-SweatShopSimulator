@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour, Iinteracted
     {
         playerMovement.Init();
         gameFeedback.InIt();
-        playerObjective.Init();
+        playerObjective.Init();     
     }
 
     // Update is called once per frame

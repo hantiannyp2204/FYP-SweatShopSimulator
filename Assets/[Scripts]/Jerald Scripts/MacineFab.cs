@@ -20,6 +20,7 @@ public class MacineFab : MonoBehaviour, Iinteractable
     public void Interact(GameManager player)
     {
         Item currentItem = player.playerInventory.GetCurrentItem();
+
         SceneManager.LoadScene("Minigame");
         if (currentItem == null)
         {

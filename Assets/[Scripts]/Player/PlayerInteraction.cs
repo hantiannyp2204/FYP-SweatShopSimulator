@@ -137,7 +137,6 @@ public class PlayerInteraction : MonoBehaviour
             return;
         }
 
-
         Debug.Log("Press E to " + currentInteractable.GetInteractName());
         interacted = true;
         currentInteractable.Interact(targetPlayer);

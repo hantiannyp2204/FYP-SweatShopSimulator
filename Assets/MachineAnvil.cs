@@ -24,20 +24,20 @@ public class MachineAnvil : MonoBehaviour, Iinteractable
     {
         Item currenttool = player.playerInventory.GetCurrentItem();
         Item currentItem = player.playerInventory.GetCurrentItem();
-        Scrap currentScrapType = currentItem.GetComponent<Scrap>();
+        FlatMaterials currentRawType = currentItem.GetComponent<FlatMaterials>();
         if (currenttool == null || currenttool.name != "Hammer") //check if Hammer is equipped
         {
             Debug.Log("pick up Hammer");
             return;
         }
-        else if (currentScrapType == null)//checks if scrap is in hand
+        else if (currentRawType == null)//checks if scrap is in hand
         {
-            Debug.Log("pick up Scrap");
+            Debug.Log("pick up Raw Material");
             return;
         }
-        else //carries out function (using smelter as pseudo script first)
+        else //carries out function 
         {
-            Debug.Log("Interacting " + name + " with " + player.playerInventory.GetCurrentItem().Data.name);
+           
             //set the input
             inputItem = currentItem;
             //remove the item from inventory
@@ -49,38 +49,41 @@ public class MachineAnvil : MonoBehaviour, Iinteractable
 
             //convert scrap to its specific raw material
             //0 is plastic, 1 is wood, 2 is metal
-            int selectedRawMaterial = 0;
-            switch (currentScrapType.GetScrapType())
+            int selectedFlatMaterial = 0;
+            switch (currentRawType.GetMaterialType())
             {
-                case Scrap.ScrapType.Plastic:
-                    selectedRawMaterial = 0;
+                case FlatMaterials.FlatMaterialType.Plastic:
+                    selectedFlatMaterial = 0;
+                    Debug.Log("Flat_Plastic");
                     break;
-                case Scrap.ScrapType.Wood:
-                    selectedRawMaterial = 1;
+                case FlatMaterials.FlatMaterialType.Wood:
+                    selectedFlatMaterial = 1;
+                    Debug.Log("Flat_Wood");
                     break;
-                case Scrap.ScrapType.Metal:
-                    selectedRawMaterial = 2;
+                case FlatMaterials.FlatMaterialType.Metal:
+                    selectedFlatMaterial = 2;
+                    Debug.Log("Flat_Metal");
                     break;
             }
-            //spawn the raw material
-            Instantiate(OutputItemList[selectedRawMaterial].GetPrefab(), itemPosition);
-            //delete the scrap
+            //spawn the flat material
+            Instantiate(OutputItemList[selectedFlatMaterial].GetPrefab(), itemPosition);
+            //delete the raw material
             Destroy(inputItem);
 
         }
 
 
 
-        // Start is called before the first frame update
-        void Start()
-        {
+        //// Start is called before the first frame update
+        //void Start()
+        //{    
 
-        }
+        //}
 
-        // Update is called once per frame
-        void Update()
-        {
+        //// Update is called once per frame
+        //void Update()
+        //{
 
-        }
+        //}
     }
 }

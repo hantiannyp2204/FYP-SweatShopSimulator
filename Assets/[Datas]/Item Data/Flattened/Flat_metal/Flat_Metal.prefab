@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 335292869906194961}
   - component: {fileID: 5713905745641252113}
   - component: {fileID: 3783033188894051919}
+  - component: {fileID: 3657249044177299966}
   m_Layer: 0
   m_Name: Flat_Metal
   m_TagString: Untagged
@@ -129,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5895d806f9cb464c8883d988f733d98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 0}
+  data: {fileID: 11400000, guid: b149ed69200896741bf42e07456cd0e3, type: 2}
   itemState: 0
   e_pickUp: {fileID: 0}
   e_drop: {fileID: 0}
@@ -157,3 +158,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3657249044177299966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8183334357624151044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76788c742c8d36f489fd91d02e9aabfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0

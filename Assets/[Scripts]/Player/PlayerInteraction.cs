@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using UnityEngine;
-using static UnityEditor.Timeline.Actions.MenuPriority;
 
 
 //Inspired by Raqib

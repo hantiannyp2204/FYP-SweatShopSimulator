@@ -1,6 +1,9 @@
+using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit.UI.BodyUI;
 using static Item;
 
 public class GameManager : MonoBehaviour, Iinteracted
@@ -11,8 +14,13 @@ public class GameManager : MonoBehaviour, Iinteracted
         Test_Chamber
     }
     public GameMode gameMode;
-    //set the time
+
+    //Game variables
+    //time given to complete task
     public float SecondsGiven;
+    //score needed to win
+    public float ScoreNeeded;
+
     [SerializeField] PlayerMovement playerMovement;
     public PlayerInventory playerInventory;
     [SerializeField] PlayerInteraction playerInteraction;
@@ -21,9 +29,22 @@ public class GameManager : MonoBehaviour, Iinteracted
     [SerializeField] CustomerTable customerTable;
     [SerializeField] GameTimer gameTimer;
 
+    //Score system
+    [SerializeField] PlayerScore playerScore;
+    public static event Action<float> OnScoreAdded;
+    public static void AddScore(float score)
+    {
+        OnScoreAdded?.Invoke(score);
+    }
+
     //Pause menu
     [SerializeField] PauseMenu pauseMenu;
     bool isPaused = false;
+
+    //game end system
+    bool gameEnded = false;
+    [SerializeField] EndMenu endMenu;
+
     public void OnInteracted(GameObject obj)
     {
         Item item = obj.GetComponent<Item>();
@@ -52,23 +73,38 @@ public class GameManager : MonoBehaviour, Iinteracted
         {
             gameTimer.SetTimer(SecondsGiven);
         }
+        playerScore.Init();
         pauseMenu.gameObject.SetActive(false);
+        endMenu.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        playerMovement.UpdateTransform();
-        playerInteraction.UpdateInteraction();
-        playerInventory.UpdateInventory();
-        //update table timer
-        if(gameMode == GameMode.Levels)
+        if (gameEnded)
         {
-            customerTable.UpdateTimer();
-            gameTimer.UpdateTime();
+            endMenu.gameObject.SetActive(true);
+            endMenu.GameEnd(ScoreNeeded,playerScore.GetScore());
+            StopAllCoroutines();
+            return;
         }
+
+        if(!isPaused)
+        {
+            playerMovement.UpdateTransform();
+            playerInteraction.UpdateInteraction();
+            playerInventory.UpdateInventory();
+            //update table timer
+            if (gameMode == GameMode.Levels)
+            {
+                customerTable.UpdateTimer();
+                gameEnded = gameTimer.UpdateTime();
+            }
+        }
+        
+
         //check for puase menu
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             TogglePauseMenu();
         }
@@ -88,11 +124,13 @@ public class GameManager : MonoBehaviour, Iinteracted
         isPaused = !isPaused;
         if(isPaused)
         {
+            Time.timeScale = 0;
             pauseMenu.gameObject.SetActive(true);
             pauseMenu.EnableCursor();
         }
         else
         {
+            Time.timeScale = 1.0f;
             pauseMenu.DisableCursor();
             pauseMenu.gameObject.SetActive(false);
         }

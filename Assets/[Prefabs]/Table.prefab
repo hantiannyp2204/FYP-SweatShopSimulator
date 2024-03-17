@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3649865047925654341}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.056, y: 0.5, z: 0.723}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -50,7 +50,9 @@ MonoBehaviour:
   boxRequestYPosition: 0.65
   boxSendYPosition: 0.3
   posibleRequests:
-  - {fileID: 11400000, guid: 162b1438295fc6d428580819cf2ce4e0, type: 2}
+  - {fileID: 11400000, guid: 6fb1e272581b477499ffc2e251885fe7, type: 2}
+  - {fileID: 11400000, guid: a8f7e41a42b5aa04793b15c59c7beb25, type: 2}
+  - {fileID: 11400000, guid: 9662fc5d81c6f7d4abca460858dcbdae, type: 2}
 --- !u!1 &4295489278425666927
 GameObject:
   m_ObjectHideFlags: 0
@@ -169,6 +171,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28f4811c992546e479c500e744be385b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pointsMax: 1000
+  timerText: {fileID: 0}
 --- !u!1 &8970641553288711405
 GameObject:
   m_ObjectHideFlags: 0

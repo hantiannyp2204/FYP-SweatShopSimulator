@@ -15,8 +15,6 @@ public class Item : MonoBehaviour, Iinteractable
 
     [SerializeField] private LayerMask groundLayer;
 
-    bool dispose = false;
-    public bool Dispose => dispose;
     protected virtual void Start()
     {
         groundLayer = 1 << LayerMask.NameToLayer("Ground");
@@ -63,10 +61,6 @@ public class Item : MonoBehaviour, Iinteractable
     }
     public ITEM_STATE GetState()=> itemState;
 
-    public void SetDispose(bool dispose)
-    {
-        this.dispose = dispose;
-    }
 
     public void Interact(GameManager player)
     {

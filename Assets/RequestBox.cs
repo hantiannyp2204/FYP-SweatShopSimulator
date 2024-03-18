@@ -1,11 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using System.Timers;
+using UnityEditor.Rendering;
+
 
 public class RequestBox : MonoBehaviour,Iinteractable
 {
+    [SerializeField] private float pointsMax;
+    [SerializeField] private TMP_Text timerText;
+
     bool boxOpened = false;
     ItemData requestedItem;
+
+    private float _timer;
+    private float _pointsToReward;
+    private float _tracker;
 
     public delegate void OrderInteractionHandler();
     public static event OrderInteractionHandler OnOrderProcessed;
@@ -29,6 +40,7 @@ public class RequestBox : MonoBehaviour,Iinteractable
         if(!boxOpened)
         {
             //get the request
+            ResetPointTracker();
             player.playerObjective.UpdateObjetcive(requestedItem.GetName());
             boxOpened = true;
         }
@@ -50,13 +62,44 @@ public class RequestBox : MonoBehaviour,Iinteractable
             //and send object over
             OnOrderProcessed?.Invoke();
 
+            //lastly, give points accordingly
+            GameManager.AddScore(_pointsToReward);
+
             //reset objective
             player.playerObjective.ResetObjective();
 
             boxOpened = false;
 
         }
+    }
+    private void Update()
+    {
+        if (boxOpened)
+        {
 
+            // Start timer when receive requests
+            _timer += Time.deltaTime;
+            _tracker += Time.deltaTime;
+
+            if (_tracker >= 5)
+            {
+                _pointsToReward -= 100;
+                if (_pointsToReward <= 0)
+                {
+                    Debug.Log("Jerald islesbian");
+                    _pointsToReward = 0;
+                    return;
+                }
+                _tracker = 0;
+            }
+            timerText.text = "Time Being Taken: " + (int)_timer;
+        }
+    }
+    void ResetPointTracker()
+    {
+        _tracker = 0;
+        _timer = 0;
+        _pointsToReward = pointsMax;
     }
     public void SetRequestedItem(ItemData newRequestedItem) => requestedItem = newRequestedItem;
 }

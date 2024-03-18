@@ -10,7 +10,7 @@ public class GameTimer : MonoBehaviour
     [SerializeField] TMP_Text timerTxt;
     public void SetTimer(float newTime)=>timer = newTime;
 
-    public void UpdateTime()
+    public bool UpdateTime()
     {
         //reduce time by one if not reached
         if(timer > 0)
@@ -19,11 +19,17 @@ public class GameTimer : MonoBehaviour
             // Format the time as a 24-hour clock and display it
             TimeSpan timeSpan = TimeSpan.FromSeconds(timer);
             timerTxt.text = "Time left: "+timeSpan.ToString(@"mm\:ss");
+            return false;
         }
         else
         {
-           //check win/lose condition
-           timer = 0;
+            //check win/lose condition
+            timer = 0;
+            return true;
         }
-    }    
+    }  
+    public void NoTime()
+    {
+        timerTxt.text = "Time left: Null";
+    }
 }

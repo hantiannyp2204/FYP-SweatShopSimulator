@@ -20,7 +20,18 @@ public class PlayerInventory : MonoBehaviour, ISubscribeEvents<Iinventory>
     public int GetInventorySize() => itemList.Length;
     public int GetAmountOfItemsInInvenotry() => itemsIn;
 
-    public Item GetCurrentItem() => itemList[currentSelect];
+    public Item GetCurrentItem()
+    {
+        if (itemList[currentSelect] == null)
+        {
+            return null;
+        }
+        else
+        {
+            return itemList[currentSelect];
+        }
+    }
+
     public void AddItem(Item item)
     {
         if (IsFull()) return;

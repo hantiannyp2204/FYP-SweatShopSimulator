@@ -6,7 +6,7 @@ public class MachineAnvil : MonoBehaviour, Iinteractable
 {
     Item inputItem;
     [SerializeField] List<ItemData> OutputItemList;
-    [SerializeField] Transform itemPosition;
+    [SerializeField] Transform Anvil_itemPosition;
     ItemData outputItemData;
     GameObject outputItem;
     [SerializeField] float anvTimer = 3;
@@ -31,7 +31,11 @@ public class MachineAnvil : MonoBehaviour, Iinteractable
         throw new System.NotImplementedException();
     }
 
-    public string GetInteractName() => "Use " + name;
+    public string GetInteractName()
+    {
+        return "using Anvil";
+
+    }
 
     IEnumerator AnvilCoroutine(GameManager player, Item currentItem, RawMaterial currentRawType)
     {
@@ -40,10 +44,13 @@ public class MachineAnvil : MonoBehaviour, Iinteractable
         //remove the item from inventory
         player.playerInventory.RemoveAtCurrentSlot();
         //move the input item on the anvil
-        inputItem.transform.position = itemPosition.position;
+        inputItem.transform.position = Anvil_itemPosition.position;
+        //reset it's rotation
+        inputItem.transform.rotation = Quaternion.identity;
         //set the parent the item position
-        inputItem.transform.SetParent(itemPosition);
-
+        inputItem.transform.SetParent(Anvil_itemPosition);
+        e_run?.InvokeEvent(transform.position, Quaternion.identity, transform);
+        e_done?.InvokeEvent(transform.position, Quaternion.identity, transform);
         //convert scrap to its specific raw material
         //0 is plastic, 1 is wood, 2 is metal
         int selectedFlatMaterial = 0;
@@ -66,7 +73,7 @@ public class MachineAnvil : MonoBehaviour, Iinteractable
         //set the output item
         outputItemData = OutputItemList[selectedFlatMaterial];
         //spawn the raw material
-        outputItem = Instantiate(outputItemData.GetPrefab(), itemPosition);
+        outputItem = Instantiate(outputItemData.GetPrefab(), Anvil_itemPosition);
         //delete the scrap
         Destroy(inputItem.gameObject);
 
@@ -85,20 +92,23 @@ public class MachineAnvil : MonoBehaviour, Iinteractable
         }
         if (outputItemData == null)
         {
-            Item currenttool = player.playerInventory.GetCurrentItem();
+           // Item currenttool = player.playerInventory.GetCurrentItem();
             Item currentItem = player.playerInventory.GetCurrentItem();
+            if (currentItem == null) return;
             RawMaterial currentRawType = currentItem.GetComponent<RawMaterial>();
             //check if Hammer is equipped
-            if (currenttool == null || currenttool.name != "Hammer")
-            {
-                Debug.Log("pick up Hammer");
-                return;
-            }
-            else if (currentRawType == null)//checks if scrap is in hand
+            //if (currenttool == null || currenttool.name != "Hammer")
+            //{
+            //    Debug.Log("pick up Hammer");
+            //    return;
+            //}
+            //else
+            if (currentRawType == null)//checks if scrap is in hand
             {
                 Debug.Log("pick up Raw Material");
                 return;
             }
+            AnvilCoroutineHandler = StartCoroutine(AnvilCoroutine(player, currentItem, currentRawType));
         }
         //take out item if have output
         else

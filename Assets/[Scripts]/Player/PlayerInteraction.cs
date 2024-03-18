@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using UnityEngine;
-using static UnityEditor.Timeline.Actions.MenuPriority;
 
 
 //Inspired by Raqib
@@ -136,7 +135,6 @@ public class PlayerInteraction : MonoBehaviour
             e_interactError?.InvokeEvent(transform.position, Quaternion.identity, transform);
             return;
         }
-
 
         Debug.Log("Press E to " + currentInteractable.GetInteractName());
         interacted = true;

@@ -19,13 +19,17 @@ public class MacineFab : MonoBehaviour, Iinteractable
 
     public void Interact(GameManager player)
     {
-        Item currentItem = player.playerInventory.GetCurrentItem();
         SceneManager.LoadScene("Minigame");
+        Item currentItem = player.playerInventory.GetCurrentItem();
+
         if (currentItem == null)
         {
             return;
         }
-        Debug.Log("Interacting " + name + " with " + player.playerInventory.GetCurrentItem().Data.name);
+        else
+        {
+            Debug.Log("Interacting " + name + " with " + player.playerInventory.GetCurrentItem().Data.name);
+        }
     }
 
     // Start is called before the first frame update

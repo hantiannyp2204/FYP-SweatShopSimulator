@@ -12,27 +12,38 @@ public class CustomerTable : MonoBehaviour
     //requests
     bool isRequest = true;
     [SerializeField] List<ItemData> posibleRequests;
-    // Start is called before the first frame update
+
+    //Timer
+    float elapsedTime = 0;
+    float timeToNextRequest;
+
+    void RandomiseNextRequestTimer()
+    {
+        timeToNextRequest = Random.Range(2, 5);
+    }
     void Start()
     {
         ResetBox();
+        RandomiseNextRequestTimer();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateTimer()
     {
-        if(Input.GetKeyDown(KeyCode.F))
+        //if time exceed return
+        if(elapsedTime >= timeToNextRequest)
         {
-            if(isRequest)
-            {
-                RequestOrder();
-            }
-
-
+            RequestOrder();
+            return;
         }
+        elapsedTime += Time.deltaTime;
     }
+
     public void RequestOrder()
     {
+        if(!isRequest)
+        {
+            return;
+        }
         //randomise what to order
         int randomRequest = Random.Range(0, posibleRequests.Count);
         requestBox.SetRequestedItem(posibleRequests[randomRequest]);
@@ -45,7 +56,11 @@ public class CustomerTable : MonoBehaviour
         //animate box downwards
         StartCoroutine(MoveBoxCoroutine());
         //check item quality (how long it takes to complete)
+
+        //reset all variable
         isRequest= true;
+        elapsedTime = 0;
+        RandomiseNextRequestTimer();
     }
     IEnumerator MoveBoxCoroutine()
     {

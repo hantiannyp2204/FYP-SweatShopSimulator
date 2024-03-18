@@ -110,15 +110,15 @@ public class Controller : MonoBehaviour
         Lnum += 1;
         PlayerPrefs.SetInt("Level num", Lnum);
 
-        SceneManager.LoadScene(0);     
+        SceneManager.LoadScene("Minigame");
     }
     public void Again()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Minigame");
     }
     public void GotoLevel1()
     {
         PlayerPrefs.DeleteAll();
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Jerald");
     }
 }

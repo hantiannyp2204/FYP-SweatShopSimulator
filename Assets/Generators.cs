@@ -24,7 +24,12 @@ public class Generators : MonoBehaviour,Iinteractable
     public void Interact(GameManager player)
     {
         //return if prefab don't have item script
-        if (ItemToGenerate.GetComponent<Item>() == null) return;
+        if (ItemToGenerate.GetComponent<Item>() == null)
+        {
+            Debug.Log("Allocated prefab is NOT an Item");
+            return;
+        }
+
         //spawn the object
         Item generatedItem = Instantiate(ItemToGenerate.GetComponent<Item>());
         //add into player

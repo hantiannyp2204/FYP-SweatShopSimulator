@@ -76,6 +76,7 @@ public class GameManager : MonoBehaviour, Iinteracted
         playerScore.Init();
         pauseMenu.gameObject.SetActive(false);
         endMenu.gameObject.SetActive(false);
+        Time.timeScale = 1;
     }
 
     // Update is called once per frame
@@ -99,6 +100,10 @@ public class GameManager : MonoBehaviour, Iinteracted
             {
                 customerTable.UpdateTimer();
                 gameEnded = gameTimer.UpdateTime();
+            }
+            else
+            {
+                gameTimer.NoTime();
             }
         }
         

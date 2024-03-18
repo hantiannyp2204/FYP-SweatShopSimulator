@@ -27,5 +27,9 @@ public class GameTimer : MonoBehaviour
             timer = 0;
             return true;
         }
-    }    
+    }  
+    public void NoTime()
+    {
+        timerTxt.text = "Time left: Null";
+    }
 }

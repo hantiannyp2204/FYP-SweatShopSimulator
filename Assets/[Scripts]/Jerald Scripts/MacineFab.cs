@@ -5,6 +5,28 @@ using UnityEngine.SceneManagement;
 
 public class MacineFab : MonoBehaviour, Iinteractable
 {
+    public Power power;
+
+    void Start()
+    {
+        // Find the persistent GameObject by its name
+        GameObject persistentManager = GameObject.Find("MonkeyNuts");
+
+        // Get the Power script attached to the persistent GameObject
+        if (persistentManager != null)
+        {
+            power = persistentManager.GetComponent<Power>();
+
+            // Load the saved power level from PlayerPrefs after finding the persistent GameObject
+            power.finalPower = PlayerPrefs.GetFloat("finalPower", power.finalPower);
+            Debug.Log(power.finalPower);
+        }
+        else
+        {
+            Debug.LogError("Game not found!");
+        }
+    }
+
     public bool CanInteract()
     {
         return true;
@@ -19,28 +41,30 @@ public class MacineFab : MonoBehaviour, Iinteractable
 
     public void Interact(GameManager player)
     {
-        SceneManager.LoadScene("Minigame");
+        
         Item currentItem = player.playerInventory.GetCurrentItem();
 
-        if (currentItem == null)
+        if (currentItem == null || power.currentPower <= 0)
         {
             return;
         }
         else
         {
+            SceneManager.LoadScene("Minigame");
             Debug.Log("Interacting " + name + " with " + player.playerInventory.GetCurrentItem().Data.name);
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            power.finalPower += 10;
+            // Log the finalPower variable to the console
+            Debug.Log("Final Power: " + power.finalPower);
+        }
+
     }
 }

@@ -5,14 +5,12 @@ using UnityEngine;
 public class MachineAnvil : MonoBehaviour, Iinteractable
 {
     Item inputItem;
+    [SerializeField] List<ItemData> inputItemList;
     [SerializeField] List<ItemData> OutputItemList;
     [SerializeField] Transform Anvil_itemPosition;
     ItemData outputItemData;
     GameObject outputItem;
-    [SerializeField] float anvTimer = 3;
-    float elapsedTime;
-    //[SerializeField] TMP_Text timerText;
-    Coroutine AnvilCoroutineHandler;
+    private bool itemInside=false;
 
     // Feedback
     [Header("FEEDBACK")]
@@ -36,11 +34,10 @@ public class MachineAnvil : MonoBehaviour, Iinteractable
         return "using Anvil";
 
     }
-
-    IEnumerator AnvilCoroutine(GameManager player, Item currentItem, RawMaterial currentRawType)
+    public void PutItemInside(GameManager player, Item currentItem)
     {
         //set the input
-        inputItem = currentItem;
+        inputItem = player.playerInventory.GetCurrentItem();
         //remove the item from inventory
         player.playerInventory.RemoveAtCurrentSlot();
         //move the input item on the anvil
@@ -51,81 +48,87 @@ public class MachineAnvil : MonoBehaviour, Iinteractable
         inputItem.transform.SetParent(Anvil_itemPosition);
         e_run?.InvokeEvent(transform.position, Quaternion.identity, transform);
         e_done?.InvokeEvent(transform.position, Quaternion.identity, transform);
-        //convert scrap to its specific raw material
-        //0 is plastic, 1 is wood, 2 is metal
-        int selectedFlatMaterial = 0;
-        switch (currentRawType.GetRawMaterialType())
-        {
-            case RawMaterial.RawMaterialType.Plastic:
-                selectedFlatMaterial = 0;
-                Debug.Log("Flat_Plastic");
-                break;
-            case RawMaterial.RawMaterialType.Wood:
-                selectedFlatMaterial = 1;
-                Debug.Log("Flat_Wood");
-                break;
-            case RawMaterial.RawMaterialType.Metal:
-                selectedFlatMaterial = 2;
-                Debug.Log("Flat_Metal");
-                break;
-        }
-
-        //set the output item
-        outputItemData = OutputItemList[selectedFlatMaterial];
-        //spawn the raw material
-        outputItem = Instantiate(outputItemData.GetPrefab(), Anvil_itemPosition);
-        //delete the scrap
-        Destroy(inputItem.gameObject);
-
-        AnvilCoroutineHandler = null;
-
-        yield return null;
+        //ensures there's an item inside
+        Debug.Log("Item inside Anvil");
+        itemInside = true;
     }
-
     public void Interact(GameManager player)
     {
-
-        //cant interact if smelting
-        if (AnvilCoroutineHandler != null)
-        {
-            return;
-        }
-        if (outputItemData == null)
-        {
-           // Item currenttool = player.playerInventory.GetCurrentItem();
-            Item currentItem = player.playerInventory.GetCurrentItem();
-            if (currentItem == null) return;
-            RawMaterial currentRawType = currentItem.GetComponent<RawMaterial>();
-            //check if Hammer is equipped
-            //if (currenttool == null || currenttool.name != "Hammer")
-            //{
-            //    Debug.Log("pick up Hammer");
-            //    return;
-            //}
-            //else
-            if (currentRawType == null)//checks if scrap is in hand
+       
+       /* if (itemInside)*/
+        //{ 
+            //cant interact if in use
+            if (outputItemData == null)
             {
-                Debug.Log("pick up Raw Material");
-                return;
-            }
-            AnvilCoroutineHandler = StartCoroutine(AnvilCoroutine(player, currentItem, currentRawType));
-        }
-        //take out item if have output
-        else
-        {
-            //inventory full, cant take
-            if (player.playerInventory.IsFull())
-            {
-                return;
-            }
-            //play take out output item sound
-            e_takeOutputItem?.InvokeEvent(transform.position, Quaternion.identity, transform);
-            player.playerInventory.AddItem(outputItem.GetComponent<Item>());
-            //reset
-            outputItemData = null;
-            // timerText.text = "Ready";
+           
+                // Item currenttool = player.playerInventory.GetCurrentItem();
+                Item currentItem = player.playerInventory.GetCurrentItem();
+                if (currentItem == null) return;
+                RawMaterial currentRawType = currentItem.GetComponent<RawMaterial>();
+                //check if Hammer is equipped
+                //if (currenttool == null || currenttool.name != "Hammer")
+                //{
+                //    Debug.Log("pick up Hammer");
+                //    return;
+                //}
+                //else
+                if (currentRawType == null)//checks if raw material is in hand
+                {
+                    Debug.Log("pick up Raw Material");
+                    return;
+                }
 
-        }
+                //convert scrap to its specific raw material
+                //0 is plastic, 1 is wood, 2 is metal
+                int selectedFlatMaterial = 0;
+                switch (currentRawType.GetRawMaterialType())
+                {
+                    case RawMaterial.RawMaterialType.Plastic:
+                        selectedFlatMaterial = 0;
+                        Debug.Log("Flat_Plastic");
+                        break;
+                    case RawMaterial.RawMaterialType.Wood:
+                        selectedFlatMaterial = 1;
+                        Debug.Log("Flat_Wood");
+                        break;
+                    case RawMaterial.RawMaterialType.Metal:
+                        selectedFlatMaterial = 2;
+                        Debug.Log("Flat_Metal");
+                        break;
+                }
+                //set the output item
+                outputItemData = OutputItemList[selectedFlatMaterial];
+
+                //spawn the flattened material
+                outputItem = Instantiate(outputItemData.GetPrefab(), Anvil_itemPosition);
+                //delete the raw material
+                Destroy(inputItem.gameObject);
+
+
+            }
+            //take out item if have output
+            else
+            {
+                //inventory full, cant take
+                if (player.playerInventory.IsFull())
+                {
+                    return;
+                }
+                //play take out output item sound
+                e_takeOutputItem?.InvokeEvent(transform.position, Quaternion.identity, transform);
+                player.playerInventory.AddItem(outputItem.GetComponent<Item>());
+                //reset
+                outputItemData = null;
+                Debug.Log("Taken out");
+                // timerText.text = "Ready";
+
+            }
+        //}
+        //else
+        //{
+        //    Debug.Log("No item in anvil");
+        //}
+       
     }
 
 

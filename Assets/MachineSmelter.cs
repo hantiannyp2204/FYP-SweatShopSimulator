@@ -102,9 +102,11 @@ public class MachineSmelter : MonoBehaviour,Iinteractable
         if(outputItemData == null)
         {  
             Item currentItem = player.playerInventory.GetCurrentItem();
+            //stop this fucntion if theres nothing in hand 
+            if (currentItem == null) return;
             Scrap currentScrapType = currentItem.GetComponent<Scrap>();
-            //stop this fucntion if theres nothing in hand or it item is not a scrap
-            if (currentItem == null || currentScrapType == null)
+            //stop this fucntion if item is not a scrap
+            if (currentScrapType == null)
             {
                 return;
             }

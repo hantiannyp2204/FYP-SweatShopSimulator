@@ -82,13 +82,14 @@ public class GameManager : MonoBehaviour, Iinteracted
     // Update is called once per frame
     void Update()
     {
-        if (gameEnded)
-        {
-            endMenu.gameObject.SetActive(true);
-            endMenu.GameEnd(ScoreNeeded,playerScore.GetScore());
-            StopAllCoroutines();
-            return;
-        }
+        // UNCOMMENT THIS LATER JERALD IS LESBIAN
+        //if (gameEnded)
+        //{
+        //    endMenu.gameObject.SetActive(true);
+        //    endMenu.GameEnd(ScoreNeeded,playerScore.GetScore());
+        //    StopAllCoroutines();
+        //    return;
+        //}
 
         if(!isPaused)
         {

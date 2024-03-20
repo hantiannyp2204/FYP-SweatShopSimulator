@@ -9,6 +9,8 @@ public class Controller : MonoBehaviour
     public int trueRange = 50;
     public Text minT, maxT, currentText, winORloseText,levelText;
     public Image againPanel , nextPanel , endPanel, levelPanelBack;
+    public float LevelCurrentPower;
+
 
     Vector3 rotationPoint = Vector3.zero;
     float temp;
@@ -96,9 +98,13 @@ public class Controller : MonoBehaviour
             winORloseText.text = "LOSE";
             againPanel.gameObject.SetActive(true);
         }
+
+        // Stop decreasing power
+        power.canDecreasePower = false;
+       
     }
 
-
+     
     public void StartRotate()
     {
         hold = true;
@@ -110,11 +116,15 @@ public class Controller : MonoBehaviour
     }
 
     public void Next()
-    {
+    { 
         Lnum += 1;
         PlayerPrefs.SetInt("Level num", Lnum);
-
         SceneManager.LoadScene("Minigame");
+    }
+
+    public void LoadSavedPower()
+    {
+
     }
     public void Again()
     {

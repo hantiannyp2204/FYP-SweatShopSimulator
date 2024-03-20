@@ -7,6 +7,10 @@ public class MacineFab : MonoBehaviour, Iinteractable
 {
     public Power power;
 
+    private void Awake()
+    {
+        
+    }
     void Start()
     {
         // Find the persistent GameObject by its name
@@ -44,12 +48,13 @@ public class MacineFab : MonoBehaviour, Iinteractable
         
         Item currentItem = player.playerInventory.GetCurrentItem();
 
-        if (currentItem == null || power.currentPower <= 0)
+        if (currentItem == null || power.finalPower <= 0)
         {
             return;
         }
         else
         {
+           
             SceneManager.LoadScene("Minigame");
             Debug.Log("Interacting " + name + " with " + player.playerInventory.GetCurrentItem().Data.name);
         }
@@ -62,6 +67,16 @@ public class MacineFab : MonoBehaviour, Iinteractable
         if (Input.GetKeyDown(KeyCode.P))
         {
             power.finalPower += 10;
+            // Log the finalPower variable to the console
+            Debug.Log("Final Power: " + power.finalPower);
+            // Save the updated finalPower value to PlayerPrefs
+            PlayerPrefs.SetFloat("finalPower", power.finalPower);
+        }
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            // Retrieve the finalPower value from PlayerPrefs
+            power.finalPower = PlayerPrefs.GetFloat("finalPower", power.finalPower);
             // Log the finalPower variable to the console
             Debug.Log("Final Power: " + power.finalPower);
         }

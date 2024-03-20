@@ -16,12 +16,14 @@ public class MachineShredder : MonoBehaviour, Iinteractable
     [SerializeField] private Scrollbar progressBar;
 
     [SerializeField] private GameObject player;
+    [SerializeField] private GameManager gameManager;
 
     [Header("Debug")]
     [SerializeField] private TMP_Text progressText;
     [SerializeField] private TMP_Text distFromPlayerText;
     [SerializeField] private TMP_Text shredderFuelText;
     [SerializeField] private TMP_Text productToShredText;
+    [SerializeField] private TMP_Text lockedInProductText;
 
     [Header("Shredder Machine Settings")]
     [SerializeField] private float decreaseMultiplier;
@@ -42,8 +44,9 @@ public class MachineShredder : MonoBehaviour, Iinteractable
     private Bounds _spawnPointBound;
     private RefillFuelManager _refillManager;
 
-    private Item _savedShredProduct;
+    private bool _beingSaved = false;
 
+    private Item _itemToSave;
 
     public bool IsOutOfFuel()
     {
@@ -72,28 +75,41 @@ public class MachineShredder : MonoBehaviour, Iinteractable
     {
         e_interactShredder?.InvokeEvent(transform.position, Quaternion.identity, transform);
 
+        if (_itemToSave == null)
+        {
+            productToShredText.text = "Press F to Lock Product While holding item";
+            return;
+        }
+
         if (player.playerInventory.GetCurrentItem() == null || _refillManager.activateRefill) // Check if in the middle of fuellling
         {
             return;
         }
 
-        _initShredding = true;
         Item product = player.playerInventory.GetCurrentItem();
-
         // All other items will have their containable with nothing
         if (product == null || product.Data.productContainable.Count == 0) // Product needs to contain smth
         {
             return; // Check if item is product or just another itS
         }
 
-        productToShredText.text = "Product To Shred: " + product.Data.name;
-        _productToShred = product; // store product in seperate variable for safety purpose
-
-        if (_productToShred.Data.productContainable != null)
+        if (product != _itemToSave)
         {
-            foreach  (ItemData a in _productToShred.Data.productContainable)
+            productToShredText.text = "NOT LOCKED IN PRODUCT";
+            return;
+        }
+        else
+        {
+            _initShredding = true;
+            productToShredText.text = "Product To Shred: " + product.Data.name;
+            _productToShred = product; // store product in seperate variable for safety purpose
+
+            if (_productToShred.Data.productContainable != null)
             {
-                Debug.Log("This product contains: " + a.itemName);
+                foreach  (ItemData a in _productToShred.Data.productContainable)
+                {
+                    Debug.Log("This product contains: " + a.itemName);
+                }
             }
         }
     }
@@ -119,6 +135,13 @@ public class MachineShredder : MonoBehaviour, Iinteractable
             shredderFuelText.text = "NO FUEL!";
         }
 
+        if (Input.GetKeyDown(KeyCode.F) && gameManager.playerInventory.GetCurrentItem().Data.productContainable != null 
+            && gameManager.playerInventory.GetCurrentItem() != null) // check if item is a product
+        {
+            _itemToSave = gameManager.playerInventory.GetCurrentItem();
+            lockedInProductText.text = "Locked In : " + _itemToSave.gameObject.name;
+        }
+        
         if (_initShredding)
         {
             if (IsOutOfFuel())
@@ -146,6 +169,7 @@ public class MachineShredder : MonoBehaviour, Iinteractable
                 }
 
                 progressText.text = (_chargeValue * 100).ToString("0.0") + "%";
+
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     IncreaseProgress();

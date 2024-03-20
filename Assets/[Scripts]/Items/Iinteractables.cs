@@ -6,7 +6,6 @@ using UnityEngine;
 //Inspired by Raqib
 public interface Iinteractable
 {
-    //public int GetViewId();
     public bool CanInteract();
     public void Interact(GameManager player);
     public string GetInteractName();

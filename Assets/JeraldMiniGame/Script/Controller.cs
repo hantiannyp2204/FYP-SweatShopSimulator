@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class Controller : MonoBehaviour
 {
+    public Power power;
     public float speed = 50;
     public int trueRange = 50;
     public Text minT, maxT, currentText, winORloseText,levelText;
@@ -41,7 +42,11 @@ public class Controller : MonoBehaviour
         {
             transform.RotateAround(rotationPoint, Vector3.forward, speed * Time.deltaTime);
         }
-        
+
+        if (power.currentPower <= 0)
+        {
+            GotoLevel1();
+        }
     } 
 
 

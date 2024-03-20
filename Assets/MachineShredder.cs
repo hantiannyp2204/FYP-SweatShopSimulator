@@ -1,12 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Linq;
-using Unity.VisualScripting;
-using System.Runtime.CompilerServices;
 
 public class MachineShredder : MonoBehaviour, Iinteractable
 {
@@ -43,8 +37,6 @@ public class MachineShredder : MonoBehaviour, Iinteractable
 
     private Bounds _spawnPointBound;
     private RefillFuelManager _refillManager;
-
-    private bool _beingSaved = false;
 
     private Item _itemToSave;
 
@@ -215,3 +207,4 @@ public class MachineShredder : MonoBehaviour, Iinteractable
         }
     }
 }
+    

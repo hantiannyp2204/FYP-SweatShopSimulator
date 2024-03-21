@@ -29,7 +29,6 @@ public class FeedbackEventData : ScriptableObject
     Quaternion rotData = Quaternion.identity;
     Transform parentData = null;
 
-    public bool effectsLoop = false;
     public bool stopEffectsInChildren = false;
     public bool stopEffectsLoopingInChildren = false;
     public void InvokeEvent()

@@ -112,12 +112,13 @@ public class GameFeedback : MonoBehaviour
         foreach (var effectType in data.Effects)
         {
             GameObject effectObj = EffectsPooling[(int)effectType].GetEffect(data);
-            float effectDuration = effectObj.GetComponent<ParticleSystem>().main.duration;
+            ParticleSystem effectParticle = effectObj.GetComponent<ParticleSystem>();
+            float effectDuration = effectParticle.main.duration;
             if (effectObj != null)
             {
                 effectObj.SetActive(true); // Assuming activation starts the effect
 
-                if(!data.effectsLoop)
+                if(!effectParticle.main.loop)
                     StartCoroutine(DisableEffect(effectObj, effectDuration));
             }
         }

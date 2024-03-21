@@ -111,7 +111,7 @@ public class MachineSmelter : MonoBehaviour,Iinteractable
                 return;
             }
             //play input item sound
-            e_inputItem?.InvokeEvent(transform.position, Quaternion.identity, transform);
+            e_inputItem?.InvokeEvent(transform.position, Quaternion.Euler(-90, 0, 0), transform);
             smeltingCoroutineHandler = StartCoroutine(SmeltCoroutine(player, currentItem, currentScrapType));
 
 

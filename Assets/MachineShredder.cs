@@ -1,6 +1,8 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Oculus.Interaction;
+using UnityEngine.Rendering.UI;
 
 public class MachineShredder : MonoBehaviour, Iinteractable
 {
@@ -39,7 +41,6 @@ public class MachineShredder : MonoBehaviour, Iinteractable
     private RefillFuelManager _refillManager;
 
     private Item _itemToSave;
-
     public bool IsOutOfFuel()
     {
         return secretHealth <= 0 ? true : false;
@@ -128,11 +129,24 @@ public class MachineShredder : MonoBehaviour, Iinteractable
             shredderFuelText.text = "NO FUEL!";
         }
 
-        if (Input.GetKeyDown(KeyCode.F) && gameManager.playerInventory.GetCurrentItem().Data.productContainable != null 
-            && gameManager.playerInventory.GetCurrentItem() != null) // check if item is a product
+        if (gameManager.playerInventory.GetCurrentItem() != null)
         {
-            _itemToSave = gameManager.playerInventory.GetCurrentItem();
-            lockedInProductText.text = "Locked In : " + _itemToSave.gameObject.name;
+            if (Input.GetKeyDown(KeyCode.F) && gameManager.playerInventory.GetCurrentItem().Data.productContainable != null ) // check if item is a product
+            {
+                if (gameManager.playerInventory.GetCurrentItem() != _itemToSave && _itemToSave != null)
+                {
+                    return;
+                }
+                else
+                {
+                    _itemToSave = gameManager.playerInventory.GetCurrentItem();
+                    lockedInProductText.text = "Locked In : " + _itemToSave.gameObject.name;
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("Holding nothing");
         }
         
         if (_initShredding)

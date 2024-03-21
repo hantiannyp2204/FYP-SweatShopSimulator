@@ -65,8 +65,6 @@ public class MachineShredder : MonoBehaviour, Iinteractable
 
     public void Interact(GameManager player)
     {
-        e_interactShredder?.InvokeEvent(transform.position, Quaternion.identity, transform);
-
         if (_itemToSave == null)
         {
             productToShredText.text = "Press F to Lock Product While holding item";
@@ -92,6 +90,9 @@ public class MachineShredder : MonoBehaviour, Iinteractable
         }
         else
         {
+            //e_interactShredder?.InvokeEvent(transform.position, Quaternion.Euler(-90, 0, 0), transform);
+            e_interactShredder?.InvokeEvent(transform.position + new Vector3(0, 0.2f, 0), Quaternion.identity, transform);
+
             _initShredding = true;
             productToShredText.text = "Product To Shred: " + product.Data.name;
             _productToShred = product; // store product in seperate variable for safety purpose
@@ -175,7 +176,7 @@ public class MachineShredder : MonoBehaviour, Iinteractable
             maxHealth = GetNewHealth();
             secretHealth = maxHealth;
 
-            e_shredderFinish?.InvokeEvent(transform.position, Quaternion.identity, transform);
+            e_shredderFinish?.InvokeEvent(transform.position + new Vector3(0, 1f, 0), Quaternion.identity, transform);
 
             _initShredding = false;
             _chargeValue = 0;

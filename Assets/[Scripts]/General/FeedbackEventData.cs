@@ -92,6 +92,8 @@ public enum AUDIO_TYPE
 public enum EFFECT_TYPE
 {
     // Add effects here
+    SHREDDER_SMOKE,
+    SHREDDER_FINISH_SMOKE,
     SMOKE,
     NONE,
 }

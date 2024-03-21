@@ -3,22 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public class Power : MonoBehaviour
 {
     public Controller controller;
     public MacineFab macineFab;
+    
     [SerializeField] private float _StartingPower;
     [SerializeField] private float _PowerToMinus;
     public float currentPower;
     public float finalPower;
     public float newfinalPower;
     public bool canDecreasePower = true;
+    int currentlevel;
     void Start()
     {
+        // Get the current level number
+        //currentlevel = PlayerPrefs.GetInt("Level num", controller.Lnum);
+
         if (SceneManager.GetActiveScene().name == "Minigame")
         {
-            // Load newfinalPower from PlayerPrefs
-            newfinalPower = PlayerPrefs.GetFloat("FinalPower", newfinalPower);
+            // Load newfinalPower from PlayerPrefs based on the current level
+            for (int i = 1; i <= 5; i++)
+            {
+                if (controller.Lnum == i)
+                {
+                    newfinalPower = PlayerPrefs.GetFloat("FinalPower", newfinalPower);
+                    break; // Exit loop once the correct level is found
+                }
+            }
+
             Debug.Log(newfinalPower);
 
             // Assign newfinalPower to currentPower
@@ -31,8 +45,6 @@ public class Power : MonoBehaviour
         }
 
         Debug.Log(currentPower);
-
-
     }
 
 
@@ -40,6 +52,9 @@ public class Power : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //currentlevel = PlayerPrefs.GetInt("Level num", controller.Lnum);
+        
+
         if (SceneManager.GetActiveScene().name == "Minigame" && canDecreasePower)
         {
             currentPower -= _PowerToMinus * Time.deltaTime;
@@ -51,6 +66,12 @@ public class Power : MonoBehaviour
             NoPower();
         }
 
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Debug.Log("Level");
+            Debug.Log(currentlevel);
+        }
+
 
     }
 
@@ -60,13 +81,6 @@ public class Power : MonoBehaviour
         PlayerPrefs.SetFloat("CurrentPower", finalPower);
     }
 
-    public void SaveFinalPower(float finalPower)
-    {
-        // Get the current level number
-        int currentLevel = PlayerPrefs.GetInt("LevelNum", 1);
-
-        // Save the final power for the current level
-        PlayerPrefs.SetFloat("FinalPower_Level_" + currentLevel, finalPower);
-    }
+  
 
 }

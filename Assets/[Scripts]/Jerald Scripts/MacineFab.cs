@@ -66,9 +66,12 @@ public class MacineFab : MonoBehaviour, Iinteractable
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            power.finalPower += 10;
+            int randomValue = Random.Range(350, 1001); // Generates a random integer between 350 and 1000 (inclusive)
+            power.finalPower += randomValue;
+
             // Log the finalPower variable to the console
             Debug.Log("Final Power: " + power.finalPower);
+
             // Save the updated finalPower value to PlayerPrefs
             PlayerPrefs.SetFloat("FinalPower", power.finalPower);
         }

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class Controller : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class Controller : MonoBehaviour
     public Text minT, maxT, currentText, winORloseText,levelText;
     public Image againPanel , nextPanel , endPanel, levelPanelBack;
     public float LevelCurrentPower;
-
+    [SerializeField] TextMeshProUGUI TextPower;
 
     Vector3 rotationPoint = Vector3.zero;
     float temp;
@@ -18,6 +19,7 @@ public class Controller : MonoBehaviour
     int minWinD;
     bool hold;
     public int Lnum = 1;
+    public float CCL;
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +51,14 @@ public class Controller : MonoBehaviour
         {
             GotoLevel1();
         }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Debug.Log(power.currentPower);
+
+        }
+
+        UpdatePowerText();
     } 
 
 
@@ -101,6 +111,7 @@ public class Controller : MonoBehaviour
 
         // Stop decreasing power
         power.canDecreasePower = false;
+        PlayerPrefs.SetFloat("FinalPower",power.currentPower);
        
     }
 
@@ -122,17 +133,23 @@ public class Controller : MonoBehaviour
         SceneManager.LoadScene("Minigame");
     }
 
-    public void LoadSavedPower()
-    {
 
-    }
     public void Again()
     {
+        PlayerPrefs.SetFloat("FinalPower", power.newfinalPower -= 50);
         SceneManager.LoadScene("Minigame");
+        
+
     }
     public void GotoLevel1()
     {
         PlayerPrefs.DeleteAll();
         SceneManager.LoadScene("Jerald");
+    }
+
+    void UpdatePowerText()
+    {
+        // Update the text of the TextMeshProUGUI component with the current power value
+        TextPower.text = "Power: " + power.currentPower.ToString();
     }
 }

@@ -15,8 +15,7 @@ public class FeedbackEventData : ScriptableObject
     public List<AudioClip> Audios => audios;
     public bool sendToAll = false;
     public bool fadeoutAudio = false;
-    public bool loop = false;
-    public bool stopMusic = false;
+    public bool audioLoop = false;
     public bool stopAudioInChildren = false;
     public bool stopLoopingInChildren = false;
     public int musicPosition = -1;
@@ -24,12 +23,15 @@ public class FeedbackEventData : ScriptableObject
     [Header("EFFECT SETTINGS")]
     [SerializeField] private List<EFFECT_TYPE> effects;
     public List<EFFECT_TYPE> Effects => effects;
-    [SerializeField] private bool effectSetParent; // set effect on position
 
     public System.Action eventToInvoke;
     Vector3 posData = Vector3.zero;
     Quaternion rotData = Quaternion.identity;
     Transform parentData = null;
+
+    public bool effectsLoop = false;
+    public bool stopEffectsInChildren = false;
+    public bool stopEffectsLoopingInChildren = false;
     public void InvokeEvent()
     {
         eventToInvoke?.Invoke();

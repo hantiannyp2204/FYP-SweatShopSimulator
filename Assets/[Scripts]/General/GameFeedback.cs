@@ -39,8 +39,9 @@ public class GameFeedback : MonoBehaviour
         // parentData not null
         if (data.GetParentData() != null)
         {
-            AudioSource[] sources = data.GetParentData().gameObject.GetComponentsInChildren<AudioSource>();
-            foreach (var source in sources)
+            //for all audio
+            AudioSource[] audioSources = data.GetParentData().gameObject.GetComponentsInChildren<AudioSource>();
+            foreach (var source in audioSources)
             {
                 if (!source.gameObject.CompareTag(poolTag)) continue;
 
@@ -52,6 +53,23 @@ public class GameFeedback : MonoBehaviour
                     source.transform.SetParent(null);
                 }
                 if (data.stopLoopingInChildren)
+                {
+                    source.loop = false;
+                }
+            }
+            //for all effects
+            //for all audio
+            ParticleSystem[] particleSystems = data.GetParentData().gameObject.GetComponentsInChildren<ParticleSystem>();
+            foreach (var source in particleSystems)
+            {
+                if (!source.gameObject.CompareTag(poolTag)) continue;
+
+                if (data.stopEffectsInChildren)
+                {
+                    source.Stop();
+                    StartCoroutine(WaitForParticles(source));
+                }
+                if (data.stopEffectsLoopingInChildren)
                 {
                     source.loop = false;
                 }
@@ -87,16 +105,45 @@ public class GameFeedback : MonoBehaviour
                 default:
                     break;
             }
-            if (!data.loop)
+            if (!data.audioLoop)
                 StartCoroutine(DisableAudio(audioS, data.fadeoutAudio));
         }
         // Play Effects
-        foreach (var effect in data.Effects)
+        foreach (var effectType in data.Effects)
         {
-            GameObject effectObj = EffectsPooling[(int)effect].GetEffect(data);
+            GameObject effectObj = EffectsPooling[(int)effectType].GetEffect(data);
+            ParticleSystem effectParticle = effectObj.GetComponent<ParticleSystem>();
+            float effectDuration = effectParticle.main.duration;
+            if (effectObj != null)
+            {
+                effectObj.SetActive(true); // Assuming activation starts the effect
+
+                if(!effectParticle.main.loop)
+                    StartCoroutine(DisableEffect(effectObj, effectDuration));
+            }
         }
     }
+    private IEnumerator WaitForParticles(ParticleSystem particleSystem)
+    {
+        // Wait until the particle system stops emitting and all particles are dead
+        while (particleSystem.IsAlive(true))
+        {
+            yield return new WaitForSeconds(0.1f); //force it to check every .1 seconds instead of Update
+        }
 
+        // Once all particles are dead, deactivate the GameObject and unparent it
+        particleSystem.gameObject.SetActive(false);
+        particleSystem.transform.SetParent(null);
+    }
+    //Disable effects
+    IEnumerator DisableEffect(GameObject effectObj, float effectDuration)
+    {
+        yield return new WaitForSeconds(effectDuration);
+
+        // Disable and unparent the effect
+        effectObj.SetActive(false);
+        effectObj.transform.SetParent(null);
+    }
     // Disable audio
     IEnumerator DisableAudio(AudioSource audioS, bool fade)
     {

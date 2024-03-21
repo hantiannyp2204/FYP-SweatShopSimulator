@@ -22,7 +22,7 @@ public class MacineFab : MonoBehaviour, Iinteractable
             power = persistentManager.GetComponent<Power>();
 
             // Load the saved power level from PlayerPrefs after finding the persistent GameObject
-            power.finalPower = PlayerPrefs.GetFloat("finalPower", power.finalPower);
+            power.finalPower = PlayerPrefs.GetFloat("FinalPower", power.finalPower);
             Debug.Log(power.finalPower);
         }
         else
@@ -70,13 +70,13 @@ public class MacineFab : MonoBehaviour, Iinteractable
             // Log the finalPower variable to the console
             Debug.Log("Final Power: " + power.finalPower);
             // Save the updated finalPower value to PlayerPrefs
-            PlayerPrefs.SetFloat("finalPower", power.finalPower);
+            PlayerPrefs.SetFloat("FinalPower", power.finalPower);
         }
 
         if (Input.GetKeyDown(KeyCode.O))
         {
             // Retrieve the finalPower value from PlayerPrefs
-            power.finalPower = PlayerPrefs.GetFloat("finalPower", power.finalPower);
+            power.finalPower = PlayerPrefs.GetFloat("FinalPower", power.finalPower);
             // Log the finalPower variable to the console
             Debug.Log("Final Power: " + power.finalPower);
         }

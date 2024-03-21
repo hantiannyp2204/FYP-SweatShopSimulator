@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Power : MonoBehaviour
 {
+    public Controller controller;
     public MacineFab macineFab;
     [SerializeField] private float _StartingPower;
     [SerializeField] private float _PowerToMinus;
@@ -12,13 +13,12 @@ public class Power : MonoBehaviour
     public float finalPower;
     public float newfinalPower;
     public bool canDecreasePower = true;
-    // Start is called before the first frame update
     void Start()
     {
         if (SceneManager.GetActiveScene().name == "Minigame")
         {
             // Load newfinalPower from PlayerPrefs
-            newfinalPower = PlayerPrefs.GetFloat("finalPower", macineFab.power.finalPower);
+            newfinalPower = PlayerPrefs.GetFloat("FinalPower", newfinalPower);
             Debug.Log(newfinalPower);
 
             // Assign newfinalPower to currentPower
@@ -35,6 +35,8 @@ public class Power : MonoBehaviour
 
     }
 
+
+
     // Update is called once per frame
     void Update()
     {
@@ -48,12 +50,23 @@ public class Power : MonoBehaviour
             finalPower = currentPower;
             NoPower();
         }
+
+
     }
 
     private void NoPower()
     {
         // Save the current power level to PlayerPrefs
         PlayerPrefs.SetFloat("CurrentPower", finalPower);
+    }
+
+    public void SaveFinalPower(float finalPower)
+    {
+        // Get the current level number
+        int currentLevel = PlayerPrefs.GetInt("LevelNum", 1);
+
+        // Save the final power for the current level
+        PlayerPrefs.SetFloat("FinalPower_Level_" + currentLevel, finalPower);
     }
 
 }

@@ -17,7 +17,7 @@ public class Controller : MonoBehaviour
     int maxWinD;
     int minWinD;
     bool hold;
-    int Lnum = 1;
+    public int Lnum = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -57,7 +57,7 @@ public class Controller : MonoBehaviour
         switch (Lnum)
         {
             case 1:
-                levelPanelBack.color = new Color32(0, 255,50,255);
+                levelPanelBack.color = new Color32(0, 255,50,255);   
                 break;
             case 2:
                 levelPanelBack.color = new Color32(0, 255, 228, 255);

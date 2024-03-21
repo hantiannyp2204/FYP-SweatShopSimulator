@@ -16,7 +16,7 @@ public class MachineShredder : MonoBehaviour, Iinteractable
     [SerializeField] private Scrollbar progressBar;
 
     [SerializeField] private GameObject player;
-    [SerializeField] private GameManager gameManager;
+    [SerializeField] private KeyboardGameManager gameManager;
 
     [Header("Debug")]
     [SerializeField] private TMP_Text progressText;
@@ -71,7 +71,7 @@ public class MachineShredder : MonoBehaviour, Iinteractable
         return "Shredder";
     }
 
-    public void Interact(GameManager player)
+    public void Interact(KeyboardGameManager player)
     {
         e_interactShredder?.InvokeEvent(transform.position, Quaternion.identity, transform);
 

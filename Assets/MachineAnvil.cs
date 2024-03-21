@@ -38,7 +38,7 @@ public class MachineAnvil : MonoBehaviour, Iinteractable
     //{ 
     //    itemInside = true;
     //}
-    public void Interact(GameManager player)
+    public void Interact(KeyboardGameManager player)
     {
         // Item currenttool = player.playerInventory.GetCurrentItem();
         Item currentItem = player.playerInventory.GetCurrentItem();

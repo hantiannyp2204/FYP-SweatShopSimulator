@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.UI.BodyUI;
 using static Item;
 
-public class GameManager : MonoBehaviour, Iinteracted
+public class KeyboardGameManager : MonoBehaviour, Iinteracted
 {
     public enum GameMode
     {

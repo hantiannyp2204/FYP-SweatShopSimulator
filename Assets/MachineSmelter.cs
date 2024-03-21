@@ -41,7 +41,7 @@ public class MachineSmelter : MonoBehaviour,Iinteractable
     {
         timerText.text = "Ready";
     }
-    IEnumerator SmeltCoroutine(GameManager player, Item currentItem, Scrap currentScrapType)
+    IEnumerator SmeltCoroutine(KeyboardGameManager player, Item currentItem, Scrap currentScrapType)
     {
         //set the input
         inputItem = currentItem;
@@ -91,7 +91,7 @@ public class MachineSmelter : MonoBehaviour,Iinteractable
 
         yield return null;
     }
-    public void Interact(GameManager player)
+    public void Interact(KeyboardGameManager player)
     {
         //cant interact if smelting
         if(smeltingCoroutineHandler != null )

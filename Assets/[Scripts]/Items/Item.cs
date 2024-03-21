@@ -62,7 +62,7 @@ public class Item : MonoBehaviour, Iinteractable
     public ITEM_STATE GetState()=> itemState;
 
 
-    public void Interact(GameManager player)
+    public void Interact(KeyboardGameManager player)
     {
         Debug.Log("Item picked up dah");
     }

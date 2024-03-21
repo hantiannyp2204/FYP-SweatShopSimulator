@@ -39,7 +39,7 @@ public class MacineFab : MonoBehaviour, Iinteractable
 
     public string GetInteractName() => "Use " + name;
 
-    public void Interact(GameManager player)
+    public void Interact(KeyboardGameManager player)
     {
         
         Item currentItem = player.playerInventory.GetCurrentItem();

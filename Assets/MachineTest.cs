@@ -17,7 +17,7 @@ public class MachineTest : MonoBehaviour,Iinteractable
     public string GetInteractName()=> "Use "+ name;
 
 
-    public void Interact(GameManager player)
+    public void Interact(KeyboardGameManager player)
     {
         Item currentItem = player.playerInventory.GetCurrentItem();
         if (currentItem == null)

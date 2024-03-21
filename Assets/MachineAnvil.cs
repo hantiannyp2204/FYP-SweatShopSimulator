@@ -5,12 +5,11 @@ using UnityEngine;
 public class MachineAnvil : MonoBehaviour, Iinteractable
 {
     Item inputItem;
-    [SerializeField] List<ItemData> inputItemList;
     [SerializeField] List<ItemData> OutputItemList;
     [SerializeField] Transform Anvil_itemPosition;
+    [SerializeField] private State currentState;
     ItemData outputItemData;
     GameObject outputItem;
-    private bool itemInside=false;
 
     // Feedback
     [Header("FEEDBACK")]
@@ -19,6 +18,15 @@ public class MachineAnvil : MonoBehaviour, Iinteractable
     [SerializeField] private FeedbackEventData e_run;
     [SerializeField] private FeedbackEventData e_done;
 
+    public enum State
+    {
+        Empty,
+        HasItem
+    }
+    void Start()
+    {
+        currentState = State.Empty;
+    }
     public bool CanInteract()
     {
         return true;
@@ -40,18 +48,26 @@ public class MachineAnvil : MonoBehaviour, Iinteractable
     //}
     public void Interact(KeyboardGameManager player)
     {
-        // Item currenttool = player.playerInventory.GetCurrentItem();
         Item currentItem = player.playerInventory.GetCurrentItem();
-        //Checks for item in hand
-        if (currentItem == null)
-        {
-            return;
-        }
-        /* if (itemInside)*/
-        //{ 
+       
+        Item currenttool = player.playerInventory.GetCurrentItem();
         //cant interact if in use
-        if (outputItemData == null)
+        if (outputItemData == null && currentState == State.Empty)
         {
+            //Checks for item in hand
+
+            if (currentItem == null)
+            {
+                return;
+                Debug.Log("nothing in hand");
+            }
+            //checks if raw material is in hand
+            RawMaterial currentRawType = currentItem.GetComponent<RawMaterial>();
+            if (currentRawType == null)
+            {
+                Debug.Log("pick up Raw Material");
+                return;
+            }
             //set the input
             inputItem = player.playerInventory.GetCurrentItem();
             //remove the item from inventory
@@ -64,49 +80,62 @@ public class MachineAnvil : MonoBehaviour, Iinteractable
             inputItem.transform.SetParent(Anvil_itemPosition);
             e_run?.InvokeEvent(transform.position, Quaternion.identity, transform);
             e_done?.InvokeEvent(transform.position, Quaternion.identity, transform);
-            //ensures there's an item inside
-            Debug.Log("Item inside Anvil");
-           
-            RawMaterial currentRawType = inputItem.GetComponent<RawMaterial>();
-            //check if Hammer is equipped
-            //if (currenttool == null || currenttool.name != "Hammer")
+            //Changes State to HasItem
+            ChangeState();
+            //if (inputItem == null)
             //{
-            //    Debug.Log("pick up Hammer");
-            //    return;
+
+            //    currentState = State.Empty;
+            //    Debug.Log("State changed back");
             //}
             //else
-            //if (currentRawType == null)//checks if raw material is in hand
             //{
-            //    Debug.Log("pick up Raw Material");
-            //    return;
+            //   
+            //    Debug.Log("State changed");
             //}
-
-            //convert scrap to its specific raw material
-            //0 is plastic, 1 is wood, 2 is metal
-            int selectedFlatMaterial = 0;
-            switch (currentRawType.GetRawMaterialType())
+        }
+        //needs to stop code and check if player is holding a hammer
+        else if (currentState == State.HasItem)
+        {
+            //check if Hammer is equipped
+            if (currentItem == null || currentItem.name != "Hammer")
             {
-                case RawMaterial.RawMaterialType.Plastic:
-                    selectedFlatMaterial = 0;
-                    Debug.Log("Flat_Plastic");
-                    break;
-                case RawMaterial.RawMaterialType.Wood:
-                    selectedFlatMaterial = 1;
-                    Debug.Log("Flat_Wood");
-                    break;
-                case RawMaterial.RawMaterialType.Metal:
-                    selectedFlatMaterial = 2;
-                    Debug.Log("Flat_Metal");
-                    break;
-            }
-            //set the output item
-            outputItemData = OutputItemList[selectedFlatMaterial];
-            //spawn the flattened material
-            outputItem = Instantiate(outputItemData.GetPrefab(), Anvil_itemPosition);
-            Debug.Log(Anvil_itemPosition.position);
-            //delete the raw material
-            Destroy(inputItem.gameObject);
+                Debug.Log("pick up Hammer");
+                return;
 
+            }
+            else
+            {
+                RawMaterial currentRawType = inputItem.GetComponent<RawMaterial>();
+                //convert scrap to its specific raw material
+                //0 is plastic, 1 is wood, 2 is metal
+                int selectedFlatMaterial = 0;
+                switch (currentRawType.GetRawMaterialType())
+                {
+                    case RawMaterial.RawMaterialType.Plastic:
+                        selectedFlatMaterial = 0;
+                        Debug.Log("Flat_Plastic");
+                        break;
+                    case RawMaterial.RawMaterialType.Wood:
+                        selectedFlatMaterial = 1;
+                        Debug.Log("Flat_Wood");
+                        break;
+                    case RawMaterial.RawMaterialType.Metal:
+                        selectedFlatMaterial = 2;
+                        Debug.Log("Flat_Metal");
+                        break;
+                }
+                //set the output item
+                outputItemData = OutputItemList[selectedFlatMaterial];
+                //spawn the flattened material
+                outputItem = Instantiate(outputItemData.GetPrefab(), Anvil_itemPosition);
+                //delete the raw material
+                Destroy(inputItem.gameObject);
+                //Changes state to 
+                ChangeState();
+
+
+            }
         }
         //take out item if have output
         else
@@ -125,21 +154,30 @@ public class MachineAnvil : MonoBehaviour, Iinteractable
             // timerText.text = "Ready";
 
         }
-        //}
-        //else
-        //{
-        //    Debug.Log("No item in anvil");
-        //}
-       
+
+        void ChangeState()
+        {
+            switch (currentState)
+            {
+                case State.Empty:
+                    currentState = State.HasItem;
+                    break;
+                case State.HasItem:
+                    currentState = State.Empty;
+                    Debug.Log("State changed to Crafting");
+                    break;
+                //case State.Crafting:
+                //    currentState = State.Empty;
+                //    Debug.Log("State changed to Empty");
+                //    break;
+            }
+        }
     }
 
 
 
     //// Start is called before the first frame update
-    //void Start()
-    //{    
-
-    //}
+    
 
     //// Update is called once per frame
     //void Update()

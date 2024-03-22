@@ -20,7 +20,7 @@ public class ManualRequestButton : MonoBehaviour,Iinteractable
         return "to request order";
     }
 
-    public void Interact(GameManager player)
+    public void Interact(KeyboardGameManager player)
     {
         customerTable.RequestOrder();
     }

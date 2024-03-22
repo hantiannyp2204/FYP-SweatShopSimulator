@@ -35,7 +35,7 @@ public class RequestBox : MonoBehaviour,Iinteractable
         return "open request";
     }
 
-    public void Interact(GameManager player)
+    public void Interact(KeyboardGameManager player)
     {
         if(!boxOpened)
         {
@@ -63,7 +63,7 @@ public class RequestBox : MonoBehaviour,Iinteractable
             OnOrderProcessed?.Invoke();
 
             //lastly, give points accordingly
-            GameManager.AddScore(_pointsToReward);
+            KeyboardGameManager.AddScore(_pointsToReward);
 
             //reset objective
             player.playerObjective.ResetObjective();

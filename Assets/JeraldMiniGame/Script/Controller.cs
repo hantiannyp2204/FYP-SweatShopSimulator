@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class Controller : MonoBehaviour
 {
@@ -9,13 +10,16 @@ public class Controller : MonoBehaviour
     public int trueRange = 50;
     public Text minT, maxT, currentText, winORloseText,levelText;
     public Image againPanel , nextPanel , endPanel, levelPanelBack;
+    public float LevelCurrentPower;
+    [SerializeField] TextMeshProUGUI TextPower;
 
     Vector3 rotationPoint = Vector3.zero;
     float temp;
     int maxWinD;
     int minWinD;
     bool hold;
-    int Lnum = 1;
+    public int Lnum = 1;
+    public float CCL;
 
     // Start is called before the first frame update
     void Start()
@@ -47,6 +51,14 @@ public class Controller : MonoBehaviour
         {
             GotoLevel1();
         }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Debug.Log(power.currentPower);
+
+        }
+
+        UpdatePowerText();
     } 
 
 
@@ -55,7 +67,7 @@ public class Controller : MonoBehaviour
         switch (Lnum)
         {
             case 1:
-                levelPanelBack.color = new Color32(0, 255,50,255);
+                levelPanelBack.color = new Color32(0, 255,50,255);   
                 break;
             case 2:
                 levelPanelBack.color = new Color32(0, 255, 228, 255);
@@ -96,9 +108,14 @@ public class Controller : MonoBehaviour
             winORloseText.text = "LOSE";
             againPanel.gameObject.SetActive(true);
         }
+
+        // Stop decreasing power
+        power.canDecreasePower = false;
+        PlayerPrefs.SetFloat("FinalPower",power.currentPower);
+       
     }
 
-
+     
     public void StartRotate()
     {
         hold = true;
@@ -110,19 +127,29 @@ public class Controller : MonoBehaviour
     }
 
     public void Next()
-    {
+    { 
         Lnum += 1;
         PlayerPrefs.SetInt("Level num", Lnum);
-
         SceneManager.LoadScene("Minigame");
     }
+
+
     public void Again()
     {
+        PlayerPrefs.SetFloat("FinalPower", power.newfinalPower -= 50);
         SceneManager.LoadScene("Minigame");
+        
+
     }
     public void GotoLevel1()
     {
         PlayerPrefs.DeleteAll();
         SceneManager.LoadScene("Jerald");
+    }
+
+    void UpdatePowerText()
+    {
+        // Update the text of the TextMeshProUGUI component with the current power value
+        TextPower.text = "Power: " + power.currentPower.ToString();
     }
 }

@@ -7,6 +7,10 @@ public class MacineFab : MonoBehaviour, Iinteractable
 {
     public Power power;
 
+    private void Awake()
+    {
+        
+    }
     void Start()
     {
         // Find the persistent GameObject by its name
@@ -18,7 +22,7 @@ public class MacineFab : MonoBehaviour, Iinteractable
             power = persistentManager.GetComponent<Power>();
 
             // Load the saved power level from PlayerPrefs after finding the persistent GameObject
-            power.finalPower = PlayerPrefs.GetFloat("finalPower", power.finalPower);
+            power.finalPower = PlayerPrefs.GetFloat("FinalPower", power.finalPower);
             Debug.Log(power.finalPower);
         }
         else
@@ -44,12 +48,13 @@ public class MacineFab : MonoBehaviour, Iinteractable
         
         Item currentItem = player.playerInventory.GetCurrentItem();
 
-        if (currentItem == null || power.currentPower <= 0)
+        if (currentItem == null || power.finalPower <= 0)
         {
             return;
         }
         else
         {
+           
             SceneManager.LoadScene("Minigame");
             Debug.Log("Interacting " + name + " with " + player.playerInventory.GetCurrentItem().Data.name);
         }
@@ -61,7 +66,20 @@ public class MacineFab : MonoBehaviour, Iinteractable
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            power.finalPower += 10;
+            int randomValue = Random.Range(350, 1001); // Generates a random integer between 350 and 1000 (inclusive)
+            power.finalPower += randomValue;
+
+            // Log the finalPower variable to the console
+            Debug.Log("Final Power: " + power.finalPower);
+
+            // Save the updated finalPower value to PlayerPrefs
+            PlayerPrefs.SetFloat("FinalPower", power.finalPower);
+        }
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            // Retrieve the finalPower value from PlayerPrefs
+            power.finalPower = PlayerPrefs.GetFloat("FinalPower", power.finalPower);
             // Log the finalPower variable to the console
             Debug.Log("Final Power: " + power.finalPower);
         }

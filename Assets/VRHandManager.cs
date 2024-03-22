@@ -2,8 +2,9 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using Oculus.Interaction;
 
-public class VRHandManager : MonoBehaviour
+public class VRHandManager : MonoBehaviour, ISubscribeEvents<Iinteracted>
 {
     public InputActionProperty pinchAnimationAction;
     public InputActionProperty gripAnimationAction;
@@ -14,6 +15,8 @@ public class VRHandManager : MonoBehaviour
     private Vector3 lastHandPosition;
     private Vector3 handVelocity;
 
+    System.Action<GameObject> OnInteracted;
+    [SerializeField] private FeedbackEventData e_interactError;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,11 +37,11 @@ public class VRHandManager : MonoBehaviour
         lastHandPosition = transform.position;
 
         // Check for grab or release
-        if (gripValue > 0.5f) // Adjust grip threshold as needed
+        if (gripValue > 0.5f && grabbedObject == null) // Adjust grip threshold as needed
         {
             Grab();
         }
-        else if (gripValue <= 0.5f) // Adjust release threshold as needed
+        else if (gripValue <= 0.5f && grabbedObject != null) // Adjust release threshold as needed
         {
             Release();
         }
@@ -64,7 +67,9 @@ public class VRHandManager : MonoBehaviour
         if (closestObject != null)
         {
             grabbedObject = closestObject;
-            grabbedObject.transform.SetParent(transform);
+            grabbedObject.transform.SetParent(transform, true);
+            grabbedObject.transform.localPosition = Vector3.zero;
+            grabbedObject.transform.localRotation = Quaternion.identity;
             Rigidbody rb = grabbedObject.GetComponent<Rigidbody>();
             if (rb != null)
             {
@@ -87,10 +92,10 @@ public class VRHandManager : MonoBehaviour
             grabbedObject = null;
         }
     }
-
     private void OnTriggerEnter(Collider other)
     {
-        if (DebugText == null) return;
+        //only accept grabbing item typed items
+        if (DebugText == null || other.GetComponent<Item>() == null) return;
         currentlyTouching.Add(other.gameObject);
     }
 
@@ -99,4 +104,7 @@ public class VRHandManager : MonoBehaviour
         if (DebugText == null) return;
         currentlyTouching.Remove(other.gameObject);
     }
+
+    public void SubcribeEvents(Iinteracted action) => OnInteracted += action.OnInteracted;
+    public void UnsubcribeEvents(Iinteracted action) => OnInteracted -= action.OnInteracted;
 }

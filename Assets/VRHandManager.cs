@@ -92,23 +92,6 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<Iinteracted>
             grabbedObject = null;
         }
     }
-    void Interact()
-    {
-
-        if (currentInteractable == null || currentInteractable != null && !currentInteractable.CanInteract())
-        {
-            //play interact error sound
-            e_interactError?.InvokeEvent(transform.position, Quaternion.identity, transform);
-            return;
-        }
-
-        Debug.Log("Press E to " + currentInteractable.GetInteractName());
-        interacted = true;
-        currentInteractable.Interact(targetPlayer);
-        OnInteracted?.Invoke(interactObj);
-        currentInteractable = null;
-        interactObj = null;
-    }
     private void OnTriggerEnter(Collider other)
     {
         //only accept grabbing item typed items

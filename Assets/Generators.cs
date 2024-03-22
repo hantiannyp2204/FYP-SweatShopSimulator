@@ -21,7 +21,7 @@ public class Generators : MonoBehaviour,Iinteractable
         return $"obtain {ItemToGenerate.name}";
     }
 
-    public void Interact(GameManager player)
+    public void Interact(KeyboardGameManager player)
     {
         //return if prefab don't have item script
         if (ItemToGenerate.GetComponent<Item>() == null)

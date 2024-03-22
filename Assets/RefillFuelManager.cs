@@ -24,7 +24,7 @@ public class RefillFuelManager : MonoBehaviour, Iinteractable
         return "RefillFuelMachine";
     }
 
-    public void Interact(GameManager player)
+    public void Interact(KeyboardGameManager player)
     {
         if (!shredder.IsOutOfFuel() || player.playerInventory.GetCurrentItem() != refillCan)
         {

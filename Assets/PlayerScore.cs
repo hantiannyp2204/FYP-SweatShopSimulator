@@ -24,11 +24,11 @@ public class PlayerScore : MonoBehaviour
     }
     private void OnEnable()
     {
-        GameManager.OnScoreAdded += AddScore;
+        KeyboardGameManager.OnScoreAdded += AddScore;
     }
 
     private void OnDisable()
     {
-        GameManager.OnScoreAdded -= AddScore;
+        KeyboardGameManager.OnScoreAdded -= AddScore;
     }
 }

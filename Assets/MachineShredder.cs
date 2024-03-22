@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine.UI;
 using Oculus.Interaction;
 using UnityEngine.Rendering.UI;
+using Unity.VisualScripting;
 
 public class MachineShredder : MonoBehaviour, Iinteractable
 {
@@ -131,7 +132,7 @@ public class MachineShredder : MonoBehaviour, Iinteractable
 
         if (gameManager.playerInventory.GetCurrentItem() != null)
         {
-            if (Input.GetKeyDown(KeyCode.F) && gameManager.playerInventory.GetCurrentItem().Data.productContainable != null ) // check if item is a product
+            if (Input.GetKeyDown(KeyCode.F) && gameManager.playerInventory.GetCurrentItem().Data.productContainable != null) // check if item is a product
             {
                 if (gameManager.playerInventory.GetCurrentItem() != _itemToSave && _itemToSave != null)
                 {
@@ -148,6 +149,7 @@ public class MachineShredder : MonoBehaviour, Iinteractable
         {
             Debug.Log("Holding nothing");
         }
+
         
         if (_initShredding)
         {
@@ -185,8 +187,13 @@ public class MachineShredder : MonoBehaviour, Iinteractable
             }
         }
 
+
         if (_chargeValue >= 1)
         {
+            _itemToSave = null;
+
+            progressText.text = "Shreddinator Process Completed";
+
             maxHealth = GetNewHealth();
             secretHealth = maxHealth;
 
@@ -195,7 +202,6 @@ public class MachineShredder : MonoBehaviour, Iinteractable
             _initShredding = false;
             _chargeValue = 0;
 
-            progressText.text = "Shreddinator Process Completed";
             foreach (ItemData a in _productToShred.Data.productContainable)
             {
                 float x = Random.Range(-_spawnPointBound.extents.x, _spawnPointBound.extents.x);

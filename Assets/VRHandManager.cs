@@ -3,8 +3,9 @@ using TMPro;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using Oculus.Interaction;
+using Oculus.Platform;
 
-public class VRHandManager : MonoBehaviour, ISubscribeEvents<Iinteracted>
+public class VRHandManager : MonoBehaviour, ISubscribeEvents<Iinteracted>, ISubscribeEvents<IRelease>
 {
     public InputActionProperty pinchAnimationAction;
     public InputActionProperty gripAnimationAction;
@@ -15,16 +16,24 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<Iinteracted>
     private Vector3 lastHandPosition;
     private Vector3 handVelocity;
 
-    System.Action<GameObject> OnInteracted;
+    enum handAction
+    {
+        Grabbing,
+        Releasing
+    }
+    handAction currentHandAction;
+    System.Action<GameObject> OnGrabbed;
+    System.Action<Vector3> OnRelease;
     [SerializeField] private FeedbackEventData e_interactError;
     // Start is called before the first frame update
-    void Start()
+    public void Init()
     {
+        currentHandAction = handAction.Releasing;
         lastHandPosition = transform.position;
     }
 
     // Update is called once per frame
-    void Update()
+    public void UpdateInteractions()
     {
         // Update hand animations
         float triggerValue = pinchAnimationAction.action.ReadValue<float>();
@@ -37,17 +46,23 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<Iinteracted>
         lastHandPosition = transform.position;
 
         // Check for grab or release
-        if (gripValue > 0.5f && grabbedObject == null) // Adjust grip threshold as needed
+        //makes sure it can only grab 1 object at a time
+        if (gripValue > 0.5f && currentHandAction == handAction.Releasing) // Adjust grip threshold as needed
         {
-            Grab();
+            currentHandAction = handAction.Grabbing;
+            FindNearestObject();
         }
-        else if (gripValue <= 0.5f && grabbedObject != null) // Adjust release threshold as needed
+        else if (gripValue <= 0.5f && currentHandAction == handAction.Grabbing) // Adjust release threshold as needed
         {
+            currentHandAction = handAction.Releasing;
             Release();
         }
     }
-
-    void Grab()
+    public Vector3 GetHandVelocity()
+    {
+        return handVelocity;
+    }
+    void FindNearestObject()
     {
         float closestDistance = float.MaxValue;
         GameObject closestObject = null;
@@ -63,18 +78,10 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<Iinteracted>
                 closestObject = go;
             }
         }
-
         if (closestObject != null)
         {
             grabbedObject = closestObject;
-            grabbedObject.transform.SetParent(transform, true);
-            grabbedObject.transform.localPosition = Vector3.zero;
-            grabbedObject.transform.localRotation = Quaternion.identity;
-            Rigidbody rb = grabbedObject.GetComponent<Rigidbody>();
-            if (rb != null)
-            {
-                rb.isKinematic = true;
-            }
+            OnGrabbed?.Invoke(grabbedObject);
         }
     }
 
@@ -82,14 +89,7 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<Iinteracted>
     {
         if (grabbedObject != null)
         {
-            grabbedObject.transform.SetParent(null);
-            Rigidbody rb = grabbedObject.GetComponent<Rigidbody>();
-            if (rb != null)
-            {
-                rb.isKinematic = false;
-                rb.AddForce(handVelocity * rb.mass, ForceMode.Impulse); // Apply force based on hand velocity and object mass
-            }
-            grabbedObject = null;
+            OnRelease?.Invoke(handVelocity);
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -105,6 +105,47 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<Iinteracted>
         currentlyTouching.Remove(other.gameObject);
     }
 
-    public void SubcribeEvents(Iinteracted action) => OnInteracted += action.OnInteracted;
-    public void UnsubcribeEvents(Iinteracted action) => OnInteracted -= action.OnInteracted;
+    public void SubcribeEvents(Iinteracted action)
+    {
+        OnGrabbed += action.OnInteracted;
+    }
+
+    public void UnsubcribeEvents(Iinteracted action)
+    {
+        OnGrabbed -= action.OnInteracted;
+    }
+    public void SubcribeEvents(IRelease action)
+    {
+        OnRelease += action.OnRelease;
+    }
+
+    public void UnsubcribeEvents(IRelease action)
+    {
+        OnRelease -= action.OnRelease;
+    }
 }
+public interface Iinteracted
+{
+    public void OnInteracted(GameObject obj);
+}
+public interface IRelease
+{
+    public void OnRelease(Vector3 handVelocity);
+}
+
+public interface IinteractableExtensionRetrieve
+{
+    public void OnEnter(Iinteractable interactable);
+    public void OnExit(Iinteractable interactable);
+}
+public interface IinteractableExtensionRetrieveObj
+{
+    public void OnEnter(GameObject interactable);
+    public void OnExit(GameObject interactable);
+}
+public interface IinteractableInteracting
+{
+    public void OnInteracting(Iinteractable interactable);
+    public void OnStopInteracting(Iinteractable interactable);
+}
+

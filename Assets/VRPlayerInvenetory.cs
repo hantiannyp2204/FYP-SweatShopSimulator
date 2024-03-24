@@ -1,13 +1,26 @@
+using Oculus.Interaction.HandGrab;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Item;
 using static UnityEditor.Progress;
 using static UnityEditor.Timeline.Actions.MenuPriority;
+using static VRHandManager;
 
 public class VRPlayerInvenetory : MonoBehaviour
 {
     [SerializeField] Item currentHoldingItem;
+    HandType handType = HandType.Left;
+
+    public HandType GetHandType() => handType;
+    public void Init()
+    {
+        //set the hand type
+        if (transform.name == "Right hand")
+        {
+            handType = HandType.Right;
+        }
+    }
     public void AddItem(Item item, Transform handTransform)
     {
         //if theres item, ignore

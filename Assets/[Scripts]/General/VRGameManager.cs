@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.UI.BodyUI;
 using static Item;
+using static UnityEditor.Progress;
+using static VRHandManager;
 
 public class VRGameManager : MonoBehaviour, Iinteracted, IRelease
 {
@@ -22,8 +24,8 @@ public class VRGameManager : MonoBehaviour, Iinteracted, IRelease
     public float ScoreNeeded;
 
     //[SerializeField] PlayerMovement playerMovement; 
-    [SerializeField] VRHandManager vrHandInteractionManager;
-    [SerializeField] VRPlayerInvenetory vrPlayerInventory;
+    [SerializeField] List<VRHandManager> vrHandInteractionManager;
+    [SerializeField] List<VRPlayerInvenetory> vrPlayerInventory;
     [SerializeField] GameFeedback gameFeedback;
     //public Objective playerObjective;
     //[SerializeField] CustomerTable customerTable;
@@ -45,33 +47,62 @@ public class VRGameManager : MonoBehaviour, Iinteracted, IRelease
     bool gameEnded = false;
     //[SerializeField] EndMenu endMenu;
 
-    public void OnInteracted(GameObject obj)
+    public void OnInteracted(GameObject obj, HandType handType)
     {
-        Debug.Log("Grab");
-        Item item = obj.GetComponent<Item>();
-        if (item != null)
+        //check if current hand type is the one calling
+        foreach(var hand in vrHandInteractionManager)
         {
-            switch (item.GetState())
+            if (hand.GetHandType() != handType) continue;
+            Debug.Log("Grab");
+            Item item = obj.GetComponent<Item>();
+            if (item != null)
             {
-                case ITEM_STATE.NOT_PICKED_UP:
-                    vrPlayerInventory.AddItem(item, vrHandInteractionManager.gameObject.transform);
-                    break;
-                case ITEM_STATE.PICKED_UP:
-                    break;
-                default:
-                    break;
+                switch (item.GetState())
+                {
+                    case ITEM_STATE.NOT_PICKED_UP:
+                        foreach (VRPlayerInvenetory handInv in vrPlayerInventory)
+                        {
+                            if (handInv.GetHandType() != handType) continue;
+                            handInv.AddItem(item, hand.gameObject.transform);
+                        }
+            
+                        break;
+                    case ITEM_STATE.PICKED_UP:
+                        break;
+                    default:
+                        break;
+                }
             }
         }
+
     }
-    public void OnRelease(Vector3 handVelocity)
+    public void OnRelease(Vector3 handVelocity, HandType handType)
     {
-        Debug.Log("Release");
-        vrPlayerInventory.RemoveItem(handVelocity);
+        foreach (var hand in vrHandInteractionManager)
+        {
+            Debug.Log("Release");
+            foreach (VRPlayerInvenetory handInv in vrPlayerInventory)
+            {
+                if (handInv.GetHandType() != handType) continue;
+                handInv.RemoveItem(handVelocity);
+            }
+
+        }
+
+
     }
     void Start()
     {
         //playerMovement.Init();
-        vrHandInteractionManager.Init();
+        foreach(VRHandManager handManager in vrHandInteractionManager)
+        {
+            handManager.Init();
+        }
+        foreach (VRPlayerInvenetory handInv in vrPlayerInventory)
+        {
+            handInv.Init();
+        }
+
         gameFeedback.InIt();
        // playerObjective.Init();     
         if(gameMode == GameMode.Levels)
@@ -99,8 +130,15 @@ public class VRGameManager : MonoBehaviour, Iinteracted, IRelease
         if (!isPaused)
         {
             //playerMovement.UpdateTransform();
-            vrHandInteractionManager.UpdateInteractions();
-            vrPlayerInventory.UpdateItemPositions();
+            foreach(var hand in vrHandInteractionManager)
+            {
+                hand.UpdateInteractions();
+            }
+            foreach (var handInv in vrPlayerInventory)
+            {
+                handInv.UpdateItemPositions();
+            }
+
             //update table timer
             if (gameMode == GameMode.Levels)
             {
@@ -120,14 +158,21 @@ public class VRGameManager : MonoBehaviour, Iinteracted, IRelease
     }
     private void OnEnable()
     {
-        vrHandInteractionManager.SubcribeEvents((Iinteracted)this);
-        vrHandInteractionManager.SubcribeEvents((IRelease)this);
+        foreach (var hand in vrHandInteractionManager)
+        {
+            hand.SubcribeEvents((Iinteracted)this);
+            hand.SubcribeEvents((IRelease)this);
+        }
        // customerTable.SubcribeEvents();
     }
     private void OnDisable()
     {
-        vrHandInteractionManager.UnsubcribeEvents((Iinteracted)this);
-        vrHandInteractionManager.UnsubcribeEvents((IRelease)this);
+        foreach (var hand in vrHandInteractionManager)
+        {
+            hand.UnsubcribeEvents((Iinteracted)this);
+            hand.UnsubcribeEvents((IRelease)this);
+        }
+
         //customerTable.UnsubcribeEvents();
     }
     void TogglePauseMenu()

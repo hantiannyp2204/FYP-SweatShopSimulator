@@ -6,7 +6,7 @@ using UnityEngine;
 
 //Inspired by Raqib
 public class PlayerInteraction : MonoBehaviour
-    , ISubscribeEvents<Iinteracted>
+   // , ISubscribeEvents<Iinteracted>
     , ISubscribeEvents<IinteractableInteracting>
     , ISubscribeEvents<IinteractableExtensionRetrieve>
     , ISubscribeEvents<IinteractableExtensionRetrieveObj>
@@ -149,8 +149,8 @@ public class PlayerInteraction : MonoBehaviour
     }
 
     #region EVENTS
-    public void SubcribeEvents(Iinteracted action) => OnInteracted += action.OnInteracted;
-    public void UnsubcribeEvents(Iinteracted action) => OnInteracted -= action.OnInteracted;
+    //public void SubcribeEvents(Iinteracted action) => OnInteracted += action.OnInteracted;
+    //public void UnsubcribeEvents(Iinteracted action) => OnInteracted -= action.OnInteracted;
     public void SubcribeEvents(IinteractableInteracting action)
     {
         OnInteracting += action.OnInteracting;
@@ -184,25 +184,4 @@ public class PlayerInteraction : MonoBehaviour
         OnExitObj -= action.OnExit;
     }
     #endregion
-}
-public interface Iinteracted
-{
-    public void OnInteracted(GameObject obj);
-
-}
-
-public interface IinteractableExtensionRetrieve
-{
-    public void OnEnter(Iinteractable interactable);
-    public void OnExit(Iinteractable interactable);
-}
-public interface IinteractableExtensionRetrieveObj
-{
-    public void OnEnter(GameObject interactable);
-    public void OnExit(GameObject interactable);
-}
-public interface IinteractableInteracting
-{
-    public void OnInteracting(Iinteractable interactable);
-    public void OnStopInteracting(Iinteractable interactable);
 }

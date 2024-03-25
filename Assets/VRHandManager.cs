@@ -2,8 +2,12 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using Oculus.Interaction;
+using Oculus.Platform;
+using Oculus.Interaction.HandGrab;
+using static VRHandManager;
 
-public class VRHandManager : MonoBehaviour
+public class VRHandManager : MonoBehaviour, ISubscribeEvents<Iinteracted>, ISubscribeEvents<IRelease>
 {
     public InputActionProperty pinchAnimationAction;
     public InputActionProperty gripAnimationAction;
@@ -13,15 +17,38 @@ public class VRHandManager : MonoBehaviour
     private GameObject grabbedObject = null;
     private Vector3 lastHandPosition;
     private Vector3 handVelocity;
+    public enum HandType
+    {
+        Left,
+        Right
+    }
+    enum HandAction
+    {
+        Grabbing,
+        Releasing
+    }
+    HandType handType = HandType.Left;
+    HandAction currentHandAction;
+    System.Action<GameObject, HandType> OnGrabbed;
+    System.Action<Vector3, HandType> OnRelease;
+    [SerializeField] private FeedbackEventData e_interactError;
+
+    public HandType GetHandType()=> handType;
 
     // Start is called before the first frame update
-    void Start()
+    public void Init()
     {
+        currentHandAction = HandAction.Releasing;
         lastHandPosition = transform.position;
+        //set the hand type
+        if(transform.name == "Right hand")
+        {
+            handType = HandType.Right;
+        }
     }
 
     // Update is called once per frame
-    void Update()
+    public void UpdateInteractions()
     {
         // Update hand animations
         float triggerValue = pinchAnimationAction.action.ReadValue<float>();
@@ -34,17 +61,23 @@ public class VRHandManager : MonoBehaviour
         lastHandPosition = transform.position;
 
         // Check for grab or release
-        if (gripValue > 0.5f) // Adjust grip threshold as needed
+        //makes sure it can only grab 1 object at a time
+        if (gripValue > 0.5f && currentHandAction == HandAction.Releasing) // Adjust grip threshold as needed
         {
-            Grab();
+            currentHandAction = HandAction.Grabbing;
+            FindNearestObject();
         }
-        else if (gripValue <= 0.5f) // Adjust release threshold as needed
+        else if (gripValue <= 0.5f && currentHandAction == HandAction.Grabbing) // Adjust release threshold as needed
         {
+            currentHandAction = HandAction.Releasing;
             Release();
         }
     }
-
-    void Grab()
+    public Vector3 GetHandVelocity()
+    {
+        return handVelocity;
+    }
+    void FindNearestObject()
     {
         float closestDistance = float.MaxValue;
         GameObject closestObject = null;
@@ -60,16 +93,10 @@ public class VRHandManager : MonoBehaviour
                 closestObject = go;
             }
         }
-
         if (closestObject != null)
         {
             grabbedObject = closestObject;
-            grabbedObject.transform.SetParent(transform);
-            Rigidbody rb = grabbedObject.GetComponent<Rigidbody>();
-            if (rb != null)
-            {
-                rb.isKinematic = true;
-            }
+            OnGrabbed?.Invoke(grabbedObject,handType);
         }
     }
 
@@ -77,20 +104,13 @@ public class VRHandManager : MonoBehaviour
     {
         if (grabbedObject != null)
         {
-            grabbedObject.transform.SetParent(null);
-            Rigidbody rb = grabbedObject.GetComponent<Rigidbody>();
-            if (rb != null)
-            {
-                rb.isKinematic = false;
-                rb.AddForce(handVelocity * rb.mass, ForceMode.Impulse); // Apply force based on hand velocity and object mass
-            }
-            grabbedObject = null;
+            OnRelease?.Invoke(handVelocity,handType);
         }
     }
-
     private void OnTriggerEnter(Collider other)
     {
-        if (DebugText == null) return;
+        //only accept grabbing item typed items
+        if (DebugText == null || other.GetComponent<Item>() == null) return;
         currentlyTouching.Add(other.gameObject);
     }
 
@@ -99,4 +119,48 @@ public class VRHandManager : MonoBehaviour
         if (DebugText == null) return;
         currentlyTouching.Remove(other.gameObject);
     }
+
+    public void SubcribeEvents(Iinteracted action)
+    {
+        OnGrabbed += action.OnInteracted;
+    }
+
+    public void UnsubcribeEvents(Iinteracted action)
+    {
+        OnGrabbed -= action.OnInteracted;
+    }
+    public void SubcribeEvents(IRelease action)
+    {
+        OnRelease += action.OnRelease;
+    }
+
+    public void UnsubcribeEvents(IRelease action)
+    {
+        OnRelease -= action.OnRelease;
+    }
 }
+public interface Iinteracted
+{
+    public void OnInteracted(GameObject obj, HandType handType);
+}
+public interface IRelease
+{
+    public void OnRelease(Vector3 handVelocity, HandType handType);
+}
+
+public interface IinteractableExtensionRetrieve
+{
+    public void OnEnter(Iinteractable interactable);
+    public void OnExit(Iinteractable interactable);
+}
+public interface IinteractableExtensionRetrieveObj
+{
+    public void OnEnter(GameObject interactable);
+    public void OnExit(GameObject interactable);
+}
+public interface IinteractableInteracting
+{
+    public void OnInteracting(Iinteractable interactable);
+    public void OnStopInteracting(Iinteractable interactable);
+}
+

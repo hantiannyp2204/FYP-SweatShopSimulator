@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.UI.BodyUI;
 using static Item;
 
-public class KeyboardGameManager : MonoBehaviour, Iinteracted
+public class KeyboardGameManager : MonoBehaviour//, Iinteracted
 {
     public enum GameMode
     {
@@ -117,12 +117,12 @@ public class KeyboardGameManager : MonoBehaviour, Iinteracted
     }
     private void OnEnable()
     {
-        playerInteraction.SubcribeEvents(this);
+        //playerInteraction.SubcribeEvents(this);
         customerTable.SubcribeEvents();
     }
     private void OnDisable()
     {
-        playerInteraction.UnsubcribeEvents(this);
+        //playerInteraction.UnsubcribeEvents(this);
         customerTable.UnsubcribeEvents();
     }
     void TogglePauseMenu()

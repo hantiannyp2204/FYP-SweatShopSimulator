@@ -17,6 +17,10 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<Iinteracted>, ISubs
     private GameObject grabbedObject = null;
     private Vector3 lastHandPosition;
     private Vector3 handVelocity;
+
+    //for sphere cast
+    Vector3 sphereCenter;
+    [SerializeField]float sphereRadius = 0.5f; // Adjust this radius as needed
     public enum HandType
     {
         Left,
@@ -50,6 +54,10 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<Iinteracted>, ISubs
     // Update is called once per frame
     public void UpdateInteractions()
     {
+        // Define sphere center and radius
+        sphereCenter = transform.position;
+
+
         // Update hand animations
         float triggerValue = pinchAnimationAction.action.ReadValue<float>();
         float gripValue = gripAnimationAction.action.ReadValue<float>();
@@ -59,6 +67,17 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<Iinteracted>, ISubs
         // Calculate hand velocity
         handVelocity = (transform.position - lastHandPosition) / Time.deltaTime;
         lastHandPosition = transform.position;
+
+        //check for item entering hand
+        Collider[] hitColliders = Physics.OverlapSphere(sphereCenter, sphereRadius);
+        currentlyTouching.Clear(); // Clear the list before updating it
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.GetComponent<Item>() != null)
+            {
+                currentlyTouching.Add(hitCollider.gameObject);
+            }
+        }
 
         // Check for grab or release
         //makes sure it can only grab 1 object at a time
@@ -72,6 +91,14 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<Iinteracted>, ISubs
             currentHandAction = HandAction.Releasing;
             Release();
         }
+
+
+    }
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow; // Set gizmo color
+   
+        Gizmos.DrawWireSphere(transform.position, sphereRadius);
     }
     public Vector3 GetHandVelocity()
     {
@@ -106,18 +133,6 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<Iinteracted>, ISubs
         {
             OnRelease?.Invoke(handVelocity,handType);
         }
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        //only accept grabbing item typed items
-        if (DebugText == null || other.GetComponent<Item>() == null) return;
-        currentlyTouching.Add(other.gameObject);
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (DebugText == null) return;
-        currentlyTouching.Remove(other.gameObject);
     }
 
     public void SubcribeEvents(Iinteracted action)

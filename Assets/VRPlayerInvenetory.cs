@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Item;
-using static UnityEditor.Progress;
-using static UnityEditor.Timeline.Actions.MenuPriority;
 using static VRHandManager;
 
 public class VRPlayerInvenetory : MonoBehaviour

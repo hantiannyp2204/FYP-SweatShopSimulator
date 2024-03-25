@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.UI.BodyUI;
 using static Item;
-using static UnityEditor.Progress;
 using static VRHandManager;
 
 public class VRGameManager : MonoBehaviour, Iinteracted, IRelease

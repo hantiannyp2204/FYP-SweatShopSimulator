@@ -8,7 +8,7 @@ using Oculus.Interaction.HandGrab;
 using static VRHandManager;
 using System;
 
-public class VRHandManager : MonoBehaviour, ISubscribeEvents<Iinteracted>, ISubscribeEvents<IRelease>
+public class VRHandManager : MonoBehaviour, ISubscribeEvents<IVRInteracted>, ISubscribeEvents<IVRRelease>
 {
     public InputActionProperty pinchAnimationAction;
     public InputActionProperty gripAnimationAction;
@@ -150,30 +150,31 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<Iinteracted>, ISubs
         }
     }
 
-    public void SubcribeEvents(Iinteracted action)
+    public void SubcribeEvents(IVRInteracted action)
     {
         OnGrabbed += action.OnInteracted;
     }
 
-    public void UnsubcribeEvents(Iinteracted action)
+    public void UnsubcribeEvents(IVRInteracted action)
     {
         OnGrabbed -= action.OnInteracted;
     }
-    public void SubcribeEvents(IRelease action)
+    public void SubcribeEvents(IVRRelease action)
     {
         OnRelease += action.OnRelease;
     }
 
-    public void UnsubcribeEvents(IRelease action)
+    public void UnsubcribeEvents(IVRRelease action)
     {
         OnRelease -= action.OnRelease;
     }
 }
-public interface Iinteracted
+
+public interface IVRInteracted
 {
     public void OnInteracted(GameObject obj, HandType handType);
 }
-public interface IRelease
+public interface IVRRelease
 {
     public void OnRelease(Vector3 handVelocity, HandType handType);
 }

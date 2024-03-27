@@ -71,7 +71,7 @@ public class MachineAnvil : MonoBehaviour, Iinteractable
             //set the input
             inputItem = player.playerInventory.GetCurrentItem();
             //remove the item from inventory
-            player.playerInventory.RemoveAtCurrentSlot();
+            player.playerInventory.RemoveAtCurrentSlot(true);
             //move the input item on the anvil
             inputItem.transform.position = Anvil_itemPosition.position;
             //reset it's rotation

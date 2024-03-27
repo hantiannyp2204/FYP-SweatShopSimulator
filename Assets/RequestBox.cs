@@ -54,7 +54,7 @@ public class RequestBox : MonoBehaviour,Iinteractable
                 return;
             }
             //if correct, remove it and set into the box as parent
-            player.playerInventory.RemoveAtCurrentSlot(true,false);
+            player.playerInventory.RemoveAtCurrentSlot(true,true,false);
 
             // Change parent
             playerCurrentEquip.transform.SetParent(this.transform);

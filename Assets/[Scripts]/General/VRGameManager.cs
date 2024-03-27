@@ -25,6 +25,7 @@ public class VRGameManager : MonoBehaviour, Iinteracted, IRelease
     //[SerializeField] PlayerMovement playerMovement; 
     [SerializeField] List<VRHandManager> vrHandInteractionManager;
     [SerializeField] List<VRPlayerInvenetory> vrPlayerInventory;
+    [SerializeField] List<HandPresensePhysics> vrPlayerHandPhysics;
     [SerializeField] GameFeedback gameFeedback;
     //public Objective playerObjective;
     //[SerializeField] CustomerTable customerTable;
@@ -113,7 +114,13 @@ public class VRGameManager : MonoBehaviour, Iinteracted, IRelease
         //endMenu.gameObject.SetActive(false);
         Time.timeScale = 1;
     }
-
+    private void FixedUpdate()
+    {
+        foreach (HandPresensePhysics handPhysics in vrPlayerHandPhysics)
+        {
+            handPhysics.HandPhysicsFixedUpdate();
+        }
+    }
     // Update is called once per frame
     void Update()
     {

@@ -6,13 +6,14 @@ using Oculus.Interaction;
 using Oculus.Platform;
 using Oculus.Interaction.HandGrab;
 using static VRHandManager;
+using System;
 
 public class VRHandManager : MonoBehaviour, ISubscribeEvents<Iinteracted>, ISubscribeEvents<IRelease>
 {
     public InputActionProperty pinchAnimationAction;
     public InputActionProperty gripAnimationAction;
     [SerializeField] private Animator handAnimator;
-    [SerializeField] private TMP_Text DebugText; // Make sure this is properly referenced in the Inspector
+    [SerializeField] private TMP_Text DebugText;
     private List<GameObject> currentlyTouching = new();
     private GameObject grabbedObject = null;
     private Vector3 lastHandPosition;
@@ -20,7 +21,10 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<Iinteracted>, ISubs
 
     //for sphere cast
     Vector3 sphereCenter;
-    [SerializeField]float sphereRadius = 0.5f; // Adjust this radius as needed
+    [SerializeField]float sphereRadius = 0.5f;
+
+    //Physics movement
+ 
     public enum HandType
     {
         Left,
@@ -45,10 +49,16 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<Iinteracted>, ISubs
         currentHandAction = HandAction.Releasing;
         lastHandPosition = transform.position;
         //set the hand type
-        if(transform.name == "Right hand")
+        if(transform.name == "Right Hand Model" || transform.name == "Right Hand Physics")
         {
             handType = HandType.Right;
         }
+
+        //Physics movement
+
+
+        //Teleport hands
+
     }
 
     // Update is called once per frame
@@ -56,6 +66,8 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<Iinteracted>, ISubs
     {
         // Define sphere center and radius
         sphereCenter = transform.position;
+
+        //physics move
 
 
         // Update hand animations
@@ -94,6 +106,9 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<Iinteracted>, ISubs
 
 
     }
+
+
+
     void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow; // Set gizmo color

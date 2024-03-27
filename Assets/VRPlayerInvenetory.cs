@@ -14,7 +14,7 @@ public class VRPlayerInvenetory : MonoBehaviour
     public void Init()
     {
         //set the hand type
-        if (transform.name == "Right hand")
+        if (transform.name == "Right hand" || transform.name == "Right Hand Physics")
         {
             handType = HandType.Right;
         }

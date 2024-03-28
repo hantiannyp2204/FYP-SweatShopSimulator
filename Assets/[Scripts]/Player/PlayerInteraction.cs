@@ -128,7 +128,6 @@ public class PlayerInteraction : MonoBehaviour
     }
     void Interact()
     {
-
         if (currentInteractable == null || currentInteractable != null && !currentInteractable.CanInteract())
         {
             //play interact error sound

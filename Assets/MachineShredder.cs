@@ -14,6 +14,7 @@ public class MachineShredder : MonoBehaviour, Iinteractable
 
     [SerializeField] private GameObject player;
     [SerializeField] private KeyboardGameManager gameManager;
+    [SerializeField] private GameObject afterInteract;
 
     [Header("Debug")]
     [SerializeField] private TMP_Text progressText;
@@ -92,12 +93,17 @@ public class MachineShredder : MonoBehaviour, Iinteractable
         }
         else
         {
+            //player.playerInventory.RemoveAtCurrentSlot();
+            product.transform.position = afterInteract.transform.position;
+
             //e_interactShredder?.InvokeEvent(transform.position, Quaternion.Euler(-90, 0, 0), transform);
             e_interactShredder?.InvokeEvent(transform.position + new Vector3(0, 0.2f, 0), Quaternion.identity, transform);
 
             _initShredding = true;
             productToShredText.text = "Product To Shred: " + product.Data.name;
             _productToShred = product; // store product in seperate variable for safety purpose
+
+            //product.gameObject.transform.position = afterInteract.transform.position;
 
             if (_productToShred.Data.productContainable != null)
             {
@@ -132,16 +138,23 @@ public class MachineShredder : MonoBehaviour, Iinteractable
 
         if (gameManager.playerInventory.GetCurrentItem() != null)
         {
-            if (Input.GetKeyDown(KeyCode.F) && gameManager.playerInventory.GetCurrentItem().Data.productContainable != null) // check if item is a product
+            if (Input.GetKeyDown(KeyCode.F)) // check if item is a product
             {
-                if (gameManager.playerInventory.GetCurrentItem() != _itemToSave && _itemToSave != null)
+                if (gameManager.playerInventory.GetCurrentItem().Data.productContainable != null)
                 {
-                    return;
+                    if (gameManager.playerInventory.GetCurrentItem() != _itemToSave && _itemToSave != null)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        _itemToSave = gameManager.playerInventory.GetCurrentItem();
+                        lockedInProductText.text = "Locked In : " + _itemToSave.gameObject.name;
+                    }
                 }
                 else
                 {
-                    _itemToSave = gameManager.playerInventory.GetCurrentItem();
-                    lockedInProductText.text = "Locked In : " + _itemToSave.gameObject.name;
+                    Debug.Log("lalla");
                 }
             }
         }

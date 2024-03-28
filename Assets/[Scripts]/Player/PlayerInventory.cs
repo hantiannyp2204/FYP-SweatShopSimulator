@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Item;
-
 public class PlayerInventory : MonoBehaviour, ISubscribeEvents<Iinventory>
 {
     [SerializeField] private LayerMask ignoreLayer;
@@ -36,6 +35,18 @@ public class PlayerInventory : MonoBehaviour, ISubscribeEvents<Iinventory>
     {
         if (IsFull()) return;
         item.ChangeState(ITEM_STATE.PICKED_UP);
+        //set its rigid bodt to kinematic
+        Rigidbody itemRb = item.GetComponent<Rigidbody>();
+        if(itemRb != null)
+        {
+            //set is kinematic to true
+            itemRb.isKinematic= true;
+            //set interpolate to none
+            itemRb.interpolation = RigidbodyInterpolation.None;
+
+          
+
+        }
         for (int i = 0; i < itemList.Length; i++)
         {
             if (itemList[i] == null)
@@ -59,15 +70,9 @@ public class PlayerInventory : MonoBehaviour, ISubscribeEvents<Iinventory>
 
     }
 
-    public void CallRemoveAll(bool disable = false, bool dropItem = true)
-    {
-        for (int i = 0; i < itemList.Length; i++)
-            RemoveItem(i, disable, dropItem);
-
-    }
 
     // Remove item at index
-    public void RemoveItem(int n, bool disable = false, bool dropItem = true)
+    public void RemoveItem(int n,bool isMachine, bool disable = false, bool dropItem = true)
     {
         // Return if out of range
         if (n >= itemList.Length) return;
@@ -90,25 +95,41 @@ public class PlayerInventory : MonoBehaviour, ISubscribeEvents<Iinventory>
             // Remove from parent
             itemRemove.transform.SetParent(null);
 
-            // Calculate the drop position in front of the player, offset by half the item's Z scale and the adjustable forward offset
-            float forwardOffset = itemRemove.transform.localScale.z / 2 + inventoryDropOffset;
-            Vector3 dropPosition = transform.position + transform.forward * forwardOffset;
-
-            // Reset rotation except Y rotation
-            Quaternion currentRotation = itemRemove.transform.rotation;
-            Quaternion resetRotation = Quaternion.Euler(0, currentRotation.eulerAngles.y, 0);
-            itemRemove.transform.rotation = resetRotation;
-
-
-
-
-            // Adjust the drop position to the ground if there's a surface directly below
-            if (Physics.Raycast(dropPosition, -Vector3.up, out RaycastHit hit, Mathf.Infinity, ~ignoreLayer))
+            //set its interpolation back to interpolate
+            //set its rigid bodt to kinematic
+            Rigidbody itemRb = itemRemove.GetComponent<Rigidbody>();
+            if (itemRb != null)
             {
-                dropPosition.y = hit.point.y;
-                itemRemove.transform.SetParent(hit.transform.root.transform);
+                if (!isMachine)
+                {
+                    itemRb.isKinematic = false;
+                    //set interpolate to none
+                    itemRb.interpolation = RigidbodyInterpolation.Interpolate;
+                }
+  
+
+
             }
-            itemRemove.transform.position = dropPosition;
+
+            //// Calculate the drop position in front of the player, offset by half the item's Z scale and the adjustable forward offset
+            //float forwardOffset = itemRemove.transform.localScale.z / 2 + inventoryDropOffset;
+            //Vector3 dropPosition = transform.position + transform.forward * forwardOffset;
+
+            //// Reset rotation except Y rotation
+            //Quaternion currentRotation = itemRemove.transform.rotation;
+            //Quaternion resetRotation = Quaternion.Euler(0, currentRotation.eulerAngles.y, 0);
+            //itemRemove.transform.rotation = resetRotation;
+
+
+
+
+            //// Adjust the drop position to the ground if there's a surface directly below
+            //if (Physics.Raycast(dropPosition, -Vector3.up, out RaycastHit hit, Mathf.Infinity, ~ignoreLayer))
+            //{
+            //    dropPosition.y = hit.point.y;
+            //    itemRemove.transform.SetParent(hit.transform.root.transform);
+            //}
+            //itemRemove.transform.position = dropPosition;
 
 
             Debug.Log("Item removed from inventory");
@@ -124,9 +145,9 @@ public class PlayerInventory : MonoBehaviour, ISubscribeEvents<Iinventory>
 
 
     // Remove item at current select
-    public void RemoveAtCurrentSlot(bool disable = false, bool dropItem = true)
+    public void RemoveAtCurrentSlot(bool isMachine = false,bool disable = false, bool dropItem = true)
     {
-        RemoveItem(currentSelect, disable, dropItem);
+        RemoveItem(currentSelect, isMachine, disable, dropItem);
     }
 
     public void CallChangeSelect(int n)

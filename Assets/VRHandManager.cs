@@ -6,17 +6,25 @@ using Oculus.Interaction;
 using Oculus.Platform;
 using Oculus.Interaction.HandGrab;
 using static VRHandManager;
+using System;
 
-public class VRHandManager : MonoBehaviour, ISubscribeEvents<Iinteracted>, ISubscribeEvents<IRelease>
+public class VRHandManager : MonoBehaviour, ISubscribeEvents<IVRInteracted>, ISubscribeEvents<IVRRelease>
 {
     public InputActionProperty pinchAnimationAction;
     public InputActionProperty gripAnimationAction;
     [SerializeField] private Animator handAnimator;
-    [SerializeField] private TMP_Text DebugText; // Make sure this is properly referenced in the Inspector
+    [SerializeField] private TMP_Text DebugText;
     private List<GameObject> currentlyTouching = new();
     private GameObject grabbedObject = null;
     private Vector3 lastHandPosition;
     private Vector3 handVelocity;
+
+    //for sphere cast
+    Vector3 sphereCenter;
+    [SerializeField]float sphereRadius = 0.5f;
+
+    //Physics movement
+ 
     public enum HandType
     {
         Left,
@@ -41,15 +49,27 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<Iinteracted>, ISubs
         currentHandAction = HandAction.Releasing;
         lastHandPosition = transform.position;
         //set the hand type
-        if(transform.name == "Right hand")
+        if(transform.name == "Right Hand Model" || transform.name == "Right Hand Physics")
         {
             handType = HandType.Right;
         }
+
+        //Physics movement
+
+
+        //Teleport hands
+
     }
 
     // Update is called once per frame
     public void UpdateInteractions()
     {
+        // Define sphere center and radius
+        sphereCenter = transform.position;
+
+        //physics move
+
+
         // Update hand animations
         float triggerValue = pinchAnimationAction.action.ReadValue<float>();
         float gripValue = gripAnimationAction.action.ReadValue<float>();
@@ -59,6 +79,17 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<Iinteracted>, ISubs
         // Calculate hand velocity
         handVelocity = (transform.position - lastHandPosition) / Time.deltaTime;
         lastHandPosition = transform.position;
+
+        //check for item entering hand
+        Collider[] hitColliders = Physics.OverlapSphere(sphereCenter, sphereRadius);
+        currentlyTouching.Clear(); // Clear the list before updating it
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.GetComponent<Item>() != null)
+            {
+                currentlyTouching.Add(hitCollider.gameObject);
+            }
+        }
 
         // Check for grab or release
         //makes sure it can only grab 1 object at a time
@@ -72,6 +103,17 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<Iinteracted>, ISubs
             currentHandAction = HandAction.Releasing;
             Release();
         }
+
+
+    }
+
+
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow; // Set gizmo color
+   
+        Gizmos.DrawWireSphere(transform.position, sphereRadius);
     }
     public Vector3 GetHandVelocity()
     {
@@ -107,43 +149,32 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<Iinteracted>, ISubs
             OnRelease?.Invoke(handVelocity,handType);
         }
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        //only accept grabbing item typed items
-        if (DebugText == null || other.GetComponent<Item>() == null) return;
-        currentlyTouching.Add(other.gameObject);
-    }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (DebugText == null) return;
-        currentlyTouching.Remove(other.gameObject);
-    }
-
-    public void SubcribeEvents(Iinteracted action)
+    public void SubcribeEvents(IVRInteracted action)
     {
         OnGrabbed += action.OnInteracted;
     }
 
-    public void UnsubcribeEvents(Iinteracted action)
+    public void UnsubcribeEvents(IVRInteracted action)
     {
         OnGrabbed -= action.OnInteracted;
     }
-    public void SubcribeEvents(IRelease action)
+    public void SubcribeEvents(IVRRelease action)
     {
         OnRelease += action.OnRelease;
     }
 
-    public void UnsubcribeEvents(IRelease action)
+    public void UnsubcribeEvents(IVRRelease action)
     {
         OnRelease -= action.OnRelease;
     }
 }
-public interface Iinteracted
+
+public interface IVRInteracted
 {
     public void OnInteracted(GameObject obj, HandType handType);
 }
-public interface IRelease
+public interface IVRRelease
 {
     public void OnRelease(Vector3 handVelocity, HandType handType);
 }

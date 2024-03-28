@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class MacineFab : MonoBehaviour, Iinteractable
 {
     public Power power;
+    public GameObject _Wheel;
 
     private void Awake()
     {
@@ -54,8 +55,8 @@ public class MacineFab : MonoBehaviour, Iinteractable
         }
         else
         {
-           
-            SceneManager.LoadScene("Minigame");
+           _Wheel.SetActive(true);
+            //SceneManager.LoadScene("Minigame");
             Debug.Log("Interacting " + name + " with " + player.playerInventory.GetCurrentItem().Data.name);
         }
     }

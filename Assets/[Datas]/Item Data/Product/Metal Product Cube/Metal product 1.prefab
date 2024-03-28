@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3734322132536079654}
   - component: {fileID: 8277459329859065972}
+  - component: {fileID: 5290174976418673334}
   - component: {fileID: 2377627497252500152}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Metal product 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,11 +49,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 162b1438295fc6d428580819cf2ce4e0, type: 2}
   itemState: 0
-  e_pickUp: {fileID: 0}
-  e_drop: {fileID: 0}
+  e_pickUp: {fileID: 11400000, guid: 54a4f7ebf6e801746b6a472abe0e50d0, type: 2}
+  e_drop: {fileID: 11400000, guid: 4d534e67c0ac9174090ae77afb340815, type: 2}
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
+--- !u!54 &5290174976418673334
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2525786441151603322}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!65 &2377627497252500152
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -85,7 +113,7 @@ GameObject:
   - component: {fileID: 3511380184924004730}
   - component: {fileID: 6637290457944261793}
   - component: {fileID: 1723700650482664813}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}

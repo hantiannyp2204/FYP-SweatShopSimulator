@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.UI.BodyUI;
 using static Item;
-using static UnityEditor.Progress;
 using static VRHandManager;
 
-public class VRGameManager : MonoBehaviour, Iinteracted, IRelease
+public class VRGameManager : MonoBehaviour, IVRInteracted, IVRRelease
 {
+    [SerializeField] PlatformChecker platformChecker;
     public enum GameMode
     {
         Levels,
@@ -24,8 +24,10 @@ public class VRGameManager : MonoBehaviour, Iinteracted, IRelease
     public float ScoreNeeded;
 
     //[SerializeField] PlayerMovement playerMovement; 
+    [SerializeField] GameObject VRPlayer;
     [SerializeField] List<VRHandManager> vrHandInteractionManager;
     [SerializeField] List<VRPlayerInvenetory> vrPlayerInventory;
+    [SerializeField] List<HandPresensePhysics> vrPlayerHandPhysics;
     [SerializeField] GameFeedback gameFeedback;
     //public Objective playerObjective;
     //[SerializeField] CustomerTable customerTable;
@@ -47,54 +49,24 @@ public class VRGameManager : MonoBehaviour, Iinteracted, IRelease
     bool gameEnded = false;
     //[SerializeField] EndMenu endMenu;
 
-    public void OnInteracted(GameObject obj, HandType handType)
-    {
-        //check if current hand type is the one calling
-        foreach(var hand in vrHandInteractionManager)
-        {
-            if (hand.GetHandType() != handType) continue;
-            Debug.Log("Grab");
-            Item item = obj.GetComponent<Item>();
-            if (item != null)
-            {
-                switch (item.GetState())
-                {
-                    case ITEM_STATE.NOT_PICKED_UP:
-                        foreach (VRPlayerInvenetory handInv in vrPlayerInventory)
-                        {
-                            if (handInv.GetHandType() != handType) continue;
-                            handInv.AddItem(item, hand.gameObject.transform);
-                        }
-            
-                        break;
-                    case ITEM_STATE.PICKED_UP:
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-    }
-    public void OnRelease(Vector3 handVelocity, HandType handType)
-    {
-        foreach (var hand in vrHandInteractionManager)
-        {
-            Debug.Log("Release");
-            foreach (VRPlayerInvenetory handInv in vrPlayerInventory)
-            {
-                if (handInv.GetHandType() != handType) continue;
-                handInv.RemoveItem(handVelocity);
-            }
-
-        }
-
-
-    }
+  
     void Start()
     {
+        //disable this and VR player if running on PC
+#if UNITY_STANDALONE_WIN
+        if (platformChecker == null || platformChecker.swapPlatform == false)
+        {
+            DisableVRSystem();
+        }
+#else
+        if (platformChecker != null && platformChecker.swapPlatform == true)
+        {
+            DisableVRSystem();
+        }
+#endif
+
         //playerMovement.Init();
-        foreach(VRHandManager handManager in vrHandInteractionManager)
+        foreach (VRHandManager handManager in vrHandInteractionManager)
         {
             handManager.Init();
         }
@@ -114,7 +86,13 @@ public class VRGameManager : MonoBehaviour, Iinteracted, IRelease
         //endMenu.gameObject.SetActive(false);
         Time.timeScale = 1;
     }
-
+    private void FixedUpdate()
+    {
+        foreach (HandPresensePhysics handPhysics in vrPlayerHandPhysics)
+        {
+            handPhysics.HandPhysicsFixedUpdate();
+        }
+    }
     // Update is called once per frame
     void Update()
     {
@@ -156,12 +134,61 @@ public class VRGameManager : MonoBehaviour, Iinteracted, IRelease
             TogglePauseMenu();
         }
     }
+    public void OnInteracted(GameObject obj, HandType handType)
+    {
+        //check if current hand type is the one calling
+        foreach (var hand in vrHandInteractionManager)
+        {
+            if (hand.GetHandType() != handType) continue;
+            Debug.Log("Grab");
+            Item item = obj.GetComponent<Item>();
+            if (item != null)
+            {
+                switch (item.GetState())
+                {
+                    case ITEM_STATE.NOT_PICKED_UP:
+                        foreach (VRPlayerInvenetory handInv in vrPlayerInventory)
+                        {
+                            if (handInv.GetHandType() != handType) continue;
+                            handInv.AddItem(item, hand.gameObject.transform);
+                        }
+
+                        break;
+                    case ITEM_STATE.PICKED_UP:
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+    }
+    public void OnRelease(Vector3 handVelocity, HandType handType)
+    {
+        foreach (var hand in vrHandInteractionManager)
+        {
+            Debug.Log("Release");
+            foreach (VRPlayerInvenetory handInv in vrPlayerInventory)
+            {
+                if (handInv.GetHandType() != handType) continue;
+                handInv.RemoveItem(handVelocity);
+            }
+
+        }
+
+
+    }
+    void DisableVRSystem()
+    {
+        VRPlayer.SetActive(false);
+        this.gameObject.SetActive(false);
+    }
     private void OnEnable()
     {
         foreach (var hand in vrHandInteractionManager)
         {
-            hand.SubcribeEvents((Iinteracted)this);
-            hand.SubcribeEvents((IRelease)this);
+            hand.SubcribeEvents((IVRInteracted)this);
+            hand.SubcribeEvents((IVRRelease)this);
         }
        // customerTable.SubcribeEvents();
     }
@@ -169,8 +196,8 @@ public class VRGameManager : MonoBehaviour, Iinteracted, IRelease
     {
         foreach (var hand in vrHandInteractionManager)
         {
-            hand.UnsubcribeEvents((Iinteracted)this);
-            hand.UnsubcribeEvents((IRelease)this);
+            hand.UnsubcribeEvents((IVRInteracted)this);
+            hand.UnsubcribeEvents((IVRRelease)this);
         }
 
         //customerTable.UnsubcribeEvents();

@@ -5,9 +5,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.UI.BodyUI;
 using static Item;
+using static VRHandManager;
 
-public class KeyboardGameManager : MonoBehaviour//, Iinteracted
+public class KeyboardGameManager : MonoBehaviour, IKeyboardInteracted
 {
+    [SerializeField] PlatformChecker platformChecker;
     public enum GameMode
     {
         Levels,
@@ -28,6 +30,9 @@ public class KeyboardGameManager : MonoBehaviour//, Iinteracted
     public Objective playerObjective;
     [SerializeField] CustomerTable customerTable;
     [SerializeField] GameTimer gameTimer;
+
+    //Keyboard interaction system
+    System.Action<GameObject> OnInteractedAction;
 
     //Score system
     [SerializeField] PlayerScore playerScore;
@@ -66,6 +71,19 @@ public class KeyboardGameManager : MonoBehaviour//, Iinteracted
 
     void Start()
     {
+        //disable this and keyboard player if running on VR
+#if UNITY_ANDROID
+        if(platformChecker == null || platformChecker.swapPlatform == false)
+        {
+            DisableKeyboardSystem();
+        }
+#else
+        if (platformChecker != null && platformChecker.swapPlatform == true)
+        {
+            DisableKeyboardSystem();
+        }
+#endif
+
         playerMovement.Init();
         gameFeedback.InIt();
         playerObjective.Init();     
@@ -117,12 +135,12 @@ public class KeyboardGameManager : MonoBehaviour//, Iinteracted
     }
     private void OnEnable()
     {
-        //playerInteraction.SubcribeEvents(this);
+        playerInteraction.SubcribeEvents(this);
         customerTable.SubcribeEvents();
     }
     private void OnDisable()
     {
-        //playerInteraction.UnsubcribeEvents(this);
+        playerInteraction.UnsubcribeEvents(this);
         customerTable.UnsubcribeEvents();
     }
     void TogglePauseMenu()
@@ -141,4 +159,13 @@ public class KeyboardGameManager : MonoBehaviour//, Iinteracted
             pauseMenu.gameObject.SetActive(false);
         }
     }
+    void DisableKeyboardSystem()
+    {
+        playerMovement.gameObject.SetActive(false);
+        this.gameObject.SetActive(false);
+    }
+}
+public interface IKeyboardInteracted
+{
+    public void OnInteracted(GameObject obj);
 }

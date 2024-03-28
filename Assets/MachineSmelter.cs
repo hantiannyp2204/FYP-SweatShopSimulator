@@ -46,7 +46,7 @@ public class MachineSmelter : MonoBehaviour,Iinteractable
         //set the input
         inputItem = currentItem;
         //remove the item from inventory
-        player.playerInventory.RemoveAtCurrentSlot();
+        player.playerInventory.RemoveAtCurrentSlot(true);
         //move the input item inside the oven
         inputItem.transform.position = itemPosition.position;
         //reset it's rotation

@@ -6,7 +6,7 @@ using UnityEngine;
 
 //Inspired by Raqib
 public class PlayerInteraction : MonoBehaviour
-   // , ISubscribeEvents<Iinteracted>
+    , ISubscribeEvents<IKeyboardInteracted>
     , ISubscribeEvents<IinteractableInteracting>
     , ISubscribeEvents<IinteractableExtensionRetrieve>
     , ISubscribeEvents<IinteractableExtensionRetrieveObj>
@@ -182,6 +182,16 @@ public class PlayerInteraction : MonoBehaviour
     {
         OnEnterObj -= action.OnEnter;
         OnExitObj -= action.OnExit;
+    }
+
+    public void SubcribeEvents(IKeyboardInteracted action)
+    {
+        OnInteracted += action.OnInteracted;
+    }
+
+    public void UnsubcribeEvents(IKeyboardInteracted action)
+    {
+        OnInteracted -= action.OnInteracted;
     }
     #endregion
 }

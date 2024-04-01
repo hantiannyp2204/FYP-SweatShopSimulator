@@ -6,8 +6,4 @@ public abstract class Item_Usable : Item
 {
     public abstract void Use();
 
-    protected override void Start()
-    {
-        base.Start();
-    }
 }

@@ -558,6 +558,26 @@ Camera:
     type: 3}
   m_PrefabInstance: {fileID: 4175335190277032024}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &284987383 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2397210226565078542, guid: 25c1367cc36328d42b39fb2b9f8be6d8,
+    type: 3}
+  m_PrefabInstance: {fileID: 579292770}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &284987387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 284987383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80c2bfe9c6a6b2f48b9785e8ca399406, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  followPlayer: {fileID: 284987383}
+  toFollow: {fileID: 267587875}
 --- !u!1001 &402294595
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -624,7 +644,7 @@ PrefabInstance:
     - target: {fileID: 5789701445358477784, guid: 3591c16320fbbe54591ba669e46d1dd7,
         type: 3}
       propertyPath: swapPlatform
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -967,7 +987,11 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 865773258}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2397210226565078542, guid: 25c1367cc36328d42b39fb2b9f8be6d8,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 284987387}
   m_SourcePrefab: {fileID: 100100000, guid: 25c1367cc36328d42b39fb2b9f8be6d8, type: 3}
 --- !u!1001 &620485084
 PrefabInstance:
@@ -1752,6 +1776,7 @@ GameObject:
   - component: {fileID: 865773258}
   - component: {fileID: 865773257}
   - component: {fileID: 865773256}
+  - component: {fileID: 865773259}
   m_Layer: 5
   m_Name: Fuel
   m_TagString: Untagged
@@ -1875,6 +1900,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 2.75}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &865773259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 865773255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80c2bfe9c6a6b2f48b9785e8ca399406, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  followPlayer: {fileID: 865773255}
+  toFollow: {fileID: 267587875}
 --- !u!224 &899149618 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 332079432443037724, guid: 0264a9b6e183fa3478206dc34f95a3e1,

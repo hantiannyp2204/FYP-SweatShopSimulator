@@ -10,6 +10,11 @@ public class VRPlayerInvenetory : MonoBehaviour
     [SerializeField] Item currentHoldingItem;
     HandType handType = HandType.Left;
 
+    Collider[] handColliders;
+
+    [SerializeField] float collisionRecoverDelay = 1.5f;
+
+    Coroutine collisionRevoverCoroutineHandler;
     public HandType GetHandType() => handType;
     public void Init()
     {
@@ -18,15 +23,30 @@ public class VRPlayerInvenetory : MonoBehaviour
         {
             handType = HandType.Right;
         }
+        // Get all Collider components in this GameObject and its children
+        handColliders = GetComponentsInChildren<Collider>();
+
     }
     public void AddItem(Item item, Transform handTransform)
     {
         //if theres item, ignore
         if (currentHoldingItem != null) return;
+
+        //stop coroutine if it exist
+        if(collisionRevoverCoroutineHandler != null)
+        {
+            StopCoroutine(collisionRevoverCoroutineHandler);
+            collisionRevoverCoroutineHandler = null;
+        }
         //plays the pickup sound
         currentHoldingItem = item;
         item.ChangeState(ITEM_STATE.PICKED_UP);
         item.transform.SetParent(handTransform, true);
+        //ignore colliders
+        foreach(Collider collider in handColliders)
+        {
+            item.IgnoreCollision(collider);
+        }
 
         Rigidbody rb = item.GetComponent<Rigidbody>();
         if (rb != null)
@@ -49,6 +69,9 @@ public class VRPlayerInvenetory : MonoBehaviour
         currentHoldingItem.transform.SetParent(null);
         // Change item state to not picked up
         currentHoldingItem.ChangeState(ITEM_STATE.NOT_PICKED_UP);
+        //reset the phyics colliders
+        collisionRevoverCoroutineHandler = StartCoroutine(RecoverCollisionCoroutine(currentHoldingItem));
+
         Rigidbody rb = currentHoldingItem.GetComponent<Rigidbody>();
         if (rb != null)
         {
@@ -57,5 +80,10 @@ public class VRPlayerInvenetory : MonoBehaviour
         }
         currentHoldingItem = null;
     }
-
+    IEnumerator RecoverCollisionCoroutine(Item itemToRecover)
+    {
+        yield return new WaitForSeconds(collisionRecoverDelay);
+        itemToRecover.ResetIgnoreCollisions();
+        collisionRevoverCoroutineHandler = null;
+    }
 }

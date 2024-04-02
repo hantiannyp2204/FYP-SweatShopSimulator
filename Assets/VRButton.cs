@@ -6,11 +6,14 @@ using UnityEngine;
 public class VRButton : MonoBehaviour
 {
     [SerializeField] float threshold = .1f;
-    [SerializeField] float deadZone = 0.025f;
+    [SerializeField] private float deadZone = 0.025f;
+    [SerializeField] private bool isToggle = false;
 
-    bool isPressed = false;
-    Vector3 startPos;
-    ConfigurableJoint joint;
+    private bool toggled = false;
+    private bool isPressed = false;
+    private Vector3 startPos;
+    private ConfigurableJoint joint;
+
     private void Start()
     {
         startPos = transform.localPosition;
@@ -19,12 +22,19 @@ public class VRButton : MonoBehaviour
 
     private void Update()
     {
-        if(!isPressed && GetValue() + threshold >= 1) {
+        if (!isPressed && GetValue() + threshold >= 1)
+        {
             OnPressed();
         }
-        if(isPressed && GetValue() - threshold <= 0)
+        else if (isPressed && GetValue() - threshold <= 0) // Modified condition for release
         {
             OnRelease();
+        }
+
+        // Prevent the button from moving "upwards" beyond its starting position
+        if (transform.localPosition.y > startPos.y)
+        {
+            transform.localPosition = new Vector3(transform.localPosition.x, startPos.y, transform.localPosition.z);
         }
     }
 
@@ -37,29 +47,38 @@ public class VRButton : MonoBehaviour
         }
         return Mathf.Clamp(value, -1, 1);
     }
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (!isPressed)
-    //    {
-    //        button.transform.localPosition = new Vector3(0, -0.07f, 0);
-    //        presser = other.gameObject;
-    //        isPressed = true;
-    //    }
-    //}
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if(other.gameObject == presser)
-    //    {
-    //        button.transform.localPosition=new Vector3(0, 0, 0);
-    //        isPressed = false;
-    //    }
-    //}
+
     public void OnPressed()
     {
-        isPressed = true;
+        if (isToggle)
+        {
+            // Toggle mode
+            if (!toggled)
+            {
+                Debug.Log("PRESSED - Toggle On");
+                toggled = true; // Toggle is now on
+            }
+            else
+            {
+                Debug.Log("Release - Toggle Off");
+                toggled = false; // Toggle is now off
+            }
+        }
+        else
+        {
+            // Non-toggle mode
+            Debug.Log("PRESSED");
+        }
+        isPressed = true; // Mark as pressed to prevent continuous triggering in Update
     }
+
     public void OnRelease()
     {
-        isPressed = false;
+        if (!isToggle)
+        {
+            Debug.Log("Release");
+
+        }
+        isPressed = false; // Reset the press state
     }
 }

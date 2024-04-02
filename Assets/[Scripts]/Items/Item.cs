@@ -15,20 +15,7 @@ public class Item : MonoBehaviour, Iinteractable
 
     [SerializeField] private LayerMask groundLayer;
 
-    protected virtual void Start()
-    {
-        groundLayer = 1 << LayerMask.NameToLayer("Ground");
-        //raycast to make sure it spawns on the floor
-        Ray ray = new Ray(transform.position, -Vector3.up);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer))
-        {
-            Vector3 newPosition = transform.position;
-            newPosition.y = hit.point.y;
-            transform.position = newPosition;
-        }
-    }
-
+    List<Collider> ignoredColliderList = new();
     public string GetInteractName() => "Interact with: " + data.GetName();
 
 
@@ -61,7 +48,22 @@ public class Item : MonoBehaviour, Iinteractable
     }
     public ITEM_STATE GetState()=> itemState;
 
-
+    //for collision
+    public void IgnoreCollision(Collider objectToIgnore)
+    {
+        Collider itemCollider = GetComponent<Collider>();
+        Physics.IgnoreCollision(itemCollider, objectToIgnore, true);
+        ignoredColliderList.Add(objectToIgnore);
+    }
+    public void ResetIgnoreCollisions()
+    {
+        Collider itemCollider = GetComponent<Collider>();
+        foreach (Collider ignoredColliders in ignoredColliderList)
+        {
+            Physics.IgnoreCollision(itemCollider, ignoredColliders, false);
+        }
+        ignoredColliderList.Clear();
+    }
     public void Interact(KeyboardGameManager player)
     {
         Debug.Log("Item picked up dah");

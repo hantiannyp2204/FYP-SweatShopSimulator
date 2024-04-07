@@ -32,7 +32,6 @@ public class Item : MonoBehaviour, Iinteractable
         {
             case ITEM_STATE.NOT_PICKED_UP:
                 e_drop?.InvokeEvent(transform.position, Quaternion.identity, transform);
-                Debug.Log("Drop");
                 break;
             case ITEM_STATE.PICKED_UP:
                 e_pickUp?.InvokeEvent(transform.position, Quaternion.identity, transform);
@@ -51,18 +50,35 @@ public class Item : MonoBehaviour, Iinteractable
     //for collision
     public void IgnoreCollision(Collider objectToIgnore)
     {
-        Collider itemCollider = GetComponent<Collider>();
-        Physics.IgnoreCollision(itemCollider, objectToIgnore, true);
+        List<Collider> itemColliderList = ObtainAllColliders();
+        foreach (Collider itemCollider in itemColliderList)
+        {
+            Physics.IgnoreCollision(itemCollider, objectToIgnore, true);
+        }
+
         ignoredColliderList.Add(objectToIgnore);
     }
     public void ResetIgnoreCollisions()
     {
-        Collider itemCollider = GetComponent<Collider>();
+        List<Collider> itemColliderList = ObtainAllColliders();
         foreach (Collider ignoredColliders in ignoredColliderList)
         {
-            Physics.IgnoreCollision(itemCollider, ignoredColliders, false);
+            foreach (Collider itemCollider in itemColliderList)
+            {
+                Physics.IgnoreCollision(ignoredColliders, itemCollider, false);
+            }
         }
         ignoredColliderList.Clear();
+    }
+    List<Collider> ObtainAllColliders()
+    {
+        List<Collider> allColliders = new();
+        Collider[] childColliders = GetComponentsInChildren<Collider>();
+        foreach (Collider childCollider in childColliders)
+        {
+            allColliders.Add(childCollider);
+        }
+        return allColliders;
     }
     public void Interact(KeyboardGameManager player)
     {

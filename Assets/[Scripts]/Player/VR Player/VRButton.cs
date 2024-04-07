@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class VRButton : MonoBehaviour
 {
+    [SerializeField] GameObject button;
     [SerializeField] float threshold = .1f;
     [SerializeField] private float deadZone = 0.025f;
-    [SerializeField] private bool isToggle = false;
+    [SerializeField] private bool usesToggle = false;
 
     private bool toggled = false;
     private bool isPressed = false;
@@ -16,8 +17,8 @@ public class VRButton : MonoBehaviour
 
     private void Start()
     {
-        startPos = transform.localPosition;
-        joint = GetComponent<ConfigurableJoint>();
+        startPos = button.transform.localPosition;
+        joint = button.GetComponent<ConfigurableJoint>();
     }
 
     private void Update()
@@ -26,21 +27,21 @@ public class VRButton : MonoBehaviour
         {
             OnPressed();
         }
-        else if (isPressed && GetValue() - threshold <= 0) // Modified condition for release
+        else if (isPressed && GetValue() - threshold <= 0) 
         {
             OnRelease();
         }
 
         // Prevent the button from moving "upwards" beyond its starting position
-        if (transform.localPosition.y > startPos.y)
+        if (button.transform.localPosition.y > startPos.y)
         {
-            transform.localPosition = new Vector3(transform.localPosition.x, startPos.y, transform.localPosition.z);
+            button.transform.localPosition = new Vector3(button.transform.localPosition.x, startPos.y, button.transform.localPosition.z);
         }
     }
 
     private float GetValue()
     {
-        var value = Vector3.Distance(startPos, transform.localPosition) / joint.linearLimit.limit;
+        var value = Vector3.Distance(startPos, button.transform.localPosition) / joint.linearLimit.limit;
         if (Math.Abs(value) < deadZone)
         {
             value = 0;
@@ -48,37 +49,45 @@ public class VRButton : MonoBehaviour
         return Mathf.Clamp(value, -1, 1);
     }
 
-    public void OnPressed()
+    void OnPressed()
     {
-        if (isToggle)
+        if (usesToggle)
         {
             // Toggle mode
             if (!toggled)
             {
-                Debug.Log("PRESSED - Toggle On");
+                ToggleOnFunction();
                 toggled = true; // Toggle is now on
             }
             else
             {
-                Debug.Log("Release - Toggle Off");
+                ToggleOffFunction();
                 toggled = false; // Toggle is now off
             }
         }
-        else
-        {
-            // Non-toggle mode
-            Debug.Log("PRESSED");
-        }
+        PressedFunction();
         isPressed = true; // Mark as pressed to prevent continuous triggering in Update
     }
 
-    public void OnRelease()
+    void OnRelease()
     {
-        if (!isToggle)
-        {
-            Debug.Log("Release");
-
-        }
+        ReleasedFunction();
         isPressed = false; // Reset the press state
+    }
+    public virtual void PressedFunction()
+    {
+        Debug.Log("PRESSED");
+    }
+    public virtual void ReleasedFunction()
+    {
+        Debug.Log("RELEASED");
+    }
+    public virtual void ToggleOnFunction()
+    {
+        Debug.Log("Toggle On");
+    }
+    public virtual void ToggleOffFunction()
+    {
+        Debug.Log("Toggle Off");
     }
 }

@@ -80,6 +80,7 @@ public class VRPlayerInvenetory : MonoBehaviour
         }
         currentHoldingItem = null;
     }
+    public Item GetCurrentHeldItem() => currentHoldingItem;
     IEnumerator RecoverCollisionCoroutine(Item itemToRecover)
     {
         yield return new WaitForSeconds(collisionRecoverDelay);

@@ -133,7 +133,14 @@ public class MachineSmelter : MonoBehaviour,Iinteractable
   
         }
     }
-
+    public void RunActive()
+    {
+        Debug.Log("Machine Active");
+    }
+    public void RunDective()
+    {
+        Debug.Log("Machine Deactive");
+    }
     // Start is called before the first frame update
     void Start()
     {

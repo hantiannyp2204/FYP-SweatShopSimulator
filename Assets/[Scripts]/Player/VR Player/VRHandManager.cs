@@ -54,11 +54,6 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<IVRInteracted>, ISu
             handType = HandType.Right;
         }
 
-        //Physics movement
-
-
-        //Teleport hands
-
     }
 
     // Update is called once per frame
@@ -66,9 +61,6 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<IVRInteracted>, ISu
     {
         // Define sphere center and radius
         sphereCenter = transform.position;
-
-        //physics move
-
 
         // Update hand animations
         float triggerValue = pinchAnimationAction.action.ReadValue<float>();
@@ -137,6 +129,7 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<IVRInteracted>, ISu
         }
         if (closestObject != null)
         {
+            Debug.Log("Nearest Object: " + closestObject.name);
             grabbedObject = closestObject;
             OnGrabbed?.Invoke(grabbedObject,handType);
         }

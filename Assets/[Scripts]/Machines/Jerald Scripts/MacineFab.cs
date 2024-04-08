@@ -7,6 +7,13 @@ public class MacineFab : MonoBehaviour, Iinteractable
 {
     public Power power;
     public GameObject _Wheel;
+    public GameObject _TextHolder;
+
+  
+
+    public GameObject _WinORLose;
+    public NewController newController; // Reference to the NewController script
+
 
     private void Awake()
     {
@@ -49,13 +56,15 @@ public class MacineFab : MonoBehaviour, Iinteractable
         
         Item currentItem = player.playerInventory.GetCurrentItem();
 
-        if (currentItem == null || power.finalPower <= 0)
+        if (currentItem == null /*|| power.finalPower <= 0*/)
         {
             return;
         }
         else
         {
            _Wheel.SetActive(true);
+           _TextHolder.SetActive(true);
+            //newController.enabled = true; // Enable the NewController script
             //SceneManager.LoadScene("Minigame");
             Debug.Log("Interacting " + name + " with " + player.playerInventory.GetCurrentItem().Data.name);
         }
@@ -65,7 +74,7 @@ public class MacineFab : MonoBehaviour, Iinteractable
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             int randomValue = Random.Range(350, 1001); // Generates a random integer between 350 and 1000 (inclusive)
             power.finalPower += randomValue;
@@ -86,4 +95,37 @@ public class MacineFab : MonoBehaviour, Iinteractable
         }
 
     }
+
+    public void RunActive()
+    {
+        _Wheel.SetActive(true);
+        _TextHolder.SetActive(true);
+        Debug.Log("Machine Active");
+    }
+
+    public void RunDective()
+    {
+        _Wheel.SetActive(false);
+        _TextHolder.SetActive(false);
+        Debug.Log("Machine NOt Active");
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    public void StartButton()
+    {
+       
+        newController.hold = true;
+        
+        Debug.Log("Machine Active");
+    }
+
+    public void EndButton()
+    {
+       
+        newController.hold = false;
+        
+        Debug.Log("Machine NOt Active");
+    }
+
 }

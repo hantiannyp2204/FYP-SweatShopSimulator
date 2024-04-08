@@ -10,40 +10,38 @@ public class VRPlayerInvenetory : MonoBehaviour
     [SerializeField] Item currentHoldingItem;
     HandType handType = HandType.Left;
 
-    Collider[] handColliders;
-
-    [SerializeField] float collisionRecoverDelay = 1.5f;
 
     Coroutine collisionRevoverCoroutineHandler;
     public HandType GetHandType() => handType;
     public void Init()
     {
         //set the hand type
-        if (transform.name == "Right hand" || transform.name == "Right Hand Physics")
+        if (transform.name.Contains("Right Hand"))
         {
             handType = HandType.Right;
         }
-        // Get all Collider components in this GameObject and its children
-        handColliders = GetComponentsInChildren<Collider>();
+
 
     }
+    Item grabbedCollisionItem;
     public void AddItem(Item item, Transform handTransform)
     {
         //if theres item, ignore
         if (currentHoldingItem != null) return;
 
-        //stop coroutine if it exist
-        if(collisionRevoverCoroutineHandler != null)
+        //stop coroutine if it exist and grabbed on the same object
+        if (collisionRevoverCoroutineHandler != null && grabbedCollisionItem == item)
         {
             StopCoroutine(collisionRevoverCoroutineHandler);
             collisionRevoverCoroutineHandler = null;
         }
         //plays the pickup sound
+        grabbedCollisionItem = item;
         currentHoldingItem = item;
         item.ChangeState(ITEM_STATE.PICKED_UP);
         item.transform.SetParent(handTransform, true);
         //ignore colliders
-        foreach(Collider collider in handColliders)
+        foreach(Collider collider in GetComponent<HandColliders>().GetHandColliders())
         {
             item.IgnoreCollision(collider);
         }
@@ -83,8 +81,9 @@ public class VRPlayerInvenetory : MonoBehaviour
     public Item GetCurrentHeldItem() => currentHoldingItem;
     IEnumerator RecoverCollisionCoroutine(Item itemToRecover)
     {
-        yield return new WaitForSeconds(collisionRecoverDelay);
+        yield return new WaitForSeconds(GetComponent<HandColliders>().GetCollisionRecoverDelay());
         itemToRecover.ResetIgnoreCollisions();
         collisionRevoverCoroutineHandler = null;
+        grabbedCollisionItem = null;
     }
 }

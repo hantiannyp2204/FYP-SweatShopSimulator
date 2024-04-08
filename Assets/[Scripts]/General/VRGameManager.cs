@@ -27,7 +27,8 @@ public class VRGameManager : MonoBehaviour, IVRInteracted, IVRRelease
     [SerializeField] GameObject VRPlayer;
     [SerializeField] List<VRHandManager> vrHandInteractionManagerList;
     [SerializeField] List<VRPlayerInvenetory> vrPlayerInventoryList;
-    [SerializeField] List<HandPresensePhysics> vrPlayerHandPhysicsList;
+    [SerializeField] List<HandPresencePhysics> vrPlayerHandPhysicsList;
+    [SerializeField] List<HandColliders> vrPlayerHandColliderList;
     [SerializeField] GameFeedback gameFeedback;
     //public Objective playerObjective;
     //[SerializeField] CustomerTable customerTable;
@@ -74,9 +75,14 @@ public class VRGameManager : MonoBehaviour, IVRInteracted, IVRRelease
         {
             handInv.Init();
         }
-        foreach (HandPresensePhysics handPhysics in vrPlayerHandPhysicsList)
+        
+        foreach (HandPresencePhysics handPhysics in vrPlayerHandPhysicsList)
         {
             handPhysics.Init();
+        }
+        foreach (HandColliders handColliders in vrPlayerHandColliderList)
+        {
+            handColliders.Init();
         }
         gameFeedback.InIt();
        // playerObjective.Init();     
@@ -91,7 +97,7 @@ public class VRGameManager : MonoBehaviour, IVRInteracted, IVRRelease
     }
     private void FixedUpdate()
     {
-        foreach (HandPresensePhysics handPhysics in vrPlayerHandPhysicsList)
+        foreach (HandPresencePhysics handPhysics in vrPlayerHandPhysicsList)
         {
             handPhysics.HandPhysicsFixedUpdate();
         }
@@ -139,7 +145,6 @@ public class VRGameManager : MonoBehaviour, IVRInteracted, IVRRelease
     }
     public void OnInteracted(GameObject obj, HandType handType)
     {
-        bool interacted = false;
         //check if current hand type is the one calling
         foreach (var hand in vrHandInteractionManagerList)
         {
@@ -164,18 +169,16 @@ public class VRGameManager : MonoBehaviour, IVRInteracted, IVRRelease
                     default:
                         break;
                 }
-                interacted = true;
             }
             //for grabables
             Grabables grabable = obj.GetComponent<Grabables>();
-            if (grabable != null && !interacted)
+            if (grabable != null)
             {
                 grabable.Grab();
-                interacted = true;
-                foreach (HandPresensePhysics handPhysics in vrPlayerHandPhysicsList)
+                foreach (HandPresencePhysics handPhysics in vrPlayerHandPhysicsList)
                 {
                     if (handPhysics.GetHandType() != hand.GetHandType()) continue;
-                    handPhysics.LockHand(grabable.transform.position);
+                    handPhysics.LockHand(grabable.gameObject, grabable.transform.position, grabable.transform.rotation);
                 }
             }
         }
@@ -183,7 +186,6 @@ public class VRGameManager : MonoBehaviour, IVRInteracted, IVRRelease
     }
     public void OnRelease(Vector3 handVelocity, HandType handType)
     {
-        bool released = false;
         foreach (var hand in vrHandInteractionManagerList)
         {
         
@@ -195,18 +197,15 @@ public class VRGameManager : MonoBehaviour, IVRInteracted, IVRRelease
                 {
                     //if true, release them
                     handInv.RemoveItem(handVelocity);
-                    released = true;
                     Debug.Log("Released item");
                     break;
                 }
-
             }
             //release grabables
-            foreach (HandPresensePhysics handPhysics in vrPlayerHandPhysicsList)
+            foreach (HandPresencePhysics handPhysics in vrPlayerHandPhysicsList)
             {
-                if (handPhysics.GetHandType() != hand.GetHandType() || released) continue;
+                if (handPhysics.GetHandType() != hand.GetHandType()) continue;
                 handPhysics.UnlockHand();
-                released = true;
             }
 
         }

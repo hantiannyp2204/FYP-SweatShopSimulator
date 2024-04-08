@@ -49,7 +49,7 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<IVRInteracted>, ISu
         currentHandAction = HandAction.Releasing;
         lastHandPosition = transform.position;
         //set the hand type
-        if(transform.name == "Right Hand Model" || transform.name == "Right Hand Physics")
+        if (transform.name.Contains("Right Hand"))
         {
             handType = HandType.Right;
         }
@@ -77,7 +77,7 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<IVRInteracted>, ISu
         currentlyTouching.Clear(); // Clear the list before updating it
         foreach (var hitCollider in hitColliders)
         {
-            if (hitCollider.GetComponent<Item>() != null)
+            if (hitCollider.GetComponent<Item>() != null|| hitCollider.GetComponent<Grabables>() != null)
             {
                 currentlyTouching.Add(hitCollider.gameObject);
             }

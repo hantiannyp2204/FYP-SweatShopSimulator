@@ -178,7 +178,7 @@ public class VRGameManager : MonoBehaviour, IVRInteracted, IVRRelease
                 foreach (HandPresencePhysics handPhysics in vrPlayerHandPhysicsList)
                 {
                     if (handPhysics.GetHandType() != hand.GetHandType()) continue;
-                    handPhysics.LockHand(grabable.gameObject, grabable.transform.position, grabable.transform.rotation);
+                    handPhysics.IgnoreCollision(grabable.gameObject);
                 }
             }
         }
@@ -205,7 +205,7 @@ public class VRGameManager : MonoBehaviour, IVRInteracted, IVRRelease
             foreach (HandPresencePhysics handPhysics in vrPlayerHandPhysicsList)
             {
                 if (handPhysics.GetHandType() != hand.GetHandType()) continue;
-                handPhysics.UnlockHand();
+                handPhysics.ResetIgnoreCollision();
             }
 
         }

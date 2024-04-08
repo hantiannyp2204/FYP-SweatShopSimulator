@@ -7,11 +7,7 @@ public class HandPresencePhysics : MonoBehaviour
     public Transform handXRController;
     private Rigidbody rb;
     [SerializeField] private float zRotationOffset;
-    private bool isLocked = false;
 
-    // Preserved these offsets as private fields.
-    private Vector3 lockedPositionOffset = Vector3.zero;
-    private Quaternion lockedRotationOffset = Quaternion.identity;
     HandType handType = HandType.Left;
 
     Coroutine collisionRecoverCoroutineHandler;
@@ -34,67 +30,38 @@ public class HandPresencePhysics : MonoBehaviour
     public void HandPhysicsFixedUpdate()
     {
 
-        if (isLocked)
+        rb.velocity = (handXRController.position - transform.position) / Time.fixedDeltaTime;
+
+        Quaternion targetRotationWithOffset = handXRController.rotation * Quaternion.Euler(0, 0, zRotationOffset);
+        Quaternion rotationDifference = targetRotationWithOffset * Quaternion.Inverse(transform.rotation);
+        rotationDifference.ToAngleAxis(out float angleInDegrees, out Vector3 rotationAxis);
+
+        if (angleInDegrees > 180) // Properly handle angle wrapping
         {
-            rb.angularVelocity = Vector3.zero;
+            angleInDegrees -= 360;
+        }
 
-            // Calculate the target position based on the controller's position and the locked offset
-            Vector3 targetPosition = handXRController.position + handXRController.TransformDirection(lockedPositionOffset);
-            // Calculate the desired velocity to reach the target position within one frame
-            Vector3 desiredVelocity = (targetPosition - transform.position) / Time.fixedDeltaTime;
-
-            // Optionally, you can limit the maximum velocity to avoid extremely fast movements
-            float maxVelocity = 10f; // Set to the maximum speed you want the hand to move
-            rb.velocity = Vector3.ClampMagnitude(desiredVelocity, maxVelocity);
-
-            // Adjust rotation to match the locked rotation relative to the controller
-            // Quaternion targetRotation = handXRController.rotation * lockedRotationOffset;
-            rb.MoveRotation(lockedRotationOffset);
+        if (rotationAxis != Vector3.zero)
+        {
+            Vector3 rotationDifferenceInDegrees = angleInDegrees * rotationAxis;
+            rb.angularVelocity = (rotationDifferenceInDegrees * Mathf.Deg2Rad / Time.fixedDeltaTime);
         }
         else
         {
-            // Normal behavior
-            rb.velocity = (handXRController.position - transform.position) / Time.fixedDeltaTime;
-
-            Quaternion targetRotationWithOffset = handXRController.rotation * Quaternion.Euler(0, 0, zRotationOffset);
-            Quaternion rotationDifference = targetRotationWithOffset * Quaternion.Inverse(transform.rotation);
-            rotationDifference.ToAngleAxis(out float angleInDegrees, out Vector3 rotationAxis);
-
-            if (angleInDegrees > 180) // Properly handle angle wrapping
-            {
-                angleInDegrees -= 360;
-            }
-
-            if (rotationAxis != Vector3.zero)
-            {
-                Vector3 rotationDifferenceInDegrees = angleInDegrees * rotationAxis;
-                rb.angularVelocity = (rotationDifferenceInDegrees * Mathf.Deg2Rad / Time.fixedDeltaTime);
-            }
-            else
-            {
-                rb.angularVelocity = Vector3.zero;
-            }
+            rb.angularVelocity = Vector3.zero;
         }
     }
-
-    public void LockHand(GameObject itemToLockOn, Vector3 positionOffset = default, Quaternion rotationOffset = default)
+    public void IgnoreCollision(GameObject itemToIgnore)
     {
-        if (collisionRecoverCoroutineHandler != null && previousGrabbedCollisionObject == itemToLockOn)
+        if (collisionRecoverCoroutineHandler != null && previousGrabbedCollisionObject == itemToIgnore)
         {
             StopCoroutine(collisionRecoverCoroutineHandler);
             collisionRecoverCoroutineHandler = null;
         }
-        grabbedCollisionObject = itemToLockOn;
+        grabbedCollisionObject = itemToIgnore;
 
-        isLocked = true;
-        lockedPositionOffset = positionOffset;
-        lockedRotationOffset = rotationOffset;
 
-        rb.MovePosition(lockedPositionOffset);
-        rb.MoveRotation(lockedRotationOffset);
-        //transform.rotation = Quaternion.Euler(0, 0, zRotationOffset)* lockedRotationOffset; // Adjusted rotation update
-
-        itemColliderArray = itemToLockOn.GetComponentsInChildren<Collider>();
+        itemColliderArray = itemToIgnore.GetComponentsInChildren<Collider>();
         foreach (Collider handCollider in GetComponent<HandColliders>().GetHandColliders())
         {
             foreach (Collider itemCollider in itemColliderArray)
@@ -104,13 +71,10 @@ public class HandPresencePhysics : MonoBehaviour
         }
     }
 
-    public void UnlockHand()
+    public void ResetIgnoreCollision()
     {
         if (grabbedCollisionObject == null) return;
-        isLocked = false;
-        lockedPositionOffset = Vector3.zero;
-        lockedRotationOffset = Quaternion.identity;
-
+       
         previousGrabbedCollisionObject = grabbedCollisionObject;
         grabbedCollisionObject = null;
         collisionRecoverCoroutineHandler = StartCoroutine(RecoverCollisionCoroutine(itemColliderArray));

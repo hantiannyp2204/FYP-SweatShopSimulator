@@ -52,11 +52,16 @@ public class NewController : MonoBehaviour
 
         if (hold)
         {
-            //Anchor.transform.Rotate(Vector3.left, Time.deltaTime * speed); // Rotate around the forward axis (z-axis)
-            Anchor.transform.RotateAround(rotationPoint, Vector3.left, speed * Time.deltaTime);
+            //Anchor.transform.Rotate(Vector3.right, Time.deltaTime * speed); // Rotate around the forward axis (z-axis)
+            //transform.RotateAround(rotationPoint, Vector3.forward, speed * Time.deltaTime);
+            transform.RotateAround(Anchor.transform.position, Anchor.transform.forward, speed * Time.deltaTime);
+
+
+            Debug.Log(Anchor.transform.position);
+
         }
 
-        
+
 
         //if (power.currentPower <= 0)
         //{

@@ -33,12 +33,22 @@ public class HandPresencePhysics : MonoBehaviour
 
     public void HandPhysicsFixedUpdate()
     {
+
         if (isLocked)
         {
-            rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
 
-            rb.MovePosition(lockedPositionOffset);
+            // Calculate the target position based on the controller's position and the locked offset
+            Vector3 targetPosition = handXRController.position + handXRController.TransformDirection(lockedPositionOffset);
+            // Calculate the desired velocity to reach the target position within one frame
+            Vector3 desiredVelocity = (targetPosition - transform.position) / Time.fixedDeltaTime;
+
+            // Optionally, you can limit the maximum velocity to avoid extremely fast movements
+            float maxVelocity = 10f; // Set to the maximum speed you want the hand to move
+            rb.velocity = Vector3.ClampMagnitude(desiredVelocity, maxVelocity);
+
+            // Adjust rotation to match the locked rotation relative to the controller
+            // Quaternion targetRotation = handXRController.rotation * lockedRotationOffset;
             rb.MoveRotation(lockedRotationOffset);
         }
         else

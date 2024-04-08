@@ -97,6 +97,7 @@ public class MachineShredder : MonoBehaviour, Iinteractable
             product.transform.position = afterInteract.transform.position;
 
             //e_interactShredder?.InvokeEvent(transform.position, Quaternion.Euler(-90, 0, 0), transform);
+
             e_interactShredder?.InvokeEvent(transform.position + new Vector3(0, 0.2f, 0), Quaternion.identity, transform);
 
             _initShredding = true;

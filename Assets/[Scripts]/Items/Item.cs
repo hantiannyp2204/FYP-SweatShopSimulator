@@ -15,20 +15,7 @@ public class Item : MonoBehaviour, Iinteractable
 
     [SerializeField] private LayerMask groundLayer;
 
-    protected virtual void Start()
-    {
-        groundLayer = 1 << LayerMask.NameToLayer("Ground");
-        //raycast to make sure it spawns on the floor
-        Ray ray = new Ray(transform.position, -Vector3.up);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer))
-        {
-            Vector3 newPosition = transform.position;
-            newPosition.y = hit.point.y;
-            transform.position = newPosition;
-        }
-    }
-
+    List<Collider> ignoredColliderList = new();
     public string GetInteractName() => "Interact with: " + data.GetName();
 
 
@@ -45,7 +32,6 @@ public class Item : MonoBehaviour, Iinteractable
         {
             case ITEM_STATE.NOT_PICKED_UP:
                 e_drop?.InvokeEvent(transform.position, Quaternion.identity, transform);
-                Debug.Log("Drop");
                 break;
             case ITEM_STATE.PICKED_UP:
                 e_pickUp?.InvokeEvent(transform.position, Quaternion.identity, transform);
@@ -61,7 +47,39 @@ public class Item : MonoBehaviour, Iinteractable
     }
     public ITEM_STATE GetState()=> itemState;
 
+    //for collision
+    public void IgnoreCollision(Collider objectToIgnore)
+    {
+        List<Collider> itemColliderList = ObtainAllColliders();
+        foreach (Collider itemCollider in itemColliderList)
+        {
+            Physics.IgnoreCollision(itemCollider, objectToIgnore, true);
+        }
 
+        ignoredColliderList.Add(objectToIgnore);
+    }
+    public void ResetIgnoreCollisions()
+    {
+        List<Collider> itemColliderList = ObtainAllColliders();
+        foreach (Collider ignoredColliders in ignoredColliderList)
+        {
+            foreach (Collider itemCollider in itemColliderList)
+            {
+                Physics.IgnoreCollision(ignoredColliders, itemCollider, false);
+            }
+        }
+        ignoredColliderList.Clear();
+    }
+    List<Collider> ObtainAllColliders()
+    {
+        List<Collider> allColliders = new();
+        Collider[] childColliders = GetComponentsInChildren<Collider>();
+        foreach (Collider childCollider in childColliders)
+        {
+            allColliders.Add(childCollider);
+        }
+        return allColliders;
+    }
     public void Interact(KeyboardGameManager player)
     {
         Debug.Log("Item picked up dah");

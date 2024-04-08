@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1055897687649667354}
   - component: {fileID: 6164326485873256361}
   - component: {fileID: 5942706068400534498}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,8 @@ GameObject:
   - component: {fileID: 877847538986155834}
   - component: {fileID: 6921858421484541772}
   - component: {fileID: 8582665592795930772}
-  m_Layer: 0
+  - component: {fileID: 8391250627566339756}
+  m_Layer: 6
   m_Name: Wooden product 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,8 +132,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 62a264c0536fefd47a01e77218b8fcb9, type: 2}
   itemState: 0
-  e_pickUp: {fileID: 11400000, guid: 958c5b126e792a544a672cc552e2794b, type: 2}
-  e_drop: {fileID: 11400000, guid: 149c7f1f6b397da489fa7d3e7499512d, type: 2}
+  e_pickUp: {fileID: 11400000, guid: 54a4f7ebf6e801746b6a472abe0e50d0, type: 2}
+  e_drop: {fileID: 11400000, guid: 4d534e67c0ac9174090ae77afb340815, type: 2}
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -151,7 +152,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -159,3 +160,30 @@ CapsuleCollider:
   m_Height: 2.3159995
   m_Direction: 1
   m_Center: {x: 0, y: 1.2763076, z: 0}
+--- !u!54 &8391250627566339756
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3051260090759883304}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 0

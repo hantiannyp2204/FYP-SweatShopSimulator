@@ -8,7 +8,8 @@ public class MacineFab : MonoBehaviour, Iinteractable
     public Power power;
     public GameObject _Wheel;
     public GameObject _TextHolder;
-
+    public GameObject _StartButton;
+    public GameObject _NextButton;
   
 
     public GameObject _WinORLose;
@@ -98,21 +99,34 @@ public class MacineFab : MonoBehaviour, Iinteractable
 
     public void RunActive()
     {
-        _Wheel.SetActive(true);
-        _TextHolder.SetActive(true);
         Debug.Log("Machine Active");
     }
 
     public void RunDective()
+    { 
+        Debug.Log("Machine NOt Active");
+    }
+
+    public void ToggleOn()
     {
+
+        newController.hold = true;
+        _Wheel.SetActive(true);
+        _TextHolder.SetActive(true);
+        _NextButton.SetActive(true);
+        _StartButton.SetActive(true);
+    }
+
+    public void ToggleOFF()
+    {
+        newController.hold = false;
         _Wheel.SetActive(false);
         _TextHolder.SetActive(false);
-        Debug.Log("Machine NOt Active");
     }
     /// <summary>
     /// 
     /// </summary>
-    public void StartButton()
+    public void StartButtonToggle()
     {
        
         newController.hold = true;
@@ -120,12 +134,17 @@ public class MacineFab : MonoBehaviour, Iinteractable
         Debug.Log("Machine Active");
     }
 
-    public void EndButton()
+    public void StartButtonToggleOFF()
     {
        
         newController.hold = false;
-        
-        Debug.Log("Machine NOt Active");
+        Debug.Log("Machine Not Active");
     }
+
+    /// <summary>
+    /// 
+    /// </summary
+    /// 
+
 
 }

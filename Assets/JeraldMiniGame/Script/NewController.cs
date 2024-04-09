@@ -21,7 +21,8 @@ public class NewController : MonoBehaviour
     float temp;
     int maxWinD;
     int minWinD;
-    public bool hold = true;
+    public bool hold = false;
+    public bool didwin = false;
     public int Lnum = 1;
     public float CCL;
     bool gameEnded = false;
@@ -150,10 +151,15 @@ public class NewController : MonoBehaviour
         }
         else
         {
-            winORloseText.text = "LOSE";
-            Debug.Log("LOSER");
-            macine._WinORLose.SetActive(true);
-            gameEnded = true; // Set gameEnded to true when player loses
+
+            if (macine._Wheel.activeSelf) // Check if _Wheel is active
+            {
+                winORloseText.text = "LOSE";
+                Debug.Log("LOSER");
+                macine._WinORLose.SetActive(true);
+                gameEnded = true; // Set gameEnded to true when player loses
+                                  //againPanel.gameObject.SetActive(true);
+            }
             //againPanel.gameObject.SetActive(true);
         }
 
@@ -204,8 +210,12 @@ public class NewController : MonoBehaviour
         {
             // Reset everything
             hold = false;
+            macine._Wheel.SetActive(false);
             temp = 0;
             macine._WinORLose.SetActive(false);
+            macine._TextHolder.SetActive(false);
+            macine._NextButton.SetActive(false);
+            macine._StartButton.SetActive(false);
             Lnum = 1;
             trueRange = 50;
             speed = 50;
@@ -230,5 +240,18 @@ public class NewController : MonoBehaviour
     {
         yield return new WaitForSeconds(3); // Wait for 3 seconds
         ChangeLevel();
+    }
+
+    public void NextButtonToggle()
+    {
+        if (gameEnded && winORloseText.text == "WIN")
+        {
+            ChangeLevel();
+        }
+    }
+
+    public void NextButtonToggleOFF()
+    {
+        return;
     }
 }

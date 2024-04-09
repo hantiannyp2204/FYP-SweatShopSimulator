@@ -2,25 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StartButton : VRButton
+public class NextButton : VRButton
 {
-    [SerializeField] MacineFab macineFab;
+    [SerializeField] NewController newController;
     public override void PressedFunction()
     {
-        //macineFab.StartButton();
+        newController.NextButtonToggle();
     }
     public override void ReleasedFunction()
     {
-        //macineFab.EndButton();
+        newController.NextButtonToggleOFF();
+        
     }
     public override void ToggleOnFunction()
     {
-        macineFab.StartButtonToggle();
+        
         Debug.Log("Toggle On");
     }
     public override void ToggleOffFunction()
     {
-        macineFab.StartButtonToggleOFF();
+        
         Debug.Log("Toggle Off");
     }
 }

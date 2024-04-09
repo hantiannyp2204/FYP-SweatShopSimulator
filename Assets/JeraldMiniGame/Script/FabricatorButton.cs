@@ -15,10 +15,12 @@ public class FabricatorButton : VRButton
     }
     public override void ToggleOnFunction()
     {
+        macineFab.ToggleOn();
         Debug.Log("Toggle On");
     }
     public override void ToggleOffFunction()
     {
+        macineFab.ToggleOFF();
         Debug.Log("Toggle Off");
     }
 }

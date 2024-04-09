@@ -7,6 +7,10 @@ using Unity.VisualScripting;
 
 public class MachineShredder : MonoBehaviour, Iinteractable
 {
+    [SerializeField] private GameObject spamButton;
+    [SerializeField] private Transform spawnLocation;
+
+    [Header("KEYBOARD PLAYER")]
     [HideInInspector] public float secretHealth;
     [HideInInspector] public float maxHealth;
 
@@ -43,6 +47,27 @@ public class MachineShredder : MonoBehaviour, Iinteractable
     private RefillFuelManager _refillManager;
 
     private Item _itemToSave;
+
+    public void RunActive()
+    {
+        GameObject spam = Instantiate(spamButton, spawnLocation.transform.position, Quaternion.identity);
+            
+
+        _initShredding = true;
+        Debug.Log("Running");
+    }
+
+    public void RunDeactive()
+    {
+        Debug.Log("Deactivate");
+    }
+
+    public void RunSpamButton()
+    {
+        Debug.Break();
+        IncreaseProgress();
+        UpdateProgressBar();
+    }
     public bool IsOutOfFuel()
     {
         return secretHealth <= 0 ? true : false;

@@ -145,43 +145,7 @@ public class VRGameManager : MonoBehaviour, IVRInteracted, IVRRelease
     }
     public void OnInteracted(GameObject obj, HandType handType)
     {
-        //check if current hand type is the one calling
-        foreach (var hand in vrHandInteractionManagerList)
-        {
-            if (hand.GetHandType() != handType) continue;
-            Debug.Log("Grab");
-            //for item
-            Item item = obj.GetComponent<Item>();
-            if (item != null)
-            {
-                switch (item.GetState())
-                {
-                    case ITEM_STATE.NOT_PICKED_UP:
-                        foreach (VRPlayerInvenetory handInv in vrPlayerInventoryList)
-                        {
-                            if (handInv.GetHandType() != handType) continue;
-                            handInv.AddItem(item, hand.gameObject.transform);
-                        }
-
-                        break;
-                    case ITEM_STATE.PICKED_UP:
-                        break;
-                    default:
-                        break;
-                }
-            }
-            //for grabables
-            Grabables grabable = obj.GetComponent<Grabables>();
-            if (grabable != null)
-            {
-                grabable.Grab();
-                foreach (HandPresencePhysics handPhysics in vrPlayerHandPhysicsList)
-                {
-                    if (handPhysics.GetHandType() != hand.GetHandType()) continue;
-                    handPhysics.LockHand(grabable.gameObject, grabable.transform.position, grabable.transform.rotation);
-                }
-            }
-        }
+        
 
     }
     public void OnRelease(Vector3 handVelocity, HandType handType)
@@ -205,7 +169,7 @@ public class VRGameManager : MonoBehaviour, IVRInteracted, IVRRelease
             foreach (HandPresencePhysics handPhysics in vrPlayerHandPhysicsList)
             {
                 if (handPhysics.GetHandType() != hand.GetHandType()) continue;
-                handPhysics.UnlockHand();
+                handPhysics.ResetIgnoreCollision();
             }
 
         }

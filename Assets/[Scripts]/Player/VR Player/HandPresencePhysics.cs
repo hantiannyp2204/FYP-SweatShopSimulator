@@ -1,5 +1,9 @@
+using Oculus.Interaction;
 using System.Collections;
+using TMPro;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 using static VRHandManager;
 
 public class HandPresencePhysics : MonoBehaviour
@@ -14,7 +18,8 @@ public class HandPresencePhysics : MonoBehaviour
     GameObject grabbedCollisionObject;
     GameObject previousGrabbedCollisionObject;
     Collider[] itemColliderArray;
-
+    [SerializeField] XRDirectInteractor interactor;
+    public TMP_Text DebugTxt;
     public void Init()
     {
         // Set the hand type based on the object name
@@ -24,6 +29,35 @@ public class HandPresencePhysics : MonoBehaviour
         }
         rb = GetComponent<Rigidbody>();
     }
+    private void OnEnable()
+    {
+
+        if (interactor != null)
+        {
+            interactor.selectEntered.AddListener(HandleSelectEntered);
+            interactor.selectExited.AddListener(HandleSelectExited);
+        }
+    }
+    private void OnDisable()
+    {
+        if (interactor != null)
+        {
+            interactor.selectEntered.RemoveListener(HandleSelectEntered);
+            interactor.selectExited.RemoveListener(HandleSelectExited);
+        }
+    }
+    private void HandleSelectEntered(SelectEnterEventArgs arg)
+    {
+
+ 
+        IgnoreCollision(arg.interactable.gameObject);
+    }
+
+    private void HandleSelectExited(SelectExitEventArgs arg)
+    {
+        ResetIgnoreCollision();
+    }
+
 
     public HandType GetHandType() => handType;
 
@@ -51,8 +85,12 @@ public class HandPresencePhysics : MonoBehaviour
             rb.angularVelocity = Vector3.zero;
         }
     }
-    public void IgnoreCollision(GameObject itemToIgnore)
+    public void IgnoreCollision  (GameObject itemToIgnore)
     {
+        if (DebugTxt != null)
+        {
+            DebugTxt.text = "IGNORE " + itemToIgnore.name;
+        }
         if (collisionRecoverCoroutineHandler != null && previousGrabbedCollisionObject == itemToIgnore)
         {
             StopCoroutine(collisionRecoverCoroutineHandler);

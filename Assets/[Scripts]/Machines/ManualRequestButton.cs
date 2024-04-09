@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ManualRequestButton : MonoBehaviour,Iinteractable
+public class ManualRequestButton : MonoBehaviour
 {
     [SerializeField] CustomerTable customerTable;
     public bool CanInteract()
@@ -20,9 +20,10 @@ public class ManualRequestButton : MonoBehaviour,Iinteractable
         return "to request order";
     }
 
-    public void Interact(KeyboardGameManager player)
-    {
-        customerTable.RequestOrder();
-    }
+    //switch to a button
+    //public void Interact(KeyboardGameManager player)
+    //{
+    //    customerTable.RequestOrder();
+    //}
 
 }

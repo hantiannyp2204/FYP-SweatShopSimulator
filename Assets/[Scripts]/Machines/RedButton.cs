@@ -7,7 +7,7 @@ public class RedButton:VRButton
     [SerializeField] MachineSmelter smelter;
     public override void PressedFunction()
     {
-        smelter.RunActive();
+        smelter.RunMachine();
     }
     public override void ReleasedFunction()
     {

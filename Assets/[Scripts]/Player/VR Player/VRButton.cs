@@ -76,7 +76,6 @@ public class VRButton : MonoBehaviour
     }
     public virtual void PressedFunction()
     {
-        Debug.Break();
         Debug.Log("PRESSED");
     }
     public virtual void ReleasedFunction()

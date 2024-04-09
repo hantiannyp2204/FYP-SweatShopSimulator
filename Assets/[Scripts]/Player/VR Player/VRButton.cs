@@ -14,7 +14,7 @@ public class VRButton : MonoBehaviour
     private bool isPressed = false;
     private Vector3 startPos;
     private ConfigurableJoint joint;
-
+    Vector3 startingPosition;
     private void Start()
     {
         startPos = button.transform.localPosition;
@@ -31,12 +31,14 @@ public class VRButton : MonoBehaviour
         {
             OnRelease();
         }
-
+        //make sure button's x and z never move
+        button.transform.localPosition = new Vector3(startPos.x, button.transform.localPosition.y, startPos.z);
         // Prevent the button from moving "upwards" beyond its starting position
         if (button.transform.localPosition.y > startPos.y)
         {
             button.transform.localPosition = new Vector3(button.transform.localPosition.x, startPos.y, button.transform.localPosition.z);
         }
+
     }
 
     private float GetValue()

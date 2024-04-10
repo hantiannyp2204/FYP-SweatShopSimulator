@@ -153,7 +153,7 @@ public class NewController : MonoBehaviour
         else
         {
 
-            if (macine._Wheel.activeSelf) // Check if _Wheel is active
+            if (macine.IsGameEnded()) // Check if _Wheel is active
             {
                 winORloseText.text = "LOSE";
                 Debug.Log("LOSER");
@@ -219,7 +219,6 @@ public class NewController : MonoBehaviour
             }
             // Reset everythings
             hold = false;
-            macine._Wheel.SetActive(false);
             temp = 0;
             macine._WinORLose.SetActive(false);
             macine._TextHolder.SetActive(false);

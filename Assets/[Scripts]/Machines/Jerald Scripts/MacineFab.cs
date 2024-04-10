@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class MacineFab : MonoBehaviour, Iinteractable
 {
     //public Power power;
-    public GameObject _Wheel;
+    bool gameEnd = false;
     public GameObject _TextHolder;
     public GameObject _StartButton;
     public GameObject _NextButton;
@@ -63,7 +64,6 @@ public class MacineFab : MonoBehaviour, Iinteractable
         }
         else
         {
-           _Wheel.SetActive(true);
            _TextHolder.SetActive(true);
             //newController.enabled = true; // Enable the NewController script
             //SceneManager.LoadScene("Minigame");
@@ -71,7 +71,7 @@ public class MacineFab : MonoBehaviour, Iinteractable
         }
     }
 
-
+    public bool IsGameEnded() => gameEnd;
     // Update is called once per frame
     void Update()
     {
@@ -111,7 +111,7 @@ public class MacineFab : MonoBehaviour, Iinteractable
     {
 
         newController.hold = true;
-        _Wheel.SetActive(true);
+        gameEnd = true;
         _TextHolder.SetActive(true);
         _NextButton.SetActive(true);
         _StartButton.SetActive(true);
@@ -120,7 +120,7 @@ public class MacineFab : MonoBehaviour, Iinteractable
     public void ToggleOFF()
     {
         newController.hold = false;
-        _Wheel.SetActive(false);
+        gameEnd = false;
         _TextHolder.SetActive(false);
     }
     /// <summary>

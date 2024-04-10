@@ -8,6 +8,7 @@ using System.Collections;
 public class NewController : MonoBehaviour
 {
     public MacineFab macine;
+    public FabricatorVrCollider fabricatorCollider;
     //public Power power;
     public float speed = 50;
     public int trueRange = 50;
@@ -208,7 +209,15 @@ public class NewController : MonoBehaviour
         }
         else
         {
-            // Reset everything
+            Item item = fabricatorCollider.GetProduct();
+            Destroy(fabricatorCollider.GetProduct().gameObject);
+            foreach (ItemData a in item.Data.productContainable)
+            {
+                a.GetPrefab().GetComponent<Rigidbody>().isKinematic = true;
+                Instantiate(a.GetPrefab(), fabricatorCollider._collider.transform.position, Quaternion.identity);
+
+            }
+            // Reset everythings
             hold = false;
             macine._Wheel.SetActive(false);
             temp = 0;

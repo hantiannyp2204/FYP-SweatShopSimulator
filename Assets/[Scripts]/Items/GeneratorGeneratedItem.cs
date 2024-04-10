@@ -8,10 +8,6 @@ public class GeneratorGeneratedItem : MonoBehaviour
     XRBaseInteractor interactedHandInteractor;
     VRHandManager interactedHandManager;
     Rigidbody rb;
-    private void Awake()
-    {
-         GetComponent<Rigidbody>().isKinematic = false;
-    }
     public void SetHandInteractorAndAnimator(XRBaseInteractor interactedHand)
     {
         interactedHandInteractor = interactedHand;

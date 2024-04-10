@@ -49,7 +49,7 @@ public class HandPresencePhysics : MonoBehaviour
     private void HandleSelectEntered(SelectEnterEventArgs arg)
     {
 
- 
+        Debug.Log("IGNORED");
         IgnoreCollision(arg.interactable.gameObject);
     }
 

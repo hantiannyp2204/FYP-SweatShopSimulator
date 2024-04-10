@@ -84,6 +84,7 @@ public class RequestBox : MonoBehaviour
         insertedItem.transform.SetParent(null);
         // Force the interactor to pick up the current item
         insertedItem.AddComponent<GeneratorGeneratedItem>().SetHandInteractorAndAnimator(interactorUsingThis);
+        insertedItem.GetComponent<Rigidbody>().isKinematic = false;
         args.interactor.StartManualInteraction(insertedItem.GetComponent<IXRSelectInteractable>());
 
         insertedItem = null;

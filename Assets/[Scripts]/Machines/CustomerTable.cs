@@ -27,6 +27,7 @@ public class CustomerTable : MonoBehaviour
     {
         ResetBox();
         RandomiseNextRequestTimer();
+        requestBox.ResetPointTracker();
     }
 
     public void UpdateTimer()
@@ -68,7 +69,7 @@ public class CustomerTable : MonoBehaviour
             //reset all variable
             isRequest = true;
             elapsedTime = 0;
-            orderText.text = "No objective";
+            orderText.text = $"Time taken: {requestBox.ShowTimerResult()}\nScore awarded: {requestBox.ShowScoreResult()}";
             RandomiseNextRequestTimer();
         }
         
@@ -104,6 +105,9 @@ public class CustomerTable : MonoBehaviour
 
         // Ensure the RequestBox is exactly at the target position after the loop completes
         requestBox.transform.localPosition = targetPosition;
+        //reset the items
+        requestBox.ResetBox();
+        requestBox.ResetPointTracker();
         moveBoxCoroutineHandler = null;
     }
 

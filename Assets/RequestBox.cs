@@ -2,6 +2,7 @@ using Oculus.Interaction;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -9,7 +10,6 @@ public class RequestBox : MonoBehaviour
 {
     //Request box
     [SerializeField] private float pointsMax;
-    [SerializeField] private TMP_Text timerText;
 
     bool boxOpened = false;
     ItemData requestedItem;
@@ -26,6 +26,14 @@ public class RequestBox : MonoBehaviour
     XRBaseInteractable interactable;
     private XRBaseInteractor interactorUsingThis;
 
+    public void ResetBox()
+    {
+        if(insertedItem != null)
+        {
+            Destroy(insertedItem);
+        }
+        insertedItem= null;
+    }
     private void OnCollisionEnter(Collision collision)
     {
         Item collisionItemComponent = collision.gameObject.GetComponent<Item>();
@@ -93,34 +101,37 @@ public class RequestBox : MonoBehaviour
 
     private void Update()
     {
-        //if (boxOpened)
-        //{
+        if (boxOpened)
+        {
+            // Start timer when receive requests
+            _timer += Time.deltaTime;
+            _tracker += Time.deltaTime;
 
-        //    // Start timer when receive requests
-        //    _timer += Time.deltaTime;
-        //    _tracker += Time.deltaTime;
-
-        //    if (_tracker >= 5)
-        //    {
-        //        _pointsToReward -= 100;
-        //        if (_pointsToReward <= 0)
-        //        {
-        //            Debug.Log("Jerald islesbian");
-        //            _pointsToReward = 0;
-        //            return;
-        //        }
-        //        _tracker = 0;
-        //    }
-        //    timerText.text = "Time Being Taken: " + (int)_timer;
-        //}
+            if (_tracker >= 5)
+            {
+                _pointsToReward -= 100;
+                if (_pointsToReward <= 0)
+                {
+                    _pointsToReward = 0;
+                    return;
+                }
+                _tracker = 0;
+            }
+        }
     }
+    public int ShowTimerResult() => (int)_timer;
+    public int ShowScoreResult() => (int)_pointsToReward;
     public void ResetPointTracker()
     {
         _tracker = 0;
         _timer = 0;
         _pointsToReward = pointsMax;
     }
-    public void SetRequestedItem(ItemData newRequestedItem) => requestedItem = newRequestedItem;
+    public void SetRequestedItem(ItemData newRequestedItem)
+    {
+        requestedItem = newRequestedItem;
+        boxOpened= true;
+    }
 
     public ItemData GetRequestedItem()=>requestedItem;
     public ItemData GetInsertedItem() => insertedItem.GetComponent<Item>().Data;

@@ -149,25 +149,8 @@ public class VRGameManager : MonoBehaviour
         VRPlayer.SetActive(false);
         this.gameObject.SetActive(false);
     }
-    private void OnEnable()
-    {
-        foreach (var hand in vrHandInteractionManagerList)
-        {
-            hand.SubcribeEvents((IVRInteracted)this);
-            hand.SubcribeEvents((IVRRelease)this);
-        }
-       // customerTable.SubcribeEvents();
-    }
-    private void OnDisable()
-    {
-        foreach (var hand in vrHandInteractionManagerList)
-        {
-            hand.UnsubcribeEvents((IVRInteracted)this);
-            hand.UnsubcribeEvents((IVRRelease)this);
-        }
 
-        //customerTable.UnsubcribeEvents();
-    }
+
     void TogglePauseMenu()
     {
         isPaused = !isPaused;

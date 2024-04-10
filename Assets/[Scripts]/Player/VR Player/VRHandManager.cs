@@ -40,7 +40,7 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<IVRInteracted>, ISu
     System.Action<GameObject, HandType> OnGrabbed;
     System.Action<Vector3, HandType> OnRelease;
     [SerializeField] private FeedbackEventData e_interactError;
-
+    float triggerValue, gripValue;
     public HandType GetHandType()=> handType;
 
     // Start is called before the first frame update
@@ -55,7 +55,7 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<IVRInteracted>, ISu
         }
 
     }
-
+    public float GetGripValue() => gripValue;
     // Update is called once per frame
     public void UpdateInteractions()
     {
@@ -63,8 +63,8 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<IVRInteracted>, ISu
         sphereCenter = transform.position;
 
         // Update hand animations
-        float triggerValue = pinchAnimationAction.action.ReadValue<float>();
-        float gripValue = gripAnimationAction.action.ReadValue<float>();
+        triggerValue = pinchAnimationAction.action.ReadValue<float>();
+        gripValue = gripAnimationAction.action.ReadValue<float>();
         handAnimator.SetFloat("Trigger", triggerValue);
         handAnimator.SetFloat("Grip", gripValue);
 
@@ -129,7 +129,6 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<IVRInteracted>, ISu
         }
         if (closestObject != null)
         {
-            Debug.Log("Nearest Object: " + closestObject.name);
             grabbedObject = closestObject;
             OnGrabbed?.Invoke(grabbedObject,handType);
         }

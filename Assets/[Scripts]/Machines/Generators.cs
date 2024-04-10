@@ -41,9 +41,9 @@ public class Generators : MonoBehaviour
             GameObject metalScrapInstance = Instantiate(ScrapPrefab, interactorUsingThis.transform.position, Quaternion.identity);
 
             // Force the interactor to select the newly created metal scrap
-            interactorUsingThis.GetComponent<XRBaseInteractor>().IsSelecting(metalScrapInstance.GetComponent<XRBaseInteractable>());
+            Debug.Log("OBTAINED");
+            interactorUsingThis.GetComponent<XRBaseInteractor>().StartManualInteraction(metalScrapInstance.GetComponent<IXRSelectInteractable>());
+            metalScrapInstance.AddComponent<GeneratorGeneratedItem>().SetHandInteractorAndAnimator(interactorUsingThis);
         }
     }
-
-
 }

@@ -4,11 +4,13 @@ using UnityEngine.UI;
 using Oculus.Interaction;
 using UnityEngine.Rendering.UI;
 using Unity.VisualScripting;
+using UnityEngine.Events;
 
 public class MachineShredder : MonoBehaviour, Iinteractable
 {
     [SerializeField] private GameObject spamButton;
     [SerializeField] private Transform spawnLocation;
+    public VrMachineItemCollider item;
 
     [Header("KEYBOARD PLAYER")]
     [HideInInspector] public float secretHealth;
@@ -23,9 +25,9 @@ public class MachineShredder : MonoBehaviour, Iinteractable
     [Header("Debug")]
     [SerializeField] private TMP_Text progressText;
     [SerializeField] private TMP_Text distFromPlayerText;
-    [SerializeField] private TMP_Text shredderFuelText;
     [SerializeField] private TMP_Text productToShredText;
     [SerializeField] private TMP_Text lockedInProductText;
+    public TMP_Text shredderFuelText;
 
     [Header("Shredder Machine Settings")]
     [SerializeField] private float decreaseMultiplier;
@@ -48,12 +50,15 @@ public class MachineShredder : MonoBehaviour, Iinteractable
 
     private Item _itemToSave;
 
+    private UnityEvent useFuel;
+
     public void RunActive()
     {
-        GameObject spam = Instantiate(spamButton, spawnLocation.transform.position, Quaternion.identity);
-            
+        _itemToSave = item.GetProduct();    
 
         _initShredding = true;
+        GameObject spam = Instantiate(spamButton, spawnLocation.transform.position, Quaternion.identity);
+            
         Debug.Log("Running");
     }
 
@@ -64,7 +69,15 @@ public class MachineShredder : MonoBehaviour, Iinteractable
 
     public void RunSpamButton()
     {
-        Debug.Break();
+        secretHealth -= 2 * Time.deltaTime;
+
+        shredderFuelText.text = "Fuel: " + (int)secretHealth;
+
+        if (IsOutOfFuel())
+        {
+            shredderFuelText.text = "NO FUEL!";
+        }
+
         IncreaseProgress();
         UpdateProgressBar();
     }
@@ -150,11 +163,21 @@ public class MachineShredder : MonoBehaviour, Iinteractable
         secretHealth = maxHealth;
 
         _refillManager = GetComponentInChildren<RefillFuelManager>();
-    }
 
+        if (useFuel == null)
+        {
+            useFuel = new UnityEvent();
+        }
+
+    }
     // Update is called once per frame
     void Update()
     {
+        if (item.isCollided)
+        {
+            _productToShred = item.GetProduct();
+        }
+
         shredderFuelText.text = "Fuel: " + (int) secretHealth;
       
         if (IsOutOfFuel())
@@ -189,18 +212,18 @@ public class MachineShredder : MonoBehaviour, Iinteractable
             Debug.Log("Holding nothing");
         }
 
-        
+
         if (_initShredding)
         {
             if (IsOutOfFuel())
-            {   
+            {
                 secretHealth = 0;
                 _initShredding = false;
                 return;
             }
             else
             {
-                secretHealth -= 2 * Time.deltaTime;
+               // secretHealth -= 2 * Time.deltaTime;
 
                 _chargeValue -= decreaseMultiplier * Time.deltaTime;
                 _chargeValue = Mathf.Clamp(_chargeValue, 0, 100);
@@ -226,10 +249,11 @@ public class MachineShredder : MonoBehaviour, Iinteractable
             }
         }
 
-
         if (_chargeValue >= 1)
         {
             _itemToSave = null;
+            Item beforeDelete = _productToShred;
+            Destroy(_productToShred.gameObject);
 
             progressText.text = "Shreddinator Process Completed";
 
@@ -241,7 +265,7 @@ public class MachineShredder : MonoBehaviour, Iinteractable
             _initShredding = false;
             _chargeValue = 0;
 
-            foreach (ItemData a in _productToShred.Data.productContainable)
+            foreach (ItemData a in beforeDelete.Data.productContainable)
             {
                 float x = Random.Range(-_spawnPointBound.extents.x, _spawnPointBound.extents.x);
                 float z = Random.Range(-_spawnPointBound.extents.z, _spawnPointBound.extents.z);

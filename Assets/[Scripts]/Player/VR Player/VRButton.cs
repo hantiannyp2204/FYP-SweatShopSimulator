@@ -15,7 +15,7 @@ public class VRButton : MonoBehaviour
     private Vector3 startPos;
     private ConfigurableJoint joint;
 
-    private void Start()
+    protected void Start()
     {
         startPos = button.transform.localPosition;
         joint = button.GetComponent<ConfigurableJoint>();

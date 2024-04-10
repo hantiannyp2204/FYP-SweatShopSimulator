@@ -5,10 +5,23 @@ using UnityEngine;
 public class ShredderButton : VRButton  
 {
     [SerializeField] private MachineShredder shredder;
+    [SerializeField] private ShredderSpamButton spamButton;
 
     public override void PressedFunction()
     {
-        shredder.RunActive();
+        if (!shredder.item.isCollided)
+        {
+            shredder.shredderFuelText.text = "Nothing to Shred";
+            return;
+        }
+        else
+        {
+            if (!spamButton.gameObject.activeSelf)
+            {
+                spamButton.gameObject.SetActive(true);
+            }
+            shredder.RunActive();
+        }
     }
 
     public override void ReleasedFunction()

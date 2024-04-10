@@ -7,7 +7,7 @@ using UnityEngine.XR.Interaction.Toolkit.UI.BodyUI;
 using static Item;
 using static VRHandManager;
 
-public class VRGameManager : MonoBehaviour, IVRInteracted, IVRRelease
+public class VRGameManager : MonoBehaviour
 {
     [SerializeField] PlatformChecker platformChecker;
     public enum GameMode
@@ -143,61 +143,14 @@ public class VRGameManager : MonoBehaviour, IVRInteracted, IVRRelease
             TogglePauseMenu();
         }
     }
-    public void OnInteracted(GameObject obj, HandType handType)
-    {
-        
-
-    }
-    public void OnRelease(Vector3 handVelocity, HandType handType)
-    {
-        foreach (var hand in vrHandInteractionManagerList)
-        {
-        
-            //check if holding item
-            foreach (VRPlayerInvenetory handInv in vrPlayerInventoryList)
-            {
-                if (handInv.GetHandType() != handType) continue;
-                if(handInv.GetCurrentHeldItem() != null)
-                {
-                    //if true, release them
-                    handInv.RemoveItem(handVelocity);
-                    Debug.Log("Released item");
-                    break;
-                }
-            }
-            //release grabables
-            foreach (HandPresencePhysics handPhysics in vrPlayerHandPhysicsList)
-            {
-                if (handPhysics.GetHandType() != hand.GetHandType()) continue;
-                handPhysics.ResetIgnoreCollision();
-            }
-
-        }
-    }
+    
     void DisableVRSystem()
     {
         VRPlayer.SetActive(false);
         this.gameObject.SetActive(false);
     }
-    private void OnEnable()
-    {
-        foreach (var hand in vrHandInteractionManagerList)
-        {
-            hand.SubcribeEvents((IVRInteracted)this);
-            hand.SubcribeEvents((IVRRelease)this);
-        }
-       // customerTable.SubcribeEvents();
-    }
-    private void OnDisable()
-    {
-        foreach (var hand in vrHandInteractionManagerList)
-        {
-            hand.UnsubcribeEvents((IVRInteracted)this);
-            hand.UnsubcribeEvents((IVRRelease)this);
-        }
 
-        //customerTable.UnsubcribeEvents();
-    }
+
     void TogglePauseMenu()
     {
         isPaused = !isPaused;

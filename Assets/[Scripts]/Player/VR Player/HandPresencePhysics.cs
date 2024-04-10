@@ -55,6 +55,7 @@ public class HandPresencePhysics : MonoBehaviour
 
     private void HandleSelectExited(SelectExitEventArgs arg)
     {
+        Debug.Log("Let go");
         ResetIgnoreCollision();
     }
 

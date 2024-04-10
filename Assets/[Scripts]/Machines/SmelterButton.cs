@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RedButton:VRButton
+public class SmelterButton:VRButton
 {
     [SerializeField] MachineSmelter smelter;
     public override void PressedFunction()
     {
-        smelter.RunActive();
+        smelter.RunMachine();
     }
     public override void ReleasedFunction()
     {

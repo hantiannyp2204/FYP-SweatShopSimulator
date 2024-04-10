@@ -28,7 +28,7 @@ public class MacineFab : MonoBehaviour, Iinteractable
         }
         else
         {
-            Debug.LogError("Game not found!");
+            Debug.Log("Game not found!");
         }
     }
 

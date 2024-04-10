@@ -4,9 +4,15 @@ using UnityEngine.UI;
 using Oculus.Interaction;
 using UnityEngine.Rendering.UI;
 using Unity.VisualScripting;
+using UnityEngine.Events;
 
 public class MachineShredder : MonoBehaviour, Iinteractable
 {
+    [SerializeField] private GameObject spamButton;
+    [SerializeField] private Transform spawnLocation;
+    public VrMachineItemCollider item;
+
+    [Header("KEYBOARD PLAYER")]
     [HideInInspector] public float secretHealth;
     [HideInInspector] public float maxHealth;
 
@@ -19,9 +25,9 @@ public class MachineShredder : MonoBehaviour, Iinteractable
     [Header("Debug")]
     [SerializeField] private TMP_Text progressText;
     [SerializeField] private TMP_Text distFromPlayerText;
-    [SerializeField] private TMP_Text shredderFuelText;
     [SerializeField] private TMP_Text productToShredText;
     [SerializeField] private TMP_Text lockedInProductText;
+    public TMP_Text shredderFuelText;
 
     [Header("Shredder Machine Settings")]
     [SerializeField] private float decreaseMultiplier;
@@ -43,6 +49,25 @@ public class MachineShredder : MonoBehaviour, Iinteractable
     private RefillFuelManager _refillManager;
 
     private Item _itemToSave;
+
+    public void RunActive()
+    {
+        _itemToSave = item.GetProduct();    
+
+        _initShredding = true;
+        GameObject spam = Instantiate(spamButton, spawnLocation.transform.position, Quaternion.identity);
+    }
+
+    public void RunDeactive()
+    {
+        Debug.Log("Deactivate");
+    }
+
+    public void RunSpamButton()
+    {
+        IncreaseProgress();
+        UpdateProgressBar();
+    }
     public bool IsOutOfFuel()
     {
         return secretHealth <= 0 ? true : false;
@@ -98,7 +123,6 @@ public class MachineShredder : MonoBehaviour, Iinteractable
 
             //e_interactShredder?.InvokeEvent(transform.position, Quaternion.Euler(-90, 0, 0), transform);
 
-            e_interactShredder?.InvokeEvent(transform.position + new Vector3(0, 0.2f, 0), Quaternion.identity, transform);
 
             _initShredding = true;
             productToShredText.text = "Product To Shred: " + product.Data.name;
@@ -126,11 +150,19 @@ public class MachineShredder : MonoBehaviour, Iinteractable
 
         _refillManager = GetComponentInChildren<RefillFuelManager>();
     }
-
     // Update is called once per frame
     void Update()
     {
-        shredderFuelText.text = "Fuel: " + (int) secretHealth;
+        if (item.isCollided)
+        {
+            _productToShred = item.GetProduct();
+        }
+
+        if (_initShredding)
+        {
+            shredderFuelText.text = "Fuel: " + (int) secretHealth;
+            e_interactShredder?.InvokeEvent(transform.position + new Vector3(0, 0.2f, 0), Quaternion.identity, transform);
+        }
       
         if (IsOutOfFuel())
         {
@@ -164,19 +196,18 @@ public class MachineShredder : MonoBehaviour, Iinteractable
             Debug.Log("Holding nothing");
         }
 
-        
+
         if (_initShredding)
         {
             if (IsOutOfFuel())
-            {   
+            {
                 secretHealth = 0;
                 _initShredding = false;
                 return;
             }
             else
             {
-                secretHealth -= 2 * Time.deltaTime;
-
+               // secretHealth -= 2 * Time.deltaTime;
                 _chargeValue -= decreaseMultiplier * Time.deltaTime;
                 _chargeValue = Mathf.Clamp(_chargeValue, 0, 100);
                 UpdateProgressBar();
@@ -201,10 +232,12 @@ public class MachineShredder : MonoBehaviour, Iinteractable
             }
         }
 
-
         if (_chargeValue >= 1)
         {
+            item.isCollided = false; // accept products
             _itemToSave = null;
+            Item beforeDelete = _productToShred;
+            Destroy(_productToShred.gameObject);
 
             progressText.text = "Shreddinator Process Completed";
 
@@ -216,11 +249,12 @@ public class MachineShredder : MonoBehaviour, Iinteractable
             _initShredding = false;
             _chargeValue = 0;
 
-            foreach (ItemData a in _productToShred.Data.productContainable)
+            foreach (ItemData a in beforeDelete.Data.productContainable)
             {
                 float x = Random.Range(-_spawnPointBound.extents.x, _spawnPointBound.extents.x);
                 float z = Random.Range(-_spawnPointBound.extents.z, _spawnPointBound.extents.z);
 
+                a.GetPrefab().GetComponent<Rigidbody>().isKinematic = true;
                 Instantiate(a.GetPrefab(), _spawnPointBound.center + new Vector3(x, 0f, z), Quaternion.identity);
             }
         }

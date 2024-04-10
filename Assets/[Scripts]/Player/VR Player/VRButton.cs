@@ -43,7 +43,7 @@ public class VRButton : MonoBehaviour
 
     private float GetValue()
     {
-        var value = Vector3.Distance(startPos, button.transform.localPosition) / joint.linearLimit.limit;
+        var value = Vector3.Distance(startPos, button.transform.localPosition) / joint.linearLimit.limit;   
         if (Math.Abs(value) < deadZone)
         {
             value = 0;
@@ -78,7 +78,7 @@ public class VRButton : MonoBehaviour
     }
     public virtual void PressedFunction()
     {
-        Debug.Break();
+        //Debug.Break();
         Debug.Log("PRESSED");
     }
     public virtual void ReleasedFunction()

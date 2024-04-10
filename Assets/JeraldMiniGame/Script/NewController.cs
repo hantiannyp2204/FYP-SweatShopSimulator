@@ -2,9 +2,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro; // Import the TMPro namespace
+using System.Collections;
+
 
 public class NewController : MonoBehaviour
 {
+    public MacineFab macine;
     //public Power power;
     public float speed = 50;
     public int trueRange = 50;
@@ -18,13 +21,17 @@ public class NewController : MonoBehaviour
     float temp;
     int maxWinD;
     int minWinD;
-    bool hold;
+    public bool hold = false;
+    public bool didwin = false;
     public int Lnum = 1;
     public float CCL;
+    bool gameEnded = false;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        gameEnded = false;
         Cursor.lockState = CursorLockMode.None;
         Lnum = PlayerPrefs.GetInt("Level num", 1);
 
@@ -37,9 +44,11 @@ public class NewController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+
+    public void StartRotate()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        //hold = true;
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             hold = true;
         }
@@ -47,16 +56,37 @@ public class NewController : MonoBehaviour
         {
             hold = false;
         }
-        temp = Mathf.Round(transform.rotation.eulerAngles.z);
-        currentText.text = "" + temp;
+    }
+    public void EndRotate()
+    {
+        //hold = false;
+        WinCheck();
+    }
 
-        if (hold)
+    void Update()
+    {
+
+        if (gameEnded && Input.GetKeyDown(KeyCode.L) && winORloseText.text == "WIN")
         {
-            //Anchor.transform.Rotate(Vector3.left, Time.deltaTime * speed); // Rotate around the forward axis (z-axis)
-            Anchor.transform.RotateAround(rotationPoint, Vector3.left, speed * Time.deltaTime);
+            ChangeLevel();
+        }
+        StartRotate();
+        if (hold == false)
+        {
+            EndRotate();
         }
 
+        temp = Mathf.Round(transform.rotation.eulerAngles.z);
+        currentText.text = "" + temp;
+        if (hold)
+        {
+            //Anchor.transform.Rotate(Vector3.right, Time.deltaTime * speed); // Rotate around the forward axis (z-axis)
+            //transform.RotateAround(rotationPoint, Vector3.forward, speed * Time.deltaTime);
+            transform.RotateAround(Anchor.transform.position, Anchor.transform.forward, speed * Time.deltaTime); 
+        }
         
+
+
 
         //if (power.currentPower <= 0)
         //{
@@ -107,16 +137,30 @@ public class NewController : MonoBehaviour
         if (temp <= maxWinD && temp >= minWinD)
         {
             winORloseText.text = "WIN";
-
+            gameEnded = true; // Set gameEnded to true when player wins
             if (trueRange > 10)
-                nextPanel.gameObject.SetActive(true);
+            {
+                Debug.Log("WINERSIA");
+                macine._WinORLose.SetActive(true);
+                //StartCoroutine(DelayChangeLevel());
+            }
+                //nextPanel.gameObject.SetActive(true);
+             
             else
                 endPanel.gameObject.SetActive(true);
         }
         else
         {
-            winORloseText.text = "LOSE";
-            againPanel.gameObject.SetActive(true);
+
+            if (macine._Wheel.activeSelf) // Check if _Wheel is active
+            {
+                winORloseText.text = "LOSE";
+                Debug.Log("LOSER");
+                macine._WinORLose.SetActive(true);
+                gameEnded = true; // Set gameEnded to true when player loses
+                                  //againPanel.gameObject.SetActive(true);
+            }
+            //againPanel.gameObject.SetActive(true);
         }
 
         // Stop decreasing power
@@ -124,15 +168,7 @@ public class NewController : MonoBehaviour
         //PlayerPrefs.SetFloat("FinalPower", power.currentPower);
     }
 
-    public void StartRotate()
-    {
-        hold = true;
-    }
-    public void EndRotate()
-    {
-        hold = false;
-        WinCheck();
-    }
+    
 
     public void Next()
     {
@@ -155,5 +191,67 @@ public class NewController : MonoBehaviour
     void UpdatePowerText()
     {
         //TextPower.text = "Power: " + power.currentPower.ToString();
+    }
+
+    void ChangeLevel()
+    {
+        hold = true;
+        temp = 0; // Reset the current number to zero
+        macine._WinORLose.SetActive(false);
+        gameEnded = false; // Reset gameEnded to false
+
+        if (Lnum < 3)
+        {
+            Lnum += 1;
+            UpdateLevelParameters();
+            SetRange();
+        }
+        else
+        {
+            // Reset everything
+            hold = false;
+            macine._Wheel.SetActive(false);
+            temp = 0;
+            macine._WinORLose.SetActive(false);
+            macine._TextHolder.SetActive(false);
+            macine._NextButton.SetActive(false);
+            macine._StartButton.SetActive(false);
+            Lnum = 1;
+            trueRange = 50;
+            speed = 50;
+            hold = false;
+            PlayerPrefs.DeleteAll();
+            PlayerPrefs.SetInt("Level num", Lnum);
+            UpdateLevelParameters();
+            SetRange();
+        }
+    }
+
+
+
+    void UpdateLevelParameters()
+    {
+        trueRange -= (Lnum - 1) * 10;
+        speed *= 1 + ((float)(Lnum - 1) / 2);
+        levelText.text = "speed = " + speed + "    L E V E L " + Lnum + "    range = " + trueRange;
+    }
+
+    IEnumerator DelayChangeLevel()
+    {
+        yield return new WaitForSeconds(3); // Wait for 3 seconds
+        ChangeLevel();
+    }
+
+    public void NextButtonToggle()
+    {
+        if (gameEnded && winORloseText.text == "WIN")
+        {
+            ChangeLevel();
+        }
+    }
+
+    public void NextButtonToggleOFF()
+    {
+        return;
     }
 }

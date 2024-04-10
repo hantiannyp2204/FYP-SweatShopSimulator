@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class VrMachineItemCollider : MonoBehaviour
 {
+    [SerializeField] private MachineShredder shredder;
     public string layerCheck;
     private int _layer;
     public bool isCollided = false;
@@ -38,8 +39,10 @@ public class VrMachineItemCollider : MonoBehaviour
     {
         if (isCollided)
         {
-            Debug.Log(_product.gameObject.name);
-            _product.transform.position = _collider.transform.position;
+            if (_product != null)
+            {   
+                _product.transform.position = _collider.transform.position;
+            }
         }
     }
 

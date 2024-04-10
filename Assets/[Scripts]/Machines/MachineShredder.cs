@@ -50,16 +50,12 @@ public class MachineShredder : MonoBehaviour, Iinteractable
 
     private Item _itemToSave;
 
-    private UnityEvent useFuel;
-
     public void RunActive()
     {
         _itemToSave = item.GetProduct();    
 
         _initShredding = true;
         GameObject spam = Instantiate(spamButton, spawnLocation.transform.position, Quaternion.identity);
-            
-        Debug.Log("Running");
     }
 
     public void RunDeactive()
@@ -69,15 +65,6 @@ public class MachineShredder : MonoBehaviour, Iinteractable
 
     public void RunSpamButton()
     {
-        secretHealth -= 2 * Time.deltaTime;
-
-        shredderFuelText.text = "Fuel: " + (int)secretHealth;
-
-        if (IsOutOfFuel())
-        {
-            shredderFuelText.text = "NO FUEL!";
-        }
-
         IncreaseProgress();
         UpdateProgressBar();
     }
@@ -136,7 +123,6 @@ public class MachineShredder : MonoBehaviour, Iinteractable
 
             //e_interactShredder?.InvokeEvent(transform.position, Quaternion.Euler(-90, 0, 0), transform);
 
-            e_interactShredder?.InvokeEvent(transform.position + new Vector3(0, 0.2f, 0), Quaternion.identity, transform);
 
             _initShredding = true;
             productToShredText.text = "Product To Shred: " + product.Data.name;
@@ -163,12 +149,6 @@ public class MachineShredder : MonoBehaviour, Iinteractable
         secretHealth = maxHealth;
 
         _refillManager = GetComponentInChildren<RefillFuelManager>();
-
-        if (useFuel == null)
-        {
-            useFuel = new UnityEvent();
-        }
-
     }
     // Update is called once per frame
     void Update()
@@ -178,7 +158,11 @@ public class MachineShredder : MonoBehaviour, Iinteractable
             _productToShred = item.GetProduct();
         }
 
-        shredderFuelText.text = "Fuel: " + (int) secretHealth;
+        if (_initShredding)
+        {
+            shredderFuelText.text = "Fuel: " + (int) secretHealth;
+            e_interactShredder?.InvokeEvent(transform.position + new Vector3(0, 0.2f, 0), Quaternion.identity, transform);
+        }
       
         if (IsOutOfFuel())
         {
@@ -224,7 +208,6 @@ public class MachineShredder : MonoBehaviour, Iinteractable
             else
             {
                // secretHealth -= 2 * Time.deltaTime;
-
                 _chargeValue -= decreaseMultiplier * Time.deltaTime;
                 _chargeValue = Mathf.Clamp(_chargeValue, 0, 100);
                 UpdateProgressBar();
@@ -251,6 +234,7 @@ public class MachineShredder : MonoBehaviour, Iinteractable
 
         if (_chargeValue >= 1)
         {
+            item.isCollided = false; // accept products
             _itemToSave = null;
             Item beforeDelete = _productToShred;
             Destroy(_productToShred.gameObject);
@@ -270,6 +254,7 @@ public class MachineShredder : MonoBehaviour, Iinteractable
                 float x = Random.Range(-_spawnPointBound.extents.x, _spawnPointBound.extents.x);
                 float z = Random.Range(-_spawnPointBound.extents.z, _spawnPointBound.extents.z);
 
+                a.GetPrefab().GetComponent<Rigidbody>().isKinematic = true;
                 Instantiate(a.GetPrefab(), _spawnPointBound.center + new Vector3(x, 0f, z), Quaternion.identity);
             }
         }

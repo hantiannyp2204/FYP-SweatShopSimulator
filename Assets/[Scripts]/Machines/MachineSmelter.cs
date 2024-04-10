@@ -72,7 +72,7 @@ public class MachineSmelter : MonoBehaviour
             Destroy(wrongItemType);
         }
         smeltingCoroutineHandler = null;
-
+        smelterInputHitbox.ClearList();
         yield return null;
     }
     

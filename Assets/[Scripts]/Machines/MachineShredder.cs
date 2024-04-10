@@ -5,12 +5,13 @@ using Oculus.Interaction;
 using UnityEngine.Rendering.UI;
 using Unity.VisualScripting;
 using UnityEngine.Events;
+using UnityEngine.XR.Interaction.Toolkit;
 
-public class MachineShredder : MonoBehaviour, Iinteractable
+public class MachineShredder : MonoBehaviour
 {
     [SerializeField] private GameObject spamButton;
     [SerializeField] private Transform spawnLocation;
-    public VrMachineItemCollider item;
+    public VrMachineItemCollider shredderItemCollider;
 
     [Header("KEYBOARD PLAYER")]
     [HideInInspector] public float secretHealth;
@@ -19,7 +20,6 @@ public class MachineShredder : MonoBehaviour, Iinteractable
     [SerializeField] private Scrollbar progressBar;
 
     [SerializeField] private GameObject player;
-    [SerializeField] private KeyboardGameManager gameManager;
     [SerializeField] private GameObject afterInteract;
 
     [Header("Debug")]
@@ -39,22 +39,23 @@ public class MachineShredder : MonoBehaviour, Iinteractable
     [SerializeField] private FeedbackEventData e_interactShredder;
     [SerializeField] private FeedbackEventData e_shredderFinish;
 
-
-    private Item _productToShred;
     private bool _initShredding = false;
-
     private float _chargeValue;
 
     private Bounds _spawnPointBound;
     private RefillFuelManager _refillManager;
 
-    private Item _itemToSave;
 
     public void RunActive()
     {
-        _itemToSave = item.GetProduct();    
-
         _initShredding = true;
+        //lock the items, so they can no longer be picked up
+        foreach(Item itemToShred in shredderItemCollider.GetProductList())
+        {
+            XRBaseInteractable baseInteractable = itemToShred.GetComponent<XRBaseInteractable>();
+            baseInteractable.enabled= false;
+            itemToShred.GetComponent<Rigidbody>().isKinematic = true;
+        }
         GameObject spam = Instantiate(spamButton, spawnLocation.transform.position, Quaternion.identity);
     }
 
@@ -76,69 +77,8 @@ public class MachineShredder : MonoBehaviour, Iinteractable
     {
         return Random.Range(2,10);
     }
-    public bool CanInteract()
-    {
-        return true;
-    }
 
-    public float GetInteractingLast()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public string GetInteractName()
-    {
-        return "Shredder";
-    }
-
-    public void Interact(KeyboardGameManager player)
-    {
-        if (_itemToSave == null)
-        {
-            productToShredText.text = "Press F to Lock Product While holding item";
-            return;
-        }
-
-        if (player.playerInventory.GetCurrentItem() == null || _refillManager.activateRefill) // Check if in the middle of fuellling
-        {
-            return;
-        }
-
-        Item product = player.playerInventory.GetCurrentItem();
-        // All other items will have their containable with nothing
-        if (product == null || product.Data.productContainable.Count == 0) // Product needs to contain smth
-        {
-            return; // Check if item is product or just another itS
-        }
-
-        if (product != _itemToSave)
-        {
-            productToShredText.text = "NOT LOCKED IN PRODUCT";
-            return;
-        }
-        else
-        {
-            //player.playerInventory.RemoveAtCurrentSlot();
-            product.transform.position = afterInteract.transform.position;
-
-            //e_interactShredder?.InvokeEvent(transform.position, Quaternion.Euler(-90, 0, 0), transform);
-
-
-            _initShredding = true;
-            productToShredText.text = "Product To Shred: " + product.Data.name;
-            _productToShred = product; // store product in seperate variable for safety purpose
-
-            //product.gameObject.transform.position = afterInteract.transform.position;
-
-            if (_productToShred.Data.productContainable != null)
-            {
-                foreach  (ItemData a in _productToShred.Data.productContainable)
-                {
-                    Debug.Log("This product contains: " + a.itemName);
-                }
-            }
-        }
-    }
+    
    
     // Start is called before the first frame update
     void Start()
@@ -153,11 +93,6 @@ public class MachineShredder : MonoBehaviour, Iinteractable
     // Update is called once per frame
     void Update()
     {
-        if (item.isCollided)
-        {
-            _productToShred = item.GetProduct();
-        }
-
         if (_initShredding)
         {
             shredderFuelText.text = "Fuel: " + (int) secretHealth;
@@ -169,28 +104,7 @@ public class MachineShredder : MonoBehaviour, Iinteractable
             shredderFuelText.text = "NO FUEL!";
         }
 
-        if (gameManager.playerInventory.GetCurrentItem() != null)
-        {
-            if (Input.GetKeyDown(KeyCode.F)) // check if item is a product
-            {
-                if (gameManager.playerInventory.GetCurrentItem().Data.productContainable != null)
-                {
-                    if (gameManager.playerInventory.GetCurrentItem() != _itemToSave && _itemToSave != null)
-                    {
-                        return;
-                    }
-                    else
-                    {
-                        _itemToSave = gameManager.playerInventory.GetCurrentItem();
-                        lockedInProductText.text = "Locked In : " + _itemToSave.gameObject.name;
-                    }
-                }
-                else
-                {
-                    Debug.Log("lalla");
-                }
-            }
-        }
+        
         else
         {
             Debug.Log("Holding nothing");
@@ -209,7 +123,10 @@ public class MachineShredder : MonoBehaviour, Iinteractable
             {
                // secretHealth -= 2 * Time.deltaTime;
                 _chargeValue -= decreaseMultiplier * Time.deltaTime;
-                _chargeValue = Mathf.Clamp(_chargeValue, 0, 100);
+                if (_chargeValue < 0)
+                {
+                    _chargeValue = 0;
+                }    
                 UpdateProgressBar();
 
                 distFromPlayerText.text = "DFM: " + Vector3.Distance(player.transform.position, transform.position);
@@ -222,23 +139,11 @@ public class MachineShredder : MonoBehaviour, Iinteractable
                     _initShredding = false;
                 }
 
-                progressText.text = (_chargeValue * 100).ToString("0.0") + "%";
-
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    IncreaseProgress();
-                    UpdateProgressBar();
-                }
             }
         }
 
         if (_chargeValue >= 1)
         {
-            item.isCollided = false; // accept products
-            _itemToSave = null;
-            Item beforeDelete = _productToShred;
-            Destroy(_productToShred.gameObject);
-
             progressText.text = "Shreddinator Process Completed";
 
             maxHealth = GetNewHealth();
@@ -249,14 +154,22 @@ public class MachineShredder : MonoBehaviour, Iinteractable
             _initShredding = false;
             _chargeValue = 0;
 
-            foreach (ItemData a in beforeDelete.Data.productContainable)
+            //check who is in the list
+            foreach(Item itemsToDelete in shredderItemCollider.GetProductList())
             {
-                float x = Random.Range(-_spawnPointBound.extents.x, _spawnPointBound.extents.x);
-                float z = Random.Range(-_spawnPointBound.extents.z, _spawnPointBound.extents.z);
-
-                a.GetPrefab().GetComponent<Rigidbody>().isKinematic = true;
-                Instantiate(a.GetPrefab(), _spawnPointBound.center + new Vector3(x, 0f, z), Quaternion.identity);
+                ItemData deletedItemData = itemsToDelete.Data;
+                //delete the product
+                Destroy(itemsToDelete.gameObject);
+                //spawn the raw materials
+                foreach (ItemData a in deletedItemData.productContainable)
+                {
+                    float x = Random.Range(-_spawnPointBound.extents.x, _spawnPointBound.extents.x);
+                    float z = Random.Range(-_spawnPointBound.extents.z, _spawnPointBound.extents.z);
+                    Instantiate(a.GetPrefab(), _spawnPointBound.center + new Vector3(x, 0f, z), Quaternion.identity);
+                }
             }
+            //clear the list
+            shredderItemCollider.ClearProductList();
         }
     }
 
@@ -268,12 +181,13 @@ public class MachineShredder : MonoBehaviour, Iinteractable
 
     void IncreaseProgress()
     {
+        if (!_initShredding) return;
         _chargeValue += chargeSpeed * Time.deltaTime;
 
-        if (_chargeValue > 1)
-        {
-            _chargeValue = 1;
-        }
+        //if (_chargeValue > 1)
+        //{
+        //    _chargeValue = 1;
+        //}
     }
 }
     

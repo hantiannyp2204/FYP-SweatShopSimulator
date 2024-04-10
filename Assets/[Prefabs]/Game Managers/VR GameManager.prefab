@@ -45,13 +45,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a25c34123c150ff4c8a4dbed964b2583, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  platformChecker: {fileID: 0}
   gameMode: 1
   SecondsGiven: 0
   ScoreNeeded: 0
-  vrHandInteractionManager:
+  VRPlayer: {fileID: 0}
+  vrHandInteractionManagerList:
   - {fileID: 0}
   - {fileID: 0}
-  vrPlayerInventory:
+  vrPlayerInventoryList: []
+  vrPlayerHandPhysicsList:
+  - {fileID: 0}
+  - {fileID: 0}
+  vrPlayerHandColliderList:
   - {fileID: 0}
   - {fileID: 0}
   gameFeedback: {fileID: 0}

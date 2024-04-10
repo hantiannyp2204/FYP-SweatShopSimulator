@@ -4,50 +4,29 @@ using UnityEngine;
 
 public class VrMachineItemCollider : MonoBehaviour
 {
-    [SerializeField] private MachineShredder shredder;
-    public string layerCheck;
-    private int _layer;
-    public bool isCollided = false;
-    private Item _product;
+    private List<Item> _productList = new();
 
-    private Collider _collider;
-    private void Start()
-    {
-        _layer = LayerMask.NameToLayer(layerCheck);
-        _collider = GetComponent<Collider>();
-    }
     private void OnTriggerEnter(Collider other)
     {
-        if (!isCollided)
-        {
-            if (other.gameObject.layer == _layer)
-            {
-                isCollided = true;
-                _product = other.GetComponent<Item>();
-                Rigidbody rb = _product.GetComponent<Rigidbody>();
-                if (rb != null)
-                {
-                    rb.isKinematic = true;
-                }
-
-                _product.transform.position = _product.transform.position;
-            }
-        }
+        //check if it has Item Script, else ignore
+        Item itemComponenet = other.GetComponent<Item>();
+        if (itemComponenet == null) return;
+        _productList.Add(itemComponenet);
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        //check if it has Item Script, else ignore
+        Item itemComponenet = other.GetComponent<Item>();
+        if (itemComponenet == null) return;
+        _productList.Remove(itemComponenet);
     }
 
-    private void Update()
+    public void ClearProductList()
     {
-        if (isCollided)
-        {
-            if (_product != null)
-            {   
-                _product.transform.position = _collider.transform.position;
-            }
-        }
+        _productList.Clear();
     }
-
-    public Item GetProduct()
+    public List<Item> GetProductList()
     {
-        return _product;
+        return _productList;
     }
 }

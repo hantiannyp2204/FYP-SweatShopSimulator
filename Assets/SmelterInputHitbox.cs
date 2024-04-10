@@ -37,4 +37,9 @@ public class SmelterInputHitbox : MonoBehaviour
             destroyList.Remove(other.gameObject);
         }
     }
+    public void ClearList()
+    {
+        destroyList.Clear();
+        scrapList.Clear();
+    }
 }

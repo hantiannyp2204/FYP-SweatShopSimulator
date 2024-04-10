@@ -9,7 +9,8 @@ public class ShredderButton : VRButton
 
     public override void PressedFunction()
     {
-        if (!shredder.item.isCollided)
+        //if list is empty, there is nothing in collider
+        if (shredder.shredderItemCollider.GetProductList().Count == 0)
         {
             shredder.shredderFuelText.text = "Nothing to Shred";
             return;

@@ -11,6 +11,7 @@ public class MachineShredder : MonoBehaviour
 {
     [SerializeField] private GameObject spamButton;
     [SerializeField] private Transform spawnLocation;
+    [SerializeField] private Transform particleSpawnLocation;
     public VrMachineItemCollider shredderItemCollider;
 
     [Header("KEYBOARD PLAYER")]
@@ -96,7 +97,8 @@ public class MachineShredder : MonoBehaviour
         if (_initShredding)
         {
             shredderFuelText.text = "Fuel: " + (int) secretHealth;
-            e_interactShredder?.InvokeEvent(transform.position + new Vector3(0, 0.2f, 0), Quaternion.identity, transform);
+            //e_interactShredder?.InvokeEvent(transform.position + new Vector3(0, 0.2f, 0), Quaternion.identity, transform);
+            e_interactShredder?.InvokeEvent(particleSpawnLocation.position,  Quaternion.identity, transform);
         }
       
         if (IsOutOfFuel())
@@ -121,7 +123,7 @@ public class MachineShredder : MonoBehaviour
             }
             else
             {
-               // secretHealth -= 2 * Time.deltaTime;
+                //secretHealth -= 2 * Time.deltaTime;
                 _chargeValue -= decreaseMultiplier * Time.deltaTime;
                 if (_chargeValue < 0)
                 {

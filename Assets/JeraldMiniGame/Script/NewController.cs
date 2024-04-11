@@ -86,9 +86,6 @@ public class NewController : MonoBehaviour
             transform.RotateAround(Anchor.transform.position, Anchor.transform.forward, speed * Time.deltaTime); 
         }
         
-
-
-
         //if (power.currentPower <= 0)
         //{
         //    GotoLevel1();

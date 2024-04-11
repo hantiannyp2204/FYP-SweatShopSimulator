@@ -40,7 +40,7 @@ public class NewController : MonoBehaviour
         speed *= 1 + ((float)(Lnum - 1) / 2);
         levelText.text = "speed = " + speed + "    L E V E L " + Lnum + "    range = " + trueRange;
 
-        BackColor();
+        //BackColor();
         SetRange();
     }
 

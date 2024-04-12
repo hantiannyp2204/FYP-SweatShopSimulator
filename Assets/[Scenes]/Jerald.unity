@@ -252,7 +252,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointsMax: 1000
-  timerText: {fileID: 654782976}
 --- !u!1001 &83712148
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1657,6 +1656,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2606635937380419538, guid: b5465bcff680c254a813d90e3b68c206,
+        type: 3}
+      propertyPath: threshold
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 3837467528617833990, guid: b5465bcff680c254a813d90e3b68c206,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1711,6 +1715,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Fabricator 3D
+      objectReference: {fileID: 0}
+    - target: {fileID: 6206727052924590334, guid: b5465bcff680c254a813d90e3b68c206,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

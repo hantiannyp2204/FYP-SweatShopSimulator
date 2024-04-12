@@ -1,5 +1,9 @@
+using Oculus.Interaction;
 using System.Collections;
+using TMPro;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 using static VRHandManager;
 
 public class HandPresencePhysics : MonoBehaviour
@@ -7,18 +11,15 @@ public class HandPresencePhysics : MonoBehaviour
     public Transform handXRController;
     private Rigidbody rb;
     [SerializeField] private float zRotationOffset;
-    private bool isLocked = false;
 
-    // Preserved these offsets as private fields.
-    private Vector3 lockedPositionOffset = Vector3.zero;
-    private Quaternion lockedRotationOffset = Quaternion.identity;
     HandType handType = HandType.Left;
 
     Coroutine collisionRecoverCoroutineHandler;
     GameObject grabbedCollisionObject;
     GameObject previousGrabbedCollisionObject;
     Collider[] itemColliderArray;
-
+    [SerializeField] XRDirectInteractor interactor;
+    public TMP_Text DebugTxt;
     public void Init()
     {
         // Set the hand type based on the object name
@@ -28,63 +29,78 @@ public class HandPresencePhysics : MonoBehaviour
         }
         rb = GetComponent<Rigidbody>();
     }
+    private void OnEnable()
+    {
+
+        if (interactor != null)
+        {
+            interactor.selectEntered.AddListener(HandleSelectEntered);
+            interactor.selectExited.AddListener(HandleSelectExited);
+        }
+    }
+    private void OnDisable()
+    {
+        if (interactor != null)
+        {
+            interactor.selectEntered.RemoveListener(HandleSelectEntered);
+            interactor.selectExited.RemoveListener(HandleSelectExited);
+        }
+    }
+    private void HandleSelectEntered(SelectEnterEventArgs arg)
+    {
+
+        Debug.Log("IGNORED");
+        IgnoreCollision(arg.interactable.gameObject);
+    }
+
+    private void HandleSelectExited(SelectExitEventArgs arg)
+    {
+        Debug.Log("Let go");
+        ResetIgnoreCollision();
+    }
+
 
     public HandType GetHandType() => handType;
 
     public void HandPhysicsFixedUpdate()
     {
-        if (isLocked)
-        {
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
 
-            rb.MovePosition(lockedPositionOffset);
-            rb.MoveRotation(lockedRotationOffset);
+        rb.velocity = (handXRController.position - transform.position) / Time.fixedDeltaTime;
+
+        Quaternion targetRotationWithOffset = handXRController.rotation * Quaternion.Euler(0, 0, zRotationOffset);
+        Quaternion rotationDifference = targetRotationWithOffset * Quaternion.Inverse(transform.rotation);
+        rotationDifference.ToAngleAxis(out float angleInDegrees, out Vector3 rotationAxis);
+
+        if (angleInDegrees > 180) // Properly handle angle wrapping
+        {
+            angleInDegrees -= 360;
+        }
+
+        if (rotationAxis != Vector3.zero)
+        {
+            Vector3 rotationDifferenceInDegrees = angleInDegrees * rotationAxis;
+            rb.angularVelocity = (rotationDifferenceInDegrees * Mathf.Deg2Rad / Time.fixedDeltaTime);
         }
         else
         {
-            // Normal behavior
-            rb.velocity = (handXRController.position - transform.position) / Time.fixedDeltaTime;
-
-            Quaternion targetRotationWithOffset = handXRController.rotation * Quaternion.Euler(0, 0, zRotationOffset);
-            Quaternion rotationDifference = targetRotationWithOffset * Quaternion.Inverse(transform.rotation);
-            rotationDifference.ToAngleAxis(out float angleInDegrees, out Vector3 rotationAxis);
-
-            if (angleInDegrees > 180) // Properly handle angle wrapping
-            {
-                angleInDegrees -= 360;
-            }
-
-            if (rotationAxis != Vector3.zero)
-            {
-                Vector3 rotationDifferenceInDegrees = angleInDegrees * rotationAxis;
-                rb.angularVelocity = (rotationDifferenceInDegrees * Mathf.Deg2Rad / Time.fixedDeltaTime);
-            }
-            else
-            {
-                rb.angularVelocity = Vector3.zero;
-            }
+            rb.angularVelocity = Vector3.zero;
         }
     }
-
-    public void LockHand(GameObject itemToLockOn, Vector3 positionOffset = default, Quaternion rotationOffset = default)
+    public void IgnoreCollision  (GameObject itemToIgnore)
     {
-        if (collisionRecoverCoroutineHandler != null && previousGrabbedCollisionObject == itemToLockOn)
+        if (DebugTxt != null)
+        {
+            DebugTxt.text = "IGNORE " + itemToIgnore.name;
+        }
+        if (collisionRecoverCoroutineHandler != null && previousGrabbedCollisionObject == itemToIgnore)
         {
             StopCoroutine(collisionRecoverCoroutineHandler);
             collisionRecoverCoroutineHandler = null;
         }
-        grabbedCollisionObject = itemToLockOn;
+        grabbedCollisionObject = itemToIgnore;
 
-        isLocked = true;
-        lockedPositionOffset = positionOffset;
-        lockedRotationOffset = rotationOffset;
 
-        rb.MovePosition(lockedPositionOffset);
-        rb.MoveRotation(lockedRotationOffset);
-        //transform.rotation = Quaternion.Euler(0, 0, zRotationOffset)* lockedRotationOffset; // Adjusted rotation update
-
-        itemColliderArray = itemToLockOn.GetComponentsInChildren<Collider>();
+        itemColliderArray = itemToIgnore.GetComponentsInChildren<Collider>();
         foreach (Collider handCollider in GetComponent<HandColliders>().GetHandColliders())
         {
             foreach (Collider itemCollider in itemColliderArray)
@@ -94,13 +110,10 @@ public class HandPresencePhysics : MonoBehaviour
         }
     }
 
-    public void UnlockHand()
+    public void ResetIgnoreCollision()
     {
         if (grabbedCollisionObject == null) return;
-        isLocked = false;
-        lockedPositionOffset = Vector3.zero;
-        lockedRotationOffset = Quaternion.identity;
-
+       
         previousGrabbedCollisionObject = grabbedCollisionObject;
         grabbedCollisionObject = null;
         collisionRecoverCoroutineHandler = StartCoroutine(RecoverCollisionCoroutine(itemColliderArray));

@@ -15,6 +15,12 @@ public class VRButton : MonoBehaviour
     private Vector3 startPos;
     private ConfigurableJoint joint;
     Vector3 startingPosition;
+
+    [Header("FEEDBACK")]
+    [SerializeField] private FeedbackEventData e_press;
+    [SerializeField] private FeedbackEventData e_release;
+
+
     public void Start()
     {
         startPos = button.transform.localPosition;
@@ -53,6 +59,8 @@ public class VRButton : MonoBehaviour
 
     void OnPressed()
     {
+        e_press?.InvokeEvent(transform.position, Quaternion.identity, transform);
+
         if (usesToggle)
         {
             // Toggle mode
@@ -73,6 +81,8 @@ public class VRButton : MonoBehaviour
 
     void OnRelease()
     {
+        e_release?.InvokeEvent(transform.position, Quaternion.identity, transform);
+
         ReleasedFunction();
         isPressed = false; // Reset the press state
     }

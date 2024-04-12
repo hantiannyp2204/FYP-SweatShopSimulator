@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Item : MonoBehaviour
+public class Item : MonoBehaviour, Iinteractable
 {
     [SerializeField] private ItemData data;
     public ItemData Data => data;
@@ -80,7 +80,10 @@ public class Item : MonoBehaviour
         }
         return allColliders;
     }
-
+    public void Interact(KeyboardGameManager player)
+    {
+        Debug.Log("Item picked up dah");
+    }
     public enum ITEM_STATE
     {
         NOT_PICKED_UP,

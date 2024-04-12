@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MachineAnvil : MonoBehaviour
+public class MachineAnvil : MonoBehaviour, Iinteractable
 {
     Item inputItem;
     [SerializeField] List<ItemData> OutputItemList;

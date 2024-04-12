@@ -1,49 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
 
-public class Generators : MonoBehaviour
+public class Generators : MonoBehaviour,Iinteractable
 {
-    public GameObject ScrapPrefab; // Assign this in the inspector
+    [SerializeField] GameObject ItemToGenerate;
 
-    private XRBaseInteractor interactorUsingThis;
-
-    public TMP_Text debugTxt;
-    protected void OnEnable()
+    public bool CanInteract()
     {
-        // Get the interactable component and subscribe to the select entered event
-        GetComponent<XRBaseInteractable>().selectEntered.AddListener(OnGrabbed);
+        return true;
     }
 
-    protected void OnDisable()
+    public float GetInteractingLast()
     {
-        // Unsubscribe to avoid memory leaks
-        GetComponent<XRBaseInteractable>().selectEntered.RemoveListener(OnGrabbed);
+        throw new System.NotImplementedException();
     }
 
-    private void OnGrabbed(SelectEnterEventArgs args)
+    public string GetInteractName()
     {
-        interactorUsingThis = args.interactor;
-        GenerateAndGrabMetalScrap();
+        return $"obtain {ItemToGenerate.name}";
     }
 
-    private void GenerateAndGrabMetalScrap()
+    public void Interact(KeyboardGameManager player)
     {
-        if(debugTxt != null)
+        //return if prefab don't have item script
+        if (ItemToGenerate.GetComponent<Item>() == null)
         {
-            debugTxt.text = "Grabbed";
+            Debug.Log("Allocated prefab is NOT an Item");
+            return;
         }
-        if (ScrapPrefab != null && interactorUsingThis != null)
-        {
-            // Instantiate the metal scrap prefab
-            GameObject metalScrapInstance = Instantiate(ScrapPrefab, interactorUsingThis.transform.position, Quaternion.identity);
 
-            // Force the interactor to select the newly created metal scrap
-            Debug.Log("OBTAINED");
-            interactorUsingThis.GetComponent<XRBaseInteractor>().StartManualInteraction(metalScrapInstance.GetComponent<IXRSelectInteractable>());
-            metalScrapInstance.AddComponent<GeneratorGeneratedItem>().SetHandInteractorAndAnimator(interactorUsingThis);
-        }
+        //spawn the object
+        Item generatedItem = Instantiate(ItemToGenerate.GetComponent<Item>());
+        //add into player
+        player.playerInventory.AddItem(generatedItem);
     }
 }

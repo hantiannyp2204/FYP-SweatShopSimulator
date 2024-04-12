@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MachineTest : MonoBehaviour
+public class MachineTest : MonoBehaviour,Iinteractable
 {
     public bool CanInteract()
     {
@@ -17,15 +17,15 @@ public class MachineTest : MonoBehaviour
     public string GetInteractName()=> "Use "+ name;
 
 
-    //public void Interact(KeyboardGameManager player)
-    //{
-    //    Item currentItem = player.playerInventory.GetCurrentItem();
-    //    if (currentItem == null)
-    //    {
-    //        return;
-    //    }
-    //    Debug.Log("Interacting " + name + " with " + player.playerInventory.GetCurrentItem().Data.name);
-    //}
+    public void Interact(KeyboardGameManager player)
+    {
+        Item currentItem = player.playerInventory.GetCurrentItem();
+        if (currentItem == null)
+        {
+            return;
+        }
+        Debug.Log("Interacting " + name + " with " + player.playerInventory.GetCurrentItem().Data.name);
+    }
 
     // Start is called before the first frame update
     void Start()

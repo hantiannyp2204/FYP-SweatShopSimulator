@@ -11,8 +11,7 @@ public class Scrap : MonoBehaviour
         Wood,
         Metal
     }
-    [SerializeField] ScrapType type = ScrapType.Plastic;
+    [SerializeField] ScrapType type;
 
     public ScrapType GetScrapType() => type;
-   
 }

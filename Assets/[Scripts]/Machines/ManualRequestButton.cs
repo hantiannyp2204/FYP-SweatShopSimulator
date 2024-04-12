@@ -2,15 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ManualRequestButton : VRButton
+public class ManualRequestButton : MonoBehaviour,Iinteractable
 {
     [SerializeField] CustomerTable customerTable;
-   
+    public bool CanInteract()
+    {
+        return true;
+    }
 
-    //switch to a button
-    //public void Interact(KeyboardGameManager player)
-    //{
-    //    customerTable.RequestOrder();
-    //}
+    public float GetInteractingLast()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public string GetInteractName()
+    {
+        return "to request order";
+    }
+
+    public void Interact(KeyboardGameManager player)
+    {
+        customerTable.RequestOrder();
+    }
 
 }

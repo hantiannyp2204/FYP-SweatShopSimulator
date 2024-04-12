@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class CustomerTable : MonoBehaviour
@@ -13,8 +12,7 @@ public class CustomerTable : MonoBehaviour
     //requests
     bool isRequest = true;
     [SerializeField] List<ItemData> posibleRequests;
-    [SerializeField] TMP_Text orderText;
-    Coroutine moveBoxCoroutineHandler;
+
     //Timer
     float elapsedTime = 0;
     float timeToNextRequest;
@@ -27,7 +25,6 @@ public class CustomerTable : MonoBehaviour
     {
         ResetBox();
         RandomiseNextRequestTimer();
-        requestBox.ResetPointTracker();
     }
 
     public void UpdateTimer()
@@ -35,44 +32,35 @@ public class CustomerTable : MonoBehaviour
         //if time exceed return
         if(elapsedTime >= timeToNextRequest)
         {
-            ToggleOrder();
+            RequestOrder();
             return;
         }
         elapsedTime += Time.deltaTime;
     }
 
-    public void ToggleOrder()
+    public void RequestOrder()
     {
-        if (moveBoxCoroutineHandler != null) return;
-        //request
-        if(isRequest)
+        if(!isRequest)
         {
-            //randomise what to order
-            int randomRequest = Random.Range(0, posibleRequests.Count);
-            requestBox.SetRequestedItem(posibleRequests[randomRequest]);
-            orderText.text = posibleRequests[randomRequest].itemName;
-            //animate box upwards
-            moveBoxCoroutineHandler = StartCoroutine(MoveBoxCoroutine());
-            isRequest = false;
+            return;
         }
-        //send
-        else
-        {
-            //if wrong item, ignore
-            if (requestBox.GetRequestedItem() != requestBox.GetInsertedItem()) return;
+        //randomise what to order
+        int randomRequest = Random.Range(0, posibleRequests.Count);
+        requestBox.SetRequestedItem(posibleRequests[randomRequest]);
+        //animate box upwards
+        StartCoroutine(MoveBoxCoroutine());
+        isRequest = false;
+    }
+    public void SendOrder()
+    {
+        //animate box downwards
+        StartCoroutine(MoveBoxCoroutine());
+        //check item quality (how long it takes to complete)
 
-            //correct item
-            //animate box downwards
-            moveBoxCoroutineHandler = StartCoroutine(MoveBoxCoroutine());
-            //check item quality (how long it takes to complete)
-
-            //reset all variable
-            isRequest = true;
-            elapsedTime = 0;
-            orderText.text = $"Time taken: {requestBox.ShowTimerResult()}\nScore awarded: {requestBox.ShowScoreResult()}";
-            RandomiseNextRequestTimer();
-        }
-        
+        //reset all variable
+        isRequest= true;
+        elapsedTime = 0;
+        RandomiseNextRequestTimer();
     }
     IEnumerator MoveBoxCoroutine()
     {
@@ -105,10 +93,6 @@ public class CustomerTable : MonoBehaviour
 
         // Ensure the RequestBox is exactly at the target position after the loop completes
         requestBox.transform.localPosition = targetPosition;
-        //reset the items
-        requestBox.ResetBox();
-        requestBox.ResetPointTracker();
-        moveBoxCoroutineHandler = null;
     }
 
     void ResetBox()
@@ -118,6 +102,6 @@ public class CustomerTable : MonoBehaviour
         currentPosition.y = boxSendYPosition;
         requestBox.transform.localPosition = currentPosition;
     }
-    public void SubcribeEvents() => RequestBox.OnOrderProcessed += ToggleOrder;
-    public void UnsubcribeEvents() => RequestBox.OnOrderProcessed -= ToggleOrder;
+    public void SubcribeEvents() => RequestBox.OnOrderProcessed += SendOrder;
+    public void UnsubcribeEvents() => RequestBox.OnOrderProcessed -= SendOrder;
 }

@@ -6,10 +6,12 @@ using UnityEngine.Rendering.UI;
 using Unity.VisualScripting;
 using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.UIElements;
 
 public class MachineShredder : MonoBehaviour
 {
     [SerializeField] private GameObject spamButton;
+    [SerializeField] private GameObject fuelButton;
     [SerializeField] private Transform spawnLocation;
     [SerializeField] private Transform particleSpawnLocation;
     public VrMachineItemCollider shredderItemCollider;
@@ -46,10 +48,16 @@ public class MachineShredder : MonoBehaviour
     private Bounds _spawnPointBound;
     private RefillFuelManager _refillManager;
 
-
+    public void FillFuel()
+    {
+        if (!_refillManager.activateRefill)
+        {
+            _refillManager.activateRefill = true;
+        }
+    }
     public void RunActive()
     {
-        _initShredding = true;
+        //_initShredding = true;
         //lock the items, so they can no longer be picked up
         foreach(Item itemToShred in shredderItemCollider.GetProductList())
         {
@@ -67,9 +75,19 @@ public class MachineShredder : MonoBehaviour
 
     public void RunSpamButton()
     {
-        IncreaseProgress();
-        UpdateProgressBar();
+        if (_chargeValue >= 1 || IsOutOfFuel()) return;
+        else
+        {
+            if (!_initShredding)
+            {
+                _initShredding = true;
+            }
+
+            IncreaseProgress();
+            UpdateProgressBar();
+        }
     }
+
     public bool IsOutOfFuel()
     {
         return secretHealth <= 0 ? true : false;
@@ -79,8 +97,6 @@ public class MachineShredder : MonoBehaviour
         return Random.Range(2,10);
     }
 
-    
-   
     // Start is called before the first frame update
     void Start()
     {
@@ -94,7 +110,9 @@ public class MachineShredder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_initShredding)
+        Debug.Log("FUEL LEFT: " + secretHealth);
+
+        if (_initShredding || _refillManager.activateRefill)
         {
             shredderFuelText.text = "Fuel: " + (int) secretHealth;
             //e_interactShredder?.InvokeEvent(transform.position + new Vector3(0, 0.2f, 0), Quaternion.identity, transform);
@@ -117,13 +135,17 @@ public class MachineShredder : MonoBehaviour
         {
             if (IsOutOfFuel())
             {
+                if (!fuelButton.gameObject.activeSelf) // make button visible 
+                {
+                    fuelButton.gameObject.SetActive(true);
+                }
                 secretHealth = 0;
                 _initShredding = false;
                 return;
             }
             else
             {
-                //secretHealth -= 2 * Time.deltaTime;
+                secretHealth -= 1 * Time.deltaTime;
                 _chargeValue -= decreaseMultiplier * Time.deltaTime;
                 if (_chargeValue < 0)
                 {
@@ -131,30 +153,31 @@ public class MachineShredder : MonoBehaviour
                 }    
                 UpdateProgressBar();
 
-                distFromPlayerText.text = "DFM: " + Vector3.Distance(player.transform.position, transform.position);
-                // Check if shredding and player goes ou
-                if (Vector3.Distance(transform.position, player.transform.position) >= distToStop && _initShredding) 
-                {
-                    _chargeValue = 0;
-                    UpdateProgressBar();
+                //distFromPlayerText.text = "DFM: " + Vector3.Distance(player.transform.position, transform.position);
+                //// Check if shredding and player goes ou
+                //if (Vector3.Distance(transform.position, player.transform.position) >= distToStop && _initShredding) 
+                //{
+                //    _chargeValue = 0;
+                //    UpdateProgressBar();
 
-                    _initShredding = false;
-                }
+                //    _initShredding = false;
+                //}
 
             }
         }
 
         if (_chargeValue >= 1)
         {
+            spamButton.gameObject.SetActive(false);
+            _chargeValue = 0;
             progressText.text = "Shreddinator Process Completed";
 
             maxHealth = GetNewHealth();
             secretHealth = maxHealth;
 
-            e_shredderFinish?.InvokeEvent(transform.position + new Vector3(0, 1f, 0), Quaternion.identity, transform);
+            e_shredderFinish?.InvokeEvent(particleSpawnLocation.position, Quaternion.identity, transform);
 
             _initShredding = false;
-            _chargeValue = 0;
 
             //check who is in the list
             foreach(Item itemsToDelete in shredderItemCollider.GetProductList())
@@ -183,7 +206,11 @@ public class MachineShredder : MonoBehaviour
 
     void IncreaseProgress()
     {
-        if (!_initShredding) return;
+        if (!_initShredding)
+        {
+            return;
+    
+        }
         _chargeValue += chargeSpeed * Time.deltaTime;
 
         //if (_chargeValue > 1)

@@ -102,23 +102,26 @@ public class NewController : MonoBehaviour
 
     void BackColor()
     {
-        switch (Lnum)
+        if (levelPanelBack != null)
         {
-            case 1:
-                levelPanelBack.color = new Color32(0, 255, 50, 255);
-                break;
-            case 2:
-                levelPanelBack.color = new Color32(0, 255, 228, 255);
-                break;
-            case 3:
-                levelPanelBack.color = new Color32(0, 50, 255, 255);
-                break;
-            case 4:
-                levelPanelBack.color = new Color32(160, 0, 255, 255);
-                break;
-            case 5:
-                levelPanelBack.color = new Color32(255, 0, 130, 255);
-                break;
+            switch (Lnum)
+            {
+                case 1:
+                    levelPanelBack.color = new Color32(0, 255, 50, 255);
+                    break;
+                case 2:
+                    levelPanelBack.color = new Color32(0, 255, 228, 255);
+                    break;
+                case 3:
+                    levelPanelBack.color = new Color32(0, 50, 255, 255);
+                    break;
+                case 4:
+                    levelPanelBack.color = new Color32(160, 0, 255, 255);
+                    break;
+                case 5:
+                    levelPanelBack.color = new Color32(255, 0, 130, 255);
+                    break;
+            }
         }
     }
     void SetRange()

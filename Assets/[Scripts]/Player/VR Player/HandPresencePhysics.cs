@@ -48,8 +48,6 @@ public class HandPresencePhysics : MonoBehaviour
     }
     private void HandleSelectEntered(SelectEnterEventArgs arg)
     {
-
-
         IgnoreCollision(arg.interactable.gameObject);
     }
 

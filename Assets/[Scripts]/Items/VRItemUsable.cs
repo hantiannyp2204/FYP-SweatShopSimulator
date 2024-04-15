@@ -10,7 +10,7 @@ public class VRItemUsable : MonoBehaviour
     [Header("FEEDBACK")]
     [SerializeField] private FeedbackEventData e_use;
     [SerializeField] private FeedbackEventData e_useRelease;
-    void Start()
+    public void Start()
     {
         XRGrabInteractable grabInteractable = GetComponent<XRGrabInteractable>();
         grabInteractable.activated.AddListener(x=>Use());

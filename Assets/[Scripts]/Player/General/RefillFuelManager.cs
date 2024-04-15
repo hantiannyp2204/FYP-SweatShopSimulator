@@ -10,6 +10,8 @@ public class RefillFuelManager : MonoBehaviour, Iinteractable
     [SerializeField] private MachineShredder shredder;
     [SerializeField] private Item refillCan;
     public bool activateRefill;
+
+    private TMP_Text _textAboveStation;
     public bool CanInteract()
     {
         return true;
@@ -40,12 +42,19 @@ public class RefillFuelManager : MonoBehaviour, Iinteractable
     // Start is called before the first frame update
     void Start()
     {
-        
+        _textAboveStation = GetComponentInChildren<TMP_Text>();
+        _textAboveStation.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (shredder.IsOutOfFuel())
+        {
+            _textAboveStation.text = "Use me!";
+            _textAboveStation.gameObject.SetActive(true);
+        }
+
         if (activateRefill)
         {
             // Logic for if out of fuel
@@ -55,6 +64,7 @@ public class RefillFuelManager : MonoBehaviour, Iinteractable
             }
             else // Reached Max Health
             {
+                _textAboveStation.gameObject.SetActive(false);
                 activateRefill = false;
                 return;
             }

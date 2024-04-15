@@ -17,25 +17,37 @@ public class MachineSmelter : MonoBehaviour
     [Header("FEEDBACK")]
     [SerializeField] private FeedbackEventData e_run;
     [SerializeField] private FeedbackEventData e_done;
-   
+
+    //fuel system
+    bool scrapConverted = false;
+    bool convertingPaused = false; // This variable is now unnecessary
+    float fuelLeft;
     private void Awake()
     {
+        RefillFuel();
         timerText.text = "Ready";
     }
 
     IEnumerator SmeltCoroutine()
-    {  
-        //play the start machine sound
+    {
         e_run?.InvokeEvent(transform.position, Quaternion.identity, transform);
-       
-        //timer
-        while (elapsedTime <= smeltTime)
+
+        while (elapsedTime <= smeltTime && fuelLeft > 0) // Check fuel level
         {
             elapsedTime += Time.deltaTime;
-            timerText.text = ((int)(smeltTime - elapsedTime)+1).ToString();
+            fuelLeft -= Time.deltaTime; // Simulate fuel consumption
+            timerText.text = ((int)(smeltTime - elapsedTime) + 1).ToString();
             yield return null;
         }
-        //play the stop machine sound
+
+        if (fuelLeft <= 0)
+        {
+            // Pause execution here by returning and not proceeding to the rest of the method.
+            // The coroutine is technically still running but doing nothing.
+            convertingPaused = true; // This marks that the process is paused.
+            yield break; // Exit the coroutine
+        }
+
         e_done?.InvokeEvent(transform.position, Quaternion.identity, transform);
         timerText.text = "Done";
         elapsedTime = 0;
@@ -73,16 +85,46 @@ public class MachineSmelter : MonoBehaviour
         }
         smeltingCoroutineHandler = null;
         smelterInputHitbox.ClearList();
+        scrapConverted = true;
         yield return null;
     }
-    
+
     public void RunMachine()
     {
-        if (smeltingCoroutineHandler != null) return;
-        smeltingCoroutineHandler = StartCoroutine(SmeltCoroutine());
+        if (smeltingCoroutineHandler == null) // Start only if not already running
+        {
+            elapsedTime = 0; // Reset elapsed time
+            smeltingCoroutineHandler = StartCoroutine(SmeltCoroutine());
+        }
     }
     public void RunDective()
     {
+        scrapConverted = false;
         Debug.Log("Machine Deactive");
+    }
+    public void RefillFuel()
+    {
+        fuelLeft = Random.Range(100, 300); // Refill the fuel
+        if (convertingPaused) // Check if it was paused due to fuel running out
+        {
+            convertingPaused = false;
+            RunMachine(); // Resume smelting by starting the coroutine again
+        }
+    }
+    private void Update()
+    {
+        //if ran out of fuel, pause coroutine
+        if (fuelLeft <= 0 && smeltingCoroutineHandler != null)
+        {
+            fuelLeft = 0;
+            timerText.text = "Out of fuel";
+            StopCoroutine(smeltingCoroutineHandler); // Stop the coroutine if it's running
+            smeltingCoroutineHandler = null; // Clear the handler to allow restarting
+        }
+        //do countdown to burning
+        if (scrapConverted)
+        {
+
+        }
     }
 }

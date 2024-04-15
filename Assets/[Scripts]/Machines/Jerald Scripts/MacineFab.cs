@@ -11,7 +11,7 @@ public class MacineFab : MonoBehaviour, Iinteractable
     public GameObject _TextHolder;
     public GameObject _StartButton;
     public GameObject _NextButton;
-  
+    public FabricatorCrafting _Crafting;
 
     public GameObject _WinORLose;
     public NewController newController; // Reference to the NewController script
@@ -109,12 +109,18 @@ public class MacineFab : MonoBehaviour, Iinteractable
 
     public void ToggleOn()
     {
+        Debug.Log("Machine");
+        _Crafting.CheckIfPresent();
+        if (_Crafting.EnoughMaterials == true)
+        {
+            newController.hold = true;
+            gameEnd = true;
+            _TextHolder.SetActive(true);
+            _NextButton.SetActive(true);
+            _StartButton.SetActive(true);
+        }
+        
 
-        newController.hold = true;
-        gameEnd = true;
-        _TextHolder.SetActive(true);
-        _NextButton.SetActive(true);
-        _StartButton.SetActive(true);
     }
 
     public void ToggleOFF()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using TMPro;
+using System.Runtime.CompilerServices;
 
 public class RefillFuelManager : MonoBehaviour, Iinteractable
 {

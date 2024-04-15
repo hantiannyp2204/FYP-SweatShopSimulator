@@ -8,8 +8,8 @@ public class ShredderSpamButton : VRButton
 
     private void Start()
     {
-        transform.gameObject.SetActive(false);
         base.Start();
+        transform.gameObject.SetActive(false);
     }
 
     public override void PressedFunction()

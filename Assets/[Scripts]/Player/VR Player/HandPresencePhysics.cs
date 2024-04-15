@@ -1,5 +1,6 @@
 using Oculus.Interaction;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using Unity.Burst.Intrinsics;
 using UnityEngine;
@@ -18,7 +19,7 @@ public class HandPresencePhysics : MonoBehaviour
     GameObject grabbedCollisionObject;
     GameObject previousGrabbedCollisionObject;
     Collider[] itemColliderArray;
-    [SerializeField] XRDirectInteractor interactor;
+    [SerializeField] List<XRBaseInteractor> interactorList= new List<XRBaseInteractor>();
     public TMP_Text DebugTxt;
     public void Init()
     {
@@ -31,8 +32,7 @@ public class HandPresencePhysics : MonoBehaviour
     }
     private void OnEnable()
     {
-
-        if (interactor != null)
+        foreach(XRBaseInteractor interactor in  interactorList)
         {
             interactor.selectEntered.AddListener(HandleSelectEntered);
             interactor.selectExited.AddListener(HandleSelectExited);
@@ -40,7 +40,7 @@ public class HandPresencePhysics : MonoBehaviour
     }
     private void OnDisable()
     {
-        if (interactor != null)
+        foreach (XRBaseInteractor interactor in interactorList)
         {
             interactor.selectEntered.RemoveListener(HandleSelectEntered);
             interactor.selectExited.RemoveListener(HandleSelectExited);
@@ -48,14 +48,12 @@ public class HandPresencePhysics : MonoBehaviour
     }
     private void HandleSelectEntered(SelectEnterEventArgs arg)
     {
-
-        Debug.Log("IGNORED");
         IgnoreCollision(arg.interactable.gameObject);
     }
 
     private void HandleSelectExited(SelectExitEventArgs arg)
     {
-        Debug.Log("Let go");
+        Debug.Log(arg.interactor.name + ": Let go");
         ResetIgnoreCollision();
     }
 
@@ -88,6 +86,8 @@ public class HandPresencePhysics : MonoBehaviour
     }
     public void IgnoreCollision  (GameObject itemToIgnore)
     {
+        //dont run if its a generator
+        if (itemToIgnore.GetComponent<Generators>()) return;
         if (DebugTxt != null)
         {
             DebugTxt.text = "IGNORE " + itemToIgnore.name;
@@ -99,7 +99,7 @@ public class HandPresencePhysics : MonoBehaviour
         }
         grabbedCollisionObject = itemToIgnore;
 
-
+    
         itemColliderArray = itemToIgnore.GetComponentsInChildren<Collider>();
         foreach (Collider handCollider in GetComponent<HandColliders>().GetHandColliders())
         {

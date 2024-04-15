@@ -1,31 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Content.Interaction;
 
 public class MachineTest : MonoBehaviour
 {
-    public bool CanInteract()
-    {
-        return true;
-    }
-
-    public float GetInteractingLast()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public string GetInteractName()=> "Use "+ name;
-
-
-    //public void Interact(KeyboardGameManager player)
-    //{
-    //    Item currentItem = player.playerInventory.GetCurrentItem();
-    //    if (currentItem == null)
-    //    {
-    //        return;
-    //    }
-    //    Debug.Log("Interacting " + name + " with " + player.playerInventory.GetCurrentItem().Data.name);
-    //}
+    public XRKnob knob;
+    public XRLever lever;
+    public XRSlider slider;
+    public XRKnob wheel;
 
     // Start is called before the first frame update
     void Start()

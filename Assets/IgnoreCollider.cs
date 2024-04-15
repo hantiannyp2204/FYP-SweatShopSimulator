@@ -4,16 +4,23 @@ using UnityEngine;
 
 public class IgnoreCollider : MonoBehaviour
 {
-   [SerializeField]List<Collider> colliderList;
+    [SerializeField] List<GameObject> gameObjectList;
+
     private void Start()
     {
-        foreach(Collider colliderA in colliderList) {
+        // Collect all colliders from the GameObjects in the list
+        List<Collider> allColliders = new List<Collider>();
+        foreach (GameObject obj in gameObjectList)
+        {
+            allColliders.AddRange(obj.GetComponentsInChildren<Collider>());
+        }
 
-            foreach (Collider colliderB in colliderList)
+        // Ignore collision between all pairs of collected colliders
+        for (int i = 0; i < allColliders.Count; i++)
+        {
+            for (int j = i + 1; j < allColliders.Count; j++)
             {
-                if (colliderA == colliderB) continue;
-                Physics.IgnoreCollision(colliderA, colliderB,true);
-
+                Physics.IgnoreCollision(allColliders[i], allColliders[j], true);
             }
         }
     }

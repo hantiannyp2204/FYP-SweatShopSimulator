@@ -10,7 +10,6 @@ public class Generators : MonoBehaviour
 
     private XRBaseInteractor interactorUsingThis;
 
-    public TMP_Text debugTxt;
     protected void OnEnable()
     {
         // Get the interactable component and subscribe to the select entered event
@@ -31,10 +30,6 @@ public class Generators : MonoBehaviour
 
     private void GenerateAndGrabMetalScrap()
     {
-        if(debugTxt != null)
-        {
-            debugTxt.text = "Grabbed";
-        }
         if (ScrapPrefab != null && interactorUsingThis != null)
         {
             // Instantiate the metal scrap prefab

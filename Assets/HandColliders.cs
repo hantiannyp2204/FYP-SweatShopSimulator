@@ -28,7 +28,6 @@ public class HandColliders : MonoBehaviour
                 filteredColliders.Add(collider);
             }
         }
-
         // Convert the filtered list back to an array
         handColliders = filteredColliders.ToArray();
     }

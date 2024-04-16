@@ -18,7 +18,8 @@ public class MachineShredder : MonoBehaviour
 
     [Header("KEYBOARD PLAYER")]
     [HideInInspector] public float secretHealth;
-    [HideInInspector] public float maxHealth;
+/*    [HideInInspector]*/ 
+    public float maxHealth;
 
     [SerializeField] private Scrollbar progressBar;
 
@@ -48,6 +49,10 @@ public class MachineShredder : MonoBehaviour
     private Bounds _spawnPointBound;
     private RefillFuelManager _refillManager;
 
+    public bool AlreadyFull()
+    {
+        return secretHealth >= maxHealth;
+    }
     public void FillFuel()
     {
         if (!_refillManager.activateRefill)
@@ -92,6 +97,7 @@ public class MachineShredder : MonoBehaviour
     {
         return secretHealth <= 0 ? true : false;
     }
+
     public float GetNewHealth()
     {
         return Random.Range(2,10);
@@ -106,6 +112,8 @@ public class MachineShredder : MonoBehaviour
         secretHealth = maxHealth;
 
         _refillManager = GetComponentInChildren<RefillFuelManager>();
+
+        secretHealth = 0;
     }
     // Update is called once per frame
     void Update()

@@ -13,35 +13,30 @@ public class UsableRefillCan : VRItemUsable
     [SerializeField] private GameObject refillStation;
 
     private RefillFuelManager _fuelManager;
-    [SerializeField] private GameObject center;
+
+    [SerializeField] private GameObject shootFrom;
 
     private void Start()
     {
-
         _fuelManager = refillStation.GetComponent<RefillFuelManager>();
 
         if (_fuelManager == null) return;
 
         base.Start(); // need to use base start still
-
     }
 
     public override void UseFunction()
     {
-        //if (Vector3.Distance(refillStation.transform.position, player.transform.position) >= saidDistance)
-        //{
-        //    return;
-        //}
+        GameObject spawnGasoline = Instantiate(gasolineParticle, shootFrom.transform.position, shootFrom.transform.rotation);
 
-        // Calculate spawn position in front of the refill can, aligned with player's forward direction
-        Vector3 spawnPosition = center.transform.position;
+        ParticleTrigger trigger = spawnGasoline.GetComponent<ParticleTrigger>();
+        if (trigger == null) return;
 
-        GameObject spawnGasoline = Instantiate(gasolineParticle, spawnPosition,  player.transform.rotation);
+        trigger.SetCollider(refillStation.GetComponent<Collider>());
+        trigger.SetStation(refillStation.GetComponent<RefillFuelManager>());
      
-
-
-        shredder.secretHealth = 0;
-        _fuelManager.activateRefill = true;
+        //shredder.secretHealth = 0;
+        //_fuelManager.activateRefill = true;
 
         base.UseFunction();
     }

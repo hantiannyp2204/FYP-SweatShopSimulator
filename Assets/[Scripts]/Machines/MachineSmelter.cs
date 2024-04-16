@@ -22,6 +22,18 @@ public class MachineSmelter : MonoBehaviour
     bool scrapConverted = false;
     bool convertingPaused = false; // This variable is now unnecessary
     float fuelLeft;
+
+    //obstcal event
+    [SerializeField] float timeToBlowUp = 5;
+    float elapsedTimeToBlowUp = 0;
+    bool blewUp = false;
+
+    //door system
+    bool isDoorClosed;
+    public void SetDoorClose(bool doorCloseStatus)
+    {
+        isDoorClosed = doorCloseStatus;
+    }
     private void Awake()
     {
         RefillFuel();
@@ -48,9 +60,7 @@ public class MachineSmelter : MonoBehaviour
             yield break; // Exit the coroutine
         }
 
-        e_done?.InvokeEvent(transform.position, Quaternion.identity, transform);
-        timerText.text = "Done";
-        elapsedTime = 0;
+
 
         //replace all scrap with their respective material
         foreach(Scrap scrap in smelterInputHitbox.GetScrapList())
@@ -83,24 +93,33 @@ public class MachineSmelter : MonoBehaviour
         {
             Destroy(wrongItemType);
         }
+
+        //play done sound
+        e_done?.InvokeEvent(transform.position, Quaternion.identity, transform);
+        timerText.text = "Done";
+
+        //reset all varaible
+        elapsedTime = 0;
         smeltingCoroutineHandler = null;
         smelterInputHitbox.ClearList();
         scrapConverted = true;
         yield return null;
     }
 
-    public void RunMachine()
+    public void ToggleMachine()
     {
+        //only run if door closed
+        if (!isDoorClosed) return;
         if (smeltingCoroutineHandler == null) // Start only if not already running
         {
             elapsedTime = 0; // Reset elapsed time
             smeltingCoroutineHandler = StartCoroutine(SmeltCoroutine());
         }
-    }
-    public void RunDective()
-    {
-        scrapConverted = false;
-        Debug.Log("Machine Deactive");
+        else if(scrapConverted)
+        {
+            scrapConverted = false;
+            Debug.Log("Machine Deactive");
+        }
     }
     public void RefillFuel()
     {
@@ -108,11 +127,13 @@ public class MachineSmelter : MonoBehaviour
         if (convertingPaused) // Check if it was paused due to fuel running out
         {
             convertingPaused = false;
-            RunMachine(); // Resume smelting by starting the coroutine again
+            ToggleMachine(); // Resume smelting by starting the coroutine again
         }
     }
+
     private void Update()
     {
+        if (blewUp) return;
         //if ran out of fuel, pause coroutine
         if (fuelLeft <= 0 && smeltingCoroutineHandler != null)
         {
@@ -124,7 +145,39 @@ public class MachineSmelter : MonoBehaviour
         //do countdown to burning
         if (scrapConverted)
         {
-
+            fuelLeft -= Time.deltaTime;
+            elapsedTimeToBlowUp += Time.deltaTime;
+            if(elapsedTimeToBlowUp >= timeToBlowUp)
+            {
+                timerText.text = "WARNING!!!";
+                BlowUp();
+            }
         }
+    }
+    void BlowUp()
+    {
+        //play blow up sound
+        //play blow up effect
+        //reset all varaibles
+        elapsedTimeToBlowUp = timeToBlowUp;
+        scrapConverted = false;
+        smeltingCoroutineHandler = null;
+        elapsedTime = 0;
+        //delete all items in the hitbox
+        foreach (Scrap scraps in smelterInputHitbox.GetScrapList())
+        {
+            Destroy(scraps);
+        }
+        foreach (GameObject wrongItemType in smelterInputHitbox.GetDestroyList())
+        {
+            Destroy(wrongItemType);
+        }
+        smelterInputHitbox.ClearList();
+        blewUp = true;
+    }
+    void FixBlowUp()
+    {
+        blewUp = false;
+        //play stop particles
     }
 }

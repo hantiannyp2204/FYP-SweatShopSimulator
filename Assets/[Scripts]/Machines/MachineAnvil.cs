@@ -8,6 +8,8 @@ public class MachineAnvil : MonoBehaviour
     [SerializeField] List<ItemData> OutputItemList;
     [SerializeField] Transform Anvil_itemPosition;
     [SerializeField] private State currentState;
+    //[SerializeField] private GameObject player;
+    public VrMachineItemCollider anvilItemCollider;
     ItemData outputItemData;
     GameObject outputItem;
 
@@ -42,137 +44,169 @@ public class MachineAnvil : MonoBehaviour
         return "using Anvil";
 
     }
-    //public void PutItemInside(GameManager player, Item currentItem)
-    //{ 
-    //    itemInside = true;
-    //}
-    public void Interact(KeyboardGameManager player)
+    public void RunMachine()
     {
-        Item currentItem = player.playerInventory.GetCurrentItem();
-       
-        Item currenttool = player.playerInventory.GetCurrentItem();
-        //cant interact if in use
-        if (outputItemData == null && currentState == State.Empty)
+        Debug.Log("using anvil");
+        //if(item != RawMaterial)
+        //else
         {
-            //Checks for item in hand
-
-            if (currentItem == null)
-            {
-                return;
-                Debug.Log("nothing in hand");
-            }
-            //checks if raw material is in hand
-            RawMaterial currentRawType = currentItem.GetComponent<RawMaterial>();
-            if (currentRawType == null)
-            {
-                Debug.Log("pick up Raw Material");
-                return;
-            }
-            //set the input
-            inputItem = player.playerInventory.GetCurrentItem();
-            //remove the item from inventory
-            player.playerInventory.RemoveAtCurrentSlot(true);
-            //move the input item on the anvil
-            inputItem.transform.position = Anvil_itemPosition.position;
-            //reset it's rotation
-            inputItem.transform.rotation = Quaternion.identity;
-            //set the parent the item position
-            inputItem.transform.SetParent(Anvil_itemPosition);
-            e_run?.InvokeEvent(transform.position, Quaternion.identity, transform);
-            e_done?.InvokeEvent(transform.position, Quaternion.identity, transform);
-            //Changes State to HasItem
             ChangeState();
-            //if (inputItem == null)
-            //{
-
-            //    currentState = State.Empty;
-            //    Debug.Log("State changed back");
-            //}
-            //else
-            //{
-            //   
-            //    Debug.Log("State changed");
-            //}
-        }
-        //needs to stop code and check if player is holding a hammer
-        else if (currentState == State.HasItem)
-        {
-            //check if Hammer is equipped
-            if (currentItem == null || currentItem.name != "Hammer")
+            RawMaterial currentRawType = inputItem.GetComponent<RawMaterial>();
+            //convert scrap to its specific raw material
+            //0 is plastic, 1 is wood, 2 is metal
+            int selectedFlatMaterial = 0;
+            switch (currentRawType.GetRawMaterialType())
             {
-                Debug.Log("pick up Hammer");
-                return;
-
-            }
-            else
-            {
-                RawMaterial currentRawType = inputItem.GetComponent<RawMaterial>();
-                //convert scrap to its specific raw material
-                //0 is plastic, 1 is wood, 2 is metal
-                int selectedFlatMaterial = 0;
-                switch (currentRawType.GetRawMaterialType())
-                {
-                    case RawMaterial.RawMaterialType.Plastic:
-                        selectedFlatMaterial = 0;
-                        Debug.Log("Flat_Plastic");
-                        break;
-                    case RawMaterial.RawMaterialType.Wood:
-                        selectedFlatMaterial = 1;
-                        Debug.Log("Flat_Wood");
-                        break;
-                    case RawMaterial.RawMaterialType.Metal:
-                        selectedFlatMaterial = 2;
-                        Debug.Log("Flat_Metal");
-                        break;
-                }
-                //set the output item
-                outputItemData = OutputItemList[selectedFlatMaterial];
-                //spawn the flattened material
-                outputItem = Instantiate(outputItemData.GetPrefab(), Anvil_itemPosition);
-                //delete the raw material
-                Destroy(inputItem.gameObject);
-                //Changes state to 
-                ChangeState();
-
-
-            }
-        }
-        //take out item if have output
-        else
-        {
-            //inventory full, cant take
-            if (player.playerInventory.IsFull())
-            {
-                return;
-            }
-            //play take out output item sound
-            e_takeOutputItem?.InvokeEvent(transform.position, Quaternion.identity, transform);
-            player.playerInventory.AddItem(outputItem.GetComponent<Item>());
-            //reset
-            outputItemData = null;
-            Debug.Log("Taken out");
-            // timerText.text = "Ready";
-
-        }
-
-        void ChangeState()
-        {
-            switch (currentState)
-            {
-                case State.Empty:
-                    currentState = State.HasItem;
+                case RawMaterial.RawMaterialType.Plastic:
+                    selectedFlatMaterial = 0;
+                    Debug.Log("Flat_Plastic");
                     break;
-                case State.HasItem:
-                    currentState = State.Empty;
-                    Debug.Log("State changed to Crafting");
+                case RawMaterial.RawMaterialType.Wood:
+                    selectedFlatMaterial = 1;
+                    Debug.Log("Flat_Wood");
                     break;
-                //case State.Crafting:
-                //    currentState = State.Empty;
-                //    Debug.Log("State changed to Empty");
-                //    break;
+                case RawMaterial.RawMaterialType.Metal:
+                    selectedFlatMaterial = 2;
+                    Debug.Log("Flat_Metal");
+                    break;
             }
+            //set the output item
+            outputItemData = OutputItemList[selectedFlatMaterial];
+            //spawn the flattened material
+            outputItem = Instantiate(outputItemData.GetPrefab(), Anvil_itemPosition);
         }
+       
+
+       // Item currentItem = player.playerInventory.GetCurrentItem();
+
+        //Item currenttool = player.playerInventory.GetCurrentItem();
+        //cant interact if in use
+        //if (outputItemData == null && currentState == State.Empty)
+        //{
+        //    //Checks for item in hand
+
+        //    if (currentItem == null)
+        //    {
+        //        return;
+        //        Debug.Log("nothing in hand");
+        //    }
+        //    //checks if raw material is in hand
+        //    RawMaterial currentRawType = currentItem.GetComponent<RawMaterial>();
+        //    if (currentRawType == null)
+        //    {
+        //        Debug.Log("pick up Raw Material");
+        //        return;
+        //    }
+        //    //set the input
+        //    inputItem = player.playerInventory.GetCurrentItem();
+        //    //remove the item from inventory
+        //    player.playerInventory.RemoveAtCurrentSlot(true);
+        //    //move the input item on the anvil
+        //    inputItem.transform.position = Anvil_itemPosition.position;
+        //    //reset it's rotation
+        //    inputItem.transform.rotation = Quaternion.identity;
+        //    //set the parent the item position
+        //    inputItem.transform.SetParent(Anvil_itemPosition);
+        //    e_run?.InvokeEvent(transform.position, Quaternion.identity, transform);
+        //    e_done?.InvokeEvent(transform.position, Quaternion.identity, transform);
+        //    //Changes State to HasItem
+        //    ChangeState();
+        //    //if (inputItem == null)
+        //    //{
+
+        //    //    currentState = State.Empty;
+        //    //    Debug.Log("State changed back");
+        //    //}
+        //    //else
+        //    //{
+        //    //   
+        //    //    Debug.Log("State changed");
+        //    //}
+        //}
+        ////needs to stop code and check if player is holding a hammer
+        //else if (currentState == State.HasItem)
+        //{
+        //    //check if Hammer is equipped
+        //    if (currentItem == null || currentItem.name != "Hammer")
+        //    {
+        //        Debug.Log("pick up Hammer");
+        //        return;
+
+        //    }
+        //    else
+        //    {
+        //        RawMaterial currentRawType = inputItem.GetComponent<RawMaterial>();
+        //        //convert scrap to its specific raw material
+        //        //0 is plastic, 1 is wood, 2 is metal
+        //        int selectedFlatMaterial = 0;
+        //        switch (currentRawType.GetRawMaterialType())
+        //        {
+        //            case RawMaterial.RawMaterialType.Plastic:
+        //                selectedFlatMaterial = 0;
+        //                Debug.Log("Flat_Plastic");
+        //                break;
+        //            case RawMaterial.RawMaterialType.Wood:
+        //                selectedFlatMaterial = 1;
+        //                Debug.Log("Flat_Wood");
+        //                break;
+        //            case RawMaterial.RawMaterialType.Metal:
+        //                selectedFlatMaterial = 2;
+        //                Debug.Log("Flat_Metal");
+        //                break;
+        //        }
+        //        //set the output item
+        //        outputItemData = OutputItemList[selectedFlatMaterial];
+        //        //spawn the flattened material
+        //        outputItem = Instantiate(outputItemData.GetPrefab(), Anvil_itemPosition);
+        //        //delete the raw material
+        //        Destroy(inputItem.gameObject);
+        //        //Changes state to 
+        //        ChangeState();
+
+
+        //    }
+        //}
+        ////take out item if have output
+        //else
+        //{
+        //    //inventory full, cant take
+        //    if (player.playerInventory.IsFull())
+        //    {
+        //        return;
+        //    }
+        //    //play take out output item sound
+        //    e_takeOutputItem?.InvokeEvent(transform.position, Quaternion.identity, transform);
+        //    player.playerInventory.AddItem(outputItem.GetComponent<Item>());
+        //    //reset
+        //    outputItemData = null;
+        //    Debug.Log("Taken out");
+        //    // timerText.text = "Ready";
+
+        //}
     }
+    public void RunDeactive()
+   {
+        currentState = State.Empty;
+        Debug.Log("Deactivated");
+   }
+   void ChangeState()
+   {
+       switch (currentState)
+       {
+           case State.Empty:
+               currentState = State.HasItem;
+               break;
+           case State.HasItem:
+               currentState = State.Empty;
+               Debug.Log("State changed to Crafting");
+               break;
+           //case State.Crafting:
+           //    currentState = State.Empty;
+           //    Debug.Log("State changed to Empty");
+           //    break;
+       }
+   }
+    
 
 
 

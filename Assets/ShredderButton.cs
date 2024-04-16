@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ShredderButton : VRButton  
 {
-    [SerializeField] private MachineShredder shredder;
+       [SerializeField] private MachineShredder shredder;
     [SerializeField] private ShredderSpamButton spamButton;
 
     public override void PressedFunction()

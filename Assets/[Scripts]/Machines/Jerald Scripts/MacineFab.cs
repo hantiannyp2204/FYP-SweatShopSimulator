@@ -110,9 +110,13 @@ public class MacineFab : MonoBehaviour, Iinteractable
     public void ToggleOn()
     {
         Debug.Log("Machine");
-        _Crafting.CheckIfPresent();
-        if (_Crafting.EnoughMaterials == true)
+        if (_Crafting.HasChosenCraftingItem == true)
         {
+            _Crafting.CheckIfPresent();
+        }      
+        if (_Crafting.EnoughMaterials == true && _Crafting.HasChosenCraftingItem == true)
+        {
+            //_Crafting.foundCount = 0;
             newController.hold = true;
             gameEnd = true;
             _TextHolder.SetActive(true);

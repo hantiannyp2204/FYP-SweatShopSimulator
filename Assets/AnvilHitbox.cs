@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class AnvilHitbox : MonoBehaviour
 {
-    List<RawMaterial> RMaterialList = new();
+    [SerializeField] private List<RawMaterial> RMaterialList = new();
     List<GameObject> trashList = new();
-
+    
     public List<RawMaterial> GetRMaterialList() => RMaterialList;
     public List<GameObject> GetTrashList() => trashList;
     private void OnTriggerEnter(Collider other)

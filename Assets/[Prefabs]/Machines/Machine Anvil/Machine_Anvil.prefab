@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5830467177270562191}
-  - component: {fileID: 8018477477450994128}
   m_Layer: 0
   m_Name: AnvilSpawner
   m_TagString: Untagged
@@ -32,27 +31,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3931527576275246440}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &8018477477450994128
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1056618519915490179}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.35765985, y: 0.07619413, z: 0.80069786}
-  m_Center: {x: 0.8459212, y: 0.6200546, z: -0.29488763}
 --- !u!1 &1084760652472488168
 GameObject:
   m_ObjectHideFlags: 0
@@ -669,6 +647,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70add65141a03c94dbf66691ea182155, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RMaterialList: []
 --- !u!1001 &1434606579106425021
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -551,6 +551,37 @@ CapsuleCollider:
   m_Height: 0.06
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &456884449891602035
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1198617109503139516}
+  m_Layer: 9
+  m_Name: Particle Spawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1198617109503139516
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 456884449891602035}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.027000025, y: 0, z: 0.105000034}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6320909590653122245}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &467849033204804586
 GameObject:
   m_ObjectHideFlags: 0
@@ -3481,6 +3512,7 @@ GameObject:
   - component: {fileID: 4710054781732697559}
   - component: {fileID: 4035014081320553009}
   - component: {fileID: 2195090300615719147}
+  - component: {fileID: 2190295803917406680}
   m_Layer: 9
   m_Name: VR Player
   m_TagString: Untagged
@@ -3720,6 +3752,25 @@ MonoBehaviour:
   m_LocomotionProvider: {fileID: 4417457345493538781}
   m_MinHeight: 0
   m_MaxHeight: Infinity
+--- !u!114 &2190295803917406680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2324035213948884905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 039bb24c011aeb042b27d4202d6b5f9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xr: {fileID: 2324035213948884905}
+  eye: {fileID: 194890005966374514}
+  executeMethod: 1
+  speedMul: 1
+  speedMode: 0
+  constantSpeed: 2
+  constantSpeedThreshold: 1
 --- !u!1 &2495433360403463069
 GameObject:
   m_ObjectHideFlags: 0
@@ -5610,6 +5661,7 @@ Transform:
   - {fileID: 3477970683467665350}
   - {fileID: 7705857342434982732}
   - {fileID: 5371278913010910937}
+  - {fileID: 1198617109503139516}
   m_Father: {fileID: 4745634843690301426}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &256904150576817618

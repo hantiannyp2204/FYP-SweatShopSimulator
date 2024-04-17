@@ -122,10 +122,10 @@ public class KATXRWalker : MonoBehaviour
 
     void LateUpdate()
     {
-        var offset = transform.position - lastPosition;
-        offset.y = 0;
-        xr.transform.position += offset;
+        //var offset = transform.position - lastPosition;
+        //offset.y = 0;
+        //xr.transform.position += offset;
 
-        lastPosition = transform.position;
+        //lastPosition = transform.position;
     }
 }

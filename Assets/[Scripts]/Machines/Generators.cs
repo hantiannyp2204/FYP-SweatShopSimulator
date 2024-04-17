@@ -10,6 +10,8 @@ public class Generators : MonoBehaviour
 
     private XRBaseInteractor interactorUsingThis;
 
+    public TMP_Text debugtxt;
+
     protected void OnEnable()
     {
         // Get the interactable component and subscribe to the select entered event
@@ -24,6 +26,11 @@ public class Generators : MonoBehaviour
 
     private void OnGrabbed(SelectEnterEventArgs args)
     {
+        if(debugtxt != null)
+        {
+            debugtxt.text = "NIGGER";
+        }
+
         interactorUsingThis = args.interactor;
         GenerateAndGrabMetalScrap();
     }

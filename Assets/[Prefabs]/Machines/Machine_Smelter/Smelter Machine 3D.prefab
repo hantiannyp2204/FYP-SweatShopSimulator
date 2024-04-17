@@ -62,6 +62,7 @@ MonoBehaviour:
   smelterInputHitbox: {fileID: 8274934713080159160}
   e_run: {fileID: 11400000, guid: 3832a50ebd4f6504089197b858ffa64f, type: 2}
   e_done: {fileID: 11400000, guid: 8b3e12ebd572b17479f703e840a8850a, type: 2}
+  timeToBlowUp: 5
 --- !u!114 &214684774921011484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -460,7 +461,7 @@ GameObject:
   - component: {fileID: 8263358467002186990}
   - component: {fileID: 8323890491880459974}
   - component: {fileID: 8446944659136042988}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Smelter Main Door Handel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -543,7 +544,7 @@ GameObject:
   m_Component:
   - component: {fileID: 567544500610959592}
   - component: {fileID: 7899229827619207516}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Smelter Main Door Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -798,7 +799,7 @@ GameObject:
   - component: {fileID: 3119543094886921688}
   - component: {fileID: 5669488432024425819}
   - component: {fileID: 3209093005765522026}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Smelter Main Door Render
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -935,7 +936,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7684469044890416207}
   - component: {fileID: 7786398085057392715}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Smelter Main Door Handel Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1179,7 +1180,8 @@ GameObject:
   - component: {fileID: 3208015321152163072}
   - component: {fileID: 826499629708754870}
   - component: {fileID: 5048339020882737499}
-  m_Layer: 0
+  - component: {fileID: 1015012356948029374}
+  m_Layer: 10
   m_Name: Smelter Main Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1422,6 +1424,20 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
+--- !u!114 &1015012356948029374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7675231250745805747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cc4f1b2987c18b4b9517e69486a9701, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainDoor: {fileID: 7675231250745805747}
+  doorLocked: 0
 --- !u!1 &7824746676974856724
 GameObject:
   m_ObjectHideFlags: 0

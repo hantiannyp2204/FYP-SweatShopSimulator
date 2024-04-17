@@ -2,182 +2,189 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using static Scrap;
 
 public class MachineSmelter : MonoBehaviour
 {
-    [SerializeField] float smeltTime = 3;
-    float elapsedTime;
-    [SerializeField] TMP_Text timerText;
-    Coroutine smeltingCoroutineHandler;
+    [SerializeField] private float smeltTime = 3f;
+    [SerializeField] private List<ItemData> outputItemList;
+    [SerializeField] private SmelterInputHitbox smelterInputHitbox;
+    [SerializeField] private TMP_Text timerText;
+    [SerializeField] private float timeToBlowUp = 5f;
+    [SerializeField] private TMP_Text coalPercentage;
 
-    [SerializeField] List<ItemData> OutputItemList = new();
-    [SerializeField] SmelterInputHitbox smelterInputHitbox;
-    // Feedback
-    [Header("FEEDBACK")]
+    [Header("Feedback Events")]
     [SerializeField] private FeedbackEventData e_run;
     [SerializeField] private FeedbackEventData e_done;
 
-    //fuel system
-    bool scrapConverted = false;
-    bool convertingPaused = false; // This variable is now unnecessary
-    float fuelLeft;
+    [Header("Door System")]
+    [SerializeField] private XRDoor door;
 
-    //obstcal event
-    [SerializeField] float timeToBlowUp = 5;
-    float elapsedTimeToBlowUp = 0;
-    bool blewUp = false;
+    private float elapsedTime = 0f;
+    private Coroutine smeltingCoroutineHandler;
+    private bool scrapConverted = false;
+    private float fuelLeft;
+    private float maxFuel; // Variable to track the maximum fuel level for current refill
+    private float elapsedTimeToBlowUp = 0f;
+    private bool blewUp = false;
 
-    //door system
-    bool isDoorClosed;
-    public void SetDoorClose(bool doorCloseStatus)
-    {
-        isDoorClosed = doorCloseStatus;
-    }
+    public TMP_Text debugTxt;
+
     private void Awake()
     {
         RefillFuel();
         timerText.text = "Ready";
     }
 
-    IEnumerator SmeltCoroutine()
+    private IEnumerator SmeltCoroutine()
     {
         e_run?.InvokeEvent(transform.position, Quaternion.identity, transform);
 
-        while (elapsedTime <= smeltTime && fuelLeft > 0) // Check fuel level
+        // Smelting process
+        while (elapsedTime <= smeltTime && fuelLeft > 0)
         {
-            elapsedTime += Time.deltaTime;
-            fuelLeft -= Time.deltaTime; // Simulate fuel consumption
-            timerText.text = ((int)(smeltTime - elapsedTime) + 1).ToString();
+            UpdateTimer();
             yield return null;
         }
 
+        // Check if smelting was paused due to fuel running out
         if (fuelLeft <= 0)
         {
-            // Pause execution here by returning and not proceeding to the rest of the method.
-            // The coroutine is technically still running but doing nothing.
-            convertingPaused = true; // This marks that the process is paused.
-            yield break; // Exit the coroutine
+            PauseSmelting();
+            yield break;
         }
 
-
-
-        //replace all scrap with their respective material
-        foreach(Scrap scrap in smelterInputHitbox.GetScrapList())
-        {
-            ItemData outputMaterial;
-            //convert scrap to its specific raw material
-            //0 is plastic, 1 is wood, 2 is metal
-            switch (scrap.GetScrapType())
-            {
-                case ScrapType.Plastic:
-                    outputMaterial= OutputItemList[0];
-                    break;
-                case ScrapType.Wood:
-                    outputMaterial = OutputItemList[1];
-                    break;
-                case ScrapType.Metal:
-                    outputMaterial = OutputItemList[2];
-                    break;
-                default:
-                    outputMaterial = OutputItemList[0];
-                    break;
-            }
-            //spwan the materail at where the scrap was at
-            Instantiate(outputMaterial.GetPrefab(), scrap.transform.position, scrap.transform.rotation);
-            //delete the scrap
-            Destroy(scrap.gameObject);
-
-        }
-        foreach(GameObject wrongItemType in smelterInputHitbox.GetDestroyList())
-        {
-            Destroy(wrongItemType);
-        }
-
-        //play done sound
+        // Process and replace all scrap materials
+        ProcessScrapMaterials();
         e_done?.InvokeEvent(transform.position, Quaternion.identity, transform);
-        timerText.text = "Done";
 
-        //reset all varaible
-        elapsedTime = 0;
-        smeltingCoroutineHandler = null;
-        smelterInputHitbox.ClearList();
-        scrapConverted = true;
-        yield return null;
+        ResetSmeltingVariables();
     }
 
     public void ToggleMachine()
     {
-        //only run if door closed
-        if (!isDoorClosed) return;
-        if (smeltingCoroutineHandler == null) // Start only if not already running
+        if (!door.IsDoorLocked() || blewUp) return;
+
+        if (smeltingCoroutineHandler == null && !scrapConverted)
         {
-            elapsedTime = 0; // Reset elapsed time
-            smeltingCoroutineHandler = StartCoroutine(SmeltCoroutine());
+            StartSmelting();
         }
-        else if(scrapConverted)
+        else if (scrapConverted)
         {
-            scrapConverted = false;
-            Debug.Log("Machine Deactive");
+            DeactivateMachine();
         }
     }
+
     public void RefillFuel()
     {
-        fuelLeft = Random.Range(100, 300); // Refill the fuel
-        if (convertingPaused) // Check if it was paused due to fuel running out
+        maxFuel = Random.Range(20, 30); // Determine max fuel on refill
+        fuelLeft = maxFuel; // Reset fuel to this maximum
+
+        coalPercentage.text = "Coal: 100%"; // Initially, coal is at 100%
+
+        // Check if the machine was paused and resume operation if necessary
+        if (smeltingCoroutineHandler != null)
         {
-            convertingPaused = false;
-            ToggleMachine(); // Resume smelting by starting the coroutine again
+            ToggleMachine(); // Resume smelting
         }
     }
 
     private void Update()
     {
-        if (blewUp) return;
-        //if ran out of fuel, pause coroutine
-        if (fuelLeft <= 0 && smeltingCoroutineHandler != null)
+        HandleFuelDepletion();
+        HandleBlowUpCountdown();
+        UpdateCoalPercentage();
+    }
+    private void UpdateCoalPercentage()
+    {
+        if (maxFuel > 0) // Ensure we don't divide by zero
         {
-            fuelLeft = 0;
-            timerText.text = "Out of fuel";
-            StopCoroutine(smeltingCoroutineHandler); // Stop the coroutine if it's running
-            smeltingCoroutineHandler = null; // Clear the handler to allow restarting
-        }
-        //do countdown to burning
-        if (scrapConverted)
-        {
-            fuelLeft -= Time.deltaTime;
-            elapsedTimeToBlowUp += Time.deltaTime;
-            if(elapsedTimeToBlowUp >= timeToBlowUp)
-            {
-                timerText.text = "WARNING!!!";
-                BlowUp();
-            }
+            float percentage = (fuelLeft / maxFuel) * 100f; // Calculate fuel percentage
+            coalPercentage.text = $"Coal: {Mathf.Clamp(percentage, 0, 100):0}%"; // Clamp to ensure it's between 0% and 100%
         }
     }
-    void BlowUp()
+    private void StartSmelting()
     {
-        //play blow up sound
-        //play blow up effect
-        //reset all varaibles
-        elapsedTimeToBlowUp = timeToBlowUp;
+        door.SetAbilityToGrab(false);
+        smeltingCoroutineHandler = StartCoroutine(SmeltCoroutine());
+    }
+
+    private void DeactivateMachine()
+    {
+        door.SetAbilityToGrab(true);
         scrapConverted = false;
+        Debug.Log("Machine Deactivated");
+    }
+
+    private void PauseSmelting()
+    {
+        timerText.text = "Out of fuel";
+        StopCoroutine(smeltingCoroutineHandler);
         smeltingCoroutineHandler = null;
+    }
+
+    private void ResetSmeltingVariables()
+    {
+        timerText.text = "Done";
         elapsedTime = 0;
-        //delete all items in the hitbox
-        foreach (Scrap scraps in smelterInputHitbox.GetScrapList())
+        smeltingCoroutineHandler = null;
+        smelterInputHitbox.ClearList();
+        scrapConverted = true;
+
+    }
+
+    private void UpdateTimer()
+    {
+        elapsedTime += Time.deltaTime;
+        fuelLeft -= Time.deltaTime; // Simulate fuel consumption
+        timerText.text = ((int)(smeltTime - elapsedTime) + 1).ToString();
+    }
+
+    private void HandleFuelDepletion()
+    {
+        if (fuelLeft <= 0 && smeltingCoroutineHandler != null)
         {
-            Destroy(scraps);
+            PauseSmelting();
         }
+    }
+
+    private void ProcessScrapMaterials()
+    {
+        foreach (Scrap scrap in smelterInputHitbox.GetScrapList())
+        {
+            var outputMaterial = outputItemList[(int)scrap.GetScrapType()];
+            Instantiate(outputMaterial.GetPrefab(), scrap.transform.position, scrap.transform.rotation);
+            Destroy(scrap.gameObject);
+        }
+
         foreach (GameObject wrongItemType in smelterInputHitbox.GetDestroyList())
         {
             Destroy(wrongItemType);
         }
-        smelterInputHitbox.ClearList();
+    }
+
+    private void HandleBlowUpCountdown()
+    {
+        if (!scrapConverted || blewUp) return;
+
+        elapsedTimeToBlowUp += Time.deltaTime;
+        if (elapsedTimeToBlowUp >= timeToBlowUp)
+        {
+            BlowUp();
+        }
+    }
+
+    private void BlowUp()
+    {
+        //run the blow up sound
+        //run the blow up effects
+        debugTxt.text = "ALLAHUAKBARR";
+        timerText.text = "WARNING!!!";
         blewUp = true;
     }
-    void FixBlowUp()
+
+    public void FixBlowUp()
     {
         blewUp = false;
-        //play stop particles
+        elapsedTimeToBlowUp = 0;
     }
 }

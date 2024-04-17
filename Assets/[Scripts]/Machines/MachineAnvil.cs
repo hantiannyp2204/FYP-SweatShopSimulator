@@ -7,11 +7,12 @@ public class MachineAnvil : MonoBehaviour
     Item inputItem;
     [SerializeField] List<ItemData> OutputItemList;
     [SerializeField] Transform Anvil_itemPosition;
+    [SerializeField] AnvilHitbox anvilHitbox;
     [SerializeField] private State currentState;
     //[SerializeField] private GameObject player;
     public VrMachineItemCollider anvilItemCollider;
-    ItemData outputItemData;
-    GameObject outputItem;
+    
+    //GameObject outputItem;
 
     // Feedback
     [Header("FEEDBACK")]
@@ -47,11 +48,12 @@ public class MachineAnvil : MonoBehaviour
     public void RunMachine()
     {
         Debug.Log("using anvil");
-        //if(item != RawMaterial)
-        //else
+
+
+        
+        foreach (RawMaterial currentRawType in anvilHitbox.GetRMaterialList())
         {
-            ChangeState();
-            RawMaterial currentRawType = inputItem.GetComponent<RawMaterial>();
+            ItemData outputItemData;
             //convert scrap to its specific raw material
             //0 is plastic, 1 is wood, 2 is metal
             int selectedFlatMaterial = 0;
@@ -73,11 +75,19 @@ public class MachineAnvil : MonoBehaviour
             //set the output item
             outputItemData = OutputItemList[selectedFlatMaterial];
             //spawn the flattened material
-            outputItem = Instantiate(outputItemData.GetPrefab(), Anvil_itemPosition);
+            Instantiate(outputItemData.GetPrefab(), Anvil_itemPosition);
+            //destroy the input materials
+            Destroy(currentRawType.gameObject);
         }
-       
+        foreach (GameObject wrongItemType in anvilHitbox.GetTrashList())
+        {
+            Destroy(wrongItemType);
+        }
 
-       // Item currentItem = player.playerInventory.GetCurrentItem();
+        ChangeState();
+
+
+        // Item currentItem = player.playerInventory.GetCurrentItem();
 
         //Item currenttool = player.playerInventory.GetCurrentItem();
         //cant interact if in use

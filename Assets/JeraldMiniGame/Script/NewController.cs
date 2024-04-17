@@ -8,6 +8,7 @@ using System.Collections;
 public class NewController : MonoBehaviour
 {
     public MacineFab macine;
+    public FabricatorCrafting crafting;
     public FabricatorVrCollider fabricatorCollider;
     //public Power power;
     public float speed = 50;
@@ -201,7 +202,7 @@ public class NewController : MonoBehaviour
         macine._WinORLose.SetActive(false);
         gameEnded = false; // Reset gameEnded to false
 
-        if (Lnum < 3)
+        if (Lnum < 2)
         {
             Lnum += 1;
             UpdateLevelParameters();
@@ -209,15 +210,18 @@ public class NewController : MonoBehaviour
         }
         else
         {
-            Item item = fabricatorCollider.GetProduct();
-            Destroy(fabricatorCollider.GetProduct().gameObject);
-            foreach (ItemData a in item.Data.productContainable)
-            {
-                a.GetPrefab().GetComponent<Rigidbody>().isKinematic = true;
-                Instantiate(a.GetPrefab(), fabricatorCollider._collider.transform.position, Quaternion.identity);
+            //Item item = fabricatorCollider.GetProduct();
+            //Destroy(fabricatorCollider.GetProduct().gameObject);
+            //foreach (ItemData a in item.Data.productContainable)
+            //{
+            //    a.GetPrefab().GetComponent<Rigidbody>().isKinematic = true;
+            //    Instantiate(a.GetPrefab(), fabricatorCollider._collider.transform.position, Quaternion.identity);
 
-            }
+            //}
             // Reset everythings
+            crafting.DestroyOBJ();
+            crafting.ClearLists();  
+            crafting.SpawnOBJ();
             hold = false;
             temp = 0;
             macine._WinORLose.SetActive(false);

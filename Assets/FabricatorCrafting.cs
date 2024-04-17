@@ -8,31 +8,63 @@ public class FabricatorCrafting : MonoBehaviour
     public bool HasChosenCraftingItem = false;
     public FabricatorInputHitbox inputHitbox;
     public Item item;
-    public Item Plasticitem;
+    //public Item Plasticitem;
     public List<Item> _WhatINeed = new List<Item>();
-    List<Item> _ToDestroy = new List<Item>();
+    public List<GameObject> _ToDestroy = new List<GameObject>();
     public int foundCount = 0; // Counter to track the number of found items
+    public Collider _SpawnPlace;
+    public GameObject item2Spawn;
 
 
     private void Update()
     {
-       Debugging();
+        Debugging();
     }
     public void CheckIfPresent()
     {
 
-
+        List<Item> AvailableItems = inputHitbox.GetScrapList();
+        
         foreach (Item neededItem in _WhatINeed)
         {
-            foreach (Item availableItem in inputHitbox.GetScrapList())
+            if (neededItem.TryGetComponent(out RawMaterial RawMat))
             {
-
-                if (neededItem == availableItem)
+                foreach (Item availableItem in AvailableItems)
                 {
-                    foundCount++; // Increment the counter for each found item
-                    break; // Exit the inner loop since the item is found
+                    if (availableItem.TryGetComponent(out RawMaterial RawMat2))
+                    {
+                        if (RawMat.GetRawMaterialType() == RawMat2.GetRawMaterialType())
+                        {
+                            foundCount++; // Increment the counter for each found item
+                            _ToDestroy.Add(availableItem.gameObject);
+                            Debug.Log(AvailableItems.Count);
+                            AvailableItems.Remove(availableItem);
+                            break; // Exit the inner loop since the item is found
+                        }
+                    }
+                   
                 }
             }
+
+            if (neededItem.TryGetComponent(out Scrap ScrapCom))
+            {
+                foreach (Item availableItem in AvailableItems)
+                {
+                    if (availableItem.TryGetComponent(out Scrap ScrapCom2))
+                    {
+                        if (ScrapCom.GetScrapType() == ScrapCom2.GetScrapType())
+                        {
+                            foundCount++; // Increment the counter for each found item
+                            _ToDestroy.Add(availableItem.gameObject);
+                            Debug.Log(AvailableItems.Count);
+                            AvailableItems.Remove(availableItem);
+                            break; // Exit the inner loop since the item is found
+                        }
+                    }
+
+                }
+            }
+
         }
 
         if (foundCount == _WhatINeed.Count)
@@ -48,13 +80,27 @@ public class FabricatorCrafting : MonoBehaviour
         }
     }
 
-   
+    public void DestroyOBJ()
+    {
+        foreach (GameObject ToDestroy in _ToDestroy)
+        {
+            Destroy(ToDestroy.gameObject);
+        }
+    }
 
     public void ClearLists()
     {
         _WhatINeed.Clear();
         inputHitbox.GetScrapList().Clear();
+        _ToDestroy.Clear();
         foundCount = 0;
+        HasChosenCraftingItem = false;
+        EnoughMaterials = false;
+    }
+
+    public void SpawnOBJ()
+    {
+        Instantiate(item2Spawn,_SpawnPlace.transform.position,Quaternion.identity);
     }
 
     public void LogMissingItems(List<Item> missingItems)
@@ -84,7 +130,7 @@ public class FabricatorCrafting : MonoBehaviour
             for (int i = 0; i < 3; i++) // Change 3 to the number of items you want to add
             {
                 _WhatINeed.Add(item); // Assuming you want to add the same item multiple times
-                _WhatINeed.Add(Plasticitem);
+                //_WhatINeed.Add(Plasticitem);
             }
 
             foreach (Item Item in _WhatINeed)

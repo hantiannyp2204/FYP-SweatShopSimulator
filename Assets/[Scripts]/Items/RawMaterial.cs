@@ -10,7 +10,7 @@ public class RawMaterial : MonoBehaviour
         Wood,
         Metal
     }
-    [SerializeField] public RawMaterialType type;
+    [SerializeField] RawMaterialType type;
 
     public RawMaterialType GetRawMaterialType() => type;
 }

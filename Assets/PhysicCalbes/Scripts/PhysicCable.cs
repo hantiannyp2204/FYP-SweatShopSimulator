@@ -29,8 +29,8 @@ namespace HPhysic
 
         private const string cloneText = "Part";
 
-        private Connector startConnector;
-        private Connector endConnector;
+        //private Connector startConnector;
+        //private Connector endConnector;
 
         [Button("Reset points")]
         private void UpdatePoints()
@@ -167,8 +167,8 @@ namespace HPhysic
 
         private void Start()
         {
-            startConnector = start.GetComponent<Connector>();
-            endConnector = end.GetComponent<Connector>();
+            //startConnector = start.GetComponent<Connector>();
+            //endConnector = end.GetComponent<Connector>();
 
             brakeLength = space * numberOfPoints * brakeLengthMultiplier + 2f;
 
@@ -207,7 +207,7 @@ namespace HPhysic
         private void Update()
         {
             float cableLength = 0f;
-            bool isConnected = startConnector.IsConnected || endConnector.IsConnected;
+            //bool isConnected = startConnector.IsConnected || endConnector.IsConnected;
 
             int numOfParts = connectors.Count;
             Transform lastPoint = points[0];
@@ -226,29 +226,29 @@ namespace HPhysic
                     connector.localScale = CountSizeOfCon(lastPoint.position, nextPoint.position);
                 }
 
-                if (isConnected)
-                    cableLength += (lastPoint.position - nextPoint.position).magnitude;
+                //if (isConnected)
+                //    cableLength += (lastPoint.position - nextPoint.position).magnitude;
 
                 lastPoint = nextPoint;
             }
 
-            if (isConnected)
-            {
-                if (cableLength > brakeLength)
-                {
-                    timeToBrake -= Time.deltaTime;
-                    if (timeToBrake < 0f)
-                    {
-                        startConnector.Disconnect();
-                        endConnector.Disconnect();
-                        timeToBrake = minBrakeTime;
-                    }
-                }
-                else
-                {
-                    timeToBrake = minBrakeTime;
-                }
-            }
+            //if (isConnected)
+            //{
+            //    if (cableLength > brakeLength)
+            //    {
+            //        timeToBrake -= Time.deltaTime;
+            //        if (timeToBrake < 0f)
+            //        {
+            //            startConnector.Disconnect();
+            //            endConnector.Disconnect();
+            //            timeToBrake = minBrakeTime;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        timeToBrake = minBrakeTime;
+            //    }
+            //}
         }
 
         private Vector3 CountConPos(Vector3 start, Vector3 end) => (start + end) / 2f;
@@ -287,8 +287,8 @@ namespace HPhysic
         }
 
 
-        public Connector StartConnector => startConnector;
-        public Connector EndConnector => endConnector;
+        //public Connector StartConnector => startConnector;
+        //public Connector EndConnector => endConnector;
         public IReadOnlyList<Transform> Points => points;
     }
 }

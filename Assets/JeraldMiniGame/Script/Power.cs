@@ -66,11 +66,11 @@ public class Power : MonoBehaviour
             NoPower();
         }
 
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            Debug.Log("Level");
-            Debug.Log(currentlevel);
-        }
+        //if (Input.GetKeyDown(KeyCode.P))
+        //{
+        //    Debug.Log("Level");
+        //    Debug.Log(currentlevel);
+        //}
 
 
     }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class AnvilButton : VRButton
 {
     [SerializeField] private MachineAnvil anvil;
+
     public override void PressedFunction()
     {
         //if list is empty, there is nothing in collider

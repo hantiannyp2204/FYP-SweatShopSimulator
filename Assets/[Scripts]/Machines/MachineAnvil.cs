@@ -95,34 +95,6 @@ public class MachineAnvil : MonoBehaviour
         //currentState = State.Empty;
         Debug.Log("Deactivated");
    }
-   //void ChangeState()
-   //{
-   //    switch (currentState)
-   //    {
-   //        case State.Empty:
-   //            currentState = State.HasItem;
-   //            break;
-   //        case State.HasItem:
-   //            currentState = State.Empty;
-   //            Debug.Log("State changed to Crafting");
-   //            break;
-   //        //case State.Crafting:
-   //        //    currentState = State.Empty;
-   //        //    Debug.Log("State changed to Empty");
-   //        //    break;
-   //    }
-   //}
-    
-
-
-
-    //// Start is called before the first frame update
-    
-
-    //// Update is called once per frame
-    //void Update()
-    //{
-
-    //}
+  
 }
 

@@ -743,18 +743,6 @@ Transform:
   - {fileID: 2059298407}
   m_Father: {fileID: 1926497047}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &304124838 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2646000699321126726, guid: b5465bcff680c254a813d90e3b68c206,
-    type: 3}
-  m_PrefabInstance: {fileID: 695896202}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b29b5aa50df4e7f48ac761968ef28814, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &342582060 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4627876268409951387, guid: 7f957c83514044d4da1ecb40588a5c2d,
@@ -1812,16 +1800,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2646000699321126726, guid: b5465bcff680c254a813d90e3b68c206,
+    - target: {fileID: 2872265201480014311, guid: b5465bcff680c254a813d90e3b68c206,
         type: 3}
-      propertyPath: fabricator
+      propertyPath: item
       value: 
-      objectReference: {fileID: 1448699088}
-    - target: {fileID: 2672428733364277927, guid: b5465bcff680c254a813d90e3b68c206,
-        type: 3}
-      propertyPath: _Crafting
-      value: 
-      objectReference: {fileID: 1448699088}
+      objectReference: {fileID: 1993010736}
     - target: {fileID: 3837467528617833990, guid: b5465bcff680c254a813d90e3b68c206,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1872,40 +1855,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4238245566111952662, guid: b5465bcff680c254a813d90e3b68c206,
-        type: 3}
-      propertyPath: crafting
-      value: 
-      objectReference: {fileID: 1448699088}
     - target: {fileID: 5005477706403541070, guid: b5465bcff680c254a813d90e3b68c206,
         type: 3}
       propertyPath: m_Name
       value: Fabricator 3D
       objectReference: {fileID: 0}
-    - target: {fileID: 6200236587406095673, guid: b5465bcff680c254a813d90e3b68c206,
-        type: 3}
-      propertyPath: item_data
-      value: 
-      objectReference: {fileID: 1993010736}
-    - target: {fileID: 6200236587406095673, guid: b5465bcff680c254a813d90e3b68c206,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6200236587406095673, guid: b5465bcff680c254a813d90e3b68c206,
-        type: 3}
-      propertyPath: OutputHitbox
-      value: 
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6200236587406095673, guid: b5465bcff680c254a813d90e3b68c206, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3448888047987922294, guid: b5465bcff680c254a813d90e3b68c206,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1448699088}
+      addedObject: {fileID: 1448699092}
   m_SourcePrefab: {fileID: 100100000, guid: b5465bcff680c254a813d90e3b68c206, type: 3}
 --- !u!1001 &796403461
 PrefabInstance:
@@ -2981,7 +2943,19 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 695896202}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1448699088
+--- !u!114 &1448699088 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2872265201480014311, guid: b5465bcff680c254a813d90e3b68c206,
+    type: 3}
+  m_PrefabInstance: {fileID: 695896202}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1448699084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd24038fe80e81e49a12815d28dcb180, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1448699092
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2990,25 +2964,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1448699084}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd24038fe80e81e49a12815d28dcb180, type: 3}
+  m_Script: {fileID: 11500000, guid: b81e9d4b0118c6a4c8b061625384901b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnoughMaterials: 0
-  HasChosenCraftingItem: 0
-  inputHitbox: {fileID: 304124838}
-  item: {fileID: 1993010736}
-  _WhatINeed: []
-  _ToDestroy: []
-  foundCount: 0
-  _SpawnPlace: {fileID: 1448699090}
-  item2Spawn: {fileID: 6455732590442345198, guid: 548b15e7a03601442afc567c0049b310,
+  CraftingNumber: 0
+  fabricatorCrafting: {fileID: 1448699088}
+  RawMetalMaterial: {fileID: 1976747673}
+  RawPlasticMaterial: {fileID: 8607376293775170437, guid: 793651f75ab7fa2429e9c851a03858a9,
     type: 3}
---- !u!65 &1448699090 stripped
-BoxCollider:
-  m_CorrespondingSourceObject: {fileID: 2242061751884256120, guid: b5465bcff680c254a813d90e3b68c206,
+  RawWoodMaterial: {fileID: 3555054905180592259, guid: 937fce7a216aa26489aceb4e378fe3ea,
     type: 3}
-  m_PrefabInstance: {fileID: 695896202}
-  m_PrefabAsset: {fileID: 0}
+  MetalScap: {fileID: 949434679815661635, guid: c7eec52470264174abac453ead130393,
+    type: 3}
+  PlasticScrap: {fileID: 3054858910427420724, guid: 14d0875a5bc6bf64d80dbea8db793387,
+    type: 3}
+  WoodenScrap: {fileID: 5747833209156181583, guid: 9939b78f64a35704c8b11e2ff3b013d4,
+    type: 3}
+  RequiredMetal_Broken_Sword: 0
+  RequiredMetal_Sword: 0
 --- !u!1001 &1482192559
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3379,6 +3352,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1976747673 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8621258297932030733, guid: c78ec8f4eeadc324cb09431b721e7756,
+    type: 3}
+  m_PrefabInstance: {fileID: 24757291}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5895d806f9cb464c8883d988f733d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1993010736 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8621258297932030733, guid: c78ec8f4eeadc324cb09431b721e7756,

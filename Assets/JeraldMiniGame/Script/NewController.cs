@@ -221,7 +221,7 @@ public class NewController : MonoBehaviour
             // Reset everythings
             crafting.DestroyOBJ();
             crafting.ClearLists();  
-            crafting.SpawnOBJ();
+            crafting.SpawnOBJ(crafting.item2Spawn);
             hold = false;
             temp = 0;
             macine._WinORLose.SetActive(false);

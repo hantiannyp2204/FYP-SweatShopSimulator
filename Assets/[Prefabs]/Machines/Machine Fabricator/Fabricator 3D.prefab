@@ -1128,8 +1128,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9037283221485802337}
   - component: {fileID: 2242061751884256120}
-  - component: {fileID: 7477137245826760311}
-  - component: {fileID: 6200236587406095673}
+  - component: {fileID: 2872265201480014311}
   m_Layer: 0
   m_Name: Fabricator Hitbox output
   m_TagString: Untagged
@@ -1173,23 +1172,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.44715944, y: 0.9180193, z: 0.7186292}
   m_Center: {x: 0.327228, y: 0.6141501, z: 0.08799916}
---- !u!114 &7477137245826760311
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3448888047987922294}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7814e191dc427645bf9ff63f2ea98df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Fabricator: {fileID: 2672428733364277927}
-  layerCheck: RawMat
-  isCollided: 0
-  _collider: {fileID: 2242061751884256120}
---- !u!114 &6200236587406095673
+--- !u!114 &2872265201480014311
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1201,9 +1184,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd24038fe80e81e49a12815d28dcb180, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputHitbox: {fileID: 0}
-  item_data: {fileID: 0}
-  _NotEnoughMat: 0
+  EnoughMaterials: 0
+  HasChosenCraftingItem: 0
+  inputHitbox: {fileID: 2646000699321126726}
+  item: {fileID: 0}
+  _WhatINeed: []
+  _ToDestroy: []
+  foundCount: 0
+  _SpawnPlace: {fileID: 2242061751884256120}
+  item2Spawn: {fileID: 6455732590442345198, guid: 548b15e7a03601442afc567c0049b310,
+    type: 3}
 --- !u!1 &3550246674413078842
 GameObject:
   m_ObjectHideFlags: 0
@@ -2135,6 +2125,7 @@ MonoBehaviour:
   _TextHolder: {fileID: 9062411647424298097}
   _StartButton: {fileID: 2079663662685715383}
   _NextButton: {fileID: 1243508903188132352}
+  _Crafting: {fileID: 2872265201480014311}
   _WinORLose: {fileID: 8117458692353823543}
   newController: {fileID: 4238245566111952662}
 --- !u!1 &6025299666625791807
@@ -2617,6 +2608,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   macine: {fileID: 2672428733364277927}
+  crafting: {fileID: 2872265201480014311}
   fabricatorCollider: {fileID: 466088701469474084}
   speed: 50
   trueRange: 50
@@ -3393,6 +3385,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b5aa50df4e7f48ac761968ef28814, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scrapList: []
+  fabricator: {fileID: 2872265201480014311}
 --- !u!1 &8353936741971016396
 GameObject:
   m_ObjectHideFlags: 0

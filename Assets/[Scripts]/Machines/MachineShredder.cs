@@ -7,24 +7,32 @@ using Unity.VisualScripting;
 using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.UIElements;
+using UnityEngine.XR.Content.Interaction;
+
 
 public class MachineShredder : MonoBehaviour
 {
+    [Header("VR REFERENCES")]
+    public XRLever lever;
+    public XRKnob wheel;
+    [SerializeField] private float valueToComplete;
+
+
+    [Header("BUTTON REFERENCES")]
     [SerializeField] private GameObject spamButton;
     [SerializeField] private GameObject fuelButton;
+
+    [Header("LOCATION SPAWNER PREFABS")]
     [SerializeField] private Transform spawnLocation;
     [SerializeField] private Transform particleSpawnLocation;
     public VrMachineItemCollider shredderItemCollider;
 
     [Header("KEYBOARD PLAYER")]
     [HideInInspector] public float secretHealth;
-/*    [HideInInspector]*/ 
-    public float maxHealth;
-
     [SerializeField] private Scrollbar progressBar;
-
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject afterInteract;
+    public float maxHealth;
 
     [Header("Debug")]
     [SerializeField] private TMP_Text progressText;

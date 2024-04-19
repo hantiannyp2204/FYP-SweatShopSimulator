@@ -29,6 +29,10 @@ public class MachineSmelter : MonoBehaviour
 
     public TMP_Text debugTxt;
 
+    [Header("Particle Effects")]
+    [SerializeField] private ParticleSystem explosionParticle;
+    [SerializeField] private ParticleSystem fireParticle;
+
     private void Awake()
     {
         RefillFuel();
@@ -177,13 +181,15 @@ public class MachineSmelter : MonoBehaviour
     {
         //run the blow up sound
         //run the blow up effects
-        debugTxt.text = "ALLAHUAKBARR";
+        explosionParticle.Play();
+        fireParticle.Play();
         timerText.text = "WARNING!!!";
         blewUp = true;
     }
 
     public void FixBlowUp()
     {
+        fireParticle.Stop();
         blewUp = false;
         elapsedTimeToBlowUp = 0;
     }

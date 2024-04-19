@@ -235,7 +235,6 @@ public class MachineShredder : MonoBehaviour
                 }
             }
         }
-
         {
             //if (_chargeValue >= 1)
             //{

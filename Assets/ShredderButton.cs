@@ -10,8 +10,13 @@ public class ShredderButton : VRButton
 
     private void Start()
     {
+        //shredder.lever.onLeverDeactivate.AddListener(PressedFunction); // when activate do what?
         base.Start();
-        shredder.lever.onLeverDeactivate.AddListener(PressedFunction); // when activate do what?
+    }
+
+    public void Test()
+    {
+        Debug.Break();
     }
     public override void PressedFunction()
     {
@@ -35,11 +40,12 @@ public class ShredderButton : VRButton
         //}
 
         // testing
-        if (!shredder.wheel.gameObject.activeSelf)
+        if (!shredder.wheel.activeSelf)
         {
-            shredder.wheel.gameObject.SetActive(true);
+            shredder.wheel.SetActive(true);
         }
-        shredder.RunActive();
+
+        //shredder.RunActive();
     }
 
     public override void ReleasedFunction()

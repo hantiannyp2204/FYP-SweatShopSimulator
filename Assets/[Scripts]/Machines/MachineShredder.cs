@@ -13,8 +13,8 @@ using UnityEngine.XR.Content.Interaction;
 public class MachineShredder : MonoBehaviour
 {
     [Header("VR REFERENCES")]
-    public XRLever lever;
-    public XRKnob wheel;
+    public GameObject lever;
+    public GameObject wheel;
     [SerializeField] private float valueToComplete;
 
 
@@ -57,6 +57,9 @@ public class MachineShredder : MonoBehaviour
     private Bounds _spawnPointBound;
     private RefillFuelManager _refillManager;
 
+    private XRKnob _wheelPlug;
+    private WheelManager _wheelManager;
+
     public bool AlreadyFull()
     {
         return secretHealth >= maxHealth;
@@ -78,7 +81,7 @@ public class MachineShredder : MonoBehaviour
             baseInteractable.enabled= false;
             itemToShred.GetComponent<Rigidbody>().isKinematic = true;
         }
-        GameObject spam = Instantiate(spamButton, spawnLocation.transform.position, Quaternion.identity);
+        //GameObject spam = Instantiate(spamButton, spawnLocation.transform.position, Quaternion.identity);
     }
 
     public void RunDeactive()
@@ -108,12 +111,28 @@ public class MachineShredder : MonoBehaviour
 
     public float GetNewHealth()
     {
-        return Random.Range(2,10);
+        return Random.Range(2, 10);
+    }
+
+    public void CanShred()
+    {
+        _initShredding = true;
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        wheel.SetActive(false);
+
+        _wheelPlug = wheel.GetComponentInChildren<XRKnob>();
+
+        _wheelPlug.value = 0;
+
+        //_wheelPlug.ValueChangeShredder.AddListener(ListenToValueChange);
+        _wheelManager = _wheelPlug.GetComponent<WheelManager>();
+        _wheelManager.canStartShredding.AddListener(CanShred);
+            
+
         _spawnPointBound = spawnPoint.GetComponent<Collider>().bounds;
 
         maxHealth = GetNewHealth();
@@ -123,10 +142,42 @@ public class MachineShredder : MonoBehaviour
 
         secretHealth = 0;
     }
+
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("FUEL LEFT: " + secretHealth);
+        if (_wheelPlug.value >= valueToComplete)
+        {
+            _wheelPlug.value = 0;
+
+            //spamButton.gameObject.SetActive(false);
+            //_chargeValue = 0;
+            progressText.text = "Shreddinator Process Completed";
+
+            maxHealth = GetNewHealth();
+            secretHealth = maxHealth;
+
+            e_shredderFinish?.InvokeEvent(particleSpawnLocation.position, Quaternion.identity, transform);
+
+            _initShredding = false;
+
+            //check who is in the list
+            foreach (Item itemsToDelete in shredderItemCollider.GetProductList())
+            {
+                ItemData deletedItemData = itemsToDelete.Data;
+                //delete the product
+                Destroy(itemsToDelete.gameObject);
+                //spawn the raw materials
+                foreach (ItemData a in deletedItemData.productContainable)
+                {
+                    float x = Random.Range(-_spawnPointBound.extents.x, _spawnPointBound.extents.x);
+                    float z = Random.Range(-_spawnPointBound.extents.z, _spawnPointBound.extents.z);
+                    Instantiate(a.GetPrefab(), _spawnPointBound.center + new Vector3(x, 0f, z), Quaternion.identity);
+                }
+            }
+            //clear the list
+            shredderItemCollider.ClearProductList();    
+        }
 
         if (_initShredding || _refillManager.activateRefill)
         {
@@ -139,13 +190,10 @@ public class MachineShredder : MonoBehaviour
         {
             shredderFuelText.text = "NO FUEL!";
         }
-
-        
         else
         {
             Debug.Log("Holding nothing");
         }
-
 
         if (_initShredding)
         {
@@ -162,62 +210,69 @@ public class MachineShredder : MonoBehaviour
             else
             {
                 secretHealth -= 1 * Time.deltaTime;
-                _chargeValue -= decreaseMultiplier * Time.deltaTime;
-                if (_chargeValue < 0)
-                {
-                    _chargeValue = 0;
-                }    
-                UpdateProgressBar();
-
-                //distFromPlayerText.text = "DFM: " + Vector3.Distance(player.transform.position, transform.position);
-                //// Check if shredding and player goes ou
-                //if (Vector3.Distance(transform.position, player.transform.position) >= distToStop && _initShredding) 
+                _wheelPlug.value -= decreaseMultiplier * Time.deltaTime;
+                //_chargeValue -= decreaseMultiplier * Time.deltaTime;
+                //if (_chargeValue < 0)
                 //{
                 //    _chargeValue = 0;
-                //    UpdateProgressBar();
+                //}    
+                if (_wheelPlug.value < 0)
+                {
+                    _wheelPlug.value = 0;
+                }
+                UpdateProgressBar();
 
-                //    _initShredding = false;
-                //}
+                {
+                    //distFromPlayerText.text = "DFM: " + Vector3.Distance(player.transform.position, transform.position);
+                    //// Check if shredding and player goes ou
+                    //if (Vector3.Distance(transform.position, player.transform.position) >= distToStop && _initShredding) 
+                    //{
+                    //    _chargeValue = 0;
+                    //    UpdateProgressBar();
 
+                    //    _initShredding = false;
+                    //}
+                }
             }
         }
 
-        if (_chargeValue >= 1)
         {
-            spamButton.gameObject.SetActive(false);
-            _chargeValue = 0;
-            progressText.text = "Shreddinator Process Completed";
+            //if (_chargeValue >= 1)
+            //{
+            //    spamButton.gameObject.SetActive(false);
+            //    _chargeValue = 0;
+            //    progressText.text = "Shreddinator Process Completed";
 
-            maxHealth = GetNewHealth();
-            secretHealth = maxHealth;
+            //    maxHealth = GetNewHealth();
+            //    secretHealth = maxHealth;
 
-            e_shredderFinish?.InvokeEvent(particleSpawnLocation.position, Quaternion.identity, transform);
+            //    e_shredderFinish?.InvokeEvent(particleSpawnLocation.position, Quaternion.identity, transform);
 
-            _initShredding = false;
+            //    _initShredding = false;
 
-            //check who is in the list
-            foreach(Item itemsToDelete in shredderItemCollider.GetProductList())
-            {
-                ItemData deletedItemData = itemsToDelete.Data;
-                //delete the product
-                Destroy(itemsToDelete.gameObject);
-                //spawn the raw materials
-                foreach (ItemData a in deletedItemData.productContainable)
-                {
-                    float x = Random.Range(-_spawnPointBound.extents.x, _spawnPointBound.extents.x);
-                    float z = Random.Range(-_spawnPointBound.extents.z, _spawnPointBound.extents.z);
-                    Instantiate(a.GetPrefab(), _spawnPointBound.center + new Vector3(x, 0f, z), Quaternion.identity);
-                }
-            }
-            //clear the list
-            shredderItemCollider.ClearProductList();
+            //    //check who is in the list
+            //    foreach(Item itemsToDelete in shredderItemCollider.GetProductList())
+            //    {
+            //        ItemData deletedItemData = itemsToDelete.Data;
+            //        //delete the product
+            //        Destroy(itemsToDelete.gameObject);
+            //        //spawn the raw materials
+            //        foreach (ItemData a in deletedItemData.productContainable)
+            //        {
+            //            float x = Random.Range(-_spawnPointBound.extents.x, _spawnPointBound.extents.x);
+            //            float z = Random.Range(-_spawnPointBound.extents.z, _spawnPointBound.extents.z);
+            //            Instantiate(a.GetPrefab(), _spawnPointBound.center + new Vector3(x, 0f, z), Quaternion.identity);
+            //        }
+            //    }
+            //    //clear the list
+            //    shredderItemCollider.ClearProductList();
+            //}
         }
     }
 
     void UpdateProgressBar()
     {
-        //progressBar.size = _chargeValue;
-        progressText.text = (_chargeValue * 100).ToString("0.0") + "%";
+        progressText.text = _wheelPlug.value.ToString("0.0") + "%";
     }
 
     void IncreaseProgress()
@@ -228,11 +283,6 @@ public class MachineShredder : MonoBehaviour
     
         }
         _chargeValue += chargeSpeed * Time.deltaTime;
-
-        //if (_chargeValue > 1)
-        //{
-        //    _chargeValue = 1;
-        //}
     }
 }
     

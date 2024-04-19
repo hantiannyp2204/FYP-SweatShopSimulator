@@ -528,7 +528,7 @@ GameObject:
   - component: {fileID: 3931527576275246440}
   - component: {fileID: 2749392265370198747}
   - component: {fileID: 531811231840706662}
-  - component: {fileID: 8456338258707559415}
+  - component: {fileID: 3517388264167522503}
   m_Layer: 0
   m_Name: Machine_Anvil
   m_TagString: Untagged
@@ -600,7 +600,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.3970917, y: 0.56730336, z: 1.3506954}
   m_Center: {x: 0.82269627, y: 0.2982496, z: -0.29447347}
---- !u!114 &8456338258707559415
+--- !u!114 &3517388264167522503
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -609,9 +609,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6812543773632557010}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4908854d8d714f4c995bc0bef5ffdf0, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b6de04a50c0cd445bb060a75b0cf086, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitInterval: 2
+  tolerance: 0.2
+  hammer: {fileID: 0}
+  anvil: {fileID: 2749392265370198747}
 --- !u!1 &8160446265431883874
 GameObject:
   m_ObjectHideFlags: 0

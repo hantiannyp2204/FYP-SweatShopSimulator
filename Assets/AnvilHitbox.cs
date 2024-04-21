@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class AnvilHitbox : MonoBehaviour
 {
-    [SerializeField] private List<RawMaterial> RMaterialList = new();
+    [SerializeField] public List<RawMaterial> RMaterialList = new();
     List<GameObject> trashList = new();
     
     public List<RawMaterial> GetRMaterialList() => RMaterialList;

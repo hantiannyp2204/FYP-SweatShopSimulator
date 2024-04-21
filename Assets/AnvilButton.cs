@@ -5,12 +5,13 @@ using UnityEngine;
 public class AnvilButton : VRButton
 {
     [SerializeField] private MachineAnvil anvil;
+
     public override void PressedFunction()
     {
         //if list is empty, there is nothing in collider
-        if (anvil.anvilItemCollider.GetProductList().Count == 0)
+        if (anvil.anvilItemCollider.GetProductList() == null)
         {
-            Debug.Log("not item to flatten");
+            Debug.Log("no item to flatten");
             return;
         }
         else

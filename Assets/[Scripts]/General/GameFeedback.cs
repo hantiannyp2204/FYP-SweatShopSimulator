@@ -88,6 +88,14 @@ public class GameFeedback : MonoBehaviour
             {
                 case AUDIO_TYPE.SFX:
                     audioS.clip = audioClips[UnityEngine.Random.Range(0, maxAudioClip)];
+                    if(data.audioLoop)
+                    {
+                        audioS.loop = true;
+                    }
+                    else
+                    {
+                        audioS.loop = false;
+                    }
                     audioS.Play();
                     break;
                 case AUDIO_TYPE.MUSIC:

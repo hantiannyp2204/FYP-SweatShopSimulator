@@ -7,7 +7,6 @@ using UnityEngine;
 public class MachineSmelter : MonoBehaviour
 {
     [SerializeField] private float smeltTime = 3f;
-    [SerializeField] private List<ItemData> outputItemList;
     [SerializeField] private SmelterInputHitbox smelterInputHitbox;
     [SerializeField] private TMP_Text timerText;
     [SerializeField] private float timeToBlowUp = 5f;
@@ -182,9 +181,12 @@ public class MachineSmelter : MonoBehaviour
     {
         foreach (Scrap scrap in smelterInputHitbox.GetScrapList())
         {
-            var outputMaterial = outputItemList[(int)scrap.GetScrapType()];
-            GameObject freshRawMaterial = Instantiate(outputMaterial.GetPrefab(), scrap.transform.position, scrap.transform.rotation);
-            freshRawMaterial.AddComponent<FreshRawMaterial>();
+            if (scrap.GetMaterial() != null)
+            {
+                GameObject freshRawMaterial = Instantiate(scrap.GetMaterial(), scrap.transform.position, scrap.transform.rotation);
+                freshRawMaterial.AddComponent<FreshRawMaterial>();
+            }
+
             Destroy(scrap.gameObject);
         }
 

@@ -46,24 +46,24 @@ public class FabricatorCrafting : MonoBehaviour
                 }
             }
 
-            if (neededItem.TryGetComponent(out Scrap ScrapCom))
-            {
-                foreach (Item availableItem in AvailableItems)
-                {
-                    if (availableItem.TryGetComponent(out Scrap ScrapCom2))
-                    {
-                        if (ScrapCom.GetScrapType() == ScrapCom2.GetScrapType())
-                        {
-                            foundCount++; // Increment the counter for each found item
-                            _ToDestroy.Add(availableItem.gameObject);
-                            Debug.Log(AvailableItems.Count);
-                            AvailableItems.Remove(availableItem);
-                            break; // Exit the inner loop since the item is found
-                        }
-                    }
+            //if (neededItem.TryGetComponent(out Scrap ScrapCom))
+            //{
+            //    foreach (Item availableItem in AvailableItems)
+            //    {
+            //        if (availableItem.TryGetComponent(out Scrap ScrapCom2))
+            //        {
+            //            if (ScrapCom.GetScrapType() == ScrapCom2.GetScrapType())
+            //            {
+            //                foundCount++; // Increment the counter for each found item
+            //                _ToDestroy.Add(availableItem.gameObject);
+            //                Debug.Log(AvailableItems.Count);
+            //                AvailableItems.Remove(availableItem);
+            //                break; // Exit the inner loop since the item is found
+            //            }
+            //        }
 
-                }
-            }
+            //    }
+            //}
 
         }
 

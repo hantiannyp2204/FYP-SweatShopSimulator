@@ -8,7 +8,7 @@ public class SmelterCoalManager : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //only accept if its coal and is not being grabbed
-        if (other.gameObject.name.Contains("Coal") && !other.GetComponent<XRBaseInteractable>().isSelected)
+        if (other.gameObject.name.Contains("Coal") && !other.GetComponent<XRBaseInteractable>().isSelected && other.gameObject.layer == LayerMask.NameToLayer("Item"))
         {
             Debug.Log("Entered");
             // Here you can also call a method on the smelter to refill fuel

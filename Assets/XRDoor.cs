@@ -10,7 +10,7 @@ public class XRDoor : MonoBehaviour
     [SerializeField] private GameObject mainDoor;
     public bool doorLocked = false;
     private XRGrabInteractable grabInteractable;
-    public bool grabbed = false;
+    bool grabbed = false;
 
     bool abilityToGrab = true;
 

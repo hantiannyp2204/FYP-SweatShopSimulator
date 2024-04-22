@@ -27,6 +27,7 @@ public class WheelManager : MonoBehaviour
             return;
         }
 
+        shredder.initShredding = true;
         shredder.wheel.SetActive(true);
         canStartShredding.Invoke();
     }

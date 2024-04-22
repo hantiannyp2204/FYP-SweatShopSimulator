@@ -73,38 +73,57 @@ public class RefillFuelManager : MonoBehaviour, Iinteractable
 
         if (activateRefill)
         {
-            if (shredder.AlreadyFull()) return; 
+            if (shredder.AlreadyFull())
+            {
+                shredder.SetWheelStatus(true);
+                shredder.initShredding = true;
+                return;
+            }
+
             if (shredder.secretHealth <= fulfilledCriteria)
             {
                 shredder.secretHealth += 1 * Time.deltaTime;
 
-                if (shredder.AlreadyFull()) return;
+                if (shredder.AlreadyFull())
+                {
+                    shredder.SetWheelStatus(true);
+                    shredder.initShredding = true;
+                    return;
+                }
             }
             else
             {
+                if (shredder.AlreadyFull())
+                {
+                    shredder.initShredding = true;
+                    return;
+                }
+                shredder.secretHealth = fulfilledCriteria;
                 fulfilledCriteria += incrementPostCriteria;
                 activateRefill = false;
             }
-            //else
-            //{
-            //    _textAboveStation.gameObject.SetActive(false);
-            //    activateRefill = false;
-            //    return;
-            //}
+            {
+                //else
+                //{
+                //    _textAboveStation.gameObject.SetActive(false);
+                //    activateRefill = false;
+                //    return;
+                //}
 
-            //// Logic for if out of fuel
-            //if (shredder.secretHealth <= shredder.maxHealth)
-            //{
-            //    shredder.secretHealth += 1  * Time.deltaTime;
-            //}
-            //else // Reached Max Health
-            //{
-            //    _textAboveStation.gameObject.SetActive(false);
-            //    activateRefill = false;
-            //    return;
-            //}
+                //// Logic for if out of fuel
+                //if (shredder.secretHealth <= shredder.maxHealth)
+                //{
+                //    shredder.secretHealth += 1  * Time.deltaTime;
+                //}
+                //else // Reached Max Health
+                //{
+                //    _textAboveStation.gameObject.SetActive(false);
+                //    activateRefill = false;
+                //    return;
+                //}
 
-            //Debug.Log(shredder.secretHealth);
+                //Debug.Log(shredder.secretHealth);
+            }
         }
     }
 

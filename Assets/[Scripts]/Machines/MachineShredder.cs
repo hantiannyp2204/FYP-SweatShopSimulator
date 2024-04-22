@@ -12,6 +12,8 @@ using UnityEngine.XR.Content.Interaction;
 
 public class MachineShredder : MonoBehaviour
 {
+  /*  [HideInInspector]*/ public bool initShredding = false;
+
     [Header("VR REFERENCES")]
     public GameObject lever;
     public GameObject wheel;
@@ -51,7 +53,6 @@ public class MachineShredder : MonoBehaviour
     [SerializeField] private FeedbackEventData e_interactShredder;
     [SerializeField] private FeedbackEventData e_shredderFinish;
 
-    private bool _initShredding = false;
     private float _chargeValue;
 
     private Bounds _spawnPointBound;
@@ -94,9 +95,9 @@ public class MachineShredder : MonoBehaviour
         if (_chargeValue >= 1 || IsOutOfFuel()) return;
         else
         {
-            if (!_initShredding)
+            if (!initShredding)
             {
-                _initShredding = true;
+                initShredding = true;
             }
 
             IncreaseProgress();
@@ -116,7 +117,12 @@ public class MachineShredder : MonoBehaviour
 
     public void CanShred()
     {
-        _initShredding = true;
+        initShredding = true;
+    }
+
+    public void SetWheelStatus(bool status)
+    {
+        _wheelPlug.enabled = status;
     }
 
     // Start is called before the first frame update
@@ -128,11 +134,13 @@ public class MachineShredder : MonoBehaviour
 
         _wheelPlug.value = 0;
 
+        _wheelPlug.ValueChangeShredder.AddListener(ValueChangeCheck);
+
         //_wheelPlug.ValueChangeShredder.AddListener(ListenToValueChange);
         _wheelManager = _wheelPlug.GetComponent<WheelManager>();
+
         _wheelManager.canStartShredding.AddListener(CanShred);
             
-
         _spawnPointBound = spawnPoint.GetComponent<Collider>().bounds;
 
         maxHealth = GetNewHealth();
@@ -140,14 +148,31 @@ public class MachineShredder : MonoBehaviour
 
         _refillManager = GetComponentInChildren<RefillFuelManager>();
 
-        secretHealth = 0;
+        //secretHealth = 0;
     }
 
+    public void ValueChangeCheck()
+    {
+        if (IsOutOfFuel())
+        {
+            SetWheelStatus(false);
+            return;
+        }
+        else
+        {
+            Debug.Log("can spin");
+        }
+    }
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("status: " + initShredding);
+        shredderFuelText.text = "Fuel: " + (int)secretHealth;
+        //UpdateProgressBar();
+
         if (_wheelPlug.value >= valueToComplete)
         {
+            wheel.SetActive(false);
             _wheelPlug.value = 0;
 
             //spamButton.gameObject.SetActive(false);
@@ -159,7 +184,7 @@ public class MachineShredder : MonoBehaviour
 
             e_shredderFinish?.InvokeEvent(particleSpawnLocation.position, Quaternion.identity, transform);
 
-            _initShredding = false;
+            initShredding = false;
 
             //check who is in the list
             foreach (Item itemsToDelete in shredderItemCollider.GetProductList())
@@ -179,13 +204,13 @@ public class MachineShredder : MonoBehaviour
             shredderItemCollider.ClearProductList();    
         }
 
-        if (_initShredding || _refillManager.activateRefill)
+        if (initShredding || _refillManager.activateRefill)
         {
-            shredderFuelText.text = "Fuel: " + (int) secretHealth;
+            //shredderFuelText.text = "Fuel: " + (int) secretHealth;
             //e_interactShredder?.InvokeEvent(transform.position + new Vector3(0, 0.2f, 0), Quaternion.identity, transform);
             e_interactShredder?.InvokeEvent(particleSpawnLocation.position,  Quaternion.identity, transform);
         }
-      
+
         if (IsOutOfFuel())
         {
             shredderFuelText.text = "NO FUEL!";
@@ -195,7 +220,7 @@ public class MachineShredder : MonoBehaviour
             Debug.Log("Holding nothing");
         }
 
-        if (_initShredding)
+        if (initShredding)
         {
             if (IsOutOfFuel())
             {
@@ -203,20 +228,25 @@ public class MachineShredder : MonoBehaviour
                 {
                     fuelButton.gameObject.SetActive(true);
                 }
+
+                //shredderFuelText.text = "NO FUEL!";
                 secretHealth = 0;
-                _initShredding = false;
+                initShredding = false;
                 return;
             }
             else
             {
-                secretHealth -= 1 * Time.deltaTime;
-                _wheelPlug.value -= decreaseMultiplier * Time.deltaTime;
-                //_chargeValue -= decreaseMultiplier * Time.deltaTime;
-                //if (_chargeValue < 0)
-                //{
-                //    _chargeValue = 0;
-                //}    
-                if (_wheelPlug.value < 0)
+                _refillManager.activateRefill = false;
+
+                if (_wheelPlug.value > 0.0001f)
+                {
+                    secretHealth -= 1 * Time.deltaTime;
+                }
+
+                //shredderFuelText.text = "Fuel: " + (int)secretHealth;
+
+                _wheelPlug.value -= decreaseMultiplier * Time.deltaTime; 
+                if (_wheelPlug.value < 0) // Check if player spins wheel other way roiund
                 {
                     _wheelPlug.value = 0;
                 }
@@ -276,10 +306,9 @@ public class MachineShredder : MonoBehaviour
 
     void IncreaseProgress()
     {
-        if (!_initShredding)
+        if (!initShredding)
         {
             return;
-    
         }
         _chargeValue += chargeSpeed * Time.deltaTime;
     }

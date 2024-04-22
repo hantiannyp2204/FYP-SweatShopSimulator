@@ -10,7 +10,10 @@ public class AnvilGame : MonoBehaviour
     [SerializeField] private Hammer hammer; // Reference to the hammer object
     [SerializeField] private MachineAnvil anvil;
     public Slider progressBar; // Reference to the progress bar UI element
-   
+    public Collider hammerHitCollider;
+    private List<Collider> itemsCollider = new List<Collider>();
+
+
 
     private bool canHit = true;
     private int hitsCount = 0;
@@ -19,31 +22,52 @@ public class AnvilGame : MonoBehaviour
     private void Start()
     {
         UpdateProgressBar();
+        hammerHitCollider.enabled = false;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void Update()
     {
-        // Check if the collision is with the hammer object and if the player can currently hit the anvil
-        if ((collision.gameObject.name=="Hammer") && canHit)
-        {
-            float hitTime = Time.time;
-            float anvilTime = hitTime % hitInterval;
+       foreach (Collider itemCollider in itemsCollider)
+       {
+           if (hammerHitCollider.bounds.Intersects(itemCollider.bounds)&& canHit)
+           {
+               float hitTime = Time.time;
+               float anvilTime = hitTime % hitInterval;
 
-            // Check if the player hit the anvil within the acceptable time window
-            if (anvilTime < tolerance || anvilTime > hitInterval - tolerance)
-            {
-                StartCoroutine(HitCooldown());
-                HitAnvil();
-               
-            }
-            else
-            {
-                Debug.Log("Penalty");
-                //hammer.Penalty();
-                progress -= 1f;
-            }
-        }
+                // Check if the player hit the anvil within the acceptable time window
+                if (anvilTime < tolerance || anvilTime > hitInterval - tolerance)
+                {
+                    StartCoroutine(HitCooldown());
+                    HitAnvil();
+                }
+                else
+                {
+                    Debug.Log("Penalty");
+                    //hammer.Penalty();
+                    progress -= 1f;
+                }
+                break;
+           }
+       }
     }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    // Check if the collision is with the hammer object and if the player can currently hit the anvil
+    //    if ((collision.gameObject.name=="Hammer") && canHit)
+    //    {
+    //        float hitTime = Time.time;
+    //        float anvilTime = hitTime % hitInterval;
+
+    //        // Check if the player hit the anvil within the acceptable time window
+    //        if (anvilTime < tolerance || anvilTime > hitInterval - tolerance)
+    //        {
+    //            StartCoroutine(HitCooldown());
+    //            HitAnvil();
+               
+    //        }
+           
+    //    }
+    //}
 
     IEnumerator HitCooldown()
     {

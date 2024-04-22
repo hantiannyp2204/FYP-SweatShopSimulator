@@ -9,7 +9,7 @@ public class AnvilGame : MonoBehaviour
     public float tolerance = 0.2f; // Tolerance for hitting early or late
     [SerializeField] private Hammer hammer; // Reference to the hammer object
     [SerializeField] private MachineAnvil anvil;
-    //public Slider progressBar; // Reference to the progress bar UI element
+    public Slider progressBar; // Reference to the progress bar UI element
    
 
     private bool canHit = true;
@@ -18,7 +18,7 @@ public class AnvilGame : MonoBehaviour
 
     private void Start()
     {
-        //UpdateProgressBar();
+        UpdateProgressBar();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -39,7 +39,8 @@ public class AnvilGame : MonoBehaviour
             else
             {
                 Debug.Log("Penalty");
-                hammer.Penalty();
+                //hammer.Penalty();
+                progress -= 0.5f;
             }
         }
     }
@@ -54,7 +55,7 @@ public class AnvilGame : MonoBehaviour
     void HitAnvil()
     {
         hitsCount++;
-        progress = (float)hitsCount / 5f; // Assuming 10 hits form the product
+        progress = (float)hitsCount / 5f; // Assuming 5 hits form the product
 
         if (progress >= 1f)
         {
@@ -62,13 +63,13 @@ public class AnvilGame : MonoBehaviour
             ResetBar();
         }
         hammer.Hit();
-        //UpdateProgressBar();
+        UpdateProgressBar();
     }
 
-    //void UpdateProgressBar()
-    //{
-    //    progressBar.value = progress;
-    //}
+    void UpdateProgressBar()
+    {
+        progressBar.value = progress;
+    }
 
     void ResetBar()
     {
@@ -77,6 +78,6 @@ public class AnvilGame : MonoBehaviour
         hitsCount = 0;
 
         // Update the progress bar
-        //UpdateProgressBar();
+        UpdateProgressBar();
     }
 }

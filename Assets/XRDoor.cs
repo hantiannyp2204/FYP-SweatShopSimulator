@@ -16,6 +16,9 @@ public class XRDoor : MonoBehaviour
 
     Vector3 startingPosition;
     Quaternion startingRotation;
+
+    [SerializeField] private FeedbackEventData e_doorOpen;
+    [SerializeField] private FeedbackEventData e_doorClose;
     void Start()
     {
         startingPosition = transform.position;
@@ -60,7 +63,7 @@ public class XRDoor : MonoBehaviour
         if (yRotation <= 90 && !doorLocked && !grabbed)
         {
             doorLocked = true;
-
+            e_doorClose?.InvokeEvent(transform.position, Quaternion.identity, transform);
             mainDoor.transform.rotation = startingRotation;
             mainDoor.transform.position = startingPosition;
         }
@@ -78,7 +81,10 @@ public class XRDoor : MonoBehaviour
 
     private void OnDoorGrabbed(SelectEnterEventArgs args)
     {
-     
+        if(doorLocked)
+        {
+            e_doorOpen?.InvokeEvent(transform.position, Quaternion.identity, transform);
+        }
         grabbed = true;
 
         doorLocked = false;

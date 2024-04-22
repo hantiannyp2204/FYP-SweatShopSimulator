@@ -7,18 +7,16 @@ using System.Collections;
 
 public class NewController : MonoBehaviour
 {
+    [Header("References")]
     public MacineFab macine;
     public FabricatorCrafting crafting;
     public FabricatorVrCollider fabricatorCollider;
-    //public Power power;
+    public GameObject Anchor;
+    public PowerForFab power;
+
+    [Header("Game Variables")]
     public float speed = 50;
     public int trueRange = 50;
-    public Image againPanel, nextPanel, endPanel, levelPanelBack;
-    public float LevelCurrentPower;
-    public GameObject Anchor;
-    //[SerializeField] TextMeshProUGUI TextPower; // Modify to use TextMeshProUGUI
-    [SerializeField] TMP_Text minT, maxT, currentText, winORloseText, levelText; // Change to TMP_Text
-
     Vector3 rotationPoint = Vector3.zero;
     float temp;
     int maxWinD;
@@ -29,8 +27,11 @@ public class NewController : MonoBehaviour
     public float CCL;
     bool gameEnded = false;
 
-
-    // Start is called before the first frame update
+    [Header("Display texts")]
+    [SerializeField] TMP_Text minT, maxT, currentText, winORloseText, levelText;
+    public Image againPanel, nextPanel, endPanel, levelPanelBack;
+    public float LevelCurrentPower;
+    
     void Start()
     {
         gameEnded = false;
@@ -67,7 +68,12 @@ public class NewController : MonoBehaviour
 
     void Update()
     {
-
+        power.CheckIfGotPower();
+        if (macine.HasGameStarted == true)
+        {
+            power._PowerForFab -= 1 * Time.deltaTime;
+        }
+        
         if (gameEnded && Input.GetKeyDown(KeyCode.L) && winORloseText.text == "WIN")
         {
             ChangeLevel();
@@ -82,22 +88,9 @@ public class NewController : MonoBehaviour
         currentText.text = "" + temp;
         if (hold)
         {
-            //Anchor.transform.Rotate(Vector3.right, Time.deltaTime * speed); // Rotate around the forward axis (z-axis)
-            //transform.RotateAround(rotationPoint, Vector3.forward, speed * Time.deltaTime);
-            transform.RotateAround(Anchor.transform.position, Anchor.transform.forward, speed * Time.deltaTime); 
+            transform.RotateAround(Anchor.transform.position, Anchor.transform.forward, speed * Time.deltaTime);
         }
-        
-        //if (power.currentPower <= 0)
-        //{
-        //    GotoLevel1();
-        //}
 
-        //if (Input.GetKeyDown(KeyCode.P))
-        //{
-        //    Debug.Log(power.currentPower);
-        //}
-
-        UpdatePowerText();
     }
 
 
@@ -143,11 +136,8 @@ public class NewController : MonoBehaviour
             if (trueRange > 10)
             {
                 Debug.Log("WINERSIA");
-                macine._WinORLose.SetActive(true);
-                //StartCoroutine(DelayChangeLevel());
-            }
-                //nextPanel.gameObject.SetActive(true);
-             
+                macine._WinORLose.SetActive(true);          
+            } 
             else
                 endPanel.gameObject.SetActive(true);
         }
@@ -164,10 +154,6 @@ public class NewController : MonoBehaviour
             }
             //againPanel.gameObject.SetActive(true);
         }
-
-        // Stop decreasing power
-        //power.canDecreasePower = false;
-        //PlayerPrefs.SetFloat("FinalPower", power.currentPower);
     }
 
     
@@ -177,22 +163,6 @@ public class NewController : MonoBehaviour
         Lnum += 1;
         PlayerPrefs.SetInt("Level num", Lnum);
         SceneManager.LoadScene("Minigame");
-    }
-
-    public void Again()
-    {
-        //PlayerPrefs.SetFloat("FinalPower", power.newfinalPower -= 50);
-        SceneManager.LoadScene("Minigame");
-    }
-    public void GotoLevel1()
-    {
-        PlayerPrefs.DeleteAll();
-        SceneManager.LoadScene("Jerald");
-    }
-
-    void UpdatePowerText()
-    {
-        //TextPower.text = "Power: " + power.currentPower.ToString();
     }
 
     void ChangeLevel()
@@ -208,50 +178,18 @@ public class NewController : MonoBehaviour
             UpdateLevelParameters();
             SetRange();
         }
-        else
-        {
-            //Item item = fabricatorCollider.GetProduct();
-            //Destroy(fabricatorCollider.GetProduct().gameObject);
-            //foreach (ItemData a in item.Data.productContainable)
-            //{
-            //    a.GetPrefab().GetComponent<Rigidbody>().isKinematic = true;
-            //    Instantiate(a.GetPrefab(), fabricatorCollider._collider.transform.position, Quaternion.identity);
-
-            //}
-            // Reset everythings
-            crafting.DestroyOBJ();
-            crafting.ClearLists();  
-            crafting.SpawnOBJ(crafting.item2Spawn);
-            hold = false;
-            temp = 0;
-            macine._WinORLose.SetActive(false);
-            macine._TextHolder.SetActive(false);
-            macine._NextButton.SetActive(false);
-            macine._StartButton.SetActive(false);
-            Lnum = 1;
-            trueRange = 50;
-            speed = 50;
-            hold = false;
-            PlayerPrefs.DeleteAll();
-            PlayerPrefs.SetInt("Level num", Lnum);
+        else //Win
+        {       
+            ResetEverything();
             UpdateLevelParameters();
             SetRange();
         }
-    }
-
-
-
+    } 
     void UpdateLevelParameters()
     {
         trueRange -= (Lnum - 1) * 10;
         speed *= 1 + ((float)(Lnum - 1) / 2);
         levelText.text = "speed = " + speed + "    L E V E L " + Lnum + "    range = " + trueRange;
-    }
-
-    IEnumerator DelayChangeLevel()
-    {
-        yield return new WaitForSeconds(3); // Wait for 3 seconds
-        ChangeLevel();
     }
 
     public void NextButtonToggle()
@@ -265,5 +203,24 @@ public class NewController : MonoBehaviour
     public void NextButtonToggleOFF()
     {
         return;
+    }
+
+    public void ResetEverything()
+    {
+        // Reset everythings
+        crafting.DestroyOBJ();
+        crafting.ClearLists();
+        crafting.SpawnOBJ(crafting.item2Spawn);
+        macine._WinORLose.SetActive(false);
+        macine._TextHolder.SetActive(false);
+        macine._NextButton.SetActive(false);
+        macine._StartButton.SetActive(false);
+        macine.HasGameStarted = false;
+        hold = false;
+        temp = 0;
+        Lnum = 1;
+        trueRange = 50;
+        speed = 50;
+        
     }
 }

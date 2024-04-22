@@ -7,6 +7,7 @@ public class Hammer : MonoBehaviour
     public int maxHealth = 100; // Maximum health of the hammer
     public int currentHealth; // Current health of the hammer
     public float damagePerHit = 10f; // Damage inflicted per hit
+   
 
     private void Start()
     {
@@ -29,6 +30,7 @@ public class Hammer : MonoBehaviour
     {
         // Reduce the hammer's health based on damage per hit
         currentHealth -= (int)damagePerHit*2;
+        
         Debug.Log("Hammer health:" + currentHealth);
     }
 }

@@ -40,7 +40,7 @@ public class AnvilGame : MonoBehaviour
             {
                 Debug.Log("Penalty");
                 //hammer.Penalty();
-                progress -= 0.5f;
+                progress -= 1f;
             }
         }
     }

@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class MacineFab : MonoBehaviour, Iinteractable
 {
+    [Header("Feedback")]
+    [SerializeField] private FeedbackEventData Fabricator_run;
     //public Power power;
     bool gameEnd = false;
     public bool HasGameStarted = false;
@@ -70,6 +72,7 @@ public class MacineFab : MonoBehaviour, Iinteractable
             }
             if (_Crafting.EnoughMaterials == true && _Crafting.HasChosenCraftingItem == true)
             {
+                Fabricator_run?.InvokeEvent(transform.position, Quaternion.identity, transform);
                 //_Crafting.foundCount = 0;
                 HasGameStarted = true;
                 newController.hold = true;

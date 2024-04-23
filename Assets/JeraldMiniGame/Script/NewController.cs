@@ -14,6 +14,7 @@ public class NewController : MonoBehaviour
     public GameObject Anchor;
     public PowerForFab power;
 
+
     [Header("Game Variables")]
     public float speed = 50;
     public int trueRange = 50;

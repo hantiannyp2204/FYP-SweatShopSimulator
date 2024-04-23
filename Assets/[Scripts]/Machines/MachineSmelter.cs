@@ -6,12 +6,18 @@ using UnityEngine;
 
 public class MachineSmelter : MonoBehaviour
 {
+    public TMP_Text debugTxt;
+
+    [Header("Machine Gameplay settings")]
     [SerializeField] private float smeltTime = 3f;
+    [SerializeField] private float timeToBlowUp = 5f;
+    [SerializeField] private int healthPoints;
+
+    [Header("Machine Refrences")]
     [SerializeField] private SmelterInputHitbox smelterInputHitbox;
     [SerializeField] private TMP_Text timerText;
-    [SerializeField] private float timeToBlowUp = 5f;
     [SerializeField] private TMP_Text coalPercentage;
-    [SerializeField] int healthPoints;
+
     [Header("Feedback Events")]
     [SerializeField] private FeedbackEventData e_run;
     [SerializeField] private FeedbackEventData e_done;
@@ -32,14 +38,13 @@ public class MachineSmelter : MonoBehaviour
     private float maxFuel; // Variable to track the maximum fuel level for current refill
     private float elapsedTimeToBlowUp = 0f;
     private bool blewUp = false;
-    bool aboutToBlow = false;
-    bool machineActive = false;
+    private bool aboutToBlow = false;
+    private bool machineActive = false;
 
-    public TMP_Text debugTxt;
 
     [Header("Particle Effects")]
     [SerializeField] private ParticleSystem explosionParticle;
-    [SerializeField] List<ParticleSystem> fireParticleList;
+    [SerializeField] private List<ParticleSystem> fireParticleList;
     [SerializeField] private ParticleSystem fuelFire;
 
     [Header("Coal System")]

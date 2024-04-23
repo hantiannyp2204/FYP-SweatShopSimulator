@@ -77,7 +77,11 @@ public class MachineSmelter : MonoBehaviour
 
     public void ToggleMachine()
     {
-        if (!door.IsDoorLocked() || blewUp) return;
+        if (!door.IsDoorLocked() || blewUp)
+        {
+            return;
+        }
+     
 
         if (smeltingCoroutineHandler == null && !scrapConverted)
         {
@@ -119,7 +123,11 @@ public class MachineSmelter : MonoBehaviour
     {
         if (fuelLeft == 0 || !machineActive || blewUp)
         {
-            fuelFire.Stop();
+            if(fuelFire.isPlaying)
+            {
+                fuelFire.Stop();
+            }
+
             return;
         }
 

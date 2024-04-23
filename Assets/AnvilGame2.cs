@@ -13,7 +13,7 @@ public class AnvilGame2 : MonoBehaviour
     private float currentProgress = 0f;
     public float delayBeforeHit = 5f;
     private float delayTimer = 0f;
-    private float timer = 0f;
+    //private float timer = 0f;
     public bool canHit = false;
 
     private void Update()
@@ -29,7 +29,7 @@ public class AnvilGame2 : MonoBehaviour
                 delayTimer = 0;
             }
         }
-        Debug.Log(delayTimer);
+       // Debug.Log(delayTimer);
         //if (timerRunning)
         //{
         //    timer += Time.deltaTime;
@@ -55,16 +55,16 @@ public class AnvilGame2 : MonoBehaviour
             Debug.Log("Item is fully crafted!");
             anvil.RunMachine();
             currentProgress = 0; // Reset currentProgress after crafting is complete
-            canHit = false; // Resets canHit 
         }
+        canHit = false;
     }
 
-    private void ApplyPenalty()
+    public void ApplyPenalty()
     {
         currentProgress -= penaltyAmount;
         currentProgress = Mathf.Clamp(currentProgress, 0f, 100f);
         progressBar.value = currentProgress;
-        hammer.Penalty();
+        //hammer.Penalty();
         Debug.Log("Penalty applied!");
     }
 }

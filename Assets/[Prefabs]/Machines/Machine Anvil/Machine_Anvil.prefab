@@ -742,6 +742,7 @@ GameObject:
   - component: {fileID: 2749392265370198747}
   - component: {fileID: 531811231840706662}
   - component: {fileID: 3517388264167522503}
+  - component: {fileID: 8191572116294068079}
   m_Layer: 0
   m_Name: Machine_Anvil
   m_TagString: Untagged
@@ -831,6 +832,24 @@ MonoBehaviour:
   hammer: {fileID: 0}
   anvil: {fileID: 2749392265370198747}
   progressBar: {fileID: 0}
+  hammerHitCollider: {fileID: 0}
+--- !u!114 &8191572116294068079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6812543773632557010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c70e3baa89561d34a8e456434c1ae292, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  progressBar: {fileID: 7722609873419199388}
+  progressIncreaseAmount: 20
+  penaltyAmount: 10
+  hammer: {fileID: 0}
+  delayBeforeHit: 5
 --- !u!1 &7048207544709078814
 GameObject:
   m_ObjectHideFlags: 0

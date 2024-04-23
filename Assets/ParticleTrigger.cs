@@ -33,7 +33,7 @@ public class ParticleTrigger : MonoBehaviour
         }
         
         int numEnter = _particle.GetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter);
-        int numExit = _particle.GetTriggerParticles(ParticleSystemTriggerEventType.Exit, exit);
+        //int numExit = _particle.GetTriggerParticles(ParticleSystemTriggerEventType.Exit, exit);
 
         for (int i = 0; i < numEnter; ++i)
         {
@@ -46,7 +46,6 @@ public class ParticleTrigger : MonoBehaviour
             ParticleSystem.Particle p = enter[i];
         }
     }
-
 
     public void SetCollider(Collider collider)
     {

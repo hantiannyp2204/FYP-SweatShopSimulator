@@ -76,6 +76,7 @@ public class RefillFuelManager : MonoBehaviour, Iinteractable
             if (shredder.AlreadyFull())
             {
                 shredder.SetWheelStatus(true);
+                shredder.isWheeling = false;
                 shredder.initShredding = true;
                 return;
             }
@@ -86,6 +87,7 @@ public class RefillFuelManager : MonoBehaviour, Iinteractable
 
                 if (shredder.AlreadyFull())
                 {
+                    shredder.isWheeling = false;
                     shredder.SetWheelStatus(true);
                     shredder.initShredding = true;
                     return;
@@ -95,9 +97,11 @@ public class RefillFuelManager : MonoBehaviour, Iinteractable
             {
                 if (shredder.AlreadyFull())
                 {
+                    shredder.isWheeling = false;
                     shredder.initShredding = true;
                     return;
                 }
+
                 shredder.secretHealth = fulfilledCriteria;
                 fulfilledCriteria += incrementPostCriteria;
                 activateRefill = false;
@@ -124,6 +128,10 @@ public class RefillFuelManager : MonoBehaviour, Iinteractable
 
                 //Debug.Log(shredder.secretHealth);
             }
+        }
+        else
+        {
+            shredder.isWheeling = true;
         }
     }
 

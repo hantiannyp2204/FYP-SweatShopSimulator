@@ -9,16 +9,15 @@ using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.UIElements;
 using UnityEngine.XR.Content.Interaction;
 
-
 public class MachineShredder : MonoBehaviour
 {
   /*  [HideInInspector]*/ public bool initShredding = false;
+    public bool isWheeling = false;
 
     [Header("VR REFERENCES")]
     public GameObject lever;
     public GameObject wheel;
     [SerializeField] private float valueToComplete;
-
 
     [Header("BUTTON REFERENCES")]
     [SerializeField] private GameObject spamButton;
@@ -30,17 +29,17 @@ public class MachineShredder : MonoBehaviour
     public VrMachineItemCollider shredderItemCollider;
 
     [Header("KEYBOARD PLAYER")]
-    [HideInInspector] public float secretHealth;
+     public float secretHealth;
     [SerializeField] private Scrollbar progressBar;
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject afterInteract;
     public float maxHealth;
 
     [Header("Debug")]
+    //[SerializeField] private TMP_Text distFromPlayerText;
+    //[SerializeField] private TMP_Text productToShredText;
+    //[SerializeField] private TMP_Text lockedInProductText;
     [SerializeField] private TMP_Text progressText;
-    [SerializeField] private TMP_Text distFromPlayerText;
-    [SerializeField] private TMP_Text productToShredText;
-    [SerializeField] private TMP_Text lockedInProductText;
     public TMP_Text shredderFuelText;
 
     [Header("Shredder Machine Settings")]
@@ -61,6 +60,7 @@ public class MachineShredder : MonoBehaviour
     private XRKnob _wheelPlug;
     private WheelManager _wheelManager;
 
+
     public bool AlreadyFull()
     {
         return secretHealth >= maxHealth;
@@ -74,7 +74,6 @@ public class MachineShredder : MonoBehaviour
     }
     public void RunActive()
     {
-        //_initShredding = true;
         //lock the items, so they can no longer be picked up
         foreach(Item itemToShred in shredderItemCollider.GetProductList())
         {
@@ -82,7 +81,6 @@ public class MachineShredder : MonoBehaviour
             baseInteractable.enabled= false;
             itemToShred.GetComponent<Rigidbody>().isKinematic = true;
         }
-        //GameObject spam = Instantiate(spamButton, spawnLocation.transform.position, Quaternion.identity);
     }
 
     public void RunDeactive()
@@ -136,7 +134,6 @@ public class MachineShredder : MonoBehaviour
 
         _wheelPlug.ValueChangeShredder.AddListener(ValueChangeCheck);
 
-        //_wheelPlug.ValueChangeShredder.AddListener(ListenToValueChange);
         _wheelManager = _wheelPlug.GetComponent<WheelManager>();
 
         _wheelManager.canStartShredding.AddListener(CanShred);
@@ -147,36 +144,41 @@ public class MachineShredder : MonoBehaviour
         secretHealth = maxHealth;
 
         _refillManager = GetComponentInChildren<RefillFuelManager>();
-
-        //secretHealth = 0;
     }
 
     public void ValueChangeCheck()
     {
-        if (IsOutOfFuel())
-        {
-            SetWheelStatus(false);
-            return;
-        }
-        else
-        {
-            Debug.Log("can spin");
-        }
+        isWheeling = true;
+        //if (IsOutOfFuel())
+        //{
+        //    return;
+        //}
     }
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("status: " + initShredding);
         shredderFuelText.text = "Fuel: " + (int)secretHealth;
-        //UpdateProgressBar();
+        UpdateProgressBar();
+
+        if (initShredding || _refillManager.activateRefill)
+        {
+            e_interactShredder?.InvokeEvent(particleSpawnLocation.position,  Quaternion.identity, transform);
+        }
+
+        if (IsOutOfFuel())
+        {
+            shredderFuelText.text = "NO FUEL!";
+        }
+        else
+        {
+            Debug.Log("Holding nothing");
+        }
 
         if (_wheelPlug.value >= valueToComplete)
         {
             wheel.SetActive(false);
             _wheelPlug.value = 0;
 
-            //spamButton.gameObject.SetActive(false);
-            //_chargeValue = 0;
             progressText.text = "Shreddinator Process Completed";
 
             maxHealth = GetNewHealth();
@@ -204,22 +206,6 @@ public class MachineShredder : MonoBehaviour
             shredderItemCollider.ClearProductList();    
         }
 
-        if (initShredding || _refillManager.activateRefill)
-        {
-            //shredderFuelText.text = "Fuel: " + (int) secretHealth;
-            //e_interactShredder?.InvokeEvent(transform.position + new Vector3(0, 0.2f, 0), Quaternion.identity, transform);
-            e_interactShredder?.InvokeEvent(particleSpawnLocation.position,  Quaternion.identity, transform);
-        }
-
-        if (IsOutOfFuel())
-        {
-            shredderFuelText.text = "NO FUEL!";
-        }
-        else
-        {
-            Debug.Log("Holding nothing");
-        }
-
         if (initShredding)
         {
             if (IsOutOfFuel())
@@ -229,12 +215,11 @@ public class MachineShredder : MonoBehaviour
                     fuelButton.gameObject.SetActive(true);
                 }
 
-                //shredderFuelText.text = "NO FUEL!";
                 secretHealth = 0;
                 initShredding = false;
                 return;
             }
-            else
+            else if (isWheeling)
             {
                 _refillManager.activateRefill = false;
 
@@ -243,15 +228,13 @@ public class MachineShredder : MonoBehaviour
                     secretHealth -= 1 * Time.deltaTime;
                 }
 
-                //shredderFuelText.text = "Fuel: " + (int)secretHealth;
-
                 _wheelPlug.value -= decreaseMultiplier * Time.deltaTime; 
-                if (_wheelPlug.value < 0) // Check if player spins wheel other way roiund
+                if (_wheelPlug.value < 0) // Check if player spins wheel other way round
                 {
                     _wheelPlug.value = 0;
                 }
-                UpdateProgressBar();
 
+                UpdateProgressBar();
                 {
                     //distFromPlayerText.text = "DFM: " + Vector3.Distance(player.transform.position, transform.position);
                     //// Check if shredding and player goes ou

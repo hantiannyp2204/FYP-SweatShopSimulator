@@ -35,6 +35,7 @@ public class NewController : MonoBehaviour
     
     void Start()
     {
+        
         gameEnded = false;
         Cursor.lockState = CursorLockMode.None;
         Lnum = PlayerPrefs.GetInt("Level num", 1);
@@ -72,7 +73,9 @@ public class NewController : MonoBehaviour
         power.CheckIfGotPower();
         if (macine.HasGameStarted == true)
         {
-            power._PowerForFab -= 1 * Time.deltaTime;
+            power._CurrentPower -= 1 * Time.deltaTime;
+            float newccPower = power._CurrentPower;
+            power.UpdatePowerBar(power._PowerForFab, newccPower);
         }
         
         if (gameEnded && Input.GetKeyDown(KeyCode.L) && winORloseText.text == "WIN")
@@ -180,7 +183,8 @@ public class NewController : MonoBehaviour
             SetRange();
         }
         else //Win
-        {       
+        {
+            crafting.SpawnOBJ(crafting.item2Spawn);
             ResetEverything();
             UpdateLevelParameters();
             SetRange();
@@ -211,7 +215,7 @@ public class NewController : MonoBehaviour
         // Reset everythings
         crafting.DestroyOBJ();
         crafting.ClearLists();
-        crafting.SpawnOBJ(crafting.item2Spawn);
+        
         macine._WinORLose.SetActive(false);
         macine._TextHolder.SetActive(false);
         macine._NextButton.SetActive(false);

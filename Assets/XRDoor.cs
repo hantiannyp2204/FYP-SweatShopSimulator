@@ -62,10 +62,8 @@ public class XRDoor : MonoBehaviour
         // Lock the door if unlocked and its Y rotation goes below 90 degrees
         if (yRotation <= 90 && !doorLocked && !grabbed)
         {
-            doorLocked = true;
-            e_doorClose?.InvokeEvent(transform.position, Quaternion.identity, transform);
-            mainDoor.transform.rotation = startingRotation;
-            mainDoor.transform.position = startingPosition;
+            OnDoorLocked();
+           
         }
         //door lock rb
         if(doorLocked && !doorRb.isKinematic)
@@ -79,11 +77,22 @@ public class XRDoor : MonoBehaviour
        
     }
 
+    public virtual void OnDoorLocked()
+    {
+        doorLocked = true;
+        e_doorClose?.InvokeEvent(transform.position, Quaternion.identity, transform);
+        mainDoor.transform.rotation = startingRotation;
+        mainDoor.transform.position = startingPosition;
+    }
+    public virtual void OnDoorUnlocked()
+    {
+        e_doorOpen?.InvokeEvent(transform.position, Quaternion.identity, transform);
+    }
     private void OnDoorGrabbed(SelectEnterEventArgs args)
     {
         if(doorLocked)
         {
-            e_doorOpen?.InvokeEvent(transform.position, Quaternion.identity, transform);
+            OnDoorUnlocked();
         }
         grabbed = true;
 

@@ -11,7 +11,7 @@ public class RefillFuelManager : MonoBehaviour, Iinteractable
     [HideInInspector] public UnityEvent AddFuelEvent;
     [HideInInspector] public bool activateRefill;
 
-    [SerializeField] private MachineShredder shredder;
+    public MachineShredder shredder;
     [SerializeField] private Item refillCan;
 
     private TMP_Text _textAboveStation;
@@ -75,8 +75,8 @@ public class RefillFuelManager : MonoBehaviour, Iinteractable
         {
             if (shredder.AlreadyFull())
             {
+                shredder.ResetWheelValue(); // after done reset so the health will not go down
                 shredder.SetWheelStatus(true);
-                shredder.isWheeling = false;
                 shredder.initShredding = true;
                 return;
             }
@@ -87,7 +87,7 @@ public class RefillFuelManager : MonoBehaviour, Iinteractable
 
                 if (shredder.AlreadyFull())
                 {
-                    shredder.isWheeling = false;
+                    shredder.ResetWheelValue(); // after done reset so the health will not go down
                     shredder.SetWheelStatus(true);
                     shredder.initShredding = true;
                     return;
@@ -95,13 +95,6 @@ public class RefillFuelManager : MonoBehaviour, Iinteractable
             }
             else
             {
-                if (shredder.AlreadyFull())
-                {
-                    shredder.isWheeling = false;
-                    shredder.initShredding = true;
-                    return;
-                }
-
                 shredder.secretHealth = fulfilledCriteria;
                 fulfilledCriteria += incrementPostCriteria;
                 activateRefill = false;
@@ -128,10 +121,6 @@ public class RefillFuelManager : MonoBehaviour, Iinteractable
 
                 //Debug.Log(shredder.secretHealth);
             }
-        }
-        else
-        {
-            shredder.isWheeling = true;
         }
     }
 

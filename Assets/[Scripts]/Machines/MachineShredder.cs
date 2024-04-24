@@ -11,8 +11,8 @@ using UnityEngine.XR.Content.Interaction;
 
 public class MachineShredder : MonoBehaviour
 {
-  /*  [HideInInspector]*/ public bool initShredding = false;
-    public bool isWheeling = false;
+    /*  [HideInInspector]*/
+    public bool initShredding = false;
 
     [Header("VR REFERENCES")]
     public GameObject lever;
@@ -28,38 +28,39 @@ public class MachineShredder : MonoBehaviour
     [SerializeField] private Transform particleSpawnLocation;
     public VrMachineItemCollider shredderItemCollider;
 
-    [Header("KEYBOARD PLAYER")]
-     public float secretHealth;
-    [SerializeField] private Scrollbar progressBar;
-    [SerializeField] private GameObject player;
-    [SerializeField] private GameObject afterInteract;
+    [Header("MACHINE SETTINGS")]
+    public float secretHealth;
     public float maxHealth;
-
-    [Header("Debug")]
-    //[SerializeField] private TMP_Text distFromPlayerText;
-    //[SerializeField] private TMP_Text productToShredText;
-    //[SerializeField] private TMP_Text lockedInProductText;
-    [SerializeField] private TMP_Text progressText;
-    public TMP_Text shredderFuelText;
-
-    [Header("Shredder Machine Settings")]
     [SerializeField] private float decreaseMultiplier;
     [SerializeField] private float chargeSpeed;
     [SerializeField] private float distToStop;
     [SerializeField] private Transform spawnPoint;
+    //{
+    //    //[Header("KEYBOARD PLAYER")]
+    //    //[SerializeField] private Scrollbar progressBar;
+    //    //[SerializeField] private GameObject player;
+    //    //[SerializeField] private GameObject afterInteract;
+    //[SerializeField] private TMP_Text distFromPlayerText;
+    //[SerializeField] private TMP_Text productToShredText;
+    //[SerializeField] private TMP_Text lockedInProductText;
+    //}
+
+    [Header("MACHINE WOLRD UI")]
+    [SerializeField] private TMP_Text progressText;
+    public TMP_Text shredderFuelText;
 
     [Header("Sound Effects / Feedback")]
     [SerializeField] private FeedbackEventData e_interactShredder;
     [SerializeField] private FeedbackEventData e_shredderFinish;
 
-    private float _chargeValue;
 
     private Bounds _spawnPointBound;
-    private RefillFuelManager _refillManager;
+    private float _chargeValue;
 
     private XRKnob _wheelPlug;
     private WheelManager _wheelManager;
-
+    private RefillFuelManager _refillManager;
+    private XRLever _leverPlug;
 
     public bool AlreadyFull()
     {
@@ -137,6 +138,8 @@ public class MachineShredder : MonoBehaviour
         _wheelManager = _wheelPlug.GetComponent<WheelManager>();
 
         _wheelManager.canStartShredding.AddListener(CanShred);
+
+        _leverPlug = lever.GetComponentInChildren<XRLever>();
             
         _spawnPointBound = spawnPoint.GetComponent<Collider>().bounds;
 
@@ -148,34 +151,23 @@ public class MachineShredder : MonoBehaviour
 
     public void ValueChangeCheck()
     {
-        isWheeling = true;
-        //if (IsOutOfFuel())
-        //{
-        //    return;
-        //}
+        e_interactShredder?.InvokeEvent(particleSpawnLocation.position, Quaternion.identity, transform);
+        if (IsOutOfFuel())
+        {
+            return;
+        }
     }
+
     // Update is called once per frame
     void Update()
     {
         shredderFuelText.text = "Fuel: " + (int)secretHealth;
-        UpdateProgressBar();
-
-        if (initShredding || _refillManager.activateRefill)
-        {
-            e_interactShredder?.InvokeEvent(particleSpawnLocation.position,  Quaternion.identity, transform);
-        }
-
-        if (IsOutOfFuel())
-        {
-            shredderFuelText.text = "NO FUEL!";
-        }
-        else
-        {
-            Debug.Log("Holding nothing");
-        }
+        //UpdateProgressBar();
 
         if (_wheelPlug.value >= valueToComplete)
         {
+            _leverPlug.SetHandleAngle(_leverPlug.maxAngle); // reset lever
+
             wheel.SetActive(false);
             _wheelPlug.value = 0;
 
@@ -199,11 +191,31 @@ public class MachineShredder : MonoBehaviour
                 {
                     float x = Random.Range(-_spawnPointBound.extents.x, _spawnPointBound.extents.x);
                     float z = Random.Range(-_spawnPointBound.extents.z, _spawnPointBound.extents.z);
+                    a.GetPrefab().GetComponent<Rigidbody>().isKinematic = false;
+                    a.GetPrefab().GetComponent<Rigidbody>().useGravity = true;
+
+                    ParticleSystem system = a.GetPrefab().GetComponentInChildren<ParticleSystem>();
+                    system.Play();
+
                     Instantiate(a.GetPrefab(), _spawnPointBound.center + new Vector3(x, 0f, z), Quaternion.identity);
                 }
             }
             //clear the list
             shredderItemCollider.ClearProductList();    
+        }
+
+        //if (initShredding || _refillManager.activateRefill)
+        //{
+        //    e_interactShredder?.InvokeEvent(particleSpawnLocation.position,  Quaternion.identity, transform);
+        //}
+
+        if (IsOutOfFuel())
+        {
+            shredderFuelText.text = "NO FUEL!";
+        }
+        else
+        {
+            Debug.Log("Holding nothing");
         }
 
         if (initShredding)
@@ -214,16 +226,17 @@ public class MachineShredder : MonoBehaviour
                 {
                     fuelButton.gameObject.SetActive(true);
                 }
-
+                SetWheelStatus(false);
                 secretHealth = 0;
                 initShredding = false;
+                //SetWheelValue(_wheelPlug.value);
                 return;
             }
-            else if (isWheeling)
+            else
             {
                 _refillManager.activateRefill = false;
 
-                if (_wheelPlug.value > 0.0001f)
+                if (_wheelPlug.value > 0.1f)
                 {
                     secretHealth -= 1 * Time.deltaTime;
                 }
@@ -294,6 +307,21 @@ public class MachineShredder : MonoBehaviour
             return;
         }
         _chargeValue += chargeSpeed * Time.deltaTime;
+    }
+
+    public void ResetWheelValue()
+    {
+        _wheelPlug.value = 0;
+    }
+
+    public void SetWheelValue(float value)
+    {
+        _wheelPlug.value = value;
+    }
+
+    public float GetWheelValue()
+    {
+        return _wheelPlug.value;
     }
 }
     

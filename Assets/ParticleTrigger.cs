@@ -21,11 +21,13 @@ public class ParticleTrigger : MonoBehaviour
 
     private void OnParticleTrigger()
     {
+        if (GetStation().shredder.AlreadyFull()) return;
         _counter++;
 
         if (_counter >= 10)
         {
             _counter = 0;
+
             if (GetStation() != null)
             {
                 GetStation().AddFuelEvent.Invoke();

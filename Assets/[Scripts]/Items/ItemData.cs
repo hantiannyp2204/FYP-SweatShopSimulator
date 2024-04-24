@@ -21,6 +21,4 @@ public class ItemData : ScriptableObject
 
     [Header("Product Content")]
     public List<ItemData> productContainable; // If applicable
-
-    
 }

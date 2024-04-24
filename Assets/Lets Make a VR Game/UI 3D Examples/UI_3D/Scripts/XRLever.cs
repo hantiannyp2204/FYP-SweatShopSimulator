@@ -195,10 +195,19 @@ namespace UnityEngine.XR.Content.Interaction
                 SetHandleAngle(m_Value ? m_MaxAngle : m_MinAngle);
         }
 
-        void SetHandleAngle(float angle)
+        public void SetHandleAngle(float angle)
         {
             if (m_Handle != null)
                 m_Handle.localRotation = Quaternion.Euler(angle, 0.0f, 0.0f);
+        }
+
+        public void SmoothSetHandleAngle(float angle, float speed)
+        {
+            Quaternion rotateTo = Quaternion.Euler(angle, 0.0f, 0.0f);
+            if (m_Handle != null)
+            {
+                m_Handle.localRotation = Quaternion.Slerp(m_Handle.localRotation, rotateTo, speed);
+            }
         }
 
         void OnDrawGizmosSelected()

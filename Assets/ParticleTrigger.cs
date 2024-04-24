@@ -19,25 +19,15 @@ public class ParticleTrigger : MonoBehaviour
         _particle = GetComponent<ParticleSystem>();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnParticleTrigger()
     {
+        if (GetStation().shredder.AlreadyFull()) return;
         _counter++;
 
         if (_counter >= 10)
         {
             _counter = 0;
+
             if (GetStation() != null)
             {
                 GetStation().AddFuelEvent.Invoke();
@@ -45,7 +35,7 @@ public class ParticleTrigger : MonoBehaviour
         }
         
         int numEnter = _particle.GetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter);
-        int numExit = _particle.GetTriggerParticles(ParticleSystemTriggerEventType.Exit, exit);
+        //int numExit = _particle.GetTriggerParticles(ParticleSystemTriggerEventType.Exit, exit);
 
         for (int i = 0; i < numEnter; ++i)
         {
@@ -58,7 +48,6 @@ public class ParticleTrigger : MonoBehaviour
             ParticleSystem.Particle p = enter[i];
         }
     }
-
 
     public void SetCollider(Collider collider)
     {

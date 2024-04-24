@@ -8,7 +8,7 @@ public class Hammer : MonoBehaviour
     public int maxHealth = 100; // Maximum health of the hammer
     public int currentHealth; // Current health of the hammer
     public float damagePerHit = 5f; // Damage inflicted per hit
-   
+    public bool hitting = false;
 
     private void Start()
     {
@@ -17,23 +17,20 @@ public class Hammer : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //if (game.canHit == true)
+        // Check if the collision is with an item on the anvil
+        if (collision.gameObject.CompareTag("RawMaterial"))
         {
-            // Check if the collision is with an item on the anvil
-            if (collision.gameObject.CompareTag("RawMaterial"))
-            {
-                // Increase the progress of the anvil
-                game.IncreaseProgress();
-                Hit();
-                Debug.Log("Hit!");
-            }
+            // Increase the progress of the anvil
+            game.IncreaseProgress();
+            Hit();
+            hitting = true;
+            Debug.Log("Hit!");
         }
-        //else
-        //{ 
-        //    Penalty();
-        //    game.ApplyPenalty();
-        //}
-
+        else
+        {
+            hitting = false;
+        }
+       
     }
 
     public void Hit()
@@ -45,7 +42,7 @@ public class Hammer : MonoBehaviour
         // Check if the hammer's health has dropped to zero or below
         if (currentHealth <= 0)
         {
-            Destroy(gameObject); // Destroy the hammer if health is depleted
+            Destroy(gameObject); // Destroy the hammer if health is 0
         }
     }
     public void Penalty()

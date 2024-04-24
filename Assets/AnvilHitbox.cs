@@ -10,6 +10,7 @@ public class AnvilHitbox : MonoBehaviour
     
     public List<RawMaterial> GetRMaterialList() => RMaterialList;
     public List<GameObject> GetTrashList() => trashList;
+    public bool ItemOnAnvil = false; 
     private void OnTriggerEnter(Collider other)
     {
         //check all gameobject in collider containing RawMaterial.cs
@@ -17,6 +18,7 @@ public class AnvilHitbox : MonoBehaviour
         if (RMComponent != null)
         {
             RMaterialList.Add(RMComponent);
+            ItemOnAnvil = true;
         }
         else
         //if item is not a scrap, burn it (destroy)
@@ -30,6 +32,7 @@ public class AnvilHitbox : MonoBehaviour
         if (RMComponent != null && RMaterialList.Contains(RMComponent))
         {
             RMaterialList.Remove(RMComponent);
+            ItemOnAnvil = false;
         }
         else if (trashList.Contains(other.gameObject))
         //if item is not a rawmater, burn it (destroy)

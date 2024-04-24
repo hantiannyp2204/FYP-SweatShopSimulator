@@ -49,7 +49,7 @@ public class MachineAnvil : MonoBehaviour
     public void RunMachine()
     {
         Debug.Log("using anvil");
-        
+
         foreach (RawMaterial currentRawType in anvilHitbox.GetRMaterialList())
         {
             ItemData outputItemData;
@@ -80,13 +80,9 @@ public class MachineAnvil : MonoBehaviour
 
             //destroy the input materials
             Destroy(currentRawType.gameObject);
-            anvilHitbox.RMaterialList.Remove(currentRawType); 
+            anvilHitbox.RMaterialList.Remove(currentRawType);
             anvilItemCollider.ClearProductList();
         }
-        //foreach (GameObject wrongItemType in anvilHitbox.GetTrashList())
-        //{
-        //   // Destroy(wrongItemType);
-        //}
 
        //ChangeState();
     }

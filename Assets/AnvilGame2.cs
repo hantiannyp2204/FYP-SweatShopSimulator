@@ -1,47 +1,58 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class AnvilGame2 : MonoBehaviour
 {
-    public Slider progressBar;
-    public float progressIncreaseAmount = 10f;
-    public float Newprogress;
-    //public float timeLimit = 10f; // Time limit in seconds
-    public float penaltyAmount = 15f; // Penalty amount if time limit is exceeded
+
     [SerializeField] private Hammer hammer;
     [SerializeField] private MachineAnvil anvil;
+    [SerializeField] private AnvilHitbox hitbox;
+
+    public Slider progressBar;
+    public TMP_Text timerText; // UI Text to display the timer
+    public float progressIncreaseAmount = 10f;
+    public float penaltyAmount = 15f; // Penalty amount if time limit is exceeded
+    public float offset = 0.5f; // Offset to adjust timing
+    public float BeatInterval = 5f;
+    //public int minBeatInterval = 2; // Minimum beat interval in seconds
+    //public int maxBeatInterval = 5; // Maximum beat interval in seconds
     private float currentProgress = 0f;
-    public float delayBeforeHit = 5f;
-    private float delayTimer = 0f;
-    //private float timer = 0f;
+    private float timer = 0f;
     public bool canHit = false;
 
     private void Update()
     {
-        if (!canHit)
+        if (hitbox.ItemOnAnvil == true)//checks for item on anvil
         {
-            delayTimer += Time.deltaTime;
-
-            if (delayTimer >= delayBeforeHit)
+            if (!IsCoroutineRunning("GameTimer"))
             {
-                canHit = true;
-                Debug.Log("hit the item!");
-                delayTimer = 0;
+                StartCoroutine(GameTimer());
+                Debug.Log("Timer starting");
             }
         }
-       // Debug.Log(delayTimer);
-        //if (timerRunning)
-        //{
-        //    timer += Time.deltaTime;
+        if (canHit)
+        {
+            timer += Time.deltaTime;
 
-        //    if (timer >= timeLimit)
-        //    {
-        //        ApplyPenalty();
-        //        ResetTimer();
-        //    }
-        //}
+            //checks if the player hits the anvil on time or within the delay
+            if ((hammer.hitting==true) && timer <= offset)
+            {
+                Debug.Log("ontime");
+                IncreaseProgress();
+            }
+        }
+        else if ((canHit==false) && (hammer.hitting == true))
+        {
+            //ApplyPenalty();
+            Debug.Log("Penalty applied!");
+        }
     }
-
+    private bool IsCoroutineRunning(string methodName)
+    {
+        // Check if the coroutine is running
+        return typeof(AnvilGame2).GetMethod(methodName, System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic) != null;
+    }
     public void IncreaseProgress()
     {
         currentProgress += progressIncreaseAmount;
@@ -59,12 +70,35 @@ public class AnvilGame2 : MonoBehaviour
         canHit = false;
     }
 
-    public void ApplyPenalty()
+    public void ApplyPenalty() //Penalty if the player doesnt hit the item on time
     {
         currentProgress -= penaltyAmount;
         currentProgress = Mathf.Clamp(currentProgress, 0f, 100f);
         progressBar.value = currentProgress;
-        //hammer.Penalty();
+        hammer.Penalty();
         Debug.Log("Penalty applied!");
+    }
+    private System.Collections.IEnumerator GameTimer()
+    {
+        while (true)
+        {
+            //int randomBeatInterval = Random.Range(minBeatInterval, maxBeatInterval); // Generate a random beat interval
+            yield return new WaitForSeconds(BeatInterval - offset); // Wait for beat interval
+            Debug.Log(BeatInterval);
+            canHit = true; // Allow the player to hit the action
+            timer = 0f; // Reset the timer
+
+            // Display the timer countdown 
+            for (int i = Mathf.RoundToInt(BeatInterval); i >= 0; i--)
+            {
+                timerText.text = i.ToString();
+                yield return new WaitForSeconds(1f);
+            }
+            // Display "HIT" when the timer reaches zero
+            timerText.text = "HIT!";
+            yield return new WaitForSeconds(1f);
+            timerText.text = ""; // Clear the timer display
+            canHit = false; // Disable hitting until the next beat
+        }
     }
 }

@@ -3,6 +3,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro; // Import the TMPro namespace
 using System.Collections;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Content.Interaction;
 
 
 public class NewController : MonoBehaviour
@@ -13,6 +15,8 @@ public class NewController : MonoBehaviour
     public FabricatorVrCollider fabricatorCollider;
     public GameObject Anchor;
     public PowerForFab power;
+    public XRKnob rotationSpeedKnob;
+    public XRKnob trueRangeKnob;
 
 
     [Header("Game Variables")]
@@ -88,12 +92,14 @@ public class NewController : MonoBehaviour
             EndRotate();
         }
 
-        temp = Mathf.Round(transform.rotation.eulerAngles.z);
-        currentText.text = "" + temp;
-        if (hold)
-        {
-            transform.RotateAround(Anchor.transform.position, Anchor.transform.forward, speed * Time.deltaTime);
-        }
+
+        // Update your true range logic here
+        //temp = Mathf.Round(transform.rotation.eulerAngles.z);
+        //currentText.text = "" + temp;
+        //if (hold)
+        //{
+        //    transform.RotateAround(Anchor.transform.position, Anchor.transform.forward, speed * Time.deltaTime);
+        //}
 
     }
 
@@ -215,7 +221,6 @@ public class NewController : MonoBehaviour
         // Reset everythings
         crafting.DestroyOBJ();
         crafting.ClearLists();
-        
         macine._WinORLose.SetActive(false);
         macine._TextHolder.SetActive(false);
         macine._NextButton.SetActive(false);

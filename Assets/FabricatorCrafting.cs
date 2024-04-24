@@ -98,9 +98,9 @@ public class FabricatorCrafting : MonoBehaviour
         EnoughMaterials = false;
     }
 
-    public void SpawnOBJ()
+    public void SpawnOBJ(GameObject spawnItem)
     {
-        Instantiate(item2Spawn,_SpawnPlace.transform.position,Quaternion.identity);
+        Instantiate(spawnItem, _SpawnPlace.transform.position,Quaternion.identity);
     }
 
     public void LogMissingItems(List<Item> missingItems)

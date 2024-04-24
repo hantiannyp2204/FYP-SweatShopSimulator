@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.XR.Content.Interaction;
 
 public class MachineSmelter : MonoBehaviour
 {
@@ -28,7 +29,15 @@ public class MachineSmelter : MonoBehaviour
 
 
     [Header("Door System")]
-    [SerializeField] private XRDoor door;
+    [SerializeField] private XRKnob wheel;
+
+    [Header("Particle Effects")]
+    [SerializeField] private ParticleSystem explosionParticle;
+    [SerializeField] private List<ParticleSystem> fireParticleList;
+    [SerializeField] private ParticleSystem fuelFire;
+
+    [Header("Coal System")]
+    [SerializeField] GameObject coalRender;
 
     private float elapsedTime = 0f;
     private Coroutine smeltingCoroutineHandler;
@@ -40,15 +49,13 @@ public class MachineSmelter : MonoBehaviour
     private bool blewUp = false;
     private bool aboutToBlow = false;
     private bool machineActive = false;
+    private bool ableToStart = false;
 
-
-    [Header("Particle Effects")]
-    [SerializeField] private ParticleSystem explosionParticle;
-    [SerializeField] private List<ParticleSystem> fireParticleList;
-    [SerializeField] private ParticleSystem fuelFire;
-
-    [Header("Coal System")]
-    [SerializeField] GameObject coalRender;
+    public bool AbilityToStart
+    {
+        get => ableToStart;
+        set => ableToStart = value; 
+    }
     public bool HasBlownUp() => blewUp;
     public int GetHealthPoints() => healthPoints;
     private void Awake()
@@ -77,7 +84,7 @@ public class MachineSmelter : MonoBehaviour
 
     public void ToggleMachine()
     {
-        if (!door.IsDoorLocked() || blewUp)
+        if (blewUp || !AbilityToStart)
         {
             return;
         }
@@ -148,14 +155,12 @@ public class MachineSmelter : MonoBehaviour
     }
     private void StartSmelting()
     {
-        door.SetAbilityToGrab(false);
         smeltingCoroutineHandler = StartCoroutine(SmeltCoroutine());
     }
 
     private void DeactivateMachine()
     {
         machineActive = false;
-        door.SetAbilityToGrab(true);
         scrapConverted = false;
         aboutToBlow = false;
         elapsedTime= 0;

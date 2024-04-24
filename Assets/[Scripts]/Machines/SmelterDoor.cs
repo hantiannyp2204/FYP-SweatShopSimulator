@@ -5,16 +5,16 @@ using UnityEngine.XR.Content.Interaction;
 
 public class SmelterDoor : XRDoor
 {
-    XRKnob wheel;
+    [SerializeField]private XRKnob smelterWheel;
     // Start is called before the first frame update
     public override void OnDoorLocked()
     {
         base.OnDoorLocked();
-        wheel.enabled = true;
+        smelterWheel.enabled = true;
     }
     public override void OnDoorUnlocked()
     {
         base.OnDoorUnlocked();
-        wheel.enabled = false;
+        smelterWheel.enabled = false;
     }
 }

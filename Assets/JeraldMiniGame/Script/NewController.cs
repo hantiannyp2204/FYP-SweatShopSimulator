@@ -76,7 +76,10 @@ public class NewController : MonoBehaviour
 
     void Update()
     {
-        power.CheckIfGotPower();
+        if (power != null)
+        {
+            power.CheckIfGotPower();
+        }
         if (macine.HasGameStarted == true)
         {
             power._CurrentPower -= 1 * Time.deltaTime;

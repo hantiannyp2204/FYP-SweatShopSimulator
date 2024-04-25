@@ -48,7 +48,7 @@ public class HandPresencePhysics : MonoBehaviour
     }
     private void HandleSelectEntered(SelectEnterEventArgs arg)
     {
-        if(arg.interactableObject.transform.GetComponent<XRVelocityRayGrab>().IsGrabbedByRay())
+        if(arg.interactableObject.transform.GetComponent<XRVelocityRayGrab>()!= null && arg.interactableObject.transform.GetComponent<XRVelocityRayGrab>().IsGrabbedByRay())
         {
             return;
         }

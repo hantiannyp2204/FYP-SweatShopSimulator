@@ -11,7 +11,10 @@ public class VrMachineItemCollider : MonoBehaviour
     {
         //check if it has Item Script, else ignore
         Item itemComponenet = other.GetComponent<Item>();
-        if (itemComponenet == null) return;
+        if (itemComponenet == null)
+        {
+            return;
+        }
         _tracker = itemComponenet;
         _productList.Add(itemComponenet);
     }

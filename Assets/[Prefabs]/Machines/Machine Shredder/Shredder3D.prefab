@@ -2363,7 +2363,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5593768047538002140
 Transform:
   m_ObjectHideFlags: 0
@@ -2401,6 +2401,121 @@ MonoBehaviour:
   e_press: {fileID: 0}
   e_release: {fileID: 0}
   shredder: {fileID: 6329199053643114188}
+--- !u!1 &6316664977831198832
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1510953046901202578}
+  - component: {fileID: 7856879408747509728}
+  - component: {fileID: 8249308837045132797}
+  m_Layer: 0
+  m_Name: Socket Interactor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1510953046901202578
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6316664977831198832}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.404, y: 1.89, z: 1.498}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3435589177918770607}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7856879408747509728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6316664977831198832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60523e0647cc6ab43acc73cb266a32a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_InteractionManager: {fileID: 0}
+  m_InteractionLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_InteractionLayers:
+    m_Bits: 4294967295
+  m_AttachTransform: {fileID: 0}
+  m_KeepSelectedTargetValid: 1
+  m_DisableVisualsWhenBlockedInGroup: 1
+  m_StartingSelectedInteractable: {fileID: 0}
+  m_StartingTargetFilter: {fileID: 0}
+  m_HoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_HoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_StartingHoverFilters: []
+  m_StartingSelectFilters: []
+  m_OnHoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnHoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnSelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnSelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ShowInteractableHoverMeshes: 1
+  m_InteractableHoverMeshMaterial: {fileID: 2100000, guid: 520443b275730854884341c45978a34d,
+    type: 2}
+  m_InteractableCantHoverMeshMaterial: {fileID: 0}
+  m_SocketActive: 1
+  m_InteractableHoverScale: 1
+  m_RecycleDelayTime: 1
+  m_HoverSocketSnapping: 0
+  m_SocketSnappingRadius: 0.1
+  m_SocketScaleMode: 0
+  m_FixedScale: {x: 1, y: 1, z: 1}
+  m_TargetBoundsSize: {x: 1, y: 1, z: 1}
+--- !u!135 &8249308837045132797
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6316664977831198832}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6352498412889172435
 GameObject:
   m_ObjectHideFlags: 0
@@ -3002,6 +3117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7669a0d6d25ac247a7af9bf3377f804, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initShredding: 0
   lever: {fileID: 4005564735938159178}
   wheel: {fileID: 4098273985154237320}
   valueToComplete: 5
@@ -3011,19 +3127,13 @@ MonoBehaviour:
   particleSpawnLocation: {fileID: 8386360402908531445}
   shredderItemCollider: {fileID: 4505355967688170804}
   secretHealth: 0
-  progressBar: {fileID: 7296345250537661577}
-  player: {fileID: 0}
-  afterInteract: {fileID: 758113071163210103}
   maxHealth: 0
-  progressText: {fileID: 8306239198750862955}
-  distFromPlayerText: {fileID: 0}
-  productToShredText: {fileID: 0}
-  lockedInProductText: {fileID: 0}
-  shredderFuelText: {fileID: 1802330410478894717}
-  decreaseMultiplier: 0.05
+  decreaseMultiplier: 0.1
   chargeSpeed: 10
   distToStop: 5
   spawnPoint: {fileID: 2314883235078655604}
+  progressText: {fileID: 8306239198750862955}
+  shredderFuelText: {fileID: 1802330410478894717}
   e_interactShredder: {fileID: 11400000, guid: 49e7efff2325a4a44ae7291f0f675ea0, type: 2}
   e_shredderFinish: {fileID: 11400000, guid: 3997def4957492d4e958f5971122f17b, type: 2}
 --- !u!1 &7730969524163944808
@@ -3226,6 +3336,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cc0ad485334f4d4fa1e7e826283f719, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _productList: []
+  _tracker: {fileID: 0}
 --- !u!1 &7910540262614174910
 GameObject:
   m_ObjectHideFlags: 0
@@ -3399,6 +3511,7 @@ Transform:
   - {fileID: 8386360402908531445}
   - {fileID: 5861353413372648068}
   - {fileID: 7905297918288784846}
+  - {fileID: 1510953046901202578}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!1 &8103466732197433387
@@ -3787,7 +3900,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3448707904057020533}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e452b0dd2146b74aaa5f93a6a58d858, type: 3}
   m_Name: 
@@ -3845,7 +3958,7 @@ PrefabInstance:
     - target: {fileID: 1366708127190037222, guid: 6299b20ad97432640806d923a123a60b,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2525742877047687927, guid: 6299b20ad97432640806d923a123a60b,
         type: 3}
@@ -4009,6 +4122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shredder: {fileID: 6329199053643114188}
+  _check: {fileID: 4505355967688170804}
   canStartShredding:
     m_PersistentCalls:
       m_Calls: []
@@ -4031,6 +4145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shredder: {fileID: 6329199053643114188}
+  _check: {fileID: 0}
   canStartShredding:
     m_PersistentCalls:
       m_Calls: []

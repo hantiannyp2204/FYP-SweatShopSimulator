@@ -4,21 +4,22 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR.Content.Interaction;
 public class WheelManager : MonoBehaviour
-{
+{   
+    public ProbabilityManager chance;
     [SerializeField] private MachineShredder shredder;
     [SerializeField] private VrMachineItemCollider _check;
 
     public UnityEvent canStartShredding;
-
+    
     private void Start()
     {
+        chance = GetComponent<ProbabilityManager>();
         if (canStartShredding == null)
         {
             canStartShredding = new UnityEvent();
         }
 
         shredder.lever.GetComponentInChildren<XRLever>().onLeverDeactivate.AddListener(ActivateWheel);
-        //_check = shredder.GetComponentInChildren<VrMachineItemCollider>();
     }
     private void ActivateWheel()
     {

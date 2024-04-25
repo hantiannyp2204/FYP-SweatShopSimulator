@@ -24,11 +24,7 @@ public class Hammer : MonoBehaviour
             game.IncreaseProgress();
             Hit();
             hitting = true;
-            Debug.Log("Hit");
-        }
-        else
-        {
-            hitting = false;
+            Debug.Log("bam");
         }
        
     }

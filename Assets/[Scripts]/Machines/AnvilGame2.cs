@@ -22,6 +22,7 @@ public class AnvilGame2 : MonoBehaviour
     public bool canHit = false;
     public bool timerRunning = false;
 
+
     private void Update()
     {
         if ((hitbox.ItemOnAnvil == true) && (timerRunning ==false))//checks for item on anvil
@@ -29,23 +30,24 @@ public class AnvilGame2 : MonoBehaviour
             StartCoroutine(GameTimer());
             timerRunning = true;
             Debug.Log("Timer starting");
-        
         }
         if (canHit)
         {
             timer += Time.deltaTime;
+            Debug.Log("HIT IT");
 
             //checks if the player hits the anvil on time or within the delay
             if ((hammer.hitting==true) && timer <= offset)
             {
                 Debug.Log("ontime");
                 IncreaseProgress();
+
             }
         }
-        else if ((canHit==false) && (hammer.hitting == true))
+        else if ((hammer.hitting == true)&&(canHit==false))
         {
             ApplyPenalty();
-            Debug.Log("Penalty applied!");
+            //Debug.Log("Penalty applied!");
             hammer.hitting = false;
         }
     }
@@ -63,7 +65,6 @@ public class AnvilGame2 : MonoBehaviour
             anvil.RunMachine();
             currentProgress = 0; // Reset currentProgress after crafting is complete
         }
-        canHit = false;
     }
 
     public void ApplyPenalty() //Penalty if the player doesnt hit the item on time
@@ -82,7 +83,6 @@ public class AnvilGame2 : MonoBehaviour
             //int randomBeatInterval = Random.Range(minBeatInterval, maxBeatInterval); // Generate a random beat interval
             yield return new WaitForSeconds(BeatInterval - offset); // Wait for beat interval
             Debug.Log(BeatInterval);
-            canHit = true; // Allow the player to hit the action
             timer = 0f; // Reset the timer
 
             // Display the timer countdown 
@@ -95,8 +95,12 @@ public class AnvilGame2 : MonoBehaviour
             timerText.text = "HIT!";
             yield return new WaitForSeconds(1f);
             timerText.text = ""; // Clear the timer display
-            canHit = false; // Disable hitting until the next timer
+            canHit = true; // allows player to hit
             timerRunning = false;//prevents coroutine from running agains
+
+            // Reset canHit after a delay
+            yield return new WaitForSeconds(2f); // Adjust delayTime as needed
+            canHit = false; // Reset canHit
         }
     }
 }

@@ -192,10 +192,17 @@ namespace UnityEngine.XR.Content.Interaction
         /// </summary>
         public ValueChangeEvent onValueChange => m_OnValueChange;
 
+        public UnityEvent ValueChangeShredder;
+
         void Start()
         {
             SetValue(m_Value);
             SetKnobRotation(ValueToRotation());
+
+            if  (ValueChangeShredder == null)
+            {
+                ValueChangeShredder = new UnityEvent();
+            }
         }
 
         protected override void OnEnable()
@@ -356,6 +363,8 @@ namespace UnityEngine.XR.Content.Interaction
 
             m_Value = value;
             m_OnValueChange.Invoke(m_Value);
+
+            ValueChangeShredder.Invoke(); 
         }
 
         float ValueToRotation()

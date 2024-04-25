@@ -5,14 +5,6 @@ using UnityEngine;
 
 public class Scrap : MonoBehaviour
 {
-    public enum ScrapType
-    {
-        Plastic,
-        Wood,
-        Metal
-    }
-    [SerializeField] ScrapType type = ScrapType.Plastic;
-
-    public ScrapType GetScrapType() => type;
-   
+    [SerializeField] GameObject rawMaterial;
+    public GameObject GetMaterial() => rawMaterial;
 }

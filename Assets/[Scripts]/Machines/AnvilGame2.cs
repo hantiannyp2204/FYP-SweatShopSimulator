@@ -22,6 +22,10 @@ public class AnvilGame2 : MonoBehaviour
     public bool canHit = false;
     public bool timerRunning = false;
 
+    [SerializeField] private float hitCooldown = 1f; // Cooldown period in seconds
+    private bool hitRegistered = false; // Flag to track if a hit is registered
+    private float cooldownTimer = 0f; // Timer to track the cooldown period
+
 
     private void Update()
     {
@@ -31,17 +35,29 @@ public class AnvilGame2 : MonoBehaviour
             timerRunning = true;
             Debug.Log("Timer starting");
         }
-        if (canHit)
+        // Update cooldown timer
+        if (cooldownTimer > 0f)
+        {
+            cooldownTimer -= Time.deltaTime;
+            if (cooldownTimer <= 0f)
+            {
+                cooldownTimer = 0f;
+                hitRegistered = false; // Reset hitRegistered flag after cooldown
+            }
+        }
+
+        if (canHit&& !hitRegistered)
         {
             timer += Time.deltaTime;
-            Debug.Log("HIT IT");
+           // Debug.Log("HIT IT");
 
             //checks if the player hits the anvil on time or within the delay
             if ((hammer.hitting==true) && timer <= offset)
             {
                 Debug.Log("ontime");
                 IncreaseProgress();
-
+                hitRegistered = true;
+                cooldownTimer = hitCooldown;
             }
         }
         else if ((hammer.hitting == true)&&(canHit==false))
@@ -50,6 +66,7 @@ public class AnvilGame2 : MonoBehaviour
             //Debug.Log("Penalty applied!");
             hammer.hitting = false;
         }
+        //Debug.Log("hammer.hitting: " + hammer.hitting + ", hitRegistered: " + hitRegistered);
     }
     public void IncreaseProgress()
     {
@@ -93,14 +110,15 @@ public class AnvilGame2 : MonoBehaviour
             }
             // Display "HIT" when the timer reaches zero
             timerText.text = "HIT!";
+            canHit = true;
             yield return new WaitForSeconds(1f);
             timerText.text = ""; // Clear the timer display
-            canHit = true; // allows player to hit
+             // allows player to hit
             timerRunning = false;//prevents coroutine from running agains
-
             // Reset canHit after a delay
             yield return new WaitForSeconds(2f); // Adjust delayTime as needed
             canHit = false; // Reset canHit
+            hitRegistered = false;
         }
     }
 }

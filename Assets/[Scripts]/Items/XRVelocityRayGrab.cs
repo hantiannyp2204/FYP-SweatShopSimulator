@@ -11,7 +11,9 @@ public class XRVelocityRayGrab : XRGrabInteractable
     private Vector3 previousPos;
     private Rigidbody interactableRigidbody;
     private bool canJump = true;
+    private bool grabbedByRay = false;
 
+    public bool IsGrabbedByRay() => grabbedByRay;
     protected override void Awake()
     {
         base.Awake();
@@ -56,10 +58,14 @@ public class XRVelocityRayGrab : XRGrabInteractable
     protected override void OnSelectEntered(SelectEnterEventArgs args)
     {
         //seperates what happens if its interacted by ray or direct
-
+        Debug.Log("SELECTED");
         //if ray grab
         if(args.interactorObject is XRRayInteractor)
         {
+            //if(!canJump)
+            //{
+            //    return;
+            //}
             trackPosition = false;
             trackRotation = false;
             throwOnDetach = false;
@@ -67,14 +73,23 @@ public class XRVelocityRayGrab : XRGrabInteractable
             rayInteractor = (XRRayInteractor)args.interactorObject;
             previousPos = rayInteractor.transform.position;
             canJump = true;
+            grabbedByRay = true;
         }
         else
         {
+            canJump = true;
+            grabbedByRay = false;
             trackPosition = true;
             trackRotation = true;
             throwOnDetach = true;
-        }
+            base.OnSelectEntered(args);
 
-        base.OnSelectEntered(args);
+        }
+    }
+    protected override void OnSelectExited(XRBaseInteractor interactor)
+    {
+        canJump = true;
+        grabbedByRay = false;
+        base.OnSelectExited(interactor);
     }
 }

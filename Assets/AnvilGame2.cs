@@ -13,23 +13,23 @@ public class AnvilGame2 : MonoBehaviour
     public TMP_Text timerText; // UI Text to display the timer
     public float progressIncreaseAmount = 10f;
     public float penaltyAmount = 15f; // Penalty amount if time limit is exceeded
-    public float offset = 0.5f; // Offset to adjust timing
+    public float offset = 1f; // Offset to adjust timing
     public float BeatInterval = 5f;
     //public int minBeatInterval = 2; // Minimum beat interval in seconds
     //public int maxBeatInterval = 5; // Maximum beat interval in seconds
     private float currentProgress = 0f;
     private float timer = 0f;
     public bool canHit = false;
+    public bool timerRunning = false;
 
     private void Update()
     {
-        if (hitbox.ItemOnAnvil == true)//checks for item on anvil
+        if ((hitbox.ItemOnAnvil == true) && (timerRunning ==false))//checks for item on anvil
         {
-            if (!IsCoroutineRunning("GameTimer"))
-            {
-                StartCoroutine(GameTimer());
-                Debug.Log("Timer starting");
-            }
+            StartCoroutine(GameTimer());
+            timerRunning = true;
+            Debug.Log("Timer starting");
+        
         }
         if (canHit)
         {
@@ -44,14 +44,10 @@ public class AnvilGame2 : MonoBehaviour
         }
         else if ((canHit==false) && (hammer.hitting == true))
         {
-            //ApplyPenalty();
+            ApplyPenalty();
             Debug.Log("Penalty applied!");
+            hammer.hitting = false;
         }
-    }
-    private bool IsCoroutineRunning(string methodName)
-    {
-        // Check if the coroutine is running
-        return typeof(AnvilGame2).GetMethod(methodName, System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic) != null;
     }
     public void IncreaseProgress()
     {
@@ -80,6 +76,7 @@ public class AnvilGame2 : MonoBehaviour
     }
     private System.Collections.IEnumerator GameTimer()
     {
+        timerText.text = "Anvil is ready";
         while (true)
         {
             //int randomBeatInterval = Random.Range(minBeatInterval, maxBeatInterval); // Generate a random beat interval
@@ -98,7 +95,8 @@ public class AnvilGame2 : MonoBehaviour
             timerText.text = "HIT!";
             yield return new WaitForSeconds(1f);
             timerText.text = ""; // Clear the timer display
-            canHit = false; // Disable hitting until the next beat
+            canHit = false; // Disable hitting until the next timer
+            timerRunning = false;//prevents coroutine from running agains
         }
     }
 }

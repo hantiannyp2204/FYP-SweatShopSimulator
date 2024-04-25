@@ -2105,12 +2105,12 @@ PrefabInstance:
     - target: {fileID: 7572491378490076790, guid: 92790fae272470945ac8c0eb70df6d72,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.786
+      value: -1.45
       objectReference: {fileID: 0}
     - target: {fileID: 7572491378490076790, guid: 92790fae272470945ac8c0eb70df6d72,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.812
+      value: 0.706
       objectReference: {fileID: 0}
     - target: {fileID: 7572491378490076790, guid: 92790fae272470945ac8c0eb70df6d72,
         type: 3}
@@ -3101,6 +3101,11 @@ PrefabInstance:
       objectReference: {fileID: 1991095795}
     - target: {fileID: 1301702665582605228, guid: 5afae93007a26334ea45711401b8fe16,
         type: 3}
+      propertyPath: damagePerHit
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1301702665582605228, guid: 5afae93007a26334ea45711401b8fe16,
+        type: 3}
       propertyPath: currentHealth
       value: 100
       objectReference: {fileID: 0}
@@ -3582,6 +3587,11 @@ PrefabInstance:
       propertyPath: m_RenderMode
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1270943042915770262, guid: b5667362ccad4a14a88cfdaeec4f56df,
+        type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 1851485172171582775, guid: b5667362ccad4a14a88cfdaeec4f56df,
         type: 3}
       propertyPath: anvil
@@ -3924,14 +3934,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8191572116294068079, guid: b5667362ccad4a14a88cfdaeec4f56df,
         type: 3}
-      propertyPath: anvil
-      value: 
-      objectReference: {fileID: 1795033613}
-    - target: {fileID: 8191572116294068079, guid: b5667362ccad4a14a88cfdaeec4f56df,
-        type: 3}
       propertyPath: hammer
       value: 
       objectReference: {fileID: 1849637366}
+    - target: {fileID: 8191572116294068079, guid: b5667362ccad4a14a88cfdaeec4f56df,
+        type: 3}
+      propertyPath: offset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8191572116294068079, guid: b5667362ccad4a14a88cfdaeec4f56df,
+        type: 3}
+      propertyPath: timerRunning
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8191572116294068079, guid: b5667362ccad4a14a88cfdaeec4f56df,
+        type: 3}
+      propertyPath: penaltyAmount
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8191572116294068079, guid: b5667362ccad4a14a88cfdaeec4f56df,
+        type: 3}
+      propertyPath: progressIncreaseAmount
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8456338258707559415, guid: b5667362ccad4a14a88cfdaeec4f56df,
         type: 3}
       propertyPath: anvil

@@ -12,8 +12,9 @@ public class XRVelocityRayGrab : XRGrabInteractable
     private Rigidbody interactableRigidbody;
     private bool canJump = true;
     private bool grabbedByRay = false;
-
+    private bool itemIsHovered = false;
     public bool IsGrabbedByRay() => grabbedByRay;
+    public bool CanJump() => canJump;
     protected override void Awake()
     {
         base.Awake();
@@ -35,6 +36,14 @@ public class XRVelocityRayGrab : XRGrabInteractable
                 canJump = false;
             }
         }
+        if (itemIsHovered && (Vector3.Distance(this.transform.position, hoveredItemTransform.position) >= 0.4f))
+        {
+            grabbedByRay = true;
+        }
+        else if (itemIsHovered && !(Vector3.Distance(this.transform.position, hoveredItemTransform.position) >= 0.4f))
+        {
+            grabbedByRay = false;
+        }
     }
 
     //balastic projectile equation calculation
@@ -54,18 +63,40 @@ public class XRVelocityRayGrab : XRGrabInteractable
 
         return jumpVelocityVector;
     }
+    Transform hoveredItemTransform;
+    protected override void OnHoverEntered(HoverEnterEventArgs args)
+    {
+   
+        if (args.interactorObject is XRRayInteractor)
+        {
+            itemIsHovered = true;
+            hoveredItemTransform = args.interactorObject.transform;
+        }
+        
+        base.OnHoverEntered(args);
+    }
 
+    protected override void OnHoverExited(HoverExitEventArgs args)
+    {
+        hoveredItemTransform = null;
+        itemIsHovered = false;
+        grabbedByRay = false;
+        base.OnHoverExited(args);
+    }
     protected override void OnSelectEntered(SelectEnterEventArgs args)
     {
+        itemIsHovered = false;
         //seperates what happens if its interacted by ray or direct
-        Debug.Log("SELECTED");
-        //if ray grab
-        if(args.interactorObject is XRRayInteractor)
+        Debug.Log("Distance: " + Vector3.Distance(this.transform.position, args.interactorObject.transform.position));
+        //if direct grab
+        if(grabbedByRay)
         {
-            //if(!canJump)
+
+            //if (!canJump)
             //{
             //    return;
             //}
+            Debug.Log("SELECTED by Ray");
             trackPosition = false;
             trackRotation = false;
             throwOnDetach = false;
@@ -73,23 +104,27 @@ public class XRVelocityRayGrab : XRGrabInteractable
             rayInteractor = (XRRayInteractor)args.interactorObject;
             previousPos = rayInteractor.transform.position;
             canJump = true;
-            grabbedByRay = true;
+
         }
+
+        //if ray grab
         else
         {
-            canJump = true;
-            grabbedByRay = false;
+          
+            Debug.Log("SELECTED by Direct");
             trackPosition = true;
             trackRotation = true;
             throwOnDetach = true;
-            base.OnSelectEntered(args);
 
         }
+        //canJump = true;
+        base.OnSelectEntered(args);
     }
     protected override void OnSelectExited(XRBaseInteractor interactor)
     {
-        canJump = true;
-        grabbedByRay = false;
+
+        //canJump = true;
+
         base.OnSelectExited(interactor);
     }
 }

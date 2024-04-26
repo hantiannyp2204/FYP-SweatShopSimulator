@@ -13,6 +13,7 @@ public class XRRayHoverManager : MonoBehaviour
         // Subscribe to the hover events
         rayInteractor.hoverEntered.AddListener(HandleHoverEntered);
         rayInteractor.hoverExited.AddListener(HandleHoverExited);
+        rayInteractor.selectEntered.AddListener(HandleSelectEntered);
     }
 
     void OnDisable()
@@ -20,6 +21,7 @@ public class XRRayHoverManager : MonoBehaviour
         // Always make sure to unsubscribe when the script is disabled
         rayInteractor.hoverEntered.RemoveListener(HandleHoverEntered);
         rayInteractor.hoverExited.RemoveListener(HandleHoverExited);
+        rayInteractor.selectEntered.RemoveListener(HandleSelectEntered);
     }
 
     private void HandleHoverEntered(HoverEnterEventArgs args)
@@ -37,6 +39,14 @@ public class XRRayHoverManager : MonoBehaviour
             RemoveHoverMaterial(args.interactableObject.transform);
         }
     }
+    private void HandleSelectEntered(SelectEnterEventArgs args)
+    {
+        if (args.interactableObject != null)
+        {
+            RemoveHoverMaterial(args.interactableObject.transform);
+        }
+    }
+
     private void AddHoverMaterial(Transform target)
     {
         // Retrieve all MeshRenderer components on the GameObject and its children
@@ -74,7 +84,7 @@ public class XRRayHoverManager : MonoBehaviour
         int currentIndex = 0;
         foreach (MeshRenderer renderer in meshRenderers)
         {
-            renderer.materials = initialMaterials[currentIndex];
+            renderer.materials = initialMaterials[currentIndex];    
             currentIndex++;
         }
         initialMaterials.Clear();

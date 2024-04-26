@@ -10,6 +10,7 @@ public class SmelterInputHitbox : MonoBehaviour
     List<Scrap> scrapList = new();
     List<GameObject> destroyList = new();
 
+    public LayerMask GetIgnoreLayer() => ignoreLayers;
     public List<Scrap> GetScrapList() => scrapList;
     public List<GameObject> GetDestroyList() => destroyList;
     private void OnTriggerEnter(Collider other)

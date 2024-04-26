@@ -7,16 +7,10 @@ using UnityEngine.XR.Content.Interaction;
 public class FabricaotrDialDebug : MonoBehaviour
 {
     public FabricatorXRKnob knob;
-    public TMP_Text debugTxt;
 
-    private void Start()
-    {
-        debugTxt.text = "Dial not connected";
-    }
     // Update is called once per frame
     void Update()
     {
         if(knob == null) return;
-        debugTxt.text = "Dial Value:\n" + knob.value.ToString();
     }
 }

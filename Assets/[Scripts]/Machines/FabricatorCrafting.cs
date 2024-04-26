@@ -117,6 +117,21 @@ public class FabricatorCrafting : MonoBehaviour
     {
         Debug.Log("Itemn spawned");
     }
+
+    public void VRDebugging()
+    {
+        HasChosenCraftingItem = true;
+        for (int i = 0; i < 3; i++) // Change 3 to the number of items you want to add
+        {
+            _WhatINeed.Add(item); // Assuming you want to add the same item multiple times
+                                  //_WhatINeed.Add(Plasticitem);
+        }
+
+        foreach (Item Item in _WhatINeed)
+        {
+            Debug.Log(Item.name);
+        }
+    }
     public void Debugging()
     {
         if (Input.GetKeyDown(KeyCode.L))

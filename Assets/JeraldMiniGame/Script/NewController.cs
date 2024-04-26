@@ -109,32 +109,6 @@ public class NewController : MonoBehaviour
        // }
 
     }
-
-
-    void BackColor()
-    {
-        if (levelPanelBack != null)
-        {
-            switch (Lnum)
-            {
-                case 1:
-                    levelPanelBack.color = new Color32(0, 255, 50, 255);
-                    break;
-                case 2:
-                    levelPanelBack.color = new Color32(0, 255, 228, 255);
-                    break;
-                case 3:
-                    levelPanelBack.color = new Color32(0, 50, 255, 255);
-                    break;
-                case 4:
-                    levelPanelBack.color = new Color32(160, 0, 255, 255);
-                    break;
-                case 5:
-                    levelPanelBack.color = new Color32(255, 0, 130, 255);
-                    break;
-            }
-        }
-    }
     void SetRange()
     {
         int winD = Random.Range((trueRange / 2), 360 - (trueRange / 2));
@@ -168,8 +142,7 @@ public class NewController : MonoBehaviour
                 macine._WinORLose.SetActive(true);
                 gameEnded = true; // Set gameEnded to true when player loses
                                   //againPanel.gameObject.SetActive(true);
-            }
-            //againPanel.gameObject.SetActive(true);
+            }         
         }
     }
 

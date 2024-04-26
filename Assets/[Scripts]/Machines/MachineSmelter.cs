@@ -4,6 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Content.Interaction;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class MachineSmelter : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class MachineSmelter : MonoBehaviour
     [SerializeField] private SmelterInputHitbox smelterInputHitbox;
     [SerializeField] private TMP_Text timerText;
     [SerializeField] private TMP_Text coalPercentage;
+    [SerializeField] private Collider outputCollider;
 
     [Header("Feedback Events")]
     [SerializeField] private FeedbackEventData e_run;
@@ -29,7 +31,7 @@ public class MachineSmelter : MonoBehaviour
 
 
     [Header("Door System")]
-    [SerializeField] private XRKnob wheel;
+    [SerializeField] private SmelterWheel smelterWheel;
 
     [Header("Particle Effects")]
     [SerializeField] private ParticleSystem explosionParticle;
@@ -38,6 +40,9 @@ public class MachineSmelter : MonoBehaviour
 
     [Header("Coal System")]
     [SerializeField] GameObject coalRender;
+
+    [Header("Fresh Material System")]
+    [SerializeField] Material hotMaterial;
 
     private float elapsedTime = 0f;
     private Coroutine smeltingCoroutineHandler;
@@ -50,6 +55,7 @@ public class MachineSmelter : MonoBehaviour
     private bool aboutToBlow = false;
     private bool machineActive = false;
     private bool ableToStart = false;
+    private Bounds outputSpawnBounds;
 
     public bool AbilityToStart
     {
@@ -62,6 +68,10 @@ public class MachineSmelter : MonoBehaviour
     {
         RefillFuel();
         timerText.text = "Ready";
+        if(outputCollider != null)
+        {
+            outputSpawnBounds = outputCollider.bounds;
+        }
     }
 
     private IEnumerator SmeltCoroutine()
@@ -81,7 +91,49 @@ public class MachineSmelter : MonoBehaviour
 
         ResetSmeltingVariables();
     }
+    private List<XRBaseInteractable> GetInteractablesInBounds(Bounds bounds)
+    {
+        List<XRBaseInteractable> interactableList = new();
 
+        // Center and size of the bounds are used for the OverlapBox
+        Vector3 center = bounds.center;
+        Vector3 halfExtents = bounds.extents;
+
+        // Optionally, provide the rotation of the collider
+        Quaternion rotation = outputCollider.transform.rotation;
+
+        // Get all colliders overlapping the box
+        Collider[] hitColliders = Physics.OverlapBox(center, halfExtents, rotation);
+        foreach (Collider hitCollider in hitColliders)
+        {
+            if (smelterInputHitbox.GetIgnoreLayer() == (smelterInputHitbox.GetIgnoreLayer() | (1 << hitCollider.gameObject.layer)))
+            {
+                continue;
+            }
+            XRBaseInteractable interactable = hitCollider.GetComponentInChildren<XRBaseInteractable>();
+            if(interactable !=null)
+            {
+                interactableList.Add(interactable);
+            }
+        }
+        return interactableList;
+    }
+    public void DisableItemGrab()
+    {
+        List<XRBaseInteractable> interactableList = GetInteractablesInBounds(outputSpawnBounds);
+        foreach(XRBaseInteractable baseInteractableScript in interactableList)
+        {
+            baseInteractableScript.enabled= false;
+        }
+    }
+    public void EnableItemGrab()
+    {
+        List<XRBaseInteractable> interactableList = GetInteractablesInBounds(outputSpawnBounds);
+        foreach (XRBaseInteractable baseInteractableScript in interactableList)
+        {
+            baseInteractableScript.enabled = true;
+        }
+    }
     public void ToggleMachine()
     {
         if (blewUp || !AbilityToStart)
@@ -92,6 +144,7 @@ public class MachineSmelter : MonoBehaviour
 
         if (smeltingCoroutineHandler == null && !scrapConverted)
         {
+            smelterWheel.enabled = true;
             fuelFire.Play();
             e_run?.InvokeEvent(transform.position, Quaternion.identity, transform);
             machineActive = true;
@@ -160,6 +213,7 @@ public class MachineSmelter : MonoBehaviour
 
     private void DeactivateMachine()
     {
+        smelterWheel.enabled= true;
         machineActive = false;
         scrapConverted = false;
         aboutToBlow = false;
@@ -219,12 +273,15 @@ public class MachineSmelter : MonoBehaviour
 
     private void ProcessScrapMaterials()
     {
+        //spawn the raw materials
         foreach (Scrap scrap in smelterInputHitbox.GetScrapList())
         {
             if (scrap.GetMaterial() != null)
             {
-                GameObject freshRawMaterial = Instantiate(scrap.GetMaterial(), scrap.transform.position, scrap.transform.rotation);
-                freshRawMaterial.AddComponent<FreshRawMaterial>();
+                float x = Random.Range(-outputSpawnBounds.extents.x, outputSpawnBounds.extents.x);
+                float z = Random.Range(-outputSpawnBounds.extents.z, outputSpawnBounds.extents.z);
+                GameObject freshRawMaterial = Instantiate(scrap.GetMaterial(), outputSpawnBounds.center + new Vector3(x, 0f, z), Quaternion.identity);
+                freshRawMaterial.AddComponent<FreshRawMaterial>().ApplyHotTexture(hotMaterial);
             }
 
             Destroy(scrap.gameObject);

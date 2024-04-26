@@ -23,6 +23,10 @@ public class HandColliders : MonoBehaviour
         // Filter out colliders with names containing "Hand Interactor"
         foreach (Collider collider in allColliders)
         {
+            if(collider.isTrigger)
+            {
+                continue;
+            }
             if (!collider.gameObject.name.Contains("Hand Interactor"))
             {
                 filteredColliders.Add(collider);

@@ -25,13 +25,17 @@ public class SmelterWheel : XRKnob
         else if(fullyTurned && value != 1)
         {
             e_unlock?.InvokeEvent(transform.position, Quaternion.identity, transform);
-            smelterDoor.SetAbilityToGrab(true);
+
             smelter.AbilityToStart = false;
             fullyTurned = false;
         }
         if(value != 0)
         {
             smelterDoor.SetAbilityToGrab(false);
+        }
+        else
+        {
+            smelterDoor.SetAbilityToGrab(true);
         }
     }
     void ResetWheel()

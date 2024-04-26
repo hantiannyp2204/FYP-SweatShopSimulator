@@ -145,7 +145,6 @@ public class MachineShredder : MonoBehaviour
         }
         else
         {
-            Debug.Break();
             _breakAtThisValue = 0;
         }
 
@@ -170,15 +169,17 @@ public class MachineShredder : MonoBehaviour
     public void ValueChangeCheck()
     {
         e_interactShredder?.InvokeEvent(particleSpawnLocation.position, Quaternion.identity, transform);
-        if (_save)
-        {
-            if (_wheelPlug.value >= _breakAtThisValue)
-            {
-                _wheelPlug.GetComponent<Rigidbody>().AddForce(Vector3.up * force, ForceMode.Impulse);
-                SetWheelStatus(false);
-                ResetWheelValue();
-            }
-        }
+        //if (_save)
+        //{
+        //    if (_wheelPlug.value >= _breakAtThisValue)
+        //    {
+        //        _wheelPlug.GetComponent<Rigidbody>().useGravity = true;
+        //        _wheelPlug.GetComponent<Rigidbody>().isKinematic = false;
+        //        _wheelPlug.GetComponent<Rigidbody>().AddForce(Vector3.up * force, ForceMode.Impulse);
+        //        SetWheelStatus(false);
+        //        ResetWheelValue();
+        //    }
+        //}
         if (IsOutOfFuel())
         {
             return;

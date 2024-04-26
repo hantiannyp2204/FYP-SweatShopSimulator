@@ -7,10 +7,12 @@ using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Content.Interaction;
 
 
+
 public class NewController : MonoBehaviour
 {
     [Header("References")]
     public MacineFab macine;
+    public FabricatorXRKnob xRKnob;
     public FabricatorCrafting crafting;
     public FabricatorVrCollider fabricatorCollider;
     public GameObject Anchor;
@@ -69,7 +71,7 @@ public class NewController : MonoBehaviour
     public void EndRotate()
     {
         //hold = false;
-        WinCheck();
+        WinCheck(xRKnob.m_Value);
     }
 
     void Update()
@@ -85,6 +87,8 @@ public class NewController : MonoBehaviour
             power.UpdatePowerBar(power._PowerForFab, newccPower);
         }
         
+
+
         if (gameEnded && Input.GetKeyDown(KeyCode.L) && winORloseText.text == "WIN")
         {
             ChangeLevel();
@@ -96,13 +100,13 @@ public class NewController : MonoBehaviour
         }
 
 
-        // Update your true range logic here
-        //temp = Mathf.Round(transform.rotation.eulerAngles.z);
-        //currentText.text = "" + temp;
-        //if (hold)
-        //{
-        //    transform.RotateAround(Anchor.transform.position, Anchor.transform.forward, speed * Time.deltaTime);
-        //}
+        //Update your true range logic here
+       //temp = Mathf.Round(transform.rotation.eulerAngles.z);
+       currentText.text = "" + xRKnob.m_Value;
+       // if (hold)
+       // {
+       //     transform.RotateAround(Anchor.transform.position, Anchor.transform.forward, speed * Time.deltaTime);
+       // }
 
     }
 
@@ -140,9 +144,9 @@ public class NewController : MonoBehaviour
         minT.text = "Min = " + minWinD;
         maxT.text = "Max = " + maxWinD;
     }
-    void WinCheck()
+    public void WinCheck(float WinCheck)
     {
-        if (temp <= maxWinD && temp >= minWinD)
+        if (WinCheck <= maxWinD && WinCheck >= minWinD)
         {
             winORloseText.text = "WIN";
             gameEnded = true; // Set gameEnded to true when player wins

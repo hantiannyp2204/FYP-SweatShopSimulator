@@ -78,9 +78,11 @@ public class XRVelocityRayGrab : XRGrabInteractable
 
     protected override void OnHoverExited(HoverExitEventArgs args)
     {
-        hoveredItemTransform = null;
-        itemIsHovered = false;
-        grabbedByRay = false;
+        if (args.interactorObject is XRRayInteractor)
+        {
+            itemIsHovered = false;
+            hoveredItemTransform = null;
+        }
         base.OnHoverExited(args);
     }
     protected override void OnSelectEntered(SelectEnterEventArgs args)

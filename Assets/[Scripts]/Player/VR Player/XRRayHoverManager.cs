@@ -8,7 +8,6 @@ public class XRRayHoverManager : MonoBehaviour
     [SerializeField] private XRRayInteractor rayInteractor; // Assign this in the inspector
     [SerializeField] private Material hoverMaterial;        // Assign the hover material in the inspector
     private List<Material[]> initialMaterials = new();
-    bool materialAdded = false;
     void OnEnable()
     {
         // Subscribe to the hover events
@@ -27,7 +26,6 @@ public class XRRayHoverManager : MonoBehaviour
 
     private void HandleHoverEntered(HoverEnterEventArgs args)
     {
-        materialAdded = true;
         if (args.interactableObject != null)
         {
             AddHoverMaterial(args.interactableObject.transform);
@@ -36,18 +34,16 @@ public class XRRayHoverManager : MonoBehaviour
 
     private void HandleHoverExited(HoverExitEventArgs args)
     {
-        if (args.interactableObject != null && materialAdded)
+        if (args.interactableObject != null)
         {
             RemoveHoverMaterial(args.interactableObject.transform);
-            materialAdded = false;
         }
     }
     private void HandleSelectEntered(SelectEnterEventArgs args)
     {
-        if (args.interactableObject != null && materialAdded)
+        if (args.interactableObject != null)
         {
             RemoveHoverMaterial(args.interactableObject.transform);
-            materialAdded = false;
         }
     }
 
@@ -59,6 +55,15 @@ public class XRRayHoverManager : MonoBehaviour
         int currentIndex = 0;
         foreach (MeshRenderer renderer in meshRenderers)
         {
+            //see if hover material is already added
+            foreach(Material material in renderer.materials)
+            {
+                if (material.name.Contains("HologramHover"))
+                {
+                    return;
+                }
+
+            }
             // Get the current materials array of the renderer
             initialMaterials.Add(renderer.materials);
 

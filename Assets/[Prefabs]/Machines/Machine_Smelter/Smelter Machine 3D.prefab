@@ -212,7 +212,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5642377945972506780}
   - component: {fileID: 8593613170502515846}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Smelter Wheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -360,6 +360,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  ValueChangeShredder:
+    m_PersistentCalls:
+      m_Calls: []
   smelter: {fileID: 7936502983207921324}
   smelterDoor: {fileID: 8803861449823032337}
   e_lock: {fileID: 11400000, guid: 9017d869f2f34964b95eb603601460db, type: 2}
@@ -14628,7 +14631,7 @@ MonoBehaviour:
   debugTxt: {fileID: 0}
   smeltTime: 5
   timeToBlowUp: 5
-  healthPoints: 500
+  healthPoints: 300
   smelterInputHitbox: {fileID: 8274934713080159160}
   timerText: {fileID: 8181867879368942605}
   coalPercentage: {fileID: 1239789292871614339}
@@ -14638,7 +14641,7 @@ MonoBehaviour:
   e_explosion: {fileID: 11400000, guid: 361cd276c29d9e044abdb6ecfb71fc21, type: 2}
   e_blewUpWarning: {fileID: 11400000, guid: 15a3e468a4d536945a9263307c4d012c, type: 2}
   e_stopAllSound: {fileID: 11400000, guid: d50c41a3d61f3d24681c071f79326e2d, type: 2}
-  wheel: {fileID: 0}
+  smelterWheel: {fileID: 8593613170502515846}
   explosionParticle: {fileID: 2750497101631742454}
   fireParticleList:
   - {fileID: 7220566461744524338}
@@ -14647,6 +14650,8 @@ MonoBehaviour:
   - {fileID: 5546866485217144658}
   fuelFire: {fileID: 9029695238426278939}
   coalRender: {fileID: 1960251761702972373}
+  hotMaterial: {fileID: -876546973899608171, guid: 9ae9e89a8afced8458ed8aa43c25022b,
+    type: 3}
 --- !u!114 &214684774921011484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14992,7 +14997,7 @@ GameObject:
   - component: {fileID: 8526585517216601416}
   - component: {fileID: 3350658618697622284}
   - component: {fileID: 663887735704738779}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Wheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53940,6 +53945,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bac03b210d5acfd42b77d6243e85478d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ignoreLayers:
+    serializedVersion: 2
+    m_Bits: 1920
 --- !u!1 &3316744451461861166
 GameObject:
   m_ObjectHideFlags: 0
@@ -83735,7 +83743,7 @@ MonoBehaviour:
   mainDoor: {fileID: 7675231250745805747}
   doorLocked: 0
   e_doorOpen: {fileID: 11400000, guid: 606f14d23c4c3594a91bc02f82042b4c, type: 2}
-  e_doorClose: {fileID: 11400000, guid: b015691ad05ca8743be42c50f91dd7d5, type: 2}
+  e_doorClose: {fileID: 11400000, guid: d37de476e378aeb459b5aef68c46f260, type: 2}
   smelterWheel: {fileID: 8593613170502515846}
 --- !u!1 &7691305620840011782
 GameObject:
@@ -88609,7 +88617,7 @@ GameObject:
   - component: {fileID: 7843955936506268364}
   - component: {fileID: 1610253821379404778}
   - component: {fileID: 2001625436710738340}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Wheel Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 99633423913494911}
   - component: {fileID: 3151073968700541571}
   - component: {fileID: -3109341923436851359}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Metal_Raw Material
   m_TagString: RawMaterial
   m_Icon: {fileID: 0}
@@ -34,7 +34,6 @@ Transform:
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 5923791845231911011}
   - {fileID: 7697251137600467611}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -57,8 +56,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.0615964, y: 0.46234697, z: 2.2988408}
-  m_Center: {x: 0.009865642, y: 0.2688265, z: -0.0915395}
+  m_Size: {x: 1.073011, y: 0.513712, z: 2.3159628}
+  m_Center: {x: 0.004158318, y: 0.04338965, z: 0.0026302338}
 --- !u!114 &2456190419425728070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,59 +269,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
---- !u!1 &5792184480348192721
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5923791845231911011}
-  - component: {fileID: 7895362164632919514}
-  m_Layer: 0
-  m_Name: TriggerCollider
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5923791845231911011
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5792184480348192721}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7572491378490076790}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &7895362164632919514
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5792184480348192721}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.0720638, y: 0.4596355, z: 2.291932}
-  m_Center: {x: 0.004401386, y: 0.048443437, z: -0.0013241768}
 --- !u!1001 &7879215076590802288
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -416,6 +362,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: New ingot
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d4790994f8fe4964691ae7954c83773d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: d4790994f8fe4964691ae7954c83773d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

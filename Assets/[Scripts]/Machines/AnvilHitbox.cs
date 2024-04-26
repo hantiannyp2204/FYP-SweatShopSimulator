@@ -24,6 +24,7 @@ public class AnvilHitbox : MonoBehaviour
         //if item is not a scrap, burn it (destroy)
         {
             trashList.Add(other.gameObject);
+            ItemOnAnvil = false;
         }
     }
     private void OnTriggerExit(Collider other)
@@ -38,6 +39,7 @@ public class AnvilHitbox : MonoBehaviour
         //if item is not a rawmater, burn it (destroy)
         {
             Debug.Log("Take it awayy");
+            ItemOnAnvil = false;
         }
     }
     public void ClearList()

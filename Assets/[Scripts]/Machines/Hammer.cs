@@ -21,14 +21,10 @@ public class Hammer : MonoBehaviour
         if (collision.gameObject.CompareTag("RawMaterial"))
         {
             // Increase the progress of the anvil
-            game.IncreaseProgress();
+            //game.IncreaseProgress();
             Hit();
             hitting = true;
-            Debug.Log("Hit");
-        }
-        else
-        {
-            hitting = false;
+            Debug.Log("bam");
         }
        
     }

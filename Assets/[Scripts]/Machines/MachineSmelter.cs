@@ -29,7 +29,7 @@ public class MachineSmelter : MonoBehaviour
 
 
     [Header("Door System")]
-    [SerializeField] private XRKnob wheel;
+    [SerializeField] private SmelterWheel smelterWheel;
 
     [Header("Particle Effects")]
     [SerializeField] private ParticleSystem explosionParticle;
@@ -38,6 +38,9 @@ public class MachineSmelter : MonoBehaviour
 
     [Header("Coal System")]
     [SerializeField] GameObject coalRender;
+
+    [Header("Fresh Material System")]
+    [SerializeField] Material hotMaterial;
 
     private float elapsedTime = 0f;
     private Coroutine smeltingCoroutineHandler;
@@ -92,6 +95,7 @@ public class MachineSmelter : MonoBehaviour
 
         if (smeltingCoroutineHandler == null && !scrapConverted)
         {
+            smelterWheel.enabled = true;
             fuelFire.Play();
             e_run?.InvokeEvent(transform.position, Quaternion.identity, transform);
             machineActive = true;
@@ -160,6 +164,7 @@ public class MachineSmelter : MonoBehaviour
 
     private void DeactivateMachine()
     {
+        smelterWheel.enabled= true;
         machineActive = false;
         scrapConverted = false;
         aboutToBlow = false;
@@ -223,8 +228,8 @@ public class MachineSmelter : MonoBehaviour
         {
             if (scrap.GetMaterial() != null)
             {
-                GameObject freshRawMaterial = Instantiate(scrap.GetMaterial(), scrap.transform.position, scrap.transform.rotation);
-                freshRawMaterial.AddComponent<FreshRawMaterial>();
+                GameObject freshRawMaterial = Instantiate(scrap.GetMaterial(), scrap.transform.localPosition, scrap.transform.localRotation);
+                freshRawMaterial.AddComponent<FreshRawMaterial>().ApplyHotTexture(hotMaterial);
             }
 
             Destroy(scrap.gameObject);

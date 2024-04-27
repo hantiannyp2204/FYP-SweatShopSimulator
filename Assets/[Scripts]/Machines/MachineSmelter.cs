@@ -12,6 +12,8 @@ public class MachineSmelter : MonoBehaviour
 
     [Header("Machine Gameplay settings")]
     [SerializeField] private float smeltTime = 3f;
+    [SerializeField] private float maxPercentageFuel;
+    [SerializeField] private int fuelMaxCapacityWarningCount;
     [SerializeField] private float timeToBlowUp = 5f;
     [SerializeField] private int healthPoints;
 
@@ -49,14 +51,14 @@ public class MachineSmelter : MonoBehaviour
     private Coroutine blowUpCountdownCoroutineHandler;
     private bool scrapConverted = false;
     private float fuelLeft;
-    private float maxFuel; // Variable to track the maximum fuel level for current refill
     private float elapsedTimeToBlowUp = 0f;
     private bool blewUp = false;
     private bool aboutToBlow = false;
     private bool machineActive = false;
     private bool ableToStart = false;
     private Bounds outputSpawnBounds;
-
+    private float defaultMaxFuel = 100;
+    private int currentFuelMaxWarningCount;
     public bool AbilityToStart
     {
         get => ableToStart;
@@ -66,7 +68,8 @@ public class MachineSmelter : MonoBehaviour
     public int GetHealthPoints() => healthPoints;
     private void Awake()
     {
-        RefillFuel();
+        AddFuel(100);
+        currentFuelMaxWarningCount = fuelMaxCapacityWarningCount;
         timerText.text = "Ready";
         if(outputCollider != null)
         {
@@ -156,13 +159,25 @@ public class MachineSmelter : MonoBehaviour
         }
     }
 
-    public void RefillFuel()
+    public void AddFuel(float addedFuelCount)
     {
-        maxFuel = Random.Range(20, 30); // Determine max fuel on refill
-        fuelLeft = maxFuel; // Reset fuel to this maximum
+        fuelLeft += addedFuelCount; // Reset fuel to this maximum
 
-        coalPercentage.text = "Coal: 100%"; // Initially, coal is at 100%
-
+        //if exceed max percentage
+        if(fuelLeft > maxPercentageFuel)
+        {
+            fuelLeft = maxPercentageFuel;
+            currentFuelMaxWarningCount--;
+            if(currentFuelMaxWarningCount <= 0)
+            {
+                BlowUp();
+                return;
+            }
+            else
+            {
+                //play warning ping
+            }
+        }
         //enable coal render
         coalRender.SetActive(true);
 
@@ -193,7 +208,14 @@ public class MachineSmelter : MonoBehaviour
 
         if (fuelLeft > 0) // Ensure we don't divide by zero
         {
-            float percentage = (fuelLeft / maxFuel) * 100f; // Calculate fuel percentage
+            float percentage = (fuelLeft / defaultMaxFuel) * 100f; // Calculate fuel percentage
+
+            //reset the warning count when it reaches back stable 100
+            if(percentage <= 100 && currentFuelMaxWarningCount != fuelMaxCapacityWarningCount)
+            {
+                currentFuelMaxWarningCount = fuelMaxCapacityWarningCount;
+            }
+
             coalPercentage.text = $"Coal: {Mathf.Clamp(percentage, 0, 100):0}%"; // Clamp to ensure it's between 0% and 100%
             ReduceFuel();
         }

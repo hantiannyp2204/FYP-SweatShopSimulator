@@ -1,18 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class ShredderMouthCollision : MonoBehaviour
 {
-    [SerializeField] private GameObject mouth1;
-    [SerializeField] private GameObject mouth2;
-
-
-    private void Start()
-    {
-
-    }
+    public GameObject mouth1;
+    public GameObject mouth2;
 
     private void OnTriggerStay(Collider other)
     {

@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR.Content.Interaction;
+
+public enum WheelStatus
+{
+    WORKING, 
+    BROKEN
+}
+
 public class WheelManager : MonoBehaviour
 {   
     public ProbabilityManager chance;
@@ -23,7 +30,10 @@ public class WheelManager : MonoBehaviour
     }
     private void ActivateWheel()
     {
-        Debug.Log("it is : " + _check.CheckIsProduct());
+        if (shredder.currWheelStatus != WheelStatus.WORKING)
+        {
+            return;
+        }
         if (_check.CheckIsProduct())
         {
             shredder.shredderFuelText.text = "Not A Product!";

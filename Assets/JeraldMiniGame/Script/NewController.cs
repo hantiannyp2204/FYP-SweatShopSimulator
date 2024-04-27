@@ -102,7 +102,10 @@ public class NewController : MonoBehaviour
 
         //Update your true range logic here
        //temp = Mathf.Round(transform.rotation.eulerAngles.z);
-       currentText.text = "" + xRKnob.m_Value;
+       if (xRKnob != null)
+       {
+             currentText.text = "" + xRKnob.m_Value;
+       }
        // if (hold)
        // {
        //     transform.RotateAround(Anchor.transform.position, Anchor.transform.forward, speed * Time.deltaTime);

@@ -8,6 +8,7 @@ using UnityEngine.Events;
 
 public class RefillFuelManager : MonoBehaviour, Iinteractable
 {
+    [Range(0.1f, 0.5f)] public float fuelIncrease;
     [HideInInspector] public UnityEvent AddFuelEvent;
     [HideInInspector] public bool activateRefill;
 
@@ -78,48 +79,45 @@ public class RefillFuelManager : MonoBehaviour, Iinteractable
                 shredder.ResetWheelValue(); // after done reset so the health will not go down
                 shredder.SetWheelStatus(true);
                 shredder.initShredding = true;
+                activateRefill = false;
                 return;
-            }
-
-            if (shredder.secretHealth <= fulfilledCriteria)
-            {
-                shredder.secretHealth += 1 * Time.deltaTime;
-
-                if (shredder.AlreadyFull())
-                {
-                    shredder.ResetWheelValue(); // after done reset so the health will not go down
-                    shredder.SetWheelStatus(true);
-                    shredder.initShredding = true;
-                    return;
-                }
             }
             else
             {
-                shredder.secretHealth = fulfilledCriteria;
-                fulfilledCriteria += incrementPostCriteria;
-                activateRefill = false;
+                float amt = shredder.maxHealth * fuelIncrease;
+                shredder.secretHealth += amt * Time.deltaTime;
             }
+
+            //if (shredder.AlreadyFull())
+            //{
+            //    shredder.ResetWheelValue(); // after done reset so the health will not go down
+            //    shredder.SetWheelStatus(true);
+            //    shredder.initShredding = true;
+            //    activateRefill = false;
+            //    return;
+            //}
+
+
+            // old refill code
             {
+                //if (shredder.secretHealth <= fulfilledCriteria)
+                //{
+                //    shredder.secretHealth += amt * Time.deltaTime;
+
+                //    if (shredder.AlreadyFull())
+                //    {
+                //        shredder.ResetWheelValue(); // after done reset so the health will not go down
+                //        shredder.SetWheelStatus(true);
+                //        shredder.initShredding = true;
+                //        return;
+                //    }
+                //}
                 //else
                 //{
-                //    _textAboveStation.gameObject.SetActive(false);
+                //    shredder.secretHealth = fulfilledCriteria;
+                //    fulfilledCriteria += incrementPostCriteria;
                 //    activateRefill = false;
-                //    return;
                 //}
-
-                //// Logic for if out of fuel
-                //if (shredder.secretHealth <= shredder.maxHealth)
-                //{
-                //    shredder.secretHealth += 1  * Time.deltaTime;
-                //}
-                //else // Reached Max Health
-                //{
-                //    _textAboveStation.gameObject.SetActive(false);
-                //    activateRefill = false;
-                //    return;
-                //}
-
-                //Debug.Log(shredder.secretHealth);
             }
         }
     }

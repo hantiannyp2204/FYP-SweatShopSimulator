@@ -21,4 +21,7 @@ public class ItemData : ScriptableObject
 
     [Header("Product Content")]
     public List<ItemData> productContainable; // If applicable
+
+    [Header("Material Change")]
+    public Material mat; // if applicable
 }

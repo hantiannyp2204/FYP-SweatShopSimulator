@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
+    [HideInInspector] public Material originalMaterial;
     [SerializeField] private ItemData data;
     public ItemData Data => data;
     [SerializeField] private ITEM_STATE itemState;
@@ -16,8 +17,28 @@ public class Item : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
 
     List<Collider> ignoredColliderList = new();
+
     public string GetInteractName() => "Interact with: " + data.GetName();
 
+    private Renderer _renderer;
+    private void Start()
+    {
+        originalMaterial = GetComponentInChildren<Material>();
+        if (originalMaterial == null)
+        {
+            return;
+        }
+        _renderer = GetComponentInChildren<Renderer>();
+        if (_renderer == null)
+        {
+            return;
+        }
+    }
+
+    public void SetMaterial(Material toSwitch)
+    {
+        _renderer.material = toSwitch;
+    }
 
     public bool CanInteract()
     {

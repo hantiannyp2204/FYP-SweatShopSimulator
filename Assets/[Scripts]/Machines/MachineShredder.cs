@@ -11,8 +11,9 @@ using UnityEngine.XR.Content.Interaction;
 
 public class MachineShredder : MonoBehaviour
 {
-    /*  [HideInInspector]*/
     public bool initShredding = false;
+    public int _breakAtThisValue;
+    public float force;
 
     [Header("VR REFERENCES")]
     public GameObject lever;
@@ -31,19 +32,11 @@ public class MachineShredder : MonoBehaviour
     [Header("MACHINE SETTINGS")]
     public float secretHealth;
     public float maxHealth;
+    [SerializeField] private float fuelDecrease;
     [SerializeField] private float decreaseMultiplier;
     [SerializeField] private float chargeSpeed;
     [SerializeField] private float distToStop;
     [SerializeField] private Transform spawnPoint;
-    //{
-    //    //[Header("KEYBOARD PLAYER")]
-    //    //[SerializeField] private Scrollbar progressBar;
-    //    //[SerializeField] private GameObject player;
-    //    //[SerializeField] private GameObject afterInteract;
-    //[SerializeField] private TMP_Text distFromPlayerText;
-    //[SerializeField] private TMP_Text productToShredText;
-    //[SerializeField] private TMP_Text lockedInProductText;
-    //}
 
     [Header("MACHINE WOLRD UI")]
     [SerializeField] private TMP_Text progressText;
@@ -60,7 +53,9 @@ public class MachineShredder : MonoBehaviour
     private WheelManager _wheelManager;
     private RefillFuelManager _refillManager;
     private XRLever _leverPlug;
+    private bool _save;
 
+    public WheelStatus currWheelStatus;
     public bool AlreadyFull()
     {
         return secretHealth >= maxHealth;
@@ -110,7 +105,7 @@ public class MachineShredder : MonoBehaviour
 
     public float GetNewHealth()
     {
-        return Random.Range(2, 10);
+        return Random.Range(150, 200);
     }
 
     public void CanShred()
@@ -123,21 +118,8 @@ public class MachineShredder : MonoBehaviour
         _wheelPlug.enabled = status;
     }
 
-    public int _breakAtThisValue;
-    private bool _save;
-    // Start is called before the first frame update
-    void Start()
+    public void SetUpWheelProbability()
     {
-        wheel.SetActive(false);
-
-        _wheelPlug = wheel.GetComponentInChildren<XRKnob>();
-
-        _wheelPlug.value = 0;
-
-        _wheelPlug.ValueChangeShredder.AddListener(ValueChangeCheck);
-
-        _wheelManager = _wheelPlug.GetComponent<WheelManager>();
-
         _save = _wheelManager.chance.TryLuck();
         if (_save)
         {
@@ -147,6 +129,22 @@ public class MachineShredder : MonoBehaviour
         {
             _breakAtThisValue = 0;
         }
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        currWheelStatus = WheelStatus.WORKING;
+
+        wheel.SetActive(false);
+
+        _wheelPlug = wheel.GetComponentInChildren<XRKnob>();
+
+        _wheelPlug.value = 0;
+
+        _wheelPlug.ValueChangeShredder.AddListener(ValueChangeCheck);
+
+        _wheelManager = _wheelPlug.GetComponent<WheelManager>();
 
         _wheelManager.canStartShredding.AddListener(CanShred);
 
@@ -158,6 +156,8 @@ public class MachineShredder : MonoBehaviour
         secretHealth = maxHealth;
 
         _refillManager = GetComponentInChildren<RefillFuelManager>();
+
+        SetUpWheelProbability();
     }
 
     public int GetRandomValueToBreak()
@@ -165,23 +165,24 @@ public class MachineShredder : MonoBehaviour
         return Random.Range(3, (int)valueToComplete);
     }
 
-    public float force;
     public void ValueChangeCheck()
     {
         e_interactShredder?.InvokeEvent(particleSpawnLocation.position, Quaternion.identity, transform);
-        //if (_save)
-        //{
-        //    if (_wheelPlug.value >= _breakAtThisValue)
-        //    {
-        //        _wheelPlug.GetComponent<Rigidbody>().useGravity = true;
-        //        _wheelPlug.GetComponent<Rigidbody>().isKinematic = false;
-        //        _wheelPlug.GetComponent<Rigidbody>().AddForce(Vector3.up * force, ForceMode.Impulse);
-        //        SetWheelStatus(false);
-        //        ResetWheelValue();
-        //    }
-        //}
+        if (_save)
+        {
+            if (_wheelPlug.value >= _breakAtThisValue)
+            {
+                currWheelStatus = WheelStatus.BROKEN;
+                _wheelPlug.GetComponent<Rigidbody>().useGravity = true;
+                _wheelPlug.GetComponent<Rigidbody>().isKinematic = false;
+                _wheelPlug.GetComponent<Rigidbody>().AddForce(Vector3.up * force, ForceMode.Impulse);
+                SetWheelStatus(false);
+                ResetWheelValue();
+            }
+        }
         if (IsOutOfFuel())
         {
+            ResetWheelValue();
             return;
         }
     }
@@ -189,19 +190,27 @@ public class MachineShredder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        shredderFuelText.text = "Fuel: " + (int)secretHealth;
+        float fuelPercentage = (secretHealth / maxHealth) * 100f;
+        Debug.Log("percent is: " + fuelPercentage);
 
-        HandleFinishProcess();
-        HandleShreddingProcess();
+        if (AlreadyFull())
+        {
+            shredderFuelText.color = Color.green;
+        }
 
         if (IsOutOfFuel())
         {
-            shredderFuelText.text = "NO FUEL!";
+            shredderFuelText.text = "Fuel: 0%";
+            shredderFuelText.color = Color.red; // indicate that shredder has no fuel
         }
         else
         {
-            Debug.Log("Holding nothing");
+            shredderFuelText.text = "Fuel: " + fuelPercentage.ToString("0") + "%";
+            shredderFuelText.color = Color.white;
         }
+
+        HandleFinishProcess();
+        HandleShreddingProcess();
     }
 
     void HandleShreddingProcess()
@@ -226,7 +235,7 @@ public class MachineShredder : MonoBehaviour
 
                 if (_wheelPlug.value > 0.1f)
                 {
-                    secretHealth -= 1 * Time.deltaTime;
+                    secretHealth -= fuelDecrease * Time.deltaTime;
                 }
 
                 _wheelPlug.value -= decreaseMultiplier * Time.deltaTime;
@@ -282,10 +291,17 @@ public class MachineShredder : MonoBehaviour
                     a.GetPrefab().GetComponent<Rigidbody>().isKinematic = false;
                     a.GetPrefab().GetComponent<Rigidbody>().useGravity = true;
 
-                    ///ParticleSystem system = a.GetPrefab().GetComponentInChildren<ParticleSystem>();
-                    //system.Play();
 
+                    if (a.mat != null) // check if nothing has been 
+                    {
+                        a.GetPrefab().GetComponent<Item>().SetMaterial(a.mat);
+                    }
+                    else
+                    {
+                        Debug.Break();
+                    }
                     Instantiate(a.GetPrefab(), _spawnPointBound.center + new Vector3(x, 0f, z), Quaternion.identity);
+
                 }
             }
             //clear the list

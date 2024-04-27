@@ -9,9 +9,8 @@ public class ProbabilityManager : MonoBehaviour
     {
         int randValue = Random.Range(1, 6);
         Debug.Log("value: " + randValue);   
-        if (randValue < probabilityOfEvent)
+        if (randValue <= probabilityOfEvent)
         {
-            // lucky innit
             return true;
         }
         return false;

@@ -5,6 +5,8 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class SmelterCoalManager : MonoBehaviour
 {
     public MachineSmelter smelter;
+    [SerializeField] float maxPurityValue;
+    [SerializeField] float minPurityValue;
     private void OnTriggerEnter(Collider other)
     {
         //only accept if its coal and is not being grabbed
@@ -13,7 +15,7 @@ public class SmelterCoalManager : MonoBehaviour
             Debug.Log("Entered");
             // Here you can also call a method on the smelter to refill fuel
             // Assuming such a method exists
-            smelter.RefillFuel();
+            smelter.AddFuel(Random.Range(minPurityValue, maxPurityValue));
             Destroy(other.gameObject);
         }
     }

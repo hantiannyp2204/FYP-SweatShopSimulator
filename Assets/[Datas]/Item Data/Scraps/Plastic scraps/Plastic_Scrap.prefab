@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5895d806f9cb464c8883d988f733d98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  originalMaterial: {fileID: 0}
   data: {fileID: 11400000, guid: 0b2abc8bacdda5044b539f5c4cbaadef, type: 2}
   itemState: 0
   e_pickUp: {fileID: 0}
@@ -348,6 +349,11 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7635826562936255635, guid: 6be56c3eff7bd15419e8b0e05c8bcde3,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8c583fb1deacb6540bce85fa00dda6e4, type: 2}
     - target: {fileID: 919132149155446097, guid: 6be56c3eff7bd15419e8b0e05c8bcde3,
         type: 3}
       propertyPath: m_Name

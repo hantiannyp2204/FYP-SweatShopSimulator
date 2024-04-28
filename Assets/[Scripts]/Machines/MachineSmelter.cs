@@ -83,6 +83,8 @@ public class MachineSmelter : MonoBehaviour
         {
             outputSpawnBounds = outputCollider.bounds;
         }
+        UpdateCoalPercentage();
+        UpdateHeatPercentage();
     }
     private void HandleSmeltingSpeed()
     {
@@ -258,26 +260,40 @@ public class MachineSmelter : MonoBehaviour
         HandleHeatValue();
         HandleFuelDepletion();
 
+        //Updating UI text
+        UpdateHeatPercentage();
+        UpdateCoalPercentage();
     }
     private void UpdateHeatPercentage()
     {
         heatPercentage.text = $"Heat: {heat}%";
     }
+    private void UpdateCoalPercentage()
+    {
+        float percentage = (fuelLeft / defaultMaxFuel) * 100f; // Calculate fuel percentage
 
+        //reset the warning count when it reaches back stable 100
+        if (percentage <= 100 && currentFuelMaxWarningCount != fuelMaxCapacityWarningCount)
+        {
+            currentFuelMaxWarningCount = fuelMaxCapacityWarningCount;
+        }
+
+        // Ensure we don't divide by zero
+        if (fuelLeft > 0)
+        {
+            coalPercentage.text = $"Coal: {Mathf.Clamp(percentage, 0, 100):0}%"; // Clamp to ensure it's between 0% and 100%
+        }
+        else
+        {
+            coalPercentage.text = "Coal: 0%";
+        }
+    }
     private void HandleFuelDepletion()
     {
 
-        if (fuelLeft > 0) // Ensure we don't divide by zero
+        if (fuelLeft > 0)
         {
-            float percentage = (fuelLeft / defaultMaxFuel) * 100f; // Calculate fuel percentage
-
-            //reset the warning count when it reaches back stable 100
-            if(percentage <= 100 && currentFuelMaxWarningCount != fuelMaxCapacityWarningCount)
-            {
-                currentFuelMaxWarningCount = fuelMaxCapacityWarningCount;
-            }
-
-            coalPercentage.text = $"Coal: {Mathf.Clamp(percentage, 0, 100):0}%"; // Clamp to ensure it's between 0% and 100%
+            
             ReduceFuel();
         }
         else
@@ -286,7 +302,7 @@ public class MachineSmelter : MonoBehaviour
             //enable coal render
             coalRender.SetActive(false);
             PauseSmelting();
-            coalPercentage.text = "Coal: 0%";
+
             outOfFuel = true;
         }
     }

@@ -11,6 +11,7 @@ public class MacineFab : MonoBehaviour, Iinteractable
     //public Power power;
     bool gameEnd = false;
     public bool HasGameStarted = false;
+    public bool IsGameRunning = false;
     public GameObject _TextHolder;
     public GameObject _StartButton;
     public GameObject _NextButton;
@@ -73,6 +74,7 @@ public class MacineFab : MonoBehaviour, Iinteractable
             if (_Crafting.EnoughMaterials == true && _Crafting.HasChosenCraftingItem == true)
             {
                 Fabricator_run?.InvokeEvent(transform.position, Quaternion.identity, transform);
+                IsGameRunning = true;
                 //_Crafting.foundCount = 0;
                 HasGameStarted = true;
                 newController.hold = true;
@@ -88,17 +90,22 @@ public class MacineFab : MonoBehaviour, Iinteractable
 
     public void ToggleOFF()
     {
-        newController.hold = false;
-        gameEnd = false;
-        _TextHolder.SetActive(false);
+        if (IsGameRunning == false)
+        {
+            newController.hold = false;
+            gameEnd = false;
+            _TextHolder.SetActive(false);
+        }
+        return;
     }
     /// <summary>
     /// 
     /// </summary>
-    public void StartButtonToggle()
+    public void PressedButtonToggle()
     {
        
-        newController.hold = true;
+        //newController.hold = true;
+        newController.EndRotate();
         
         Debug.Log("Machine Active");
     }

@@ -7,15 +7,15 @@ public class StartButton : VRButton
     [SerializeField] MacineFab macineFab;
     public override void PressedFunction()
     {
-        //macineFab.StartButton();
+        macineFab.PressedButtonToggle();
     }
     public override void ReleasedFunction()
     {
-        //macineFab.EndButton();
+        return;
     }
     public override void ToggleOnFunction()
     {
-        macineFab.StartButtonToggle();
+        //macineFab.StartButtonToggle();
         Debug.Log("Toggle On");
     }
     public override void ToggleOffFunction()

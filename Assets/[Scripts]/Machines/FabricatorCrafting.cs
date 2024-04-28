@@ -14,6 +14,7 @@ public class FabricatorCrafting : MonoBehaviour
     public int foundCount = 0; // Counter to track the number of found items
     public Collider _SpawnPlace;
     public GameObject item2Spawn;
+    public GameObject SpawnPoint;
 
 
     private void Update()
@@ -100,7 +101,7 @@ public class FabricatorCrafting : MonoBehaviour
 
     public void SpawnOBJ(GameObject spawnItem)
     {
-        Instantiate(spawnItem, _SpawnPlace.transform.position,Quaternion.identity);
+        Instantiate(spawnItem, SpawnPoint.transform.position,Quaternion.identity);
     }
 
     public void LogMissingItems(List<Item> missingItems)

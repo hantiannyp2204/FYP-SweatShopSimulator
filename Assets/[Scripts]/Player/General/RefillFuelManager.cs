@@ -15,13 +15,11 @@ public class RefillFuelManager : MonoBehaviour, Iinteractable
     public MachineShredder shredder;
     [SerializeField] private Item refillCan;
 
-    private TMP_Text _textAboveStation;
+    //private TMP_Text _textAboveStation;
 
-    [Header("S")]
-    [SerializeField] private int fulfilledCriteria;
+    [Header("FEEDBACK")]
+    public FeedbackEventData e_refillFuel;
 
-    [Header("D")]
-    [SerializeField] private int incrementPostCriteria;
     public bool CanInteract()
     {
         return true;
@@ -52,9 +50,6 @@ public class RefillFuelManager : MonoBehaviour, Iinteractable
     // Start is called before the first frame update
     void Start()
     {
-        _textAboveStation = GetComponentInChildren<TMP_Text>();
-        _textAboveStation.gameObject.SetActive(false);
-
         if (AddFuelEvent == null)
         {
             AddFuelEvent = new UnityEvent();
@@ -66,36 +61,18 @@ public class RefillFuelManager : MonoBehaviour, Iinteractable
     // Update is called once per frame
     void Update()
     {
-        if (shredder.IsOutOfFuel())
-        {
-            _textAboveStation.text = "Use me!";
-            _textAboveStation.gameObject.SetActive(true);
-        }
-
         if (activateRefill)
         {
             if (shredder.AlreadyFull())
             {
-                shredder.ResetWheelValue(); // after done reset so the health will not go down
                 shredder.SetWheelStatus(true);
+                shredder.ResetWheelValue(); // after done reset so the health will not go down
                 shredder.initShredding = true;
                 activateRefill = false;
                 return;
             }
-            else
-            {
-                float amt = shredder.maxHealth * fuelIncrease;
-                shredder.secretHealth += amt * Time.deltaTime;
-            }
-
-            //if (shredder.AlreadyFull())
-            //{
-            //    shredder.ResetWheelValue(); // after done reset so the health will not go down
-            //    shredder.SetWheelStatus(true);
-            //    shredder.initShredding = true;
-            //    activateRefill = false;
-            //    return;
-            //}
+ 
+           
 
 
             // old refill code
@@ -125,5 +102,8 @@ public class RefillFuelManager : MonoBehaviour, Iinteractable
     private void ActivateFuelRefill()
     {
         activateRefill = true;
+
+        float amt = shredder.maxHealth * fuelIncrease;
+        shredder.secretHealth += amt * Time.deltaTime;
     }
 }

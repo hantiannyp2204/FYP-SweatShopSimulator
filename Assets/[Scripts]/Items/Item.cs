@@ -20,15 +20,17 @@ public class Item : MonoBehaviour
 
     public string GetInteractName() => "Interact with: " + data.GetName();
 
-    private Renderer _renderer;
+    private MeshRenderer _renderer;
     private void Start()
     {
-        originalMaterial = GetComponentInChildren<Material>();
+        //originalMaterial = GetComponentInChildren<Material>();
+
+        Debug.Log("say my: " + originalMaterial);
         if (originalMaterial == null)
         {
             return;
         }
-        _renderer = GetComponentInChildren<Renderer>();
+        _renderer = GetComponentInChildren<MeshRenderer>();
         if (_renderer == null)
         {
             return;

@@ -20,10 +20,6 @@ public class MachineShredder : MonoBehaviour
     public GameObject wheel;
     [SerializeField] private float valueToComplete;
 
-    [Header("BUTTON REFERENCES")]
-    [SerializeField] private GameObject spamButton;
-    [SerializeField] private GameObject fuelButton;
-
     [Header("LOCATION SPAWNER PREFABS")]
     [SerializeField] private Transform spawnLocation;
     [SerializeField] private Transform particleSpawnLocation;
@@ -42,7 +38,7 @@ public class MachineShredder : MonoBehaviour
     [SerializeField] private TMP_Text progressText;
     public TMP_Text shredderFuelText;
 
-    [Header("Sound Effects / Feedback")]
+    [Header("FEEDBACK")]
     [SerializeField] private FeedbackEventData e_interactShredder;
     [SerializeField] private FeedbackEventData e_shredderFinish;
 
@@ -56,6 +52,8 @@ public class MachineShredder : MonoBehaviour
     private bool _save;
 
     public WheelStatus currWheelStatus;
+
+    public UnityEvent finishedShreddingEvent;
     public bool AlreadyFull()
     {
         return secretHealth >= maxHealth;
@@ -120,6 +118,7 @@ public class MachineShredder : MonoBehaviour
 
     public void SetUpWheelProbability()
     {
+        //_wheelManager.e_wheelturning?.InvokeEvent(_wheelManager.transform.position, Quaternion.identity, transform);
         _save = _wheelManager.chance.TryLuck();
         if (_save)
         {
@@ -134,11 +133,18 @@ public class MachineShredder : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (finishedShreddingEvent == null)
+        {
+            finishedShreddingEvent = new UnityEvent();
+        }
+
         currWheelStatus = WheelStatus.WORKING;
 
         wheel.SetActive(false);
 
         _wheelPlug = wheel.GetComponentInChildren<XRKnob>();
+
+        if (_wheelPlug == null) return;
 
         _wheelPlug.value = 0;
 
@@ -167,7 +173,7 @@ public class MachineShredder : MonoBehaviour
 
     public void ValueChangeCheck()
     {
-        e_interactShredder?.InvokeEvent(particleSpawnLocation.position, Quaternion.identity, transform);
+        //e_interactShredder?.InvokeEvent(particleSpawnLocation.position, Quaternion.identity, transform);
         if (_save)
         {
             if (_wheelPlug.value >= _breakAtThisValue)
@@ -182,7 +188,6 @@ public class MachineShredder : MonoBehaviour
         }
         if (IsOutOfFuel())
         {
-            ResetWheelValue();
             return;
         }
     }
@@ -212,21 +217,16 @@ public class MachineShredder : MonoBehaviour
         HandleFinishProcess();
         HandleShreddingProcess();
     }
-
+   
     void HandleShreddingProcess()
     {
         if (initShredding)
         {
             if (IsOutOfFuel())
             {
-                if (!fuelButton.gameObject.activeSelf) // make button visible 
-                {
-                    fuelButton.gameObject.SetActive(true);
-                }
                 SetWheelStatus(false);
                 secretHealth = 0;
                 initShredding = false;
-                //SetWheelValue(_wheelPlug.value);
                 return;
             }
             else
@@ -291,19 +291,14 @@ public class MachineShredder : MonoBehaviour
                     a.GetPrefab().GetComponent<Rigidbody>().isKinematic = false;
                     a.GetPrefab().GetComponent<Rigidbody>().useGravity = true;
 
-
-                    if (a.mat != null) // check if nothing has been 
-                    {
-                        a.GetPrefab().GetComponent<Item>().SetMaterial(a.mat);
-                    }
-                    else
-                    {
-                        Debug.Break();
-                    }
                     Instantiate(a.GetPrefab(), _spawnPointBound.center + new Vector3(x, 0f, z), Quaternion.identity);
-
+                    //if (a.mat != null) // check if nothing has been 
+                    //{
+                    //    a.GetPrefab().GetComponent<Item>().SetMaterial(a.mat);
+                    //}
                 }
             }
+            //finishedShreddingEvent.Invoke();
             //clear the list
             shredderItemCollider.ClearProductList();
         }

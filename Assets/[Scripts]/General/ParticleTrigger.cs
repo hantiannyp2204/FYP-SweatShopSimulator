@@ -10,7 +10,6 @@ public class ParticleTrigger : MonoBehaviour
 
     // list to contain particles that collide
     List<ParticleSystem.Particle> enter = new List<ParticleSystem.Particle>();
-    List<ParticleSystem.Particle> exit = new List<ParticleSystem.Particle>();
 
     private int _counter = 0;
   
@@ -22,31 +21,35 @@ public class ParticleTrigger : MonoBehaviour
     private void OnParticleTrigger()
     {
         if (GetStation().shredder.AlreadyFull()) return;
-        _counter++;
 
-        if (_counter >= 10)
+        if (GetStation().gameObject != null)
         {
-            _counter = 0;
-
-            if (GetStation() != null)
-            {
-                GetStation().AddFuelEvent.Invoke();
-            };
+            GetStation().AddFuelEvent.Invoke();
         }
+        //_counter++;
+
+        //if (_counter >= 10)
+        //{
+        //    _counter = 0;
+
+        //    if (GetStation() != null)
+        //    {
+        //        GetStation().AddFuelEvent.Invoke();
+        //    };
+        //}
         
-        int numEnter = _particle.GetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter);
-        //int numExit = _particle.GetTriggerParticles(ParticleSystemTriggerEventType.Exit, exit);
+        //int numEnter = _particle.GetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter);
 
-        for (int i = 0; i < numEnter; ++i)
-        {
-            _counter++;
+        //for (int i = 0; i < numEnter; ++i)
+        //{
+        //    _counter++;
 
-            if (_counter >= 10)
-            {
-                _counter = 0;
-            }
-            ParticleSystem.Particle p = enter[i];
-        }
+        //    if (_counter >= 10)
+        //    {
+        //        _counter = 0;
+        //    }
+        //    ParticleSystem.Particle p = enter[i];
+        //}
     }
 
     public void SetCollider(Collider collider)

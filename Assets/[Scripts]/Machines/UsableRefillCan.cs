@@ -55,15 +55,6 @@ public class UsableRefillCan : VRItemUsable
     {
         _isHolding = true;
 
-        //GameObject spawnGasoline = Instantiate(gasolineParticle, shootFrom.transform.position, shootFrom.transform.rotation);
-        //SetStored(spawnGasoline);
-
-        //ParticleTrigger trigger = spawnGasoline.GetComponent<ParticleTrigger>();      
-        //if (trigger == null) {return;}
-
-        //trigger.SetCollider(refillStation.GetComponent<Collider>());
-        //trigger.SetStation(refillStation.GetComponent<RefillFuelManager>());
-
         base.UseFunction();
     }
 

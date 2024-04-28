@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class VrMachineItemCollider : MonoBehaviour
 {
+    public ShredderMouthCollision mouthHandler;
     public List<Item> _productList = new();
     public Item _tracker;
+    private Item _saver;
+    private bool _collided = false;
 
     private void OnTriggerEnter(Collider other)
     {
+        _collided = true;
         //check if it has Item Script, else ignore
         Item itemComponenet = other.GetComponent<Item>();
         if (itemComponenet == null)
@@ -16,10 +20,12 @@ public class VrMachineItemCollider : MonoBehaviour
             return;
         }
         _tracker = itemComponenet;
+        _saver = itemComponenet;
         _productList.Add(itemComponenet);
     }
     private void OnTriggerExit(Collider other)
     {
+        _collided = false;
         //check if it has Item Script, else ignore
         Item itemComponenet = other.GetComponent<Item>();
         if (itemComponenet == null) return;
@@ -38,5 +44,15 @@ public class VrMachineItemCollider : MonoBehaviour
     public bool CheckIsProduct()
     {
         return _tracker.Data.productContainable.Count == 0;
+    }
+
+    private void Update()
+    {
+        if (_collided)
+        {
+            if (!mouthHandler.mouth1.GetComponent<Animator>().GetBool("isActivated") && !mouthHandler.mouth2.GetComponent<Animator>().GetBool("isActivated")) return; // check if mouth is open 
+
+            Destroy(_saver.gameObject);
+        }
     }
 }

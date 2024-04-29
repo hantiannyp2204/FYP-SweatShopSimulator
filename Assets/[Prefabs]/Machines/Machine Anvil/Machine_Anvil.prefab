@@ -706,7 +706,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3215340298069163743
 Transform:
   m_ObjectHideFlags: 0
@@ -892,7 +892,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 1.9599998, z: 0}
+  m_ConnectedAnchor: {x: -0.00000034460479, y: 1.9599998, z: 0}
   serializedVersion: 3
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -1344,8 +1344,8 @@ MonoBehaviour:
   hammer: {fileID: 0}
   anvil: {fileID: 2749392265370198747}
   hitbox: {fileID: 3296940040780873853}
-  progressBar: {fileID: 7722609873419199388}
-  timerText: {fileID: 7619337611884886135}
+  progressBar: {fileID: 7161531237135476147}
+  timerText: {fileID: 1231535463782837141}
   progressIncreaseAmount: 20
   penaltyAmount: 10
   offset: 0.5
@@ -1972,6 +1972,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 246647572506969662, guid: ed60ab1f8fe44f34caab415403f133f7,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9cf32cb8d768ce44693a87b78271d3ff, type: 2}
     - target: {fileID: 919132149155446097, guid: ed60ab1f8fe44f34caab415403f133f7,
         type: 3}
       propertyPath: m_Name

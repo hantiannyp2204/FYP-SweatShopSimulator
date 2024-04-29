@@ -21,31 +21,9 @@ public class Hammer : MonoBehaviour
         if (collision.gameObject.CompareTag("RawMaterial"))
         {
             // Increase the progress of the anvil
-            //game.IncreaseProgress();
-            Hit();
             hitting = true;
             Debug.Log("bam");
         }
        
-    }
-
-    public void Hit()
-    {
-        // Reduce the hammer's health based on damage per hit
-        currentHealth -= (int)damagePerHit;
-        Debug.Log("Hammer health:" + currentHealth);
-
-        // Check if the hammer's health has dropped to zero or below
-        if (currentHealth <= 0)
-        {
-            Destroy(gameObject); // Destroy the hammer if health is 0
-        }
-    }
-    public void Penalty()
-    {
-        // Reduce the hammer's health based on damage per hit
-        currentHealth -= (int)damagePerHit*2;
-        
-        Debug.Log("Hammer health:" + currentHealth);
     }
 }

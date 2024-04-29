@@ -48,12 +48,7 @@ public class HandPresencePhysics : MonoBehaviour
     }
     private void HandleSelectEntered(SelectEnterEventArgs arg)
     {
-        XRVelocityRayGrab veloctyGrab = arg.interactableObject.transform.GetComponent<XRVelocityRayGrab>();
-        if (veloctyGrab  != null && veloctyGrab.IsGrabbedByRay())
-        {
-            Debug.Log("NIGGER");
-            return;
-        }
+      
         IgnoreCollision(arg.interactableObject.transform.gameObject);
     }
 

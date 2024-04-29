@@ -8,9 +8,10 @@ public class XRVelocityRayGrab : XRGrabInteractable
     public float jumpAngleInDegree = 60;
 
     private XRRayInteractor rayInteractor;
+    private Transform hoveredItemTransform;
     private Vector3 previousPos;
     private Rigidbody interactableRigidbody;
-    private bool canJump = true;
+    private bool canJump = false;
     private bool grabbedByRay = false;
     private bool itemIsHovered = false;
     public bool IsGrabbedByRay() => grabbedByRay;
@@ -23,7 +24,7 @@ public class XRVelocityRayGrab : XRGrabInteractable
 
     private void Update()
     {
-        if(isSelected && firstInteractorSelecting is XRRayInteractor && canJump && grabbedByRay)
+        if(isSelected && rayInteractor != null && canJump && grabbedByRay)
         {
             Vector3 velocity = (rayInteractor.transform.position - previousPos) / Time.deltaTime;
             previousPos = rayInteractor.transform.position;
@@ -34,6 +35,8 @@ public class XRVelocityRayGrab : XRGrabInteractable
                 Drop();
                 interactableRigidbody.velocity = ComputeVelocity();
                 canJump = false;
+
+              
             }
         }
 
@@ -47,10 +50,16 @@ public class XRVelocityRayGrab : XRGrabInteractable
             if (distanceToItem >= 0.4f)
             {
                 grabbedByRay = true;
+                trackPosition = false;
+                trackRotation = false;
+                throwOnDetach = false;
             }
             else
             {
                 grabbedByRay = false;
+                trackPosition = true;
+                trackRotation = true;
+                throwOnDetach = true;
             }
         }
     }
@@ -71,12 +80,13 @@ public class XRVelocityRayGrab : XRGrabInteractable
 
         return jumpVelocityVector;
     }
-    Transform hoveredItemTransform;
+
     protected override void OnHoverEntered(HoverEnterEventArgs args)
     {
    
         if (args.interactorObject is XRRayInteractor)
         {
+            grabbedByRay = true;
             itemIsHovered = true;
             hoveredItemTransform = args.interactorObject.transform;
         }
@@ -95,11 +105,10 @@ public class XRVelocityRayGrab : XRGrabInteractable
     }
     protected override void OnSelectEntered(SelectEnterEventArgs args)
     {
-        itemIsHovered = false;
+
         //seperates what happens if its interacted by ray or direct
-        Debug.Log("Distance: " + Vector3.Distance(this.transform.position, args.interactorObject.transform.position));
-        //if direct grab
-        if(grabbedByRay)
+        //if ray grab
+        if (grabbedByRay && args.interactorObject is XRRayInteractor)
         {
 
             //if (!canJump)
@@ -107,9 +116,7 @@ public class XRVelocityRayGrab : XRGrabInteractable
             //    return;
             //}
             Debug.Log("SELECTED by Ray");
-            trackPosition = false;
-            trackRotation = false;
-            throwOnDetach = false;
+
 
             rayInteractor = (XRRayInteractor)args.interactorObject;
             previousPos = rayInteractor.transform.position;
@@ -117,18 +124,21 @@ public class XRVelocityRayGrab : XRGrabInteractable
 
         }
 
-        //if ray grab
+        //if direct grab
         else
         {
           
             Debug.Log("SELECTED by Direct");
-            trackPosition = true;
-            trackRotation = true;
-            throwOnDetach = true;
+            //if too far and flying, ignore
+
+
 
         }
-        //canJump = true;
+
         base.OnSelectEntered(args);
+        itemIsHovered = false;
+        //canJump = true;
+
     }
     protected override void OnSelectExited(XRBaseInteractor interactor)
     {

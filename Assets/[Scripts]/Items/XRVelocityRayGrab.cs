@@ -23,7 +23,7 @@ public class XRVelocityRayGrab : XRGrabInteractable
 
     private void Update()
     {
-        if(isSelected && firstInteractorSelecting is XRRayInteractor && canJump)
+        if(isSelected && firstInteractorSelecting is XRRayInteractor && canJump && grabbedByRay)
         {
             Vector3 velocity = (rayInteractor.transform.position - previousPos) / Time.deltaTime;
             previousPos = rayInteractor.transform.position;
@@ -36,16 +36,24 @@ public class XRVelocityRayGrab : XRGrabInteractable
                 canJump = false;
             }
         }
-        if (itemIsHovered && (Vector3.Distance(this.transform.position, hoveredItemTransform.position) >= 0.4f))
+
+
+    }
+    private void FixedUpdate()
+    {
+        if (itemIsHovered)
         {
-            grabbedByRay = true;
-        }
-        else if (itemIsHovered && !(Vector3.Distance(this.transform.position, hoveredItemTransform.position) >= 0.4f))
-        {
-            grabbedByRay = false;
+            float distanceToItem = Vector3.Distance(this.transform.position, hoveredItemTransform.position);
+            if (distanceToItem >= 0.4f)
+            {
+                grabbedByRay = true;
+            }
+            else
+            {
+                grabbedByRay = false;
+            }
         }
     }
-
     //balastic projectile equation calculation
     public Vector3 ComputeVelocity()
     {

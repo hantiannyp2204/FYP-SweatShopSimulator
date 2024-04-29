@@ -4056,39 +4056,100 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6912303547938444132, guid: 6aa70890968c5e74980c3f1995cd71ac,
         type: 3}
-      propertyPath: m_HoverEntered.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      propertyPath: m_MaxRaycastDistance
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6912303547938444132, guid: 6aa70890968c5e74980c3f1995cd71ac,
         type: 3}
-      propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      propertyPath: m_HapticHoverEnterIntensity
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6912303547938444132, guid: 6aa70890968c5e74980c3f1995cd71ac,
         type: 3}
-      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      propertyPath: m_AudioClipForOnHoverEntered
+      value: 
+      objectReference: {fileID: 8300000, guid: 62dfde37d7e661a459978daff31ed282, type: 3}
+    - target: {fileID: 6912303547938444132, guid: 6aa70890968c5e74980c3f1995cd71ac,
+        type: 3}
+      propertyPath: m_AudioClipForOnSelectExited
+      value: 
+      objectReference: {fileID: 8300000, guid: bc307350c2908b84ba8adb30e892dbaf, type: 3}
+    - target: {fileID: 6912303547938444132, guid: 6aa70890968c5e74980c3f1995cd71ac,
+        type: 3}
+      propertyPath: m_AudioClipForOnSelectEntered
+      value: 
+      objectReference: {fileID: 8300000, guid: 764d9f6ab1fd6814480287c8e7146d2e, type: 3}
+    - target: {fileID: 6912303547938444132, guid: 6aa70890968c5e74980c3f1995cd71ac,
+        type: 3}
+      propertyPath: m_PlayAudioClipOnHoverEntered
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6912303547938444132, guid: 6aa70890968c5e74980c3f1995cd71ac,
+        type: 3}
+      propertyPath: m_PlayAudioClipOnSelectExited
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6912303547938444132, guid: 6aa70890968c5e74980c3f1995cd71ac,
+        type: 3}
+      propertyPath: m_PlayAudioClipOnSelectEntered
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7484719097670331078, guid: 6aa70890968c5e74980c3f1995cd71ac,
         type: 3}
-      propertyPath: m_HoverEntered.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      propertyPath: m_AttachTransform
+      value: 
+      objectReference: {fileID: 5859033559388778336}
+    - target: {fileID: 7484719097670331078, guid: 6aa70890968c5e74980c3f1995cd71ac,
+        type: 3}
+      propertyPath: m_MaxRaycastDistance
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7484719097670331078, guid: 6aa70890968c5e74980c3f1995cd71ac,
         type: 3}
-      propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      propertyPath: m_HapticHoverEnterIntensity
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7484719097670331078, guid: 6aa70890968c5e74980c3f1995cd71ac,
         type: 3}
-      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      propertyPath: m_AudioClipForOnHoverEntered
+      value: 
+      objectReference: {fileID: 8300000, guid: 62dfde37d7e661a459978daff31ed282, type: 3}
+    - target: {fileID: 7484719097670331078, guid: 6aa70890968c5e74980c3f1995cd71ac,
+        type: 3}
+      propertyPath: m_AudioClipForOnSelectExited
+      value: 
+      objectReference: {fileID: 8300000, guid: bc307350c2908b84ba8adb30e892dbaf, type: 3}
+    - target: {fileID: 7484719097670331078, guid: 6aa70890968c5e74980c3f1995cd71ac,
+        type: 3}
+      propertyPath: m_AudioClipForOnSelectEntered
+      value: 
+      objectReference: {fileID: 8300000, guid: 764d9f6ab1fd6814480287c8e7146d2e, type: 3}
+    - target: {fileID: 7484719097670331078, guid: 6aa70890968c5e74980c3f1995cd71ac,
+        type: 3}
+      propertyPath: m_PlayAudioClipOnHoverEntered
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484719097670331078, guid: 6aa70890968c5e74980c3f1995cd71ac,
+        type: 3}
+      propertyPath: m_PlayAudioClipOnSelectExited
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484719097670331078, guid: 6aa70890968c5e74980c3f1995cd71ac,
+        type: 3}
+      propertyPath: m_PlayAudioClipOnSelectEntered
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6aa70890968c5e74980c3f1995cd71ac, type: 3}
+--- !u!4 &5859033559388778336 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5278187920730538306, guid: 6aa70890968c5e74980c3f1995cd71ac,
+    type: 3}
+  m_PrefabInstance: {fileID: 5859033559388778335}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5974600394636421094
 Transform:
   m_ObjectHideFlags: 0

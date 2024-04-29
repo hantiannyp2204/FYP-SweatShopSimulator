@@ -12,13 +12,17 @@ public enum WheelStatus
 
 public class WheelManager : MonoBehaviour
 {   
-    public ProbabilityManager chance;
+    [HideInInspector]public UnityEvent canStartShredding;
     [SerializeField] private MachineShredder shredder;
     [SerializeField] private VrMachineItemCollider _check;
 
-    public UnityEvent canStartShredding;
+
+    public ProbabilityManager chance;
+    [Header("FEEDBACK")]
+    [SerializeField] private FeedbackEventData e_pulledLever;
+    public FeedbackEventData e_wheelturning;
     
-    private void Start()
+    private void Awake()
     {
         chance = GetComponent<ProbabilityManager>();
         if (canStartShredding == null)
@@ -30,6 +34,8 @@ public class WheelManager : MonoBehaviour
     }
     private void ActivateWheel()
     {
+        e_pulledLever?.InvokeEvent(transform.position, Quaternion.identity, transform);
+
         if (shredder.currWheelStatus != WheelStatus.WORKING)
         {
             return;

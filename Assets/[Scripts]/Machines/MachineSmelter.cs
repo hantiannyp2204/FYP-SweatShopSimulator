@@ -16,14 +16,19 @@ public class MachineSmelter : MonoBehaviour
     [SerializeField] private int fuelMaxCapacityWarningCount;
     [SerializeField] private float timeToBlowUp = 5f;
     [SerializeField] private int healthPoints;
+    [SerializeField] private int heatIncreaseSpeed;
+    [SerializeField] private int heatPercentageThreshold;
 
     [Header("Machine Refrences")]
     [SerializeField] private SmelterInputHitbox smelterInputHitbox;
     [SerializeField] private TMP_Text timerText;
     [SerializeField] private TMP_Text coalPercentage;
+    [SerializeField] private TMP_Text heatPercentage;
     [SerializeField] private Collider outputCollider;
 
     [Header("Feedback Events")]
+    [SerializeField] private Transform smelterSoundLocation;
+    [SerializeField] private Transform smelterDoneSoundLocation;
     [SerializeField] private FeedbackEventData e_run;
     [SerializeField] private FeedbackEventData e_done;
     [SerializeField] private FeedbackEventData e_countdown;
@@ -51,6 +56,7 @@ public class MachineSmelter : MonoBehaviour
     private Coroutine blowUpCountdownCoroutineHandler;
     private bool scrapConverted = false;
     private float fuelLeft;
+    private bool outOfFuel = false;
     private float elapsedTimeToBlowUp = 0f;
     private bool blewUp = false;
     private bool aboutToBlow = false;
@@ -59,6 +65,8 @@ public class MachineSmelter : MonoBehaviour
     private Bounds outputSpawnBounds;
     private float defaultMaxFuel = 100;
     private int currentFuelMaxWarningCount;
+    private float smeltSpeed = 1;
+    private float heat = 100;
     public bool AbilityToStart
     {
         get => ableToStart;
@@ -75,8 +83,47 @@ public class MachineSmelter : MonoBehaviour
         {
             outputSpawnBounds = outputCollider.bounds;
         }
+        UpdateCoalPercentage();
+        UpdateHeatPercentage();
     }
-
+    private void HandleSmeltingSpeed()
+    {
+        if (fuelLeft > 100)
+        {
+            smeltSpeed = 2;
+        }
+        else if(fuelLeft < 40)
+        {
+            smeltSpeed = .5f;
+        }
+        else
+        {
+            smeltSpeed = 1;
+        }
+    }
+    private void HandleHeatValue()
+    {
+        //too little fuel
+        if (fuelLeft < 40)
+        {
+            heat -= heatIncreaseSpeed * Time.deltaTime;
+        }
+        //too much fuel and done smelting
+        else if (fuelLeft > 100 && scrapConverted)
+        {
+            heat += heatIncreaseSpeed * Time.deltaTime;
+        }
+        //normal fuel count
+        else
+        {
+            //if previous frame's heat is 100, return
+            if(heat == 100)
+            {
+                return;
+            }
+            heat = 100;
+        }
+    }    
     private IEnumerator SmeltCoroutine()
     {
 
@@ -84,13 +131,14 @@ public class MachineSmelter : MonoBehaviour
         // Smelting process
         while (elapsedTime <= smeltTime)
         {
+            HandleSmeltingSpeed();
             UpdateTimer();
             yield return null;
         }
 
         // Process and replace all scrap materials
         ProcessScrapMaterials();
-        e_done?.InvokeEvent(transform.position, Quaternion.identity, transform);
+        e_done?.InvokeEvent(transform.position, Quaternion.identity, smelterDoneSoundLocation);
 
         ResetSmeltingVariables();
     }
@@ -149,7 +197,7 @@ public class MachineSmelter : MonoBehaviour
         {
             smelterWheel.enabled = true;
             fuelFire.Play();
-            e_run?.InvokeEvent(transform.position, Quaternion.identity, transform);
+            e_run?.InvokeEvent(transform.position, Quaternion.identity, smelterSoundLocation);
             machineActive = true;
             StartSmelting();
         }
@@ -161,6 +209,10 @@ public class MachineSmelter : MonoBehaviour
 
     public void AddFuel(float addedFuelCount)
     {
+        if (fuelLeft == 0)
+        {
+            outOfFuel = false;
+        }
         fuelLeft += addedFuelCount; // Reset fuel to this maximum
 
         //if exceed max percentage
@@ -190,33 +242,58 @@ public class MachineSmelter : MonoBehaviour
 
     private void Update()
     {
-        HandleFuelDepletion();
-        HandleBlowUpCountdown();
-        UpdateCoalPercentage();
-    }
-    private void UpdateCoalPercentage()
-    {
-        if (fuelLeft == 0 || !machineActive || blewUp)
+        if(outOfFuel || !machineActive || blewUp)
         {
-            if(fuelFire.isPlaying)
+            if (fuelFire.isPlaying)
             {
                 fuelFire.Stop();
             }
-
             return;
         }
-
-        if (fuelLeft > 0) // Ensure we don't divide by zero
+        //if too much heat and scraps are already converted
+        if(heat > heatPercentageThreshold && !aboutToBlow && scrapConverted)
         {
-            float percentage = (fuelLeft / defaultMaxFuel) * 100f; // Calculate fuel percentage
+            blowUpCountdownCoroutineHandler = StartCoroutine(BlowUpCountdown());
+            aboutToBlow = true;
+        }
+        //runs as long as machine is active and usable
+        HandleHeatValue();
+        HandleFuelDepletion();
 
-            //reset the warning count when it reaches back stable 100
-            if(percentage <= 100 && currentFuelMaxWarningCount != fuelMaxCapacityWarningCount)
-            {
-                currentFuelMaxWarningCount = fuelMaxCapacityWarningCount;
-            }
+        //Updating UI text
+        UpdateHeatPercentage();
+        UpdateCoalPercentage();
+    }
+    private void UpdateHeatPercentage()
+    {
+        heatPercentage.text = $"Heat: {heat}%";
+    }
+    private void UpdateCoalPercentage()
+    {
+        float percentage = (fuelLeft / defaultMaxFuel) * 100f; // Calculate fuel percentage
 
+        //reset the warning count when it reaches back stable 100
+        if (percentage <= 100 && currentFuelMaxWarningCount != fuelMaxCapacityWarningCount)
+        {
+            currentFuelMaxWarningCount = fuelMaxCapacityWarningCount;
+        }
+
+        // Ensure we don't divide by zero
+        if (fuelLeft > 0)
+        {
             coalPercentage.text = $"Coal: {Mathf.Clamp(percentage, 0, 100):0}%"; // Clamp to ensure it's between 0% and 100%
+        }
+        else
+        {
+            coalPercentage.text = "Coal: 0%";
+        }
+    }
+    private void HandleFuelDepletion()
+    {
+
+        if (fuelLeft > 0)
+        {
+            
             ReduceFuel();
         }
         else
@@ -225,7 +302,8 @@ public class MachineSmelter : MonoBehaviour
             //enable coal render
             coalRender.SetActive(false);
             PauseSmelting();
-            coalPercentage.text = "Coal: 0%";
+
+            outOfFuel = true;
         }
     }
     private void StartSmelting()
@@ -247,12 +325,12 @@ public class MachineSmelter : MonoBehaviour
             blowUpCountdownCoroutineHandler = null;
         }
         Debug.Log("Machine Deactivated");
-        e_stopAllSound?.InvokeEvent(transform.position, Quaternion.identity, transform);
+        e_stopAllSound?.InvokeEvent(transform.position, Quaternion.identity, smelterSoundLocation);
     }
 
     private void PauseSmelting()
     {
-        e_stopAllSound?.InvokeEvent(transform.position, Quaternion.identity, transform);
+        e_stopAllSound?.InvokeEvent(transform.position, Quaternion.identity, smelterSoundLocation);
         //play out of fuel sound
         timerText.text = "Out of fuel";
         if(smeltingCoroutineHandler != null)
@@ -276,7 +354,7 @@ public class MachineSmelter : MonoBehaviour
 
     private void UpdateTimer()
     {
-        elapsedTime += Time.deltaTime;
+        elapsedTime += Time.deltaTime * smeltSpeed;
         
         timerText.text = ((int)(smeltTime - elapsedTime) + 1).ToString();
     }
@@ -285,13 +363,6 @@ public class MachineSmelter : MonoBehaviour
         fuelLeft -= Time.deltaTime; // Simulate fuel consumption
     }    
 
-    private void HandleFuelDepletion()
-    {
-        if (fuelLeft <= 0 && smeltingCoroutineHandler != null)
-        {
-            PauseSmelting();
-        }
-    }
 
     private void ProcessScrapMaterials()
     {
@@ -315,34 +386,9 @@ public class MachineSmelter : MonoBehaviour
         }
     }
 
-    private void HandleBlowUpCountdown()
-    {
-        if (!scrapConverted || blewUp || aboutToBlow) return;
-
-        elapsedTimeToBlowUp += Time.deltaTime;
-        // Give 5 second leeway so it will never blow up in the first 5 seconds.
-        if (elapsedTimeToBlowUp >= timeToBlowUp)
-        {
-            // Randomize 30% chance to blow up.
-            float chance = Random.Range(0f, 1f); // Generates a random number between 0.0 to 1.0.
-            if (chance <= 0.3f) // Checks if the random number falls within the first 30% range.
-            {
-                // 30% chance hit, start countdown to blow up.
-                blowUpCountdownCoroutineHandler = StartCoroutine(BlowUpCountdown());
-                aboutToBlow = true;
-            }
-            else
-            {
-                //  check if it will blow up next second again
-                elapsedTimeToBlowUp = timeToBlowUp -1;
-            }
-        }
-    }
-
     IEnumerator BlowUpCountdown()
     {
-        // Assuming a 5-second countdown before the actual blow-up.
-        e_countdown?.InvokeEvent(transform.position, Quaternion.identity, transform);
+        e_countdown?.InvokeEvent(transform.position, Quaternion.identity, smelterSoundLocation);
         yield return new WaitForSeconds(3);
         BlowUp();
     }
@@ -358,8 +404,8 @@ public class MachineSmelter : MonoBehaviour
             particle.Play();
         }
        
-        e_explosion?.InvokeEvent(transform.position, Quaternion.identity, transform);
-        e_blewUpWarning?.InvokeEvent(transform.position, Quaternion.identity, transform);
+        e_explosion?.InvokeEvent(transform.position, Quaternion.identity, smelterSoundLocation);
+        e_blewUpWarning?.InvokeEvent(transform.position, Quaternion.identity, smelterSoundLocation);
         timerText.text = "WARNING!!!";
         blewUp = true;
         aboutToBlow = false;

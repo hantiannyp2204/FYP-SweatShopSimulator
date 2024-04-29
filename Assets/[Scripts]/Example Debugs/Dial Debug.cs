@@ -17,6 +17,6 @@ public class DialDebug : MonoBehaviour
     void Update()
     {
         if(knob == null) return;
-        debugTxt.text = "Dial Value:\n" + knob.value.ToString();
+        debugTxt.text = "Dial Value:\n" + knob.value;
     }
 }

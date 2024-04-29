@@ -96,6 +96,7 @@ namespace UnityEngine.XR.Content.Interaction
             get => m_Value;
             set
             {
+
                 SetValue(value);
                 SetKnobRotation(ValueToRotation());
             }

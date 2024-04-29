@@ -15,6 +15,7 @@ public class FabricatorCrafting : MonoBehaviour
     public Collider _SpawnPlace;
     public GameObject item2Spawn;
     public GameObject SpawnPoint;
+    public CraftingRecepie _craftingRecepie;
 
 
     private void Update()
@@ -99,11 +100,18 @@ public class FabricatorCrafting : MonoBehaviour
         EnoughMaterials = false;
     }
 
-    public void SpawnOBJ(GameObject spawnItem)
-    {
-        Instantiate(spawnItem, SpawnPoint.transform.position,Quaternion.identity);
-    }
+    //public void SpawnOBJ(GameObject spawnItem)
+    //{
+    //    Instantiate(spawnItem, SpawnPoint.transform.position,Quaternion.identity);
+    //}
 
+    public void SpawnItemsFromList()
+    {
+        foreach (GameObject objPrefab in _craftingRecepie.spawnedObjects)
+        {
+            Instantiate(objPrefab, SpawnPoint.transform.position, Quaternion.identity);
+        }
+    }
     public void LogMissingItems(List<Item> missingItems)
     {
         Debug.Log("Missing items:");

@@ -5,6 +5,7 @@ using UnityEngine;
 public class CraftingRecepie : MonoBehaviour
 {
     public int CraftingNumber = 0;
+    public List<GameObject> spawnedObjects = new List<GameObject>();
     [Header("References")]
     public FabricatorCrafting fabricatorCrafting;
 
@@ -35,30 +36,33 @@ public class CraftingRecepie : MonoBehaviour
 
 
 
-    public void _ConfirmSelection()
+    public void _ConfirmSelection(int Confirmnumber)
     {
-        switch (CraftingNumber)
+        switch (Confirmnumber)
         {
-            case 1:
+            case 0:
                 for (int i = 0; i < RequiredMetal_Broken_Sword; i++)
                 {
                     fabricatorCrafting._WhatINeed.Add(RawMetalMaterial);      
                 }
-                fabricatorCrafting.SpawnOBJ(Broken_Sword);
+                spawnedObjects.Add(Broken_Sword);
+                //fabricatorCrafting.SpawnOBJ(Broken_Sword);
                 break;
-            case 2:
+            case 1:
                 for (int i = 0; i < RequiredMetal_Sword; i++)
                 {
                     fabricatorCrafting._WhatINeed.Add(RawMetalMaterial);                   
                 }
-                fabricatorCrafting.SpawnOBJ(Sword);
+                spawnedObjects.Add(Sword);
+                //fabricatorCrafting.SpawnOBJ(Sword);
                 break;
-            case 3:
+            case 2:
                 for (int i = 0; i < RequiredMetal_Pocket_Clock; i++)
                 {
                     fabricatorCrafting._WhatINeed.Add(RawMetalMaterial);
                 }
-                fabricatorCrafting.SpawnOBJ(PocketClock);
+                spawnedObjects.Add(PocketClock);
+                //fabricatorCrafting.SpawnOBJ(PocketClock);
                 break;
         }
 

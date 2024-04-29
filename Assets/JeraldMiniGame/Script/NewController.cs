@@ -17,8 +17,9 @@ public class NewController : MonoBehaviour
     public FabricatorVrCollider fabricatorCollider;
     public GameObject Anchor;
     public PowerForFab power;
-    public XRKnob rotationSpeedKnob;
-    public XRKnob trueRangeKnob;
+    public FabricatorCrafting _fabricatorCrafting;
+    public CraftingRecepie _craftingRecepie;
+    
 
 
     [Header("Game Variables")]
@@ -76,6 +77,22 @@ public class NewController : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            // Move to the next product
+            EndRotate();
+        }
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            if (gameEnded && winORloseText.text == "WIN")
+            {
+                ChangeLevel();
+            }
+        }
+
+       
+        currentText.text = "" + xRKnob.m_Value;
         if (power != null)
         {
             power.CheckIfGotPower();
@@ -101,15 +118,12 @@ public class NewController : MonoBehaviour
 
 
         //Update your true range logic here
-       //temp = Mathf.Round(transform.rotation.eulerAngles.z);
-       if (xRKnob != null)
-       {
-             currentText.text = "" + xRKnob.m_Value;
-       }
-       // if (hold)
-       // {
-       //     transform.RotateAround(Anchor.transform.position, Anchor.transform.forward, speed * Time.deltaTime);
-       // }
+        //temp = Mathf.Round(transform.rotation.eulerAngles.z);
+        
+        // if (hold)
+        // {
+        //     transform.RotateAround(Anchor.transform.position, Anchor.transform.forward, speed * Time.deltaTime);
+        // }
 
     }
     void SetRange()
@@ -173,7 +187,10 @@ public class NewController : MonoBehaviour
         }
         else //Win
         {
-            crafting.SpawnOBJ(crafting.item2Spawn);
+            Debug.Log("It went here");
+            //Spawn Item
+            _fabricatorCrafting.SpawnItemsFromList();
+            //crafting.SpawnOBJ(crafting.item2Spawn);
             ResetEverything();
             UpdateLevelParameters();
             SetRange();
@@ -202,6 +219,7 @@ public class NewController : MonoBehaviour
     public void ResetEverything()
     {
         // Reset everythings
+        _craftingRecepie.spawnedObjects.Clear();
         crafting.DestroyOBJ();
         crafting.ClearLists();
         macine._WinORLose.SetActive(false);
@@ -216,4 +234,6 @@ public class NewController : MonoBehaviour
         speed = 50;
         
     }
+
+
 }

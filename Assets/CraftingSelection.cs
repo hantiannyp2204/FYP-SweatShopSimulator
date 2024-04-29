@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class CraftingSelection : MonoBehaviour
 {
+    public FabricatorCrafting fabricatorCrafting;
+    public CraftingRecepie _craftingRecepie;
     public TabButton TabButton;
     public List<TabButton> tabButtons; // List of tab buttons for each product
     public int currentIndex = 0; // Index of the currently selected product
@@ -31,6 +33,12 @@ public class CraftingSelection : MonoBehaviour
         {
             // Move to the previous product
             SelectPreviousProduct();
+        }
+        else if (Input.GetKeyDown(KeyCode.B))
+        {
+            // Move to the previous product
+            fabricatorCrafting.HasChosenCraftingItem = true;
+            ConfirmProduct();
         }
     }
 
@@ -59,4 +67,10 @@ public class CraftingSelection : MonoBehaviour
         // Enable the newly selected product
         tabButtons[currentIndex].Select();
     }
+
+    public void ConfirmProduct()
+    {
+        _craftingRecepie._ConfirmSelection(currentIndex);
+    }
 }
+

@@ -100,8 +100,6 @@ public class MachineSmelter : MonoBehaviour
   
     private IEnumerator SmeltCoroutine()
     {
-
-
         // Smelting process
         while (elapsedTime <= smeltTime)
         {

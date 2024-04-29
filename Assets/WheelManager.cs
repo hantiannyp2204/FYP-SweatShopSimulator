@@ -12,16 +12,16 @@ public enum WheelStatus
 
 public class WheelManager : MonoBehaviour
 {   
-    [HideInInspector]public UnityEvent canStartShredding;
+    [HideInInspector] public UnityEvent canStartShredding;
     [SerializeField] private MachineShredder shredder;
     [SerializeField] private VrMachineItemCollider _check;
 
 
-    public ProbabilityManager chance;
+    public ProbabilityManager chance; 
     [Header("FEEDBACK")]
     [SerializeField] private FeedbackEventData e_pulledLever;
     public FeedbackEventData e_wheelturning;
-    
+    private XRKnob _wheel;
     private void Awake()
     {
         chance = GetComponent<ProbabilityManager>();
@@ -31,9 +31,12 @@ public class WheelManager : MonoBehaviour
         }
 
         shredder.lever.GetComponentInChildren<XRLever>().onLeverDeactivate.AddListener(ActivateWheel);
+
+        _wheel = GetComponent<XRKnob>();
     }
     private void ActivateWheel()
     {
+        _wheel.enabled = true;
         e_pulledLever?.InvokeEvent(transform.position, Quaternion.identity, transform);
 
         if (shredder.currWheelStatus != WheelStatus.WORKING)

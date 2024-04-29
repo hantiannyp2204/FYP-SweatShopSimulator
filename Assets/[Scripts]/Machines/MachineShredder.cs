@@ -24,6 +24,7 @@ public class MachineShredder : MonoBehaviour
     [SerializeField] private Transform spawnLocation;
     [SerializeField] private Transform particleSpawnLocation;
     public VrMachineItemCollider shredderItemCollider;
+    [SerializeField] private GameObject fixWheelCollider; // enables this when wheel breaks
 
     [Header("MACHINE SETTINGS")]
     public float secretHealth;
@@ -144,6 +145,8 @@ public class MachineShredder : MonoBehaviour
 
         _wheelPlug = wheel.GetComponentInChildren<XRKnob>();
 
+        _wheelPlug.enabled = false;
+
         if (_wheelPlug == null) return;
 
         _wheelPlug.value = 0;
@@ -164,6 +167,8 @@ public class MachineShredder : MonoBehaviour
         _refillManager = GetComponentInChildren<RefillFuelManager>();
 
         SetUpWheelProbability();
+
+        fixWheelCollider.GetComponent<Collider>().enabled = false;
     }
 
     public int GetRandomValueToBreak()
@@ -174,6 +179,7 @@ public class MachineShredder : MonoBehaviour
     public void ValueChangeCheck()
     {
         //e_interactShredder?.InvokeEvent(particleSpawnLocation.position, Quaternion.identity, transform);
+        _wheelManager.e_wheelturning?.InvokeEvent(transform.position, Quaternion.identity, transform);
         if (_save)
         {
             if (_wheelPlug.value >= _breakAtThisValue)
@@ -182,8 +188,11 @@ public class MachineShredder : MonoBehaviour
                 _wheelPlug.GetComponent<Rigidbody>().useGravity = true;
                 _wheelPlug.GetComponent<Rigidbody>().isKinematic = false;
                 _wheelPlug.GetComponent<Rigidbody>().AddForce(Vector3.up * force, ForceMode.Impulse);
+
                 SetWheelStatus(false);
                 ResetWheelValue();
+
+                //fixWheelCollider.GetComponent<Collider>().enabled = true; // enable collider after breaking
             }
         }
         if (IsOutOfFuel())
@@ -245,17 +254,6 @@ public class MachineShredder : MonoBehaviour
                 }
 
                 UpdateProgressBar();
-                {
-                    //distFromPlayerText.text = "DFM: " + Vector3.Distance(player.transform.position, transform.position);
-                    //// Check if shredding and player goes ou
-                    //if (Vector3.Distance(transform.position, player.transform.position) >= distToStop && _initShredding) 
-                    //{
-                    //    _chargeValue = 0;
-                    //    UpdateProgressBar();
-
-                    //    _initShredding = false;
-                    //}
-                }
             }
         }
     }

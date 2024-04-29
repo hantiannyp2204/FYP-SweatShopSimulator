@@ -22,7 +22,7 @@ public class WheelManager : MonoBehaviour
     [SerializeField] private FeedbackEventData e_pulledLever;
     public FeedbackEventData e_wheelturning;
     
-    private void Start()
+    private void Awake()
     {
         chance = GetComponent<ProbabilityManager>();
         if (canStartShredding == null)

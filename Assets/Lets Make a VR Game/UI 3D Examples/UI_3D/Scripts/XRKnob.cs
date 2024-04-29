@@ -253,6 +253,10 @@ namespace UnityEngine.XR.Content.Interaction
         {
             // Are we in position offset or direction rotation mode?
             var interactorTransform = m_Interactor.GetAttachTransform(this);
+            if (interactorTransform == null)
+            {
+                Debug.Break();
+            }
 
             // We cache the three potential sources of rotation - the position offset, the forward vector of the controller, and up vector of the controller
             // We store any data used for determining which rotation to use, then flatten the vectors to the local xz plane

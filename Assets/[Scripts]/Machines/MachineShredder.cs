@@ -140,7 +140,7 @@ public class MachineShredder : MonoBehaviour
 
         currWheelStatus = WheelStatus.WORKING;
 
-        wheel.SetActive(false);
+        //wheel.SetActive(false);
 
         _wheelPlug = wheel.GetComponentInChildren<XRKnob>();
 

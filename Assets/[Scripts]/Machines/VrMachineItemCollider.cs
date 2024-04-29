@@ -4,11 +4,20 @@ using UnityEngine;
 
 public class VrMachineItemCollider : MonoBehaviour
 {
+    [SerializeField] private MachineShredder shredder;
     public ShredderMouthCollision mouthHandler;
     public List<Item> _productList = new();
     public Item _tracker;
     private Item _saver;
     private bool _collided = false;
+
+    private void Start()
+    {
+        if (shredder != null)
+        {
+            shredder.finishedShreddingEvent.AddListener(DestroyProduct);
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -51,8 +60,12 @@ public class VrMachineItemCollider : MonoBehaviour
         if (_collided)
         {
             if (!mouthHandler.mouth1.GetComponent<Animator>().GetBool("isActivated") && !mouthHandler.mouth2.GetComponent<Animator>().GetBool("isActivated")) return; // check if mouth is open 
-
-            Destroy(_saver.gameObject);
         }
     }
+
+    public void DestroyProduct()
+    {
+        Destroy(_saver);
+    }
 }
+

@@ -56,7 +56,6 @@ public class XRDoor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-     
         // Use Euler angles to correctly check the rotation
         float yRotation = mainDoor.transform.localEulerAngles.y;
         // Lock the door if unlocked and its Y rotation goes below 90 degrees

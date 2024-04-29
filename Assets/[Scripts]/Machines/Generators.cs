@@ -28,7 +28,7 @@ public class Generators : MonoBehaviour
     {
         if(debugtxt != null)
         {
-            debugtxt.text = "NIGGER";
+            debugtxt.text = "grabbed";
         }
 
         interactorUsingThis = args.interactor;

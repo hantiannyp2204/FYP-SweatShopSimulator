@@ -7,6 +7,10 @@ public class ShredderMouthCollision : MonoBehaviour
     public GameObject mouth1;
     public GameObject mouth2;
 
+    private void Start()
+    {
+        if (mouth1 == null || mouth2 == null) return;
+    }
     private void OnTriggerStay(Collider other)
     {
         mouth1.GetComponent<Animator>().SetBool("isActivate", false);

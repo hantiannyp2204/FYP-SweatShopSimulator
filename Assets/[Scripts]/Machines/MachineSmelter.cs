@@ -16,14 +16,11 @@ public class MachineSmelter : MonoBehaviour
     [SerializeField] private int fuelMaxCapacityWarningCount;
     [SerializeField] private float timeToBlowUp = 5f;
     [SerializeField] private int healthPoints;
-    [SerializeField] private int heatIncreaseSpeed;
-    [SerializeField] private int heatPercentageThreshold;
 
     [Header("Machine Refrences")]
     [SerializeField] private SmelterInputHitbox smelterInputHitbox;
     [SerializeField] private TMP_Text timerText;
     [SerializeField] private TMP_Text coalPercentage;
-    [SerializeField] private TMP_Text heatPercentage;
     [SerializeField] private Collider outputCollider;
 
     [Header("Feedback Events")]
@@ -84,7 +81,6 @@ public class MachineSmelter : MonoBehaviour
             outputSpawnBounds = outputCollider.bounds;
         }
         UpdateCoalPercentage();
-        UpdateHeatPercentage();
     }
     private void HandleSmeltingSpeed()
     {
@@ -101,33 +97,9 @@ public class MachineSmelter : MonoBehaviour
             smeltSpeed = 1;
         }
     }
-    private void HandleHeatValue()
-    {
-        //too little fuel
-        if (fuelLeft < 40)
-        {
-            heat -= heatIncreaseSpeed * Time.deltaTime;
-        }
-        //too much fuel and done smelting
-        else if (fuelLeft > 100 && scrapConverted)
-        {
-            heat += heatIncreaseSpeed * Time.deltaTime;
-        }
-        //normal fuel count
-        else
-        {
-            //if previous frame's heat is 100, return
-            if(heat == 100)
-            {
-                return;
-            }
-            heat = 100;
-        }
-    }    
+  
     private IEnumerator SmeltCoroutine()
     {
-
-
         // Smelting process
         while (elapsedTime <= smeltTime)
         {
@@ -251,22 +223,16 @@ public class MachineSmelter : MonoBehaviour
             return;
         }
         //if too much heat and scraps are already converted
-        if(heat > heatPercentageThreshold && !aboutToBlow && scrapConverted)
+        if(fuelLeft > 100 && !aboutToBlow && scrapConverted)
         {
             blowUpCountdownCoroutineHandler = StartCoroutine(BlowUpCountdown());
             aboutToBlow = true;
         }
         //runs as long as machine is active and usable
-        HandleHeatValue();
         HandleFuelDepletion();
 
         //Updating UI text
-        UpdateHeatPercentage();
         UpdateCoalPercentage();
-    }
-    private void UpdateHeatPercentage()
-    {
-        heatPercentage.text = $"Heat: {heat}%";
     }
     private void UpdateCoalPercentage()
     {
@@ -277,10 +243,25 @@ public class MachineSmelter : MonoBehaviour
         {
             currentFuelMaxWarningCount = fuelMaxCapacityWarningCount;
         }
+      
+
 
         // Ensure we don't divide by zero
         if (fuelLeft > 0)
         {
+            //setting colors
+            if(fuelLeft > 100)
+            {
+                coalPercentage.color = Color.red;
+            }
+            else if (fuelLeft < 40)
+            {
+                coalPercentage.color = Color.yellow;
+            }
+            else
+            {
+                coalPercentage.color = Color.green;
+            }
             coalPercentage.text = $"Coal: {Mathf.Clamp(percentage, 0, 100):0}%"; // Clamp to ensure it's between 0% and 100%
         }
         else
@@ -420,6 +401,7 @@ public class MachineSmelter : MonoBehaviour
 
         blewUp = false;
         elapsedTimeToBlowUp = 0;
+        currentFuelMaxWarningCount = fuelMaxCapacityWarningCount;
         DeactivateMachine();
     }
 }

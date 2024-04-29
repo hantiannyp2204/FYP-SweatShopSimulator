@@ -4,14 +4,9 @@ using UnityEngine;
 
 public class ParticleTrigger : MonoBehaviour
 {
-    public string toFind;
+    //public string toFind;
     private ParticleSystem _particle;
     private RefillFuelManager _fuelManager;
-
-    // list to contain particles that collide
-    List<ParticleSystem.Particle> enter = new List<ParticleSystem.Particle>();
-
-    private int _counter = 0;
   
     private void OnEnable()
     {
@@ -25,31 +20,8 @@ public class ParticleTrigger : MonoBehaviour
         if (GetStation().gameObject != null)
         {
             GetStation().AddFuelEvent.Invoke();
+            //_fuelManager.e_refillFuel?.InvokeEvent(transform.position, Quaternion.identity, transform);
         }
-        //_counter++;
-
-        //if (_counter >= 10)
-        //{
-        //    _counter = 0;
-
-        //    if (GetStation() != null)
-        //    {
-        //        GetStation().AddFuelEvent.Invoke();
-        //    };
-        //}
-        
-        //int numEnter = _particle.GetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter);
-
-        //for (int i = 0; i < numEnter; ++i)
-        //{
-        //    _counter++;
-
-        //    if (_counter >= 10)
-        //    {
-        //        _counter = 0;
-        //    }
-        //    ParticleSystem.Particle p = enter[i];
-        //}
     }
 
     public void SetCollider(Collider collider)

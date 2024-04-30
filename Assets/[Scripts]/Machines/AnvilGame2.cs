@@ -89,7 +89,6 @@ public class AnvilGame2 : MonoBehaviour
         currentProgress -= penaltyAmount;
         currentProgress = Mathf.Clamp(currentProgress, 0f, 100f);
         progressBar.value = currentProgress;
-        hammer.Penalty();
         Debug.Log("Penalty applied!");
     }
     private System.Collections.IEnumerator GameTimer()

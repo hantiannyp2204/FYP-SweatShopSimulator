@@ -10,6 +10,8 @@ public class CraftingSelection : MonoBehaviour
     public TabButton TabButton;
     public List<TabButton> tabButtons; // List of tab buttons for each product
     public int currentIndex = 0; // Index of the currently selected product
+    public GameObject _Confirm;
+    public GameObject _Selected;
 
     void Start()
     {
@@ -37,7 +39,7 @@ public class CraftingSelection : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.B))
         {
             // Move to the previous product
-            fabricatorCrafting.HasChosenCraftingItem = true;
+            
             ConfirmProduct();
         }
     }
@@ -70,7 +72,10 @@ public class CraftingSelection : MonoBehaviour
 
     public void ConfirmProduct()
     {
+        fabricatorCrafting.HasChosenCraftingItem = true;
         _craftingRecepie._ConfirmSelection(currentIndex);
+        _Confirm.SetActive(false);
+        _Selected.SetActive(true);
     }
 }
 

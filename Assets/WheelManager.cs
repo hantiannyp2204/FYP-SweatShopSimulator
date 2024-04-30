@@ -40,7 +40,7 @@ public class WheelManager : MonoBehaviour
         shredder.lever.GetComponentInChildren<XRLever>().onLeverDeactivate.AddListener(ActivateWheel);
 
         _wheel = GetComponent<XRKnob>();
-        //_wheel.enabled = false;
+        
         _rb = transform.GetComponent<Rigidbody>();
 
         _wheelLayer = LayerMask.NameToLayer("Wheel");

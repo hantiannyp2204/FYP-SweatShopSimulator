@@ -21,7 +21,6 @@ public class BrokenWheelCollisionManager : MonoBehaviour
             return; // if not wheel layer then return
         }
 
-
         other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
         other.gameObject.GetComponent<Rigidbody>().useGravity = false; // reset physic changes
 

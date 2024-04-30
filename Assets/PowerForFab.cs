@@ -11,6 +11,9 @@ public class PowerForFab : MonoBehaviour
     public NewController _NewController;
     public PowerPlug _PowerPlug;
 
+    public BoxCollider boxCollider; // Reference to the BoxCollider component
+
+
     [SerializeField] private Image _PowerBar;
     public void Update()
     {
@@ -18,7 +21,14 @@ public class PowerForFab : MonoBehaviour
         {
             _CurrentPower = 0;
         }
+        if (_CurrentPower <= 1)
+        {
+            DisableBoxColliderForDuration(2f);
+        }
     }
+
+
+
     public void Start()
     {
         UpdatePowerBar(_PowerForFab, _CurrentPower);
@@ -32,13 +42,13 @@ public class PowerForFab : MonoBehaviour
 
     public void CheckIfGotPower()
     {
-        if (_CurrentPower >= 0)
+        if (_CurrentPower > 0)
         {
-            _IsTherePower=true; 
+            _IsTherePower = true; 
         }
         else
         {
-
+            _IsTherePower = false;
             _NewController.ResetEverything();
             Debug.Log("No power");
         }
@@ -47,5 +57,30 @@ public class PowerForFab : MonoBehaviour
     public void UpdatePowerBar(float MaxPower, float CurrentPower)
     {
         _PowerBar.fillAmount = CurrentPower / MaxPower;
+    }
+
+    public void PushPlugOut()
+    {
+        Vector3 direction = (_PowerPlug.Start_Plug.position - _PowerPlug.End_Plug.position).normalized;
+        _PowerPlug.GetComponent<Rigidbody>().AddForce(-direction * 25, ForceMode.Impulse);
+    }
+
+    void DisableBoxColliderForDuration(float duration)
+    {
+        
+        // Disable the BoxCollider
+        boxCollider.enabled = false;
+
+        // Start a coroutine to re-enable the collider after the specified duration
+        StartCoroutine(EnableBoxColliderAfterDelay(duration));
+    }
+
+    IEnumerator EnableBoxColliderAfterDelay(float delay)
+    {
+        // Wait for the specified duration
+        yield return new WaitForSeconds(delay);
+
+        // Re-enable the BoxCollider
+        boxCollider.enabled = true;
     }
 }

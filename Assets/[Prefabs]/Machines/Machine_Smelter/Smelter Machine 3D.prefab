@@ -245,6 +245,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5642377945972506780}
   - component: {fileID: 8593613170502515846}
+  - component: {fileID: 4473525897780394474}
   m_Layer: 10
   m_Name: Smelter Wheel
   m_TagString: Untagged
@@ -400,6 +401,22 @@ MonoBehaviour:
   smelterDoor: {fileID: 8803861449823032337}
   e_lock: {fileID: 11400000, guid: 9017d869f2f34964b95eb603601460db, type: 2}
   e_unlock: {fileID: 11400000, guid: df65874941539384d9483b166291c0bb, type: 2}
+--- !u!114 &4473525897780394474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 464699953789040078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 827f5dba72b3ddc4baced062b1f40363, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugtxt: {fileID: 0}
+  baseInteractable: {fileID: 8593613170502515846}
+  distanceThreshold: 0.8
+  detectionCollider: {fileID: 0}
 --- !u!1 &522870194775163279
 GameObject:
   m_ObjectHideFlags: 0
@@ -49544,7 +49561,8 @@ Transform:
   m_LocalPosition: {x: -57.8, y: -6, z: 35.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 4407772437648791883}
   m_Father: {fileID: 3644898184494462806}
   m_LocalEulerAnglesHint: {x: 0, y: -243.017, z: 0}
 --- !u!33 &5734319412088415983
@@ -69406,7 +69424,7 @@ Transform:
   m_GameObject: {fileID: 6026395012501328056}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -8.94, y: 0, z: -58.11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -69433,7 +69451,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 9024716141790812113, guid: 7ad626f3d2f70ce4c837a44ece992446, type: 3}
+  m_Mesh: {fileID: -3203504332989725025, guid: 69ba6da543609384d9a3e61696c0592c, type: 3}
 --- !u!1 &6033310967984243107
 GameObject:
   m_ObjectHideFlags: 0
@@ -84286,6 +84304,60 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!1 &6873137163365070098
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4407772437648791883}
+  - component: {fileID: 8156445422174562676}
+  m_Layer: 10
+  m_Name: Smelter Main Door Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4407772437648791883
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6873137163365070098}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.36664182, z: -0, w: 0.93036216}
+  m_LocalPosition: {x: 3.3780727, y: 0, z: 58.691654}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1129193653332059039}
+  m_LocalEulerAnglesHint: {x: 0, y: -200, z: 0}
+--- !u!64 &8156445422174562676
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6873137163365070098}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 2443754468092851093, guid: 7ad626f3d2f70ce4c837a44ece992446, type: 3}
 --- !u!1 &6959707989724498436
 GameObject:
   m_ObjectHideFlags: 0
@@ -84499,6 +84571,7 @@ GameObject:
   - component: {fileID: 826499629708754870}
   - component: {fileID: 5048339020882737499}
   - component: {fileID: 8803861449823032337}
+  - component: {fileID: 1962799207856409010}
   m_Layer: 10
   m_Name: Smelter Main Door
   m_TagString: Untagged
@@ -84763,6 +84836,22 @@ MonoBehaviour:
   e_doorClose: {fileID: 11400000, guid: d37de476e378aeb459b5aef68c46f260, type: 2}
   smelterWheel: {fileID: 8593613170502515846}
   smelter: {fileID: 7936502983207921324}
+--- !u!114 &1962799207856409010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7675231250745805747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 827f5dba72b3ddc4baced062b1f40363, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugtxt: {fileID: 0}
+  baseInteractable: {fileID: 5048339020882737499}
+  distanceThreshold: 10
+  detectionCollider: {fileID: 6110412641614375756}
 --- !u!1 &7691305620840011782
 GameObject:
   m_ObjectHideFlags: 0

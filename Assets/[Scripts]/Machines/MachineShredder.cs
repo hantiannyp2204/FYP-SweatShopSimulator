@@ -55,6 +55,7 @@ public class MachineShredder : MonoBehaviour
     public WheelStatus currWheelStatus;
 
     public UnityEvent finishedShreddingEvent;
+
     public bool AlreadyFull()
     {
         return secretHealth >= maxHealth;
@@ -139,7 +140,7 @@ public class MachineShredder : MonoBehaviour
             finishedShreddingEvent = new UnityEvent();
         }
 
-        currWheelStatus = WheelStatus.WORKING;
+        //currWheelStatus = WheelStatus.WORKING;
 
         //wheel.SetActive(false);
 
@@ -157,6 +158,10 @@ public class MachineShredder : MonoBehaviour
 
         _wheelManager.canStartShredding.AddListener(CanShred);
 
+        _wheelManager.SetWheelCurrState(WheelStatus.WORKING);
+
+        _wheelManager.GetComponent<XRVelocityRayGrab>().enabled = false;
+
         _leverPlug = lever.GetComponentInChildren<XRLever>();
             
         _spawnPointBound = spawnPoint.GetComponent<Collider>().bounds;
@@ -169,6 +174,11 @@ public class MachineShredder : MonoBehaviour
         SetUpWheelProbability();
 
         fixWheelCollider.GetComponent<Collider>().enabled = false;
+    }
+
+    public WheelManager GetWheelHandler()
+    {
+        return _wheelManager;
     }
 
     public int GetRandomValueToBreak()

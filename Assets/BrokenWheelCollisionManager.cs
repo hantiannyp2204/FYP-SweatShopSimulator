@@ -22,7 +22,7 @@ public class BrokenWheelCollisionManager : MonoBehaviour
         }
 
 
-            other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+        other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
         other.gameObject.GetComponent<Rigidbody>().useGravity = false; // reset physic changes
 
         other.gameObject.transform.position = other.gameObject.transform.position;

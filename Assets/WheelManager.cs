@@ -4,10 +4,12 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR.Content.Interaction;
 
+
 public enum WheelStatus
 {
     WORKING, 
-    BROKEN
+    BROKEN,
+    NOT_ATTACHED
 }
 
 public class WheelManager : MonoBehaviour
@@ -22,6 +24,10 @@ public class WheelManager : MonoBehaviour
     [SerializeField] private FeedbackEventData e_pulledLever;
     public FeedbackEventData e_wheelturning;
     private XRKnob _wheel;
+
+    public WheelStatus _status;
+    private Rigidbody _rb;
+
     private void Awake()
     {
         chance = GetComponent<ProbabilityManager>();
@@ -33,13 +39,29 @@ public class WheelManager : MonoBehaviour
         shredder.lever.GetComponentInChildren<XRLever>().onLeverDeactivate.AddListener(ActivateWheel);
 
         _wheel = GetComponent<XRKnob>();
+        _rb = transform.GetComponent<Rigidbody>();
+    }
+    private void Start()
+    {
+        SetWheelCurrState(WheelStatus.NOT_ATTACHED);    
+        if (_status != WheelStatus.WORKING) // do this for wheels that are not attached to the shreddder
+        {
+            transform.gameObject.GetComponent<XRKnob>().enabled = false;
+            _rb.useGravity = true;
+            _rb.isKinematic = false;    
+        }
     }
     private void ActivateWheel()
     {
         _wheel.enabled = true;
         e_pulledLever?.InvokeEvent(transform.position, Quaternion.identity, transform);
 
-        if (shredder.currWheelStatus != WheelStatus.WORKING)
+        //if (shredder.currWheelStatus != WheelStatus.WORKING)
+        //{
+        //    return;
+        //}
+
+        if (shredder.GetWheelHandler().GetWheelCurrState() != WheelStatus.WORKING)
         {
             return;
         }
@@ -59,5 +81,15 @@ public class WheelManager : MonoBehaviour
         shredder.initShredding = true;
         shredder.wheel.SetActive(true);
         canStartShredding.Invoke();
+    }
+
+    public void SetWheelCurrState(WheelStatus STATUS)
+    {
+        _status = STATUS;
+    }
+
+    public WheelStatus GetWheelCurrState()
+    {
+        return _status;
     }
 }

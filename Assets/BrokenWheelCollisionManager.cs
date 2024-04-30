@@ -17,7 +17,6 @@ public class BrokenWheelCollisionManager : MonoBehaviour
     {
         if (other.gameObject.layer != _wheelLayer)
         {
-            Debug.Break();
             return; // if not wheel layer then return
         }
 

@@ -219,7 +219,7 @@ public class MachineShredder : MonoBehaviour
                 SetWheelStatus(false);
                 ResetWheelValue();
 
-                //fixWheelCollider.GetComponent<Collider>().enabled = true; // enable collider after breaking
+                fixWheelCollider.GetComponent<Collider>().enabled = true; // enable collider after breaking
             }
         }
         if (IsOutOfFuel())

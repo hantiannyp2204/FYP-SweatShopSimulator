@@ -222,7 +222,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseInteractable: {fileID: 124134192}
-  distanceThreshold: 0.8
+  distanceThreshold: 0.3
+  detectionCollider: {fileID: 0}
 --- !u!1 &133179880
 GameObject:
   m_ObjectHideFlags: 0
@@ -1263,6 +1264,39 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92790fae272470945ac8c0eb70df6d72, type: 3}
+--- !u!1 &580816877 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7675231250745805747, guid: 80d828f8ac4bd05428a6bbfab5dd1191,
+    type: 3}
+  m_PrefabInstance: {fileID: 814062118}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &580816879 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5048339020882737499, guid: 80d828f8ac4bd05428a6bbfab5dd1191,
+    type: 3}
+  m_PrefabInstance: {fileID: 814062118}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 580816877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ad34abafad169848a38072baa96cdb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &580816883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 580816877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 827f5dba72b3ddc4baced062b1f40363, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseInteractable: {fileID: 580816879}
+  distanceThreshold: 10
+  detectionCollider: {fileID: 1461685179}
 --- !u!1 &705460548
 GameObject:
   m_ObjectHideFlags: 0
@@ -1730,6 +1764,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 663887735704738779, guid: 80d828f8ac4bd05428a6bbfab5dd1191,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1690447879776170352, guid: 80d828f8ac4bd05428a6bbfab5dd1191,
         type: 3}
       propertyPath: m_Name
@@ -1799,6 +1838,10 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 524686624}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7675231250745805747, guid: 80d828f8ac4bd05428a6bbfab5dd1191,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 580816883}
     - targetCorrespondingSourceObject: {fileID: 464699953789040078, guid: 80d828f8ac4bd05428a6bbfab5dd1191,
         type: 3}
       insertIndex: -1
@@ -2272,6 +2315,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7592982078985199004}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1461685179 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6110412641614375756, guid: 80d828f8ac4bd05428a6bbfab5dd1191,
+    type: 3}
+  m_PrefabInstance: {fileID: 814062118}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1587440720
 GameObject:
   m_ObjectHideFlags: 0
@@ -2608,20 +2657,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f93b16bed0c3b64493ecb0fd2743a9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1910313729
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1378237526}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 827f5dba72b3ddc4baced062b1f40363, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseInteractable: {fileID: 0}
-  distanceThreshold: 0.8
 --- !u!114 &1960854097 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1577881346341833699, guid: 6aa70890968c5e74980c3f1995cd71ac,
@@ -5380,10 +5415,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1010651845}
-    - targetCorrespondingSourceObject: {fileID: 2000483975955013795, guid: 6aa70890968c5e74980c3f1995cd71ac,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1910313729}
     - targetCorrespondingSourceObject: {fileID: 6844503761956514831, guid: 6aa70890968c5e74980c3f1995cd71ac,
         type: 3}
       insertIndex: -1

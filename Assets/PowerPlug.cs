@@ -7,7 +7,7 @@ public class PowerPlug : MonoBehaviour
     [SerializeField] XRGrabInteractable _DropPlug;
     public Transform Start_Plug;
     public Transform End_Plug;
-    public TMP_Text Text;
+    //public TMP_Text Text;
 
     public LayerMask socketLayer; // Set this in the inspector to the layer you want the plug to stick to
     private bool isStuckInSocket = false;
@@ -56,11 +56,11 @@ public class PowerPlug : MonoBehaviour
                 interactionManager.CancelInteractableSelection(_DropPlug);
                 // Do something if the distance is more than 1.85 units
                 Debug.Log("Distance between Start_Plug and End_Plug is more than 1.85 units.");
-                Text.text = "Too long";
+                //Text.text = "Too long";
             }
             else
             {
-                Text.text = "Inside length";
+                //Text.text = "Inside length";
             }
         }
     }

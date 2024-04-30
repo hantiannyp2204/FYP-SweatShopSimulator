@@ -6,16 +6,17 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class XRDoor : MonoBehaviour
 {
-    private Rigidbody doorRb;
+
     [SerializeField] private GameObject mainDoor;
     public bool doorLocked = false;
+
+    private Rigidbody doorRb;
     private XRGrabInteractable grabInteractable;
-    bool grabbed = false;
+    private bool grabbed = false;
+    private bool abilityToGrab = true;
 
-    bool abilityToGrab = true;
-
-    Vector3 startingPosition;
-    Quaternion startingRotation;
+    private Vector3 startingPosition;
+    private Quaternion startingRotation;
 
     [SerializeField] private FeedbackEventData e_doorOpen;
     [SerializeField] private FeedbackEventData e_doorClose;

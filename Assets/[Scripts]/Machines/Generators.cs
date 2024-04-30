@@ -10,7 +10,7 @@ public class Generators : MonoBehaviour
 
     private XRBaseInteractor interactorUsingThis;
 
-    public TMP_Text debugtxt;
+    //public TMP_Text debugtxt;
 
     protected void OnEnable()
     {
@@ -26,10 +26,10 @@ public class Generators : MonoBehaviour
 
     private void OnGrabbed(SelectEnterEventArgs args)
     {
-        if(debugtxt != null)
-        {
-            debugtxt.text = "grabbed";
-        }
+        //if(debugtxt != null)
+        //{
+        //    debugtxt.text = "grabbed";
+        //}
 
         interactorUsingThis = args.interactor;
         GenerateAndGrabMetalScrap();

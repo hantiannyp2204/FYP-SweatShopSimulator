@@ -92,6 +92,7 @@ public class FabricatorCrafting : MonoBehaviour
 
     public void ClearLists()
     {
+        DestroyOBJ();
         _WhatINeed.Clear();
         inputHitbox.GetScrapList().Clear();
         _ToDestroy.Clear();

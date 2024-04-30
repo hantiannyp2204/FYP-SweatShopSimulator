@@ -19,6 +19,7 @@ public class NewController : MonoBehaviour
     public PowerForFab power;
     public FabricatorCrafting _fabricatorCrafting;
     public CraftingRecepie _craftingRecepie;
+    public GameObject _ConfirmUI;
     
 
 
@@ -50,12 +51,9 @@ public class NewController : MonoBehaviour
         trueRange -= (Lnum - 1) * 10;
         speed *= 1 + ((float)(Lnum - 1) / 2);
         levelText.text = "speed = " + speed + "    L E V E L " + Lnum + "    range = " + trueRange;
-
-        //BackColor();
         SetRange();
     }
 
-    // Update is called once per frame
 
     public void StartRotate()
     {
@@ -106,25 +104,15 @@ public class NewController : MonoBehaviour
         
 
 
-        if (gameEnded && Input.GetKeyDown(KeyCode.L) && winORloseText.text == "WIN")
-        {
-            ChangeLevel();
-        }
-        StartRotate();
-        if (hold == false)
-        {
-            EndRotate();
-        }
-
-
-        //Update your true range logic here
-        //temp = Mathf.Round(transform.rotation.eulerAngles.z);
-        
-        // if (hold)
-        // {
-        //     transform.RotateAround(Anchor.transform.position, Anchor.transform.forward, speed * Time.deltaTime);
-        // }
-
+        //if (gameEnded && Input.GetKeyDown(KeyCode.L) && winORloseText.text == "WIN")
+        //{
+        //    ChangeLevel();
+        //}
+        //StartRotate();
+        //if (hold == false)
+        //{
+        //    EndRotate();
+        //}
     }
     void SetRange()
     {
@@ -190,7 +178,6 @@ public class NewController : MonoBehaviour
             Debug.Log("It went here");
             //Spawn Item
             _fabricatorCrafting.SpawnItemsFromList();
-            //crafting.SpawnOBJ(crafting.item2Spawn);
             ResetEverything();
             UpdateLevelParameters();
             SetRange();
@@ -219,9 +206,11 @@ public class NewController : MonoBehaviour
     public void ResetEverything()
     {
         // Reset everythings
+        
         _craftingRecepie.spawnedObjects.Clear();
-        crafting.DestroyOBJ();
         crafting.ClearLists();
+
+        _ConfirmUI.SetActive(true);
         macine._WinORLose.SetActive(false);
         macine._TextHolder.SetActive(false);
         macine._NextButton.SetActive(false);

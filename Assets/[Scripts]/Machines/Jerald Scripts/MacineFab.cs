@@ -17,6 +17,7 @@ public class MacineFab : MonoBehaviour, Iinteractable
     public GameObject _NextButton;
     public FabricatorCrafting _Crafting;
     public PowerForFab _PowerFab;
+    public GameObject _RedButton;
 
     public GameObject _WinORLose;
     public NewController newController; // Reference to the NewController script
@@ -73,6 +74,8 @@ public class MacineFab : MonoBehaviour, Iinteractable
             }
             if (_Crafting.EnoughMaterials == true && _Crafting.HasChosenCraftingItem == true)
             {
+                //Enalble here
+                _RedButton.SetActive(true);
                 Fabricator_run?.InvokeEvent(transform.position, Quaternion.identity, transform);
                 IsGameRunning = true;
                 //_Crafting.foundCount = 0;

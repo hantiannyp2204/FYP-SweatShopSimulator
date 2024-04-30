@@ -14843,6 +14843,7 @@ GameObject:
   - component: {fileID: 6469792219026692614}
   - component: {fileID: 5245300840106334585}
   - component: {fileID: 6165120819056537778}
+  - component: {fileID: 3334508596298395177}
   m_Layer: 10
   m_Name: Horizontal Sliding door logic
   m_TagString: Untagged
@@ -14919,7 +14920,7 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_LinearLimit:
-    limit: 0.8
+    limit: 0.6
     bounciness: 1
     contactDistance: 0
   m_AngularXLimitSpring:
@@ -14996,6 +14997,23 @@ ConfigurableJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &3334508596298395177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1724392265950217257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 137a00232c3495248bf29896409c0282, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minYValue: 0
+  grabInteractable: {fileID: 1621966673237864750}
+  coalHitbox: {fileID: 7354085194069382204}
+  e_doorOpen: {fileID: 0}
+  e_doorClose: {fileID: 0}
 --- !u!1 &1740828445764216812
 GameObject:
   m_ObjectHideFlags: 0
@@ -20589,7 +20607,7 @@ Transform:
   m_GameObject: {fileID: 2721380178347574153}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -19.670002, y: -14.78, z: -212.82013}
+  m_LocalPosition: {x: -19.73, y: -14.78, z: -212.82}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -25694,7 +25712,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6520097095380523460
 Transform:
   m_ObjectHideFlags: 0
@@ -64045,7 +64063,7 @@ Transform:
   m_GameObject: {fileID: 4240787669029196074}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.10116194, z: -0, w: 0.99487007}
-  m_LocalPosition: {x: 2.16, y: 0.54, z: 0.105}
+  m_LocalPosition: {x: 2.432, y: 0.54, z: 0.049}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -69501,8 +69519,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.1200931, y: 1.0021074, z: 0.7467382}
-  m_Center: {x: 0.062231865, y: -0.0053062392, z: 1.412404}
+  m_Size: {x: 1.1200931, y: 0.92610925, z: 0.74673826}
+  m_Center: {x: 0.062248655, y: -0.5524495, z: 1.4095974}
 --- !u!54 &6939509523352623767
 Rigidbody:
   m_ObjectHideFlags: 0

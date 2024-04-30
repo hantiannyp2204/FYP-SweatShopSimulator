@@ -8,12 +8,13 @@ public class XRVelocityRayGrab : XRGrabInteractable
     public float jumpAngleInDegree = 60;
 
     private XRRayInteractor rayInteractor;
-    private Transform hoveredItemTransform;
+    private Transform hoverInteractorTransform;
     private Vector3 previousPos;
     private Rigidbody interactableRigidbody;
     private bool canJump = false;
     private bool grabbedByRay = false;
     private bool itemIsHovered = false;
+    private Vector3 raycastHitPoint;
     public bool IsGrabbedByRay() => grabbedByRay;
     public bool CanJump() => canJump;
     protected override void Awake()
@@ -44,9 +45,9 @@ public class XRVelocityRayGrab : XRGrabInteractable
     }
     private void FixedUpdate()
     {
-        if (itemIsHovered)
+        if (itemIsHovered && rayInteractor != null)
         {
-            float distanceToItem = Vector3.Distance(this.transform.position, hoveredItemTransform.position);
+            float distanceToItem = Vector3.Distance(rayInteractor.rayEndPoint, hoverInteractorTransform.position);
             if (distanceToItem >= 0.4f)
             {
                 grabbedByRay = true;
@@ -88,7 +89,8 @@ public class XRVelocityRayGrab : XRGrabInteractable
         {
             grabbedByRay = true;
             itemIsHovered = true;
-            hoveredItemTransform = args.interactorObject.transform;
+            hoverInteractorTransform = args.interactorObject.transform;
+            rayInteractor = (XRRayInteractor)args.interactorObject;
         }
         
         base.OnHoverEntered(args);
@@ -99,7 +101,8 @@ public class XRVelocityRayGrab : XRGrabInteractable
         if (args.interactorObject is XRRayInteractor)
         {
             itemIsHovered = false;
-            hoveredItemTransform = null;
+            hoverInteractorTransform = null;
+            rayInteractor = null;
         }
         base.OnHoverExited(args);
     }
@@ -131,20 +134,27 @@ public class XRVelocityRayGrab : XRGrabInteractable
             Debug.Log("SELECTED by Direct");
             //if too far and flying, ignore
 
-
-
+            //disable hand render
+            DisableHandModels disableHandModelComponent = args.interactorObject.transform.GetComponent<DisableHandModels>();
+            if(disableHandModelComponent != null )
+            {
+                disableHandModelComponent.DisableHandRender();
+            }
         }
 
         base.OnSelectEntered(args);
         itemIsHovered = false;
-        //canJump = true;
+        //disable hand render
 
     }
-    protected override void OnSelectExited(XRBaseInteractor interactor)
+    protected override void OnSelectExited(SelectExitEventArgs args)
     {
 
-        //canJump = true;
+        DisableHandModels disableHandModelComponent = args.interactorObject.transform.GetComponent<DisableHandModels>();
+        if (disableHandModelComponent != null && !disableHandModelComponent.GetActive())
+        {
+            disableHandModelComponent.EnableHandRender();
+        }
 
-        base.OnSelectExited(interactor);
     }
 }

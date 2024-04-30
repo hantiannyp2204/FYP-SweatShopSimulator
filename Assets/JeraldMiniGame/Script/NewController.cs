@@ -19,7 +19,7 @@ public class NewController : MonoBehaviour
     public PowerForFab power;
     public FabricatorCrafting _fabricatorCrafting;
     public CraftingRecepie _craftingRecepie;
-    
+    public GameObject _ConfirmUI;
     
 
 
@@ -206,6 +206,7 @@ public class NewController : MonoBehaviour
     public void ResetEverything()
     {
         // Reset everythings
+        _ConfirmUI.SetActive(true);
         _craftingRecepie.spawnedObjects.Clear();
         crafting.DestroyOBJ();
         crafting.ClearLists();

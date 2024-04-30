@@ -152,7 +152,10 @@ public class MachineShredder : MonoBehaviour
 
         _wheelPlug.enabled = false;
 
-        if (_wheelPlug == null) return;
+        if (_wheelPlug == null)
+        {
+            return;
+        }
 
         _wheelPlug.value = 0;
 

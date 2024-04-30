@@ -206,10 +206,11 @@ public class NewController : MonoBehaviour
     public void ResetEverything()
     {
         // Reset everythings
-        _ConfirmUI.SetActive(true);
+        
         _craftingRecepie.spawnedObjects.Clear();
-        crafting.DestroyOBJ();
         crafting.ClearLists();
+
+        _ConfirmUI.SetActive(true);
         macine._WinORLose.SetActive(false);
         macine._TextHolder.SetActive(false);
         macine._NextButton.SetActive(false);

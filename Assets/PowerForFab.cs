@@ -9,12 +9,18 @@ public class PowerForFab : MonoBehaviour
     public float _CurrentPower;
     public bool _IsTherePower = false;
     public NewController _NewController;
+    public PowerPlug _PowerPlug;
 
     [SerializeField] private Image _PowerBar;
-
+    public void Update()
+    {
+        if (_PowerPlug.isStuckInSocket == false)
+        {
+            _CurrentPower = 0;
+        }
+    }
     public void Start()
     {
-        RandomPower();
         UpdatePowerBar(_PowerForFab, _CurrentPower);
     }
     public void RandomPower()
@@ -32,6 +38,7 @@ public class PowerForFab : MonoBehaviour
         }
         else
         {
+
             _NewController.ResetEverything();
             Debug.Log("No power");
         }

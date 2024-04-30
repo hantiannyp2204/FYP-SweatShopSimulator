@@ -31,9 +31,9 @@ public class CraftingRecepie : MonoBehaviour
     [SerializeField] private int RequiredMetal_Pocket_Clock;
     public GameObject PocketClock;
 
-
-
-
+    [Header("Wheel Crafting Recipe")]
+    [SerializeField] private int RequiredWheel;
+    public GameObject Wheel;
 
 
     public void _ConfirmSelection(int Confirmnumber)
@@ -62,6 +62,15 @@ public class CraftingRecepie : MonoBehaviour
                     fabricatorCrafting._WhatINeed.Add(RawMetalMaterial);
                 }
                 spawnedObjects.Add(PocketClock);
+                //fabricatorCrafting.SpawnOBJ(PocketClock);
+                break;
+            case 3:
+                for (int i = 0; i < RequiredWheel; i++)
+                {
+                    fabricatorCrafting._WhatINeed.Add(RawMetalMaterial);
+                    fabricatorCrafting._WhatINeed.Add(RawPlasticMaterial);
+                }
+                spawnedObjects.Add(Wheel);
                 //fabricatorCrafting.SpawnOBJ(PocketClock);
                 break;
         }

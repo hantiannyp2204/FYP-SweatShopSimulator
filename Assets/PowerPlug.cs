@@ -7,11 +7,15 @@ public class PowerPlug : MonoBehaviour
     [SerializeField] XRGrabInteractable _DropPlug;
     public Transform Start_Plug;
     public Transform End_Plug;
+    public bool isStuckInSocket;
+    public PowerForFab _powerForFab;
     //public TMP_Text Text;
-
     public LayerMask socketLayer; // Set this in the inspector to the layer you want the plug to stick to
-    private bool isStuckInSocket = false;
 
+    public void Start()
+    {
+       
+    }
     private void OnTriggerEnter(Collider other)
     {
         // Check if the collided object is on the specified socket layer
@@ -29,9 +33,34 @@ public class PowerPlug : MonoBehaviour
 
                 // Set the flag indicating that the plug is now stuck in a socket
                 isStuckInSocket = true;
+                if (_powerForFab._CurrentPower <= 0)
+                {
+                    _powerForFab.RandomPower();
+                }
             }
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        // Check if the collided object is not on the specified socket layer
+        if ((socketLayer.value & 1 << other.gameObject.layer) == 0)
+        {
+            // Set the plug as non-kinematic so it can move freely
+            Rigidbody rb = GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.isKinematic = false;
+            }
+
+            // Set the flag indicating that the plug is no longer stuck in a socket
+            isStuckInSocket = false;
+
+            
+        }
+    }
+
+
 
     public bool IsStuckInSocket()
     {

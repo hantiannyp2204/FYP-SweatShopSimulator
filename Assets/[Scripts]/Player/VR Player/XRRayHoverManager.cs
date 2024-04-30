@@ -5,7 +5,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class XRRayHoverManager : MonoBehaviour
 {
-    [SerializeField] private XRRayInteractor rayInteractor; // Assign this in the inspector
+    [SerializeField] private XRRayInteractor rayInteractor;
     [SerializeField] private Material hoverMaterial;
 
     [SerializeField] private FeedbackEventData e_hoverEnterSound;

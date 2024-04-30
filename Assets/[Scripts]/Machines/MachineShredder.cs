@@ -52,9 +52,13 @@ public class MachineShredder : MonoBehaviour
     private XRLever _leverPlug;
     private bool _save;
 
+    private XRVelocityRayGrab _grabber;
+
     public WheelStatus currWheelStatus;
 
     public UnityEvent finishedShreddingEvent;
+
+    private GameObject _attachedWheel;
     public bool AlreadyFull()
     {
         return secretHealth >= maxHealth;
@@ -139,9 +143,10 @@ public class MachineShredder : MonoBehaviour
             finishedShreddingEvent = new UnityEvent();
         }
 
-        currWheelStatus = WheelStatus.WORKING;
+        //currWheelStatus = WheelStatus.WORKING;
 
         //wheel.SetActive(false);
+        _attachedWheel = wheel;
 
         _wheelPlug = wheel.GetComponentInChildren<XRKnob>();
 
@@ -157,6 +162,15 @@ public class MachineShredder : MonoBehaviour
 
         _wheelManager.canStartShredding.AddListener(CanShred);
 
+        _wheelManager.SetWheelCurrState(WheelStatus.WORKING);
+
+        _grabber = _wheelManager.GetComponent<XRVelocityRayGrab>();
+
+        if (_grabber != null)
+        {
+            _grabber.enabled = false; // disable ability to grab
+        }
+
         _leverPlug = lever.GetComponentInChildren<XRLever>();
             
         _spawnPointBound = spawnPoint.GetComponent<Collider>().bounds;
@@ -169,6 +183,15 @@ public class MachineShredder : MonoBehaviour
         SetUpWheelProbability();
 
         fixWheelCollider.GetComponent<Collider>().enabled = false;
+    }
+
+    public GameObject GetAttachedWheel()
+    {
+        return _attachedWheel;
+    }
+    public WheelManager GetWheelHandler()
+    {
+        return _wheelManager;
     }
 
     public int GetRandomValueToBreak()
@@ -184,10 +207,14 @@ public class MachineShredder : MonoBehaviour
         {
             if (_wheelPlug.value >= _breakAtThisValue)
             {
-                currWheelStatus = WheelStatus.BROKEN;
+                SetGameLayerRecursive(wheel, 0);
+                _wheelManager.SetWheelCurrState(WheelStatus.BROKEN);
+                //currWheelStatus = WheelStatus.BROKEN;
                 _wheelPlug.GetComponent<Rigidbody>().useGravity = true;
                 _wheelPlug.GetComponent<Rigidbody>().isKinematic = false;
                 _wheelPlug.GetComponent<Rigidbody>().AddForce(Vector3.up * force, ForceMode.Impulse);
+
+
 
                 SetWheelStatus(false);
                 ResetWheelValue();
@@ -200,6 +227,20 @@ public class MachineShredder : MonoBehaviour
             return;
         }
     }
+
+    private void SetGameLayerRecursive(GameObject _go, int _layer)
+    {
+        _go.layer = _layer;
+        foreach (Transform child in _go.transform)
+        {
+            child.gameObject.layer = _layer;
+
+            Transform _HasChildren = child.GetComponentInChildren<Transform>();
+            if (_HasChildren != null)
+                SetGameLayerRecursive(child.gameObject, _layer);
+        }
+    }
+
 
     // Update is called once per frame
     void Update()

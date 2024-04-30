@@ -13,11 +13,11 @@ public enum WheelStatus
 }
 
 public class WheelManager : MonoBehaviour
-{   
+{
+    [HideInInspector] public UnityEvent enableUnusedWheelPhysics;
     [HideInInspector] public UnityEvent canStartShredding;
     [SerializeField] private MachineShredder shredder;
     [SerializeField] private VrMachineItemCollider _check;
-
 
     public ProbabilityManager chance; 
     [Header("FEEDBACK")]
@@ -28,7 +28,8 @@ public class WheelManager : MonoBehaviour
     public WheelStatus _status;
     private Rigidbody _rb;
 
-    private void Awake()
+    private int _wheelLayer;
+    private void Start()
     {
         chance = GetComponent<ProbabilityManager>();
         if (canStartShredding == null)
@@ -39,18 +40,17 @@ public class WheelManager : MonoBehaviour
         shredder.lever.GetComponentInChildren<XRLever>().onLeverDeactivate.AddListener(ActivateWheel);
 
         _wheel = GetComponent<XRKnob>();
+        //_wheel.enabled = false;
         _rb = transform.GetComponent<Rigidbody>();
-    }
-    private void Start()
-    {
-        SetWheelCurrState(WheelStatus.NOT_ATTACHED);    
-        if (_status != WheelStatus.WORKING) // do this for wheels that are not attached to the shreddder
+
+        _wheelLayer = LayerMask.NameToLayer("Wheel");
+
+        if (shredder.GetAttachedWheel() != this)
         {
-            transform.gameObject.GetComponent<XRKnob>().enabled = false;
-            _rb.useGravity = true;
-            _rb.isKinematic = false;    
+            SetWheelCurrState(WheelStatus.NOT_ATTACHED);
         }
     }
+
     private void ActivateWheel()
     {
         _wheel.enabled = true;

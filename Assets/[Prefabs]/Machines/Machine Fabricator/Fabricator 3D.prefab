@@ -7274,6 +7274,7 @@ GameObject:
   - component: {fileID: 956727347277745717}
   - component: {fileID: 1849298785951168323}
   - component: {fileID: 2198298577223486699}
+  - component: {fileID: 2611654868306339505}
   m_Layer: 6
   m_Name: Start
   m_TagString: Untagged
@@ -7537,6 +7538,21 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
+--- !u!114 &2611654868306339505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5508662921090904235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c16df6552845004a88eb3f0346359da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  socketLayer:
+    serializedVersion: 2
+    m_Bits: 32768
 --- !u!1 &5579198932100841917
 GameObject:
   m_ObjectHideFlags: 0
@@ -8324,7 +8340,7 @@ Transform:
   m_GameObject: {fileID: 6056968921991431540}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.2000008}
+  m_LocalPosition: {x: 0, y: 0.646, z: 1.2000008}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8414,8 +8430,8 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -8431,7 +8447,7 @@ GameObject:
   - component: {fileID: 3367364557215301050}
   - component: {fileID: 8531333617166688538}
   - component: {fileID: 4296383817189231541}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8468,7 +8484,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6077063438041130297}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -8518,7 +8534,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

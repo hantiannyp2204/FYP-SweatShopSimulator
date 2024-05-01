@@ -20,7 +20,8 @@ public class NewController : MonoBehaviour
     public FabricatorCrafting _fabricatorCrafting;
     public CraftingRecepie _craftingRecepie;
     public GameObject _ConfirmUI;
-    
+    public Renderer arrowRenderer;
+
 
 
     [Header("Game Variables")]
@@ -34,16 +35,16 @@ public class NewController : MonoBehaviour
     public bool didwin = false;
     public int Lnum = 1;
     public float CCL;
-    bool gameEnded = false;
+    public bool gameEnded = false;
 
     [Header("Display texts")]
-    [SerializeField] TMP_Text minT, maxT, currentText, winORloseText, levelText;
+    [SerializeField] public TMP_Text minT, maxT, currentText, winORloseText, levelText;
     public Image againPanel, nextPanel, endPanel, levelPanelBack;
     public float LevelCurrentPower;
     
     void Start()
     {
-        
+        arrowRenderer.material.color = Color.white;
         gameEnded = false;
         Cursor.lockState = CursorLockMode.None;
         Lnum = PlayerPrefs.GetInt("Level num", 1);
@@ -75,11 +76,11 @@ public class NewController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            // Move to the next product
-            EndRotate();
-        }
+        //if (Input.GetKeyDown(KeyCode.I))
+        //{
+        //    // Move to the next product
+        //    EndRotate();
+        //}
 
         if (Input.GetKeyDown(KeyCode.O))
         {
@@ -89,6 +90,10 @@ public class NewController : MonoBehaviour
             }
         }
 
+        if (macine.IsGameRunning == true)
+        {
+            EndRotate();
+        }
        
         currentText.text = "" + xRKnob.m_Value;
         if (power != null)
@@ -129,6 +134,7 @@ public class NewController : MonoBehaviour
         {
             winORloseText.text = "WIN";
             gameEnded = true; // Set gameEnded to true when player wins
+            arrowRenderer.material.color = Color.green;
             if (trueRange > 10)
             {
                 Debug.Log("WINERSIA");
@@ -143,6 +149,7 @@ public class NewController : MonoBehaviour
             if (macine.IsGameEnded()) // Check if _Wheel is active
             {
                 winORloseText.text = "LOSE";
+                arrowRenderer.material.color = Color.red;
                 Debug.Log("LOSER");
                 macine._WinORLose.SetActive(true);
                 gameEnded = true; // Set gameEnded to true when player loses
@@ -160,7 +167,7 @@ public class NewController : MonoBehaviour
         SceneManager.LoadScene("Minigame");
     }
 
-    void ChangeLevel()
+    public void ChangeLevel()
     {
         hold = true;
         temp = 0; // Reset the current number to zero
@@ -209,7 +216,7 @@ public class NewController : MonoBehaviour
         
         _craftingRecepie.spawnedObjects.Clear();
         crafting.ClearLists();
-
+        arrowRenderer.material.color = Color.white;
         _ConfirmUI.SetActive(true);
         macine._WinORLose.SetActive(false);
         macine._TextHolder.SetActive(false);

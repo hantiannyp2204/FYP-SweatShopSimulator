@@ -5,6 +5,8 @@ using UnityEngine;
 public class FabricatorButton : VRButton
 {
     [SerializeField] MacineFab macineFab;
+    public NewController _newcon;
+
     public override void PressedFunction()
     {
         macineFab.RunActive();
@@ -17,10 +19,18 @@ public class FabricatorButton : VRButton
     {
         macineFab.ToggleOn();
         Debug.Log("Toggle On");
+        if (_newcon.gameEnded && _newcon.winORloseText.text == "WIN")
+        {
+            _newcon.ChangeLevel();
+        }
     }
     public override void ToggleOffFunction()
     {
         macineFab.ToggleOFF();
         Debug.Log("Toggle Off");
+        if (_newcon.gameEnded && _newcon.winORloseText.text == "WIN")
+        {
+            _newcon.ChangeLevel();
+        }
     }
 }

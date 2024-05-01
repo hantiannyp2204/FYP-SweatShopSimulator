@@ -25,7 +25,7 @@ public class Item : MonoBehaviour
     {
         //originalMaterial = GetComponentInChildren<Material>();
 
-        Debug.Log("say my: " + originalMaterial);
+        //Debug.Log("say my: " + originalMaterial);
         if (originalMaterial == null)
         {
             return;

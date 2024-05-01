@@ -8,6 +8,8 @@ public class XRGrabDistanceDetection : MonoBehaviour
 {
     [SerializeField] private XRBaseInteractable baseInteractable;
     [SerializeField] private float distanceThreshold = 0.8f; // Adjustable distance threshold
+    [SerializeField] GameObject detectionCollider;
+    private float distanceBetweenObjects;
     private XRDirectInteractor directGrabInteractor;
     private Transform interactorTransform; // Store the interactor's transform
     private bool isGrabbed = false; // Flag to check if the object is currently grabbed
@@ -30,10 +32,21 @@ public class XRGrabDistanceDetection : MonoBehaviour
         if (isGrabbed && interactorTransform != null)
         {
             // Calculate the distance between the current game object and the interactor
-            float distance = Vector3.Distance(transform.position, interactorTransform.position);
 
+            if(detectionCollider == null)
+            {
+                distanceBetweenObjects = Vector3.Distance(baseInteractable.transform.position, interactorTransform.position);
+            }
+            //in case we are using secondary collider (door handle collider but script is in door frame)
+            //aka using the colliders array in Grab interactable script
+            else
+            {
+                distanceBetweenObjects = Vector3.Distance(detectionCollider.transform.position, interactorTransform.position);
+            }
+          
+            Debug.Log(interactorTransform.position);
             // Log "left" if the distance exceeds the threshold
-            if (distance > distanceThreshold)
+            if (distanceBetweenObjects > distanceThreshold)
             {
                 directGrabInteractor.interactionManager.CancelInteractableSelection(baseInteractable);
             }

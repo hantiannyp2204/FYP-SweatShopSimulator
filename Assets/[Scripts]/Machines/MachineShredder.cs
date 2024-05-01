@@ -245,7 +245,7 @@ public class MachineShredder : MonoBehaviour
     void Update()
     {
         float fuelPercentage = (secretHealth / maxHealth) * 100f;
-        Debug.Log("percent is: " + fuelPercentage);
+        //Debug.Log("percent is: " + fuelPercentage);
 
         if (AlreadyFull())
         {

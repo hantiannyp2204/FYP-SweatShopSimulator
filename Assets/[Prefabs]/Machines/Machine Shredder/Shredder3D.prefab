@@ -2144,13 +2144,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7669a0d6d25ac247a7af9bf3377f804, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currWheelStatus: 0
+  finishedShreddingEvent:
+    m_PersistentCalls:
+      m_Calls: []
   initShredding: 0
   _breakAtThisValue: 0
   force: 5
+  wheelPreview: {fileID: 0}
   lever: {fileID: 4005564735938159178}
   wheel: {fileID: 4098273985154237320}
   valueToComplete: 5
-  spawnLocation: {fileID: 3978441613114408126}
   particleSpawnLocation: {fileID: 8386360402908531445}
   shredderItemCollider: {fileID: 4505355967688170804}
   fixWheelCollider: {fileID: 8758736909931405984}
@@ -2165,10 +2169,6 @@ MonoBehaviour:
   shredderFuelText: {fileID: 1802330410478894717}
   e_interactShredder: {fileID: 11400000, guid: 49e7efff2325a4a44ae7291f0f675ea0, type: 2}
   e_shredderFinish: {fileID: 11400000, guid: 3997def4957492d4e958f5971122f17b, type: 2}
-  currWheelStatus: 0
-  finishedShreddingEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &7145733223764867337
 GameObject:
   m_ObjectHideFlags: 0
@@ -2693,10 +2693,10 @@ Transform:
   - {fileID: 867528646091189382}
   - {fileID: 8386360402908531445}
   - {fileID: 5861353413372648068}
+  - {fileID: 7204762069652876523}
   - {fileID: 7905297918288784846}
   - {fileID: 1510953046901202578}
   - {fileID: 6792851851606888433}
-  - {fileID: 7204762069652876523}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!1 &8496362359668567223
@@ -2793,8 +2793,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8758736909931405984}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.71, y: 3.34, z: 4.47}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.71, y: 3.3400002, z: 4.47}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2833,9 +2833,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acee75cb9dde91c48990ce710efa2c6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layer:
-    serializedVersion: 2
-    m_Bits: 16384
 --- !u!1 &8864220617304178888
 GameObject:
   m_ObjectHideFlags: 0

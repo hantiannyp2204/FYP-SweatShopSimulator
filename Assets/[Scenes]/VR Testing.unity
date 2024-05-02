@@ -1676,11 +1676,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Smelter Machine 3D
       objectReference: {fileID: 0}
-    - target: {fileID: 2957398005276084824, guid: 80d828f8ac4bd05428a6bbfab5dd1191,
-        type: 3}
-      propertyPath: m_Convex
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3542215188633665071, guid: 80d828f8ac4bd05428a6bbfab5dd1191,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1756,11 +1751,6 @@ PrefabInstance:
       propertyPath: debugTxt
       value: 
       objectReference: {fileID: 5859033559388778336}
-    - target: {fileID: 7936502983207921324, guid: 80d828f8ac4bd05428a6bbfab5dd1191,
-        type: 3}
-      propertyPath: smelterRenderer
-      value: 
-      objectReference: {fileID: 1425387917}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2242,12 +2232,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5859033559388778335}
   m_PrefabAsset: {fileID: 0}
---- !u!23 &1425387917 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 8553462373049663409, guid: 80d828f8ac4bd05428a6bbfab5dd1191,
-    type: 3}
-  m_PrefabInstance: {fileID: 814062118}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1433208573 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8905071842081191035, guid: 41196ccb8953b8944aa89a6e1758ce16,
@@ -2359,74 +2343,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1587440720}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &1728538226
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 360099bb060d16d46828cd69f9e10f7e,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1.3999851
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 360099bb060d16d46828cd69f9e10f7e,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.00000011920929
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 360099bb060d16d46828cd69f9e10f7e,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.09150183
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 360099bb060d16d46828cd69f9e10f7e,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 360099bb060d16d46828cd69f9e10f7e,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 360099bb060d16d46828cd69f9e10f7e,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 360099bb060d16d46828cd69f9e10f7e,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 360099bb060d16d46828cd69f9e10f7e,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 360099bb060d16d46828cd69f9e10f7e,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 360099bb060d16d46828cd69f9e10f7e,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 360099bb060d16d46828cd69f9e10f7e,
-        type: 3}
-      propertyPath: m_Name
-      value: Smelting_Tongs
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 360099bb060d16d46828cd69f9e10f7e, type: 3}
 --- !u!1001 &1833454624
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6227,6 +6143,5 @@ SceneRoots:
   - {fileID: 543450652080196002}
   - {fileID: 2032916604}
   - {fileID: 370557528}
-  - {fileID: 1728538226}
   - {fileID: 1854030636}
   - {fileID: 1984400538}

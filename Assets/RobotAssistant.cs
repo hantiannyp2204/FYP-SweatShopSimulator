@@ -19,7 +19,7 @@ public class RobotAssistant : MonoBehaviour
     private Rigidbody _rb;
     private ZoneSaver _zoneSaver;
 
-    private ROBOT_STATE _currState;
+    [SerializeField] private ROBOT_STATE _currState;
     
     // Start is called before the first frame update
     void Start()

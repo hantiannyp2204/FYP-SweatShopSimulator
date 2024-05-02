@@ -130,7 +130,10 @@ public class HandPresencePhysics : MonoBehaviour
         {
             foreach (Collider itemCollider in colliderToRecoverList)
             {
-                Physics.IgnoreCollision(handCollider, itemCollider, false);
+                if (itemCollider != null)
+                {
+                    Physics.IgnoreCollision(handCollider, itemCollider, false);
+                }
             }
         }
 

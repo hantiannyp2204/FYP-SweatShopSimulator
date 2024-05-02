@@ -6,26 +6,29 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class BrokenWheelCollisionManager : MonoBehaviour
 {
     [SerializeField] private MachineShredder shredder;
-    private int _wheelLayer;
+
     private Collider _collider;
     private XRSocketInteractor _socket;
 
     private void Start()
     {
-        _wheelLayer = LayerMask.NameToLayer("Wheel");
         _collider = transform.GetComponent<Collider>();
-        _socket = GetComponent<XRSocketInteractor>();
+        _socket = transform.GetComponent<XRSocketInteractor>();
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer != _wheelLayer)
+        if (other.gameObject.transform.tag != "Wheel")
         {
             return; // if not wheel layer then return
         }
-         var haveWheelManager = other.gameObject.GetComponentInChildren<WheelManager>();
-         if (haveWheelManager == null) return;
-         haveWheelManager.SetWheelCurrState(WheelStatus.WORKING);
-        //if (_socket.GetOldestInteractableSelected().transform.gameObject != null) // something is inside socket
+        
+        var haveWheelManager = other.gameObject.GetComponent<WheelManager>();
+        if (haveWheelManager == null)
+        {
+            return;
+        }
+        //haveWheelManager.SetWheelCurrState(WheelStatus.WORKING);
+        //if (_socket.GetOldestInteractableSelected() != null) // something is inside socket
         //{
         //    //_collider.isTrigger = false;
         //    var grabManager = other.gameObject.GetComponentInChildren<XRVelocityRayGrab>();
@@ -34,10 +37,9 @@ public class BrokenWheelCollisionManager : MonoBehaviour
         //        grabManager.enabled = false;
         //    }
         //}
-        //other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-        //other.gameObject.GetComponent<Rigidbody>().useGravity = false; // reset physic changes
 
-        //other.gameObject.transform.position = other.gameObject.transform.position;
+        shredder.enableWheelEvent.Invoke();
+        Destroy(other.gameObject);
     }
 
     private void Update()

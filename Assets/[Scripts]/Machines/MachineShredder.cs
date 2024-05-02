@@ -28,6 +28,8 @@ public class MachineShredder : MonoBehaviour
 
     [SerializeField] private XRSocketInteractor wheelPreview;
 
+    [SerializeField] private GameObject fakeWheelModel;
+
     [Header("VR REFERENCES")]
     public GameObject lever;
     public GameObject wheel;
@@ -67,6 +69,8 @@ public class MachineShredder : MonoBehaviour
     private XRVelocityRayGrab _grabber;
 
     [SerializeField] private GameObject _attachedWheel;
+
+    public UnityEvent enableWheelEvent;
 
 
     public bool AlreadyFull()
@@ -138,19 +142,23 @@ public class MachineShredder : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (enableWheelEvent == null)
+        {
+            enableWheelEvent = new UnityEvent();
+        }
+
+        enableWheelEvent.AddListener(EnableWheel);
+
         if (finishedShreddingEvent == null)
         {
             finishedShreddingEvent = new UnityEvent();
         }
 
-        //currWheelStatus = WheelStatus.WORKING;
-
-        //wheel.SetActive(false);
-        _attachedWheel = wheel;
-
         _wheelPlug = wheel.GetComponentInChildren<XRKnob>();
 
         _wheelPlug.enabled = false;
+
+        _attachedWheel = _wheelPlug.gameObject;
 
         if (_wheelPlug == null)
         {
@@ -161,12 +169,15 @@ public class MachineShredder : MonoBehaviour
 
         _wheelPlug.ValueChangeShredder.AddListener(ValueChangeCheck);
 
-        _wheelManager = _wheelPlug.GetComponent<WheelManager>();
+        _wheelManager = _wheelPlug.gameObject.GetComponent<WheelManager>();
 
         _wheelManager.canStartShredding.AddListener(CanShred);
 
         _wheelManager.SetWheelCurrState(WheelStatus.WORKING);
-        
+
+        _wheelManager.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+        _wheelManager.gameObject.GetComponent<Rigidbody>().useGravity = false;
+
         _grabber = _wheelManager.GetComponent<XRVelocityRayGrab>();
 
         if (_grabber != null)
@@ -190,11 +201,18 @@ public class MachineShredder : MonoBehaviour
         wheelPreview.enabled = false;
     }
 
+
+    public void EnableWheel()
+    {
+        _wheelManager.gameObject.SetActive(true);
+        if (!_wheelPlug.enabled)
+        {
+            SetWheelStatus(true);
+        }
+    }
     public void InitWheelVariables()
     {
         _wheelPlug = wheel.GetComponentInChildren<XRKnob>();
-
-        //_wheelPlug.enabled = false;
 
         if (_wheelPlug == null)
         {
@@ -224,16 +242,23 @@ public class MachineShredder : MonoBehaviour
                 _attachedWheel = null;
                 wheelPreview.enabled = true;
                 SetGameobjectLayer(wheel, 0);
-                //currWheelStatus = WheelStatus.BROKEN;
-                _wheelPlug.GetComponent<Rigidbody>().useGravity = true;
-                _wheelPlug.GetComponent<Rigidbody>().isKinematic = false;
-                _wheelPlug.GetComponent<Rigidbody>().AddForce(Vector3.up * force, ForceMode.Impulse);
+                //_wheelPlug.GetComponentInChildren<Rigidbody>().useGravity = true;
+                //_wheelPlug.GetComponentInChildren<Rigidbody>().isKinematic = false;
+                //_wheelPlug.GetComponentInChildren<Rigidbody>().AddForce(Vector3.up * force, ForceMode.Impulse);
+
+                GameObject fakeWheel = Instantiate(fakeWheelModel.gameObject, _wheelManager.transform.position, Quaternion.identity);
+                fakeWheel.GetComponent<Rigidbody>().useGravity = true;
+                fakeWheel.GetComponent<Rigidbody>().isKinematic = false;
+                fakeWheel.GetComponent<Rigidbody>().AddForce(Vector3.up * force, ForceMode.Impulse);
 
                 SetWheelStatus(false);
                 ResetWheelValue();
 
                 fixWheelCollider.GetComponent<Collider>().enabled = true; // enable collider after breaking
-                _wheelManager.transform.SetParent(null);
+
+                _wheelManager.gameObject.SetActive(false);
+
+                _save = false;
             }
         }
         if (IsOutOfFuel())

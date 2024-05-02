@@ -29,23 +29,23 @@ public class WheelManager : MonoBehaviour
     private Rigidbody _rb;
     private XRVelocityRayGrab _grab;
 
-    private int _wheelLayer;
-
-    private void FixedUpdate()
-    {
-        if (_status == WheelStatus.WORKING)
-        {
-            _rb.useGravity = false;
-            _rb.isKinematic = true;
-        }
-        else
-        {
-            _rb.useGravity = true;
-            _rb.isKinematic = false;
-        }
-    }
+    //private void FixedUpdate()
+    //{
+    //    if (_status == WheelStatus.WORKING)
+    //    {
+    //        _rb.useGravity = false;
+    //        _rb.isKinematic = true;
+    //    }
+    //    else
+    //    {
+    //        _rb.useGravity = true;
+    //        _rb.isKinematic = false;
+    //    }
+    //}
     private void Start()
     {
+        transform.gameObject.tag = "Wheel";
+
         chance = GetComponent<ProbabilityManager>();
         if (canStartShredding == null)
         {
@@ -58,11 +58,12 @@ public class WheelManager : MonoBehaviour
         
         _rb = transform.GetComponent<Rigidbody>();
 
-        _wheelLayer = LayerMask.NameToLayer("Wheel");
-
-        if (shredder.GetAttachedWheel() != this)
+        if (shredder.GetAttachedWheel() != this.gameObject)
         {
             SetWheelCurrState(WheelStatus.NOT_ATTACHED);
+
+            _wheel.enabled = false; 
+            //transform.gameObject.AddComponent<XRVelocityRayGrab>();
         }
     }
 

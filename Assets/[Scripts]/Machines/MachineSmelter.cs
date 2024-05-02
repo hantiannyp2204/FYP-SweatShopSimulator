@@ -203,10 +203,7 @@ public class MachineSmelter : MonoBehaviour
             coalRender.SetActive(true);
         }
         fuelLeft += addedFuelCount; // Reset fuel to this maximum
-        if(debugTxt != null)
-        {
-            debugTxt.text = fuelLeft.ToString();
-        }
+
      
         //if exceed max percentage
         if (fuelLeft > maxPercentageFuel)
@@ -223,6 +220,11 @@ public class MachineSmelter : MonoBehaviour
                 //play warning ping
             }
         }
+        if (debugTxt != null)
+        {
+            debugTxt.text = fuelLeft.ToString();
+        }
+        UpdateCoalPercentage();
 
         smelterFuelPointer.UpdatePosition(fuelLeft);
         // Check if the machine was paused and resume operation if necessary
@@ -256,7 +258,7 @@ public class MachineSmelter : MonoBehaviour
     }
     private void UpdateCoalPercentage()
     {
-        float percentage = (fuelLeft / defaultMaxFuel) * 100f; // Calculate fuel percentage
+        int percentage = (int)((fuelLeft / defaultMaxFuel) * 100); // Calculate fuel percentage
 
         //reset the warning count when it reaches back stable 100
         if (percentage <= 100 && currentFuelMaxWarningCount != fuelMaxCapacityWarningCount)
@@ -282,7 +284,7 @@ public class MachineSmelter : MonoBehaviour
             {
                 coalPercentage.color = Color.green;
             }
-            coalPercentage.text = $"Coal: {Mathf.Clamp(percentage, 0, 100):0}%"; // Clamp to ensure it's between 0% and 100%
+            coalPercentage.text = $"Coal: {Mathf.Clamp(percentage, 0, maxPercentageFuel):0}%"; // Clamp to ensure it's between 0% and 100%
 
         }
         else

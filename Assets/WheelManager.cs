@@ -29,6 +29,20 @@ public class WheelManager : MonoBehaviour
     private Rigidbody _rb;
 
     private int _wheelLayer;
+
+    private void FixedUpdate()
+    {
+        if (_status == WheelStatus.WORKING)
+        {
+            _rb.useGravity = false;
+            _rb.isKinematic = true;
+        }
+        else
+        {
+            _rb.useGravity = true;
+            _rb.isKinematic = false;
+        }
+    }
     private void Start()
     {
         chance = GetComponent<ProbabilityManager>();
@@ -40,7 +54,7 @@ public class WheelManager : MonoBehaviour
         shredder.lever.GetComponentInChildren<XRLever>().onLeverDeactivate.AddListener(ActivateWheel);
 
         _wheel = GetComponent<XRKnob>();
-        //_wheel.enabled = false;
+        
         _rb = transform.GetComponent<Rigidbody>();
 
         _wheelLayer = LayerMask.NameToLayer("Wheel");
@@ -55,11 +69,6 @@ public class WheelManager : MonoBehaviour
     {
         _wheel.enabled = true;
         e_pulledLever?.InvokeEvent(transform.position, Quaternion.identity, transform);
-
-        //if (shredder.currWheelStatus != WheelStatus.WORKING)
-        //{
-        //    return;
-        //}
 
         if (shredder.GetWheelHandler().GetWheelCurrState() != WheelStatus.WORKING)
         {

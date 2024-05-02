@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.XR.Content.Interaction;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -20,8 +21,11 @@ public class MachineSmelter : MonoBehaviour
     [Header("Machine Refrences")]
     [SerializeField] private SmelterInputHitbox smelterInputHitbox;
     [SerializeField] private TMP_Text timerText;
+    [SerializeField] private Image progressBar;
     [SerializeField] private TMP_Text coalPercentage;
     [SerializeField] private Collider outputCollider;
+    [SerializeField] private SmelterFuelPointer smelterFuelPointer;
+    [SerializeField] Renderer smelterRenderer;
 
     [Header("Feedback Events")]
     [SerializeField] private Transform smelterSoundLocation;
@@ -54,7 +58,6 @@ public class MachineSmelter : MonoBehaviour
     private bool scrapConverted = false;
     private float fuelLeft;
     private bool outOfFuel = false;
-    private float elapsedTimeToBlowUp = 0f;
     private bool blewUp = false;
     private bool aboutToBlow = false;
     private bool machineActive = false;
@@ -63,7 +66,6 @@ public class MachineSmelter : MonoBehaviour
     private float defaultMaxFuel = 100;
     private int currentFuelMaxWarningCount;
     private float smeltSpeed = 1;
-    private float heat = 100;
     public bool AbilityToStart
     {
         get => ableToStart;
@@ -73,6 +75,7 @@ public class MachineSmelter : MonoBehaviour
     public int GetHealthPoints() => healthPoints;
     private void Awake()
     {
+        ResetProgressBar();
         AddFuel(100);
         currentFuelMaxWarningCount = fuelMaxCapacityWarningCount;
         timerText.text = "Ready";
@@ -81,6 +84,20 @@ public class MachineSmelter : MonoBehaviour
             outputSpawnBounds = outputCollider.bounds;
         }
         UpdateCoalPercentage();
+    }
+    private void ToggleMachineEmmision()
+    {
+        Material material;
+        material = smelterRenderer.material;
+        if (machineActive)
+        {
+            material.EnableKeyword("_EMISSION");
+        }
+        else
+        {
+            material.DisableKeyword("_EMISSION");
+        }
+
     }
     private void HandleSmeltingSpeed()
     {
@@ -97,7 +114,7 @@ public class MachineSmelter : MonoBehaviour
             smeltSpeed = 1;
         }
     }
-  
+    
     private IEnumerator SmeltCoroutine()
     {
         // Smelting process
@@ -105,9 +122,10 @@ public class MachineSmelter : MonoBehaviour
         {
             HandleSmeltingSpeed();
             UpdateTimer();
+            UpdateProgressBar();
             yield return null;
         }
-
+        elapsedTime = smeltTime;
         // Process and replace all scrap materials
         ProcessScrapMaterials();
         e_done?.InvokeEvent(transform.position, Quaternion.identity, smelterDoneSoundLocation);
@@ -167,6 +185,7 @@ public class MachineSmelter : MonoBehaviour
 
         if (smeltingCoroutineHandler == null && !scrapConverted)
         {
+            ToggleMachineEmmision();
             smelterWheel.enabled = true;
             fuelFire.Play();
             e_run?.InvokeEvent(transform.position, Quaternion.identity, smelterSoundLocation);
@@ -184,11 +203,14 @@ public class MachineSmelter : MonoBehaviour
         if (fuelLeft == 0)
         {
             outOfFuel = false;
+            //enable coal render
+            coalRender.SetActive(true);
         }
         fuelLeft += addedFuelCount; // Reset fuel to this maximum
 
+     
         //if exceed max percentage
-        if(fuelLeft > maxPercentageFuel)
+        if (fuelLeft > maxPercentageFuel)
         {
             fuelLeft = maxPercentageFuel;
             currentFuelMaxWarningCount--;
@@ -202,9 +224,13 @@ public class MachineSmelter : MonoBehaviour
                 //play warning ping
             }
         }
-        //enable coal render
-        coalRender.SetActive(true);
+        if (debugTxt != null)
+        {
+            debugTxt.text = fuelLeft.ToString();
+        }
+        UpdateCoalPercentage();
 
+        smelterFuelPointer.UpdatePosition(fuelLeft);
         // Check if the machine was paused and resume operation if necessary
         if (smeltingCoroutineHandler != null)
         {
@@ -236,7 +262,7 @@ public class MachineSmelter : MonoBehaviour
     }
     private void UpdateCoalPercentage()
     {
-        float percentage = (fuelLeft / defaultMaxFuel) * 100f; // Calculate fuel percentage
+        int percentage = (int)((fuelLeft / defaultMaxFuel) * 100); // Calculate fuel percentage
 
         //reset the warning count when it reaches back stable 100
         if (percentage <= 100 && currentFuelMaxWarningCount != fuelMaxCapacityWarningCount)
@@ -262,7 +288,8 @@ public class MachineSmelter : MonoBehaviour
             {
                 coalPercentage.color = Color.green;
             }
-            coalPercentage.text = $"Coal: {Mathf.Clamp(percentage, 0, 100):0}%"; // Clamp to ensure it's between 0% and 100%
+            coalPercentage.text = $"Coal: {Mathf.Clamp(percentage, 0, maxPercentageFuel):0}%"; // Clamp to ensure it's between 0% and 100%
+
         }
         else
         {
@@ -274,8 +301,10 @@ public class MachineSmelter : MonoBehaviour
 
         if (fuelLeft > 0)
         {
-            
+
             ReduceFuel();
+            //update the pointer's position
+            smelterFuelPointer.UpdatePosition(fuelLeft);
         }
         else
         {
@@ -294,12 +323,13 @@ public class MachineSmelter : MonoBehaviour
 
     private void DeactivateMachine()
     {
+        ResetProgressBar();
+        ToggleMachineEmmision();
         smelterWheel.enabled= true;
         machineActive = false;
         scrapConverted = false;
         aboutToBlow = false;
         elapsedTime= 0;
-        elapsedTimeToBlowUp= 0;
         if(blowUpCountdownCoroutineHandler != null)
         {
             StopCoroutine(blowUpCountdownCoroutineHandler);
@@ -338,6 +368,22 @@ public class MachineSmelter : MonoBehaviour
         elapsedTime += Time.deltaTime * smeltSpeed;
         
         timerText.text = ((int)(smeltTime - elapsedTime) + 1).ToString();
+
+    }
+    private void UpdateProgressBar()
+    {
+        if(elapsedTime <= smeltTime)
+        {
+            progressBar.fillAmount = elapsedTime / smeltTime;
+        }
+        else
+        {
+            progressBar.fillAmount = 1;
+        }
+    }
+    private void ResetProgressBar()
+    {
+        progressBar.fillAmount = 0;
     }
     void ReduceFuel()
     {
@@ -400,7 +446,6 @@ public class MachineSmelter : MonoBehaviour
         }
 
         blewUp = false;
-        elapsedTimeToBlowUp = 0;
         currentFuelMaxWarningCount = fuelMaxCapacityWarningCount;
         DeactivateMachine();
     }

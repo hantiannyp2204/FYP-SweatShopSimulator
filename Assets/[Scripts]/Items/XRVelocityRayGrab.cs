@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using static OVRPlugin;
+
 public class XRVelocityRayGrab : XRGrabInteractable
 {
     public float velocityThreshold = 2;
@@ -48,7 +50,7 @@ public class XRVelocityRayGrab : XRGrabInteractable
         if (itemIsHovered && rayInteractor != null)
         {
             float distanceToItem = Vector3.Distance(rayInteractor.rayEndPoint, hoverInteractorTransform.position);
-            if (distanceToItem >= 0.4f)
+            if (distanceToItem >= 1)
             {
                 grabbedByRay = true;
                 trackPosition = false;
@@ -106,6 +108,17 @@ public class XRVelocityRayGrab : XRGrabInteractable
         }
         base.OnHoverExited(args);
     }
+    public override bool IsSelectableBy(IXRSelectInteractor interactor)
+    {
+        // Check if this object has the Fresh script
+        if (GetComponent<FreshRawMaterial>() != null && interactor.transform.name.Contains("Left"))
+        {
+            return false; // Prevent grabbing if the Fresh script is present
+        }
+
+        // Call the base method to preserve default behavior
+        return base.IsSelectableBy(interactor);
+    }
     protected override void OnSelectEntered(SelectEnterEventArgs args)
     {
 
@@ -130,21 +143,24 @@ public class XRVelocityRayGrab : XRGrabInteractable
         //if direct grab
         else
         {
-          
             Debug.Log("SELECTED by Direct");
             //if too far and flying, ignore
 
-            //disable hand render
-            DisableHandModels disableHandModelComponent = args.interactorObject.transform.GetComponent<DisableHandModels>();
-            if(disableHandModelComponent != null )
-            {
-                disableHandModelComponent.DisableHandRender();
-            }
+
+            
         }
 
         base.OnSelectEntered(args);
-        itemIsHovered = false;
-        //disable hand render
+        DisableHandModels disableHandModelComponent = args.interactorObject.transform.GetComponent<DisableHandModels>();
+        if (!grabbedByRay && disableHandModelComponent != null)
+        {
+            //disable hand render
+            disableHandModelComponent.DisableHandRender();
+        }
+         itemIsHovered = false;
+
+       
+
 
     }
     protected override void OnSelectExited(SelectExitEventArgs args)

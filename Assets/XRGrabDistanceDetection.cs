@@ -1,6 +1,3 @@
-using Oculus.Interaction;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -8,10 +5,9 @@ public class XRGrabDistanceDetection : MonoBehaviour
 {
     [SerializeField] private XRBaseInteractable baseInteractable;
     [SerializeField] private float distanceThreshold = 0.8f; // Adjustable distance threshold
-    private XRDirectInteractor directGrabInteractor;
     private Transform interactorTransform; // Store the interactor's transform
     private bool isGrabbed = false; // Flag to check if the object is currently grabbed
-
+    private XRDirectInteractor directGrabInteractor;
 
     private void OnEnable()
     {
@@ -29,11 +25,10 @@ public class XRGrabDistanceDetection : MonoBehaviour
     {
         if (isGrabbed && interactorTransform != null)
         {
-            // Calculate the distance between the current game object and the interactor
-            float distance = Vector3.Distance(transform.position, interactorTransform.position);
-
-            // Log "left" if the distance exceeds the threshold
-            if (distance > distanceThreshold)
+            Vector3 interactablePosition = GetInteractablePosition();
+            float distanceBetweenObjects = Vector3.Distance(interactablePosition, interactorTransform.position);
+            Debug.Log(distanceBetweenObjects);
+            if (distanceBetweenObjects > distanceThreshold)
             {
                 directGrabInteractor.interactionManager.CancelInteractableSelection(baseInteractable);
             }
@@ -42,11 +37,11 @@ public class XRGrabDistanceDetection : MonoBehaviour
 
     void StartSelectGrabDetection(SelectEnterEventArgs args)
     {
-        if(!(args.interactorObject is XRDirectInteractor))
+        if (!(args.interactorObject is XRDirectInteractor))
         {
             return;
         }
-        // When grabbed, store the interactor's transform
+
         interactorTransform = args.interactorObject.transform;
         directGrabInteractor = (XRDirectInteractor)args.interactorObject;
         isGrabbed = true; // Set the grabbed flag to true
@@ -54,8 +49,18 @@ public class XRGrabDistanceDetection : MonoBehaviour
 
     void EndSelectGrabDetection(SelectExitEventArgs args)
     {
-        // When released, clear the interactor's transform and reset the grabbed flag
         interactorTransform = null;
         isGrabbed = false;
+    }
+
+    Vector3 GetInteractablePosition()
+    {
+        // Check if there are any colliders set and use the first collider's position
+        if (baseInteractable.colliders.Count > 0 && baseInteractable.colliders[0] != null)
+        {
+            return baseInteractable.colliders[0].bounds.center;
+        }
+        // Fallback to the interactable's transform position
+        return baseInteractable.transform.position;
     }
 }

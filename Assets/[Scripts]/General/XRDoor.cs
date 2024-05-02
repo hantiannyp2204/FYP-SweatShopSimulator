@@ -8,10 +8,11 @@ public class XRDoor : MonoBehaviour
 {
 
     [SerializeField] private GameObject mainDoor;
+    [SerializeField] private XRGrabInteractable grabInteractable;
     public bool doorLocked = false;
 
+
     private Rigidbody doorRb;
-    private XRGrabInteractable grabInteractable;
     private bool grabbed = false;
     private bool abilityToGrab = true;
 
@@ -25,7 +26,6 @@ public class XRDoor : MonoBehaviour
         startingPosition = transform.position;
         startingRotation = transform.rotation;
         doorRb = GetComponent<Rigidbody>();
-        grabInteractable = GetComponent<XRGrabInteractable>();
 
         // Subscribe to the selectEntered event to detect when the door is grabbed
         grabInteractable.selectEntered.AddListener(OnDoorGrabbed);

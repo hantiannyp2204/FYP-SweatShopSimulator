@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 8607376293775170437}
   - component: {fileID: 4997693525089136579}
   - component: {fileID: 1967335658680456884}
-  - component: {fileID: -4455294068578465591}
   - component: {fileID: 7648425067061649079}
+  - component: {fileID: 7352124284230134246}
   m_Layer: 6
   m_Name: PlasticRawMaterial
   m_TagString: RawMaterial
@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5895d806f9cb464c8883d988f733d98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  originalMaterial: {fileID: 0}
   data: {fileID: 11400000, guid: 6fb1e272581b477499ffc2e251885fe7, type: 2}
   itemState: 0
   e_pickUp: {fileID: 11400000, guid: 9f7a33e90ffd56942b825e0e82642116, type: 2}
@@ -96,7 +97,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-4455294068578465591
+--- !u!65 &7648425067061649079
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8275011640473543219}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.2381256, y: 1.6381283, z: 1.782192}
+  m_Center: {x: 0.0001257658, y: 0.8054694, z: 0.27392805}
+--- !u!114 &7352124284230134246
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -105,7 +127,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8275011640473543219}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ad34abafad169848a38072baa96cdb2, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f0e6f0608e336f4799743f12a098bda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
@@ -206,7 +228,7 @@ MonoBehaviour:
   m_SnapToColliderVolume: 1
   m_ReinitializeDynamicAttachEverySingleGrab: 1
   m_AttachEaseInTime: 0.15
-  m_MovementType: 2
+  m_MovementType: 0
   m_VelocityDamping: 1
   m_VelocityScale: 1
   m_AngularVelocityDamping: 1
@@ -248,27 +270,8 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
---- !u!65 &7648425067061649079
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8275011640473543219}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.2381256, y: 1.6381283, z: 1.782192}
-  m_Center: {x: 0.0001257658, y: 0.8054694, z: 0.27392805}
+  velocityThreshold: 2
+  jumpAngleInDegree: 60
 --- !u!1001 &9029318381303312499
 PrefabInstance:
   m_ObjectHideFlags: 0

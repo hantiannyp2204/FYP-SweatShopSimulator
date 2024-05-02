@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1277941477116242236}
   - component: {fileID: 5713070396855212685}
-  - component: {fileID: 5610939844063627521}
   - component: {fileID: 7855711513412118943}
   - component: {fileID: 4288305512387030740}
   - component: {fileID: 2649462591337884749}
-  m_Layer: 0
+  - component: {fileID: 1658492034352327984}
+  m_Layer: 6
   m_Name: Metal_Scrap
   m_TagString: Scraps
   m_Icon: {fileID: 0}
@@ -64,7 +64,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &5610939844063627521
+--- !u!114 &7855711513412118943
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,7 +73,64 @@ MonoBehaviour:
   m_GameObject: {fileID: 6906102227556326641}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ad34abafad169848a38072baa96cdb2, type: 3}
+  m_Script: {fileID: 11500000, guid: f5895d806f9cb464c8883d988f733d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalMaterial: {fileID: 0}
+  data: {fileID: 11400000, guid: 4f88680253d95134b918b394329778dc, type: 2}
+  itemState: 0
+  e_pickUp: {fileID: 0}
+  e_drop: {fileID: 0}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+--- !u!136 &4288305512387030740
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6906102227556326641}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.7766287
+  m_Height: 1.5532573
+  m_Direction: 1
+  m_Center: {x: 0.0729149, y: -0.027476251, z: -0.13844699}
+--- !u!114 &2649462591337884749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6906102227556326641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b35552b657ab5d448b8a5cf8a54d567a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rawMaterial: {fileID: 1246098413341378312, guid: 92790fae272470945ac8c0eb70df6d72,
+    type: 3}
+--- !u!114 &1658492034352327984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6906102227556326641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f0e6f0608e336f4799743f12a098bda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
@@ -174,7 +231,7 @@ MonoBehaviour:
   m_SnapToColliderVolume: 1
   m_ReinitializeDynamicAttachEverySingleGrab: 1
   m_AttachEaseInTime: 0.15
-  m_MovementType: 2
+  m_MovementType: 0
   m_VelocityDamping: 1
   m_VelocityScale: 1
   m_AngularVelocityDamping: 1
@@ -216,63 +273,8 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
---- !u!114 &7855711513412118943
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6906102227556326641}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5895d806f9cb464c8883d988f733d98, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  originalMaterial: {fileID: 0}
-  data: {fileID: 11400000, guid: 4f88680253d95134b918b394329778dc, type: 2}
-  itemState: 0
-  e_pickUp: {fileID: 0}
-  e_drop: {fileID: 0}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
---- !u!136 &4288305512387030740
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6906102227556326641}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.7766287
-  m_Height: 1.5532573
-  m_Direction: 1
-  m_Center: {x: 0.0729149, y: -0.027476251, z: -0.13844699}
---- !u!114 &2649462591337884749
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6906102227556326641}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b35552b657ab5d448b8a5cf8a54d567a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rawMaterial: {fileID: 1246098413341378312, guid: 92790fae272470945ac8c0eb70df6d72,
-    type: 3}
+  velocityThreshold: 2
+  jumpAngleInDegree: 60
 --- !u!1001 &589955695384533003
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -340,6 +342,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Metal_Bolt_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4d0fe99f06c6e3b429ed11104e142ca4,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7160284088196623028, guid: 4d0fe99f06c6e3b429ed11104e142ca4,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

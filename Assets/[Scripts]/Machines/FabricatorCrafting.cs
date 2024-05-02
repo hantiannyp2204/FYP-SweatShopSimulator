@@ -39,6 +39,7 @@ public class FabricatorCrafting : MonoBehaviour
                         {
                             foundCount++; // Increment the counter for each found item
                             _ToDestroy.Add(availableItem.gameObject);
+                            availableItem.GetComponent<Rigidbody>().isKinematic = true;
                             Debug.Log(AvailableItems.Count);
                             AvailableItems.Remove(availableItem);
                             break; // Exit the inner loop since the item is found

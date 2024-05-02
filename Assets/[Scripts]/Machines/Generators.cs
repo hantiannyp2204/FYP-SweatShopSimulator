@@ -40,12 +40,19 @@ public class Generators : MonoBehaviour
         if (ScrapPrefab != null && interactorUsingThis != null)
         {
             // Instantiate the metal scrap prefab
-            GameObject metalScrapInstance = Instantiate(ScrapPrefab, interactorUsingThis.transform.position, Quaternion.identity);
+            GameObject ScrapInstance = Instantiate(ScrapPrefab, interactorUsingThis.transform.position, Quaternion.identity);
 
             // Force the interactor to select the newly created metal scrap
             Debug.Log("OBTAINED");
-            interactorUsingThis.GetComponent<XRBaseInteractor>().StartManualInteraction(metalScrapInstance.GetComponent<IXRSelectInteractable>());
-            metalScrapInstance.AddComponent<GeneratorGeneratedItem>().SetHandInteractorAndAnimator(interactorUsingThis);
+            interactorUsingThis.GetComponent<XRBaseInteractor>().StartManualInteraction(ScrapInstance.GetComponent<IXRSelectInteractable>());
+            ScrapInstance.AddComponent<GeneratorGeneratedItem>().SetHandInteractorAndAnimator(interactorUsingThis);
+
+            //disable the hand
+            DisableHandModels interactorHandModel = interactorUsingThis.GetComponent<DisableHandModels>();
+            if (interactorHandModel!=null && interactorHandModel.GetActive())
+            {
+                interactorHandModel.DisableHandRender();
+            }
         }
     }
 }

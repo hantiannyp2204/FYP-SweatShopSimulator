@@ -68,33 +68,33 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<IVRInteracted>, ISu
         handAnimator.SetFloat("Trigger", triggerValue);
         handAnimator.SetFloat("Grip", gripValue);
 
-        // Calculate hand velocity
-        handVelocity = (transform.position - lastHandPosition) / Time.deltaTime;
-        lastHandPosition = transform.position;
+        //// Calculate hand velocity
+        //handVelocity = (transform.position - lastHandPosition) / Time.deltaTime;
+        //lastHandPosition = transform.position;
 
-        //check for item entering hand
-        Collider[] hitColliders = Physics.OverlapSphere(sphereCenter, sphereRadius);
-        currentlyTouching.Clear(); // Clear the list before updating it
-        foreach (var hitCollider in hitColliders)
-        {
-            if (hitCollider.GetComponent<Item>() != null|| hitCollider.GetComponent<Grabables>() != null)
-            {
-                currentlyTouching.Add(hitCollider.gameObject);
-            }
-        }
+        ////check for item entering hand
+        //Collider[] hitColliders = Physics.OverlapSphere(sphereCenter, sphereRadius);
+        //currentlyTouching.Clear(); // Clear the list before updating it
+        //foreach (var hitCollider in hitColliders)
+        //{
+        //    if (hitCollider.GetComponent<Item>() != null|| hitCollider.GetComponent<Grabables>() != null)
+        //    {
+        //        currentlyTouching.Add(hitCollider.gameObject);
+        //    }
+        //}
 
-        // Check for grab or release
-        //makes sure it can only grab 1 object at a time
-        if (gripValue > 0.5f && currentHandAction == HandAction.Releasing) // Adjust grip threshold as needed
-        {
-            currentHandAction = HandAction.Grabbing;
-            FindNearestObject();
-        }
-        else if (gripValue <= 0.5f && currentHandAction == HandAction.Grabbing) // Adjust release threshold as needed
-        {
-            currentHandAction = HandAction.Releasing;
-            Release();
-        }
+        //// Check for grab or release
+        ////makes sure it can only grab 1 object at a time
+        //if (gripValue > 0.5f && currentHandAction == HandAction.Releasing) // Adjust grip threshold as needed
+        //{
+        //    currentHandAction = HandAction.Grabbing;
+        //    FindNearestObject();
+        //}
+        //else if (gripValue <= 0.5f && currentHandAction == HandAction.Grabbing) // Adjust release threshold as needed
+        //{
+        //    currentHandAction = HandAction.Releasing;
+        //    Release();
+        //}
 
 
     }

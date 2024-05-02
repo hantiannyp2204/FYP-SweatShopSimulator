@@ -7,7 +7,8 @@ public class AnvilHitbox : MonoBehaviour
 {
     [SerializeField] public List<RawMaterial> RMaterialList = new();
     List<GameObject> trashList = new();
-    
+    [SerializeField] VrMachineItemCollider itemCollider;
+
     public List<RawMaterial> GetRMaterialList() => RMaterialList;
     public List<GameObject> GetTrashList() => trashList;
     public bool ItemOnAnvil = false; 
@@ -19,13 +20,20 @@ public class AnvilHitbox : MonoBehaviour
         {
             RMaterialList.Add(RMComponent);
             ItemOnAnvil = true;
+            Debug.Log("Item on anvil");
         }
-        else
-        //if item is not a scrap, burn it (destroy)
+        else if (RMComponent != null || other.gameObject.tag == "Hammer")
+        {
+            ItemOnAnvil = true;
+            Debug.Log("Item/hammer on anvil");
+        }
+        else 
+        //if item is not a RM, burn it (destroy)
         {
             trashList.Add(other.gameObject);
             ItemOnAnvil = false;
         }
+        
     }
     private void OnTriggerExit(Collider other)
     {

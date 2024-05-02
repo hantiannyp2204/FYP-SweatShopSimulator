@@ -29,12 +29,21 @@ public class AnvilGame2 : MonoBehaviour
 
     private void Update()
     {
-        if ((hitbox.ItemOnAnvil == true) && (timerRunning ==false))//checks for item on anvil
+        
+         if (hitbox.ItemOnAnvil && !timerRunning) // Check for item on anvil and timer not running
         {
             StartCoroutine(GameTimer());
             timerRunning = true;
             Debug.Log("Timer starting");
         }
+        else if (!hitbox.ItemOnAnvil && timerRunning) // Check if there's no item on anvil but timer is running
+        {
+            StopCoroutine(GameTimer());
+            timerRunning = false;
+            Debug.Log("Timer stopped");
+           
+        }
+        
         // Update cooldown timer
         if (cooldownTimer > 0f)
         {
@@ -93,7 +102,6 @@ public class AnvilGame2 : MonoBehaviour
     }
     private System.Collections.IEnumerator GameTimer()
     {
-        timerText.text = "Anvil is ready";
         while (true)
         {
             //int randomBeatInterval = Random.Range(minBeatInterval, maxBeatInterval); // Generate a random beat interval
@@ -118,6 +126,8 @@ public class AnvilGame2 : MonoBehaviour
             yield return new WaitForSeconds(2f); // Adjust delayTime as needed
             canHit = false; // Reset canHit
             hitRegistered = false;
+            Debug.Log("Coroutine exited normally");
+            break;
         }
     }
 }

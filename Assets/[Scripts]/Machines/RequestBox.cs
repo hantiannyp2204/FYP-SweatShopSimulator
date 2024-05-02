@@ -22,7 +22,7 @@ public class RequestBox : MonoBehaviour
     public static event OrderInteractionHandler OnOrderProcessed;
 
     //Request box hitbox
-    GameObject insertedItem;
+    public GameObject insertedItem;
     XRBaseInteractable interactable;
     private XRBaseInteractor interactorUsingThis;
 
@@ -47,6 +47,36 @@ public class RequestBox : MonoBehaviour
         if (interactable != null && !interactable.isSelected)
         {
             insertedItem = collision.gameObject;
+            // Teleport the item onto the box    
+            //set the parent to this
+            insertedItem.transform.SetParent(transform, false);
+            insertedItem.transform.localPosition = Vector3.zero;
+            insertedItem.transform.localRotation = collisionItemComponent.Data.GetRequestBoxRotationOffset();
+
+            insertedItem.GetComponent<Rigidbody>().isKinematic = true;
+
+
+            // Temporarily disable the XRBaseInteractable to prevent picking up
+            interactable.enabled = false;
+        }
+    }
+
+    public void SetInsertedItem(GameObject item) // when robot reaches table insert the item
+    {
+        Item collisionItemComponent = item.gameObject.GetComponent<Item>();
+        // Make sure there's no inserted item already, and the collided object is an Item
+        if (insertedItem != null || collisionItemComponent == null)
+        {
+            return;
+        }
+
+        // Attempt to get the XRBaseInteractable component of the collided item
+        interactable = item.gameObject.GetComponent<XRBaseInteractable>();
+
+        // If the item is interactable and not currently being held
+        if (interactable != null && !interactable.isSelected)
+        {
+            insertedItem = item;
             // Teleport the item onto the box    
             //set the parent to this
             insertedItem.transform.SetParent(transform, false);

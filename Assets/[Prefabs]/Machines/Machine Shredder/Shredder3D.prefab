@@ -1434,7 +1434,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ScrapPrefab: {fileID: 919132149155446097, guid: 6cc234f1a0e45f14d99f8b396de6e9c6,
     type: 3}
-  debugtxt: {fileID: 0}
 --- !u!114 &7032223302031825394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2169,6 +2168,7 @@ MonoBehaviour:
   shredderFuelText: {fileID: 1802330410478894717}
   e_interactShredder: {fileID: 11400000, guid: 49e7efff2325a4a44ae7291f0f675ea0, type: 2}
   e_shredderFinish: {fileID: 11400000, guid: 3997def4957492d4e958f5971122f17b, type: 2}
+  _attachedWheel: {fileID: 0}
 --- !u!1 &7145733223764867337
 GameObject:
   m_ObjectHideFlags: 0
@@ -2833,6 +2833,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acee75cb9dde91c48990ce710efa2c6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shredder: {fileID: 0}
 --- !u!1 &8864220617304178888
 GameObject:
   m_ObjectHideFlags: 0
@@ -3074,46 +3075,6 @@ PrefabInstance:
       propertyPath: shredder
       value: 
       objectReference: {fileID: 6329199053643114188}
-    - target: {fileID: 7750308905134165783, guid: 6299b20ad97432640806d923a123a60b,
-        type: 3}
-      propertyPath: _check
-      value: 
-      objectReference: {fileID: 4505355967688170804}
-    - target: {fileID: 7750308905134165783, guid: 6299b20ad97432640806d923a123a60b,
-        type: 3}
-      propertyPath: shredder
-      value: 
-      objectReference: {fileID: 6329199053643114188}
-    - target: {fileID: 8917567055108437364, guid: 6299b20ad97432640806d923a123a60b,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 8917567055108437364, guid: 6299b20ad97432640806d923a123a60b,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8917567055108437364, guid: 6299b20ad97432640806d923a123a60b,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 8917567055108437364, guid: 6299b20ad97432640806d923a123a60b,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8917567055108437364, guid: 6299b20ad97432640806d923a123a60b,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -20
-      objectReference: {fileID: 0}
-    - target: {fileID: 8917567055108437364, guid: 6299b20ad97432640806d923a123a60b,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -20
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

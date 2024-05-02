@@ -43,6 +43,7 @@ public class ZoneDetector : MonoBehaviour
         if (other.gameObject.layer != _playerLayer) return;
         else
         {
+            Debug.Log("inzone");
             Debug.Log("CURRENT ZONE:" + _currZone);
             _currZone = zoneType;
             other.gameObject.GetComponentInParent<ZoneSaver>().SaveCurrentZone(_currZone);

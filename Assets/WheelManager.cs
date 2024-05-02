@@ -27,6 +27,7 @@ public class WheelManager : MonoBehaviour
 
     public WheelStatus _status;
     private Rigidbody _rb;
+    private XRVelocityRayGrab _grab;
 
     private int _wheelLayer;
 

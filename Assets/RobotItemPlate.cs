@@ -4,21 +4,45 @@ using UnityEngine;
 
 public class RobotItemPlate : MonoBehaviour
 {
+    public GameObject machineDestination;
     [SerializeField] private RobotMovement robotMovement;
-    [SerializeField] private GameObject machineDestination;
     [SerializeField] private Item _itemToSend;
 
 
+    public RequestBox box;
+    private Transform _tableParent;
+    //private RequestBox _requestBox;
+
+    public CustomerTable table;
+
+
+    private void Start()
+    {
+        _tableParent = machineDestination.GetComponentInParent<Transform>(); // store gameobject
+        //_requestBox = _tableParent.GetComponentInChildren<RequestBox>();
+     
+        //if (_requestBox == null)
+        //{
+        //    Debug.Break();
+        //    return;
+        //}
+
+        if (_tableParent == null)
+        {
+            return;
+        }
+    }
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("cheebye: " + other.gameObject.name);
         Item isItem = other.transform.GetComponent<Item>();
         if (isItem == null)
         {
             return;
         }
         _itemToSend = isItem;
-        isItem.transform.SetParent(transform);
+        _itemToSend.gameObject.GetComponent<Rigidbody>().useGravity = false;
+        _itemToSend.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+        _itemToSend.transform.SetParent(transform , true);
 
         robotMovement.SetNewWaypoint(machineDestination);
     }
@@ -27,4 +51,9 @@ public class RobotItemPlate : MonoBehaviour
     {
         return _itemToSend;
     }
+
+    //public RequestBox GetRequestBox()
+    //{
+    //    return _requestBox;
+    //}
 }

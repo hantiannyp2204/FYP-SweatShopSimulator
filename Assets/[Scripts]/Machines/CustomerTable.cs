@@ -74,7 +74,7 @@ public class CustomerTable : MonoBehaviour
         }
         
     }
-    IEnumerator MoveBoxCoroutine()
+    public IEnumerator MoveBoxCoroutine()
     {
         float elapsedTime = 0f;
         float duration = 0.3f;

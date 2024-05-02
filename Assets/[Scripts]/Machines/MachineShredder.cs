@@ -166,7 +166,7 @@ public class MachineShredder : MonoBehaviour
         _wheelManager.canStartShredding.AddListener(CanShred);
 
         _wheelManager.SetWheelCurrState(WheelStatus.WORKING);
-
+        
         _grabber = _wheelManager.GetComponent<XRVelocityRayGrab>();
 
         if (_grabber != null)

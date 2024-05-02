@@ -29,19 +29,6 @@ public class WheelManager : MonoBehaviour
     private Rigidbody _rb;
     private XRVelocityRayGrab _grab;
 
-    //private void FixedUpdate()
-    //{
-    //    if (_status == WheelStatus.WORKING)
-    //    {
-    //        _rb.useGravity = false;
-    //        _rb.isKinematic = true;
-    //    }
-    //    else
-    //    {
-    //        _rb.useGravity = true;
-    //        _rb.isKinematic = false;
-    //    }
-    //}
     private void Start()
     {
         transform.gameObject.tag = "Wheel";
@@ -61,19 +48,21 @@ public class WheelManager : MonoBehaviour
         if (shredder.GetAttachedWheel() != this.gameObject)
         {
             SetWheelCurrState(WheelStatus.NOT_ATTACHED);
-
+            _rb.isKinematic = false;
+            _rb.useGravity = true;
             _wheel.enabled = false; 
-            //transform.gameObject.AddComponent<XRVelocityRayGrab>();
         }
     }
 
     private void ActivateWheel()
     {
-        _wheel.enabled = true;
+        //if (_status != WheelStatus.WORKING) return;
+
         e_pulledLever?.InvokeEvent(transform.position, Quaternion.identity, transform);
 
         if (shredder.GetWheelHandler().GetWheelCurrState() != WheelStatus.WORKING)
         {
+            Debug.Break();
             return;
         }
         if (_check.CheckIsProduct())
@@ -89,6 +78,7 @@ public class WheelManager : MonoBehaviour
             return;
         }
 
+        _wheel.enabled = true;
         shredder.initShredding = true;
         shredder.wheel.SetActive(true);
         canStartShredding.Invoke();

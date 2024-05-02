@@ -1,14 +1,13 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using Oculus.Interaction;
-using UnityEngine.Rendering.UI;
-using Unity.VisualScripting;
+//using Oculus.Interaction;
+//using UnityEngine.Rendering.UI;
+//using Unity.VisualScripting;
 using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
-using UnityEngine.UIElements;
+//using UnityEngine.UIElements;
 using UnityEngine.XR.Content.Interaction;
-
 
 public class MachineShredder : MonoBehaviour
 {
@@ -51,6 +50,7 @@ public class MachineShredder : MonoBehaviour
 
     [Header("MACHINE WOLRD UI")]
     [SerializeField] private TMP_Text progressText;
+    [SerializeField] private Image progressBar;
     public TMP_Text shredderFuelText;
 
     [Header("FEEDBACK")]
@@ -142,50 +142,51 @@ public class MachineShredder : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (enableWheelEvent == null)
+        progressBar.fillAmount = 0;
+        if (enableWheelEvent == null) // show wheel when fixed event
         {
             enableWheelEvent = new UnityEvent();
         }
+        enableWheelEvent.AddListener(EnableWheel); 
 
-        enableWheelEvent.AddListener(EnableWheel);
 
         if (finishedShreddingEvent == null)
         {
             finishedShreddingEvent = new UnityEvent();
         }
 
-        _wheelPlug = wheel.GetComponentInChildren<XRKnob>();
+        _wheelPlug = wheel.GetComponentInChildren<XRKnob>(); // get knob component
 
-        _wheelPlug.enabled = false;
+        _wheelPlug.enabled = false; // disable knob at start
 
-        _attachedWheel = _wheelPlug.gameObject;
+        _attachedWheel = _wheelPlug.gameObject; // set the attached object to the knob's gameobject
 
-        if (_wheelPlug == null)
+        if (_wheelPlug == null) // attached object cannot be null
         {
             return;
         }
 
-        _wheelPlug.value = 0;
+        _wheelPlug.value = 0; // set wheel value to 0 at start always
 
-        _wheelPlug.ValueChangeShredder.AddListener(ValueChangeCheck);
+        _wheelPlug.ValueChangeShredder.AddListener(ValueChangeCheck); // every time wheel is turn call event
 
-        _wheelManager = _wheelPlug.gameObject.GetComponent<WheelManager>();
+        _wheelManager = _wheelPlug.gameObject.GetComponent<WheelManager>(); // get wheel manager from wheel gameobject
 
-        _wheelManager.canStartShredding.AddListener(CanShred);
+        _wheelManager.canStartShredding.AddListener(CanShred); // 
 
         _wheelManager.SetWheelCurrState(WheelStatus.WORKING);
 
-        _wheelManager.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+        _wheelManager.gameObject.GetComponent<Rigidbody>().isKinematic = true; // set wheel to not use gravity and kinematic
         _wheelManager.gameObject.GetComponent<Rigidbody>().useGravity = false;
 
-        _grabber = _wheelManager.GetComponent<XRVelocityRayGrab>();
+        _grabber = _wheelManager.GetComponent<XRVelocityRayGrab>(); 
 
         if (_grabber != null)
         {
-            _grabber.enabled = false; // disable ability to grab
+            _grabber.enabled = false; // disable ability to grab at the start because wheel is attached
         }
 
-        _leverPlug = lever.GetComponentInChildren<XRLever>();
+        _leverPlug = lever.GetComponentInChildren<XRLever>(); 
             
         _spawnPointBound = spawnPoint.GetComponent<Collider>().bounds;
 
@@ -196,20 +197,21 @@ public class MachineShredder : MonoBehaviour
 
         SetUpWheelProbability();
 
-        fixWheelCollider.GetComponent<Collider>().enabled = false;
+        fixWheelCollider.GetComponent<Collider>().enabled = false; // disable when wheel is not broken yet
 
-        wheelPreview.enabled = false;
+        wheelPreview.enabled = false; // disable socket and enable when wheel breaks
     }
 
 
     public void EnableWheel()
     {
-        _wheelManager.gameObject.SetActive(true);
+        _wheelManager.gameObject.SetActive(true); // set the wheel gameobject to be visible
         if (!_wheelPlug.enabled)
         {
             SetWheelStatus(true);
         }
     }
+
     public void InitWheelVariables()
     {
         _wheelPlug = wheel.GetComponentInChildren<XRKnob>();
@@ -239,12 +241,13 @@ public class MachineShredder : MonoBehaviour
             if (_wheelPlug.value >= _breakAtThisValue)
             {
                 _wheelManager.SetWheelCurrState(WheelStatus.BROKEN);
+
                 _attachedWheel = null;
-                wheelPreview.enabled = true;
-                SetGameobjectLayer(wheel, 0);
+                //wheelPreview.enabled = true;
                 //_wheelPlug.GetComponentInChildren<Rigidbody>().useGravity = true;
                 //_wheelPlug.GetComponentInChildren<Rigidbody>().isKinematic = false;
                 //_wheelPlug.GetComponentInChildren<Rigidbody>().AddForce(Vector3.up * force, ForceMode.Impulse);
+                //SetGameobjectLayer(wheel, 0); // 
 
                 GameObject fakeWheel = Instantiate(fakeWheelModel.gameObject, _wheelManager.transform.position, Quaternion.identity);
                 fakeWheel.GetComponent<Rigidbody>().useGravity = true;
@@ -256,7 +259,7 @@ public class MachineShredder : MonoBehaviour
 
                 fixWheelCollider.GetComponent<Collider>().enabled = true; // enable collider after breaking
 
-                _wheelManager.gameObject.SetActive(false);
+                _wheelManager.gameObject.SetActive(false); // set wheel to invisible
 
                 _save = false;
             }
@@ -283,6 +286,7 @@ public class MachineShredder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        currWheelStatus = _wheelManager.GetWheelCurrState();
         float fuelPercentage = (secretHealth / maxHealth) * 100f;
         //Debug.Log("percent is: " + fuelPercentage);
 
@@ -344,10 +348,12 @@ public class MachineShredder : MonoBehaviour
     {
         if (_wheelPlug.value >= valueToComplete)
         {
+            ResetProgressBar();
+
             _leverPlug.SetHandleAngle(_leverPlug.maxAngle); // reset lever
 
-            wheel.SetActive(false);
             _wheelPlug.value = 0;
+            _wheelPlug.enabled = false; 
 
             progressText.text = "Shreddinator Process Completed";
 
@@ -373,24 +379,30 @@ public class MachineShredder : MonoBehaviour
                     a.GetPrefab().GetComponent<Rigidbody>().useGravity = true;
 
                     Instantiate(a.GetPrefab(), _spawnPointBound.center + new Vector3(x, 0f, z), Quaternion.identity);
-                    //if (a.mat != null) // check if nothing has been 
-                    //{
-                    //    a.GetPrefab().GetComponent<Item>().SetMaterial(a.mat);
-                    //}
                 }
             }
-            //finishedShreddingEvent.Invoke();
             //clear the list
-            shredderItemCollider.ClearProductList();
-        }
-        else
-        {
-            //Debug.Log("h");
+            shredderItemCollider.ClearProductList(); 
         }
     }
     void UpdateProgressBar()
     {
-        progressText.text = _wheelPlug.value.ToString("0.0") + "%";
+        float fillAmount = _wheelPlug.value / valueToComplete; // Calculate fill amount based on current value and total value
+
+        // Calculate the next milestone (next multiple of 0.1)
+        float nextMilestone = Mathf.Ceil(fillAmount * 10) / 10;
+
+        // Adjust fill amount to the next milestone
+        progressBar.fillAmount = Mathf.Clamp(nextMilestone, 0f, 1f);
+
+        // Update progress text
+        progressText.text = (progressBar.fillAmount * 100).ToString("0.0") + "%";
+    }
+
+   
+    void ResetProgressBar()
+    {
+        progressBar.fillAmount = 0;
     }
 
     void IncreaseProgress()
@@ -411,30 +423,30 @@ public class MachineShredder : MonoBehaviour
     // SETTERS // 
     public void SetWheelValue(float value)
     {
-        _wheelPlug.value = value;
+        _wheelPlug.value = value; 
     }
 
     public void SetWheelStatus(bool status)
     {
-        _wheelPlug.enabled = status;
+        _wheelPlug.enabled = status; // set ability to spin wheel here
     }
 
-    public void SetAttachedWheel(GameObject newWheel)
+    public void SetWheelCurrState(WheelStatus stat)
     {
-        newWheel.transform.SetParent(wheel.transform);
-        InitWheel(newWheel);
+        _wheelManager.SetWheelCurrState(stat);
     }
 
-    public void InitWheel(GameObject toInit)
-    {
-        _attachedWheel = toInit;
-        InitWheelVariables();
-        //var grab = toInit.GetComponent<XRVelocityRayGrab>();
-        //if (grab != null)
-        //{
-        //    grab.enabled = false;
-        //}
-    }
+    //public void SetAttachedWheel(GameObject newWheel)
+    //{
+    //    newWheel.transform.SetParent(wheel.transform);
+    //    InitWheel(newWheel);
+    //}
+
+    //public void InitWheel(GameObject toInit)
+    //{
+    //    _attachedWheel = toInit;
+    //    InitWheelVariables();
+    //}
     // GETTERS
     public float GetWheelValue()
     {

@@ -10,10 +10,15 @@ public class FabricatorButton : VRButton
     public override void PressedFunction()
     {
         macineFab.RunActive();
+        if (_newcon.gameEnded && _newcon.winORloseText.text == "WIN")
+        {
+            _newcon.ChangeLevel();
+        }
     }
     public override void ReleasedFunction()
     {
-        macineFab.RunDective();
+        //macineFab.RunDective();
+        return;
     }
     public override void ToggleOnFunction()
     {

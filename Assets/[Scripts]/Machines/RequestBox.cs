@@ -109,7 +109,7 @@ public class RequestBox : MonoBehaviour
 
             if (_tracker >= 5)
             {
-                _pointsToReward -= 100;
+                _pointsToReward -= 10;
                 if (_pointsToReward <= 0)
                 {
                     _pointsToReward = 0;

@@ -50,7 +50,7 @@ public class CustomerTable : MonoBehaviour
             //randomise what to order
             int randomRequest = Random.Range(0, posibleRequests.Count);
             requestBox.SetRequestedItem(posibleRequests[randomRequest]);
-            orderText.text = posibleRequests[randomRequest].itemName;
+            orderText.text = "Product needed: "+posibleRequests[randomRequest].itemName;
             //animate box upwards
             moveBoxCoroutineHandler = StartCoroutine(MoveBoxCoroutine());
             isRequest = false;

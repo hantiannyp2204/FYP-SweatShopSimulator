@@ -53,16 +53,6 @@ public class MacineFab : MonoBehaviour, Iinteractable
     public bool IsGameEnded() => gameEnd;
     public void RunActive()
     {
-        Debug.Log("Machine Active");
-    }
-
-    public void RunDective()
-    { 
-        Debug.Log("Machine NOt Active");
-    }
-
-    public void ToggleOn()
-    {
         Debug.Log("Machine");
         _PowerFab.CheckIfGotPower();
         if (_PowerFab == true)
@@ -87,6 +77,39 @@ public class MacineFab : MonoBehaviour, Iinteractable
                 _StartButton.SetActive(true);
             }
         }
+    }
+
+    public void RunDective()
+    { 
+        Debug.Log("Machine NOt Active");
+    }
+
+    public void ToggleOn()
+    {
+        //Debug.Log("Machine");
+        //_PowerFab.CheckIfGotPower();
+        //if (_PowerFab == true)
+        //{
+        //    Debug.Log(_PowerFab._PowerForFab);
+        //    if (_Crafting.HasChosenCraftingItem == true)
+        //    {
+        //        _Crafting.CheckIfPresent();
+        //    }
+        //    if (_Crafting.EnoughMaterials == true && _Crafting.HasChosenCraftingItem == true)
+        //    {
+        //        //Enalble here
+        //        _RedButton.SetActive(true);
+        //        Fabricator_run?.InvokeEvent(transform.position, Quaternion.identity, transform);
+        //        IsGameRunning = true;
+        //        //_Crafting.foundCount = 0;
+        //        HasGameStarted = true;
+        //        newController.hold = true;
+        //        gameEnd = true;
+        //        _TextHolder.SetActive(true);
+        //        _NextButton.SetActive(true);
+        //        _StartButton.SetActive(true);
+        //    }
+        //}
       
 
     }

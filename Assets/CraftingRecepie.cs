@@ -35,6 +35,19 @@ public class CraftingRecepie : MonoBehaviour
     [SerializeField] private int RequiredWheel;
     public GameObject Wheel;
 
+    [Header("Robot Crafting Recipe")]
+    [SerializeField] private int RequiredToyRobotMetal;
+    [SerializeField] private int RequiredToyRobotPlastic;
+    public GameObject ToyRobot;
+
+    [Header("Wood Wall Clock Recipe")]
+    [SerializeField] private int RequiredWallClock;
+    public GameObject WallClock;
+
+    [Header("Lamp Clock Recipe")]
+    [SerializeField] private int RequiredLamp;
+    public GameObject Lamp;
+
 
     public void _ConfirmSelection(int Confirmnumber)
     {
@@ -46,7 +59,6 @@ public class CraftingRecepie : MonoBehaviour
                     fabricatorCrafting._WhatINeed.Add(RawMetalMaterial);      
                 }
                 spawnedObjects.Add(Broken_Sword);
-                //fabricatorCrafting.SpawnOBJ(Broken_Sword);
                 break;
             case 1:
                 for (int i = 0; i < RequiredMetal_Sword; i++)
@@ -54,15 +66,13 @@ public class CraftingRecepie : MonoBehaviour
                     fabricatorCrafting._WhatINeed.Add(RawMetalMaterial);                   
                 }
                 spawnedObjects.Add(Sword);
-                //fabricatorCrafting.SpawnOBJ(Sword);
                 break;
             case 2:
                 for (int i = 0; i < RequiredMetal_Pocket_Clock; i++)
                 {
                     fabricatorCrafting._WhatINeed.Add(RawMetalMaterial);
                 }
-                spawnedObjects.Add(PocketClock);
-                //fabricatorCrafting.SpawnOBJ(PocketClock);
+                spawnedObjects.Add(PocketClock);        
                 break;
             case 3:
                 for (int i = 0; i < RequiredWheel; i++)
@@ -71,8 +81,34 @@ public class CraftingRecepie : MonoBehaviour
                     fabricatorCrafting._WhatINeed.Add(RawPlasticMaterial);
                 }
                 spawnedObjects.Add(Wheel);
-                //fabricatorCrafting.SpawnOBJ(PocketClock);
+                
                 break;
+            case 4:
+                for (int i = 0; i < RequiredToyRobotMetal; i++)
+                {
+                    fabricatorCrafting._WhatINeed.Add(RawMetalMaterial);            
+                }
+                for (int i = 0; i < RequiredToyRobotPlastic; i++)
+                {
+                    fabricatorCrafting._WhatINeed.Add(RawPlasticMaterial);
+                }
+                spawnedObjects.Add(ToyRobot);   
+                break;
+            case 5:
+                for (int i = 0; i < RequiredWallClock; i++)
+                {
+                    fabricatorCrafting._WhatINeed.Add(RawWoodMaterial);
+                }
+                spawnedObjects.Add(WallClock);
+                break;
+            case 6:
+                for (int i = 0; i < RequiredLamp; i++)
+                {
+                    fabricatorCrafting._WhatINeed.Add(RawWoodMaterial);
+                }
+                spawnedObjects.Add(Lamp);
+                break;
+
         }
 
 

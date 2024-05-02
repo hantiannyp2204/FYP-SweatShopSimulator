@@ -9,6 +9,7 @@ public class PowerPlug : MonoBehaviour
     public Transform End_Plug;
     public bool isStuckInSocket;
     public PowerForFab _powerForFab;
+
     //public TMP_Text Text;
     public LayerMask socketLayer; // Set this in the inspector to the layer you want the plug to stick to
 
@@ -37,6 +38,7 @@ public class PowerPlug : MonoBehaviour
                 {
                     _powerForFab.RandomPower();
                 }
+                _DropPlug.enabled = false;
             }
         }
     }
@@ -55,8 +57,10 @@ public class PowerPlug : MonoBehaviour
 
             // Set the flag indicating that the plug is no longer stuck in a socket
             isStuckInSocket = false;
+            _DropPlug.enabled = true;
 
-            
+
+
         }
     }
 

@@ -4490,6 +4490,8 @@ MonoBehaviour:
   _IsTherePower: 0
   _NewController: {fileID: 4238245566111952662}
   _PowerPlug: {fileID: 2611654868306339505}
+  Isin: 1
+  _Rigidbody: {fileID: 1849298785951168323}
   boxCollider: {fileID: 4296383817189231541}
   _PowerBar: {fileID: 2513799067102045981}
 --- !u!1 &3553673533562564031
@@ -4662,7 +4664,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7513131656044331405
 Transform:
   m_ObjectHideFlags: 0
@@ -6691,8 +6693,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.04, y: 1.04, z: 1.04}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6952634977008915844}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6965,8 +6967,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.58, y: 0, z: 0.37}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5872784351140848368}
   - {fileID: 292447198305827702}
@@ -8361,7 +8363,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -9359,7 +9361,7 @@ Transform:
   m_GameObject: {fileID: 6158071486241724277}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.314, y: 0.31, z: 0}
+  m_LocalPosition: {x: 0.439, y: 0.309, z: 0.236}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11925,11 +11927,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 4385632023755109074}
-  threshold: 0.1
+  threshold: 0.9
   deadZone: 0.025
   usesToggle: 0
-  e_press: {fileID: 11400000, guid: 4d534e67c0ac9174090ae77afb340815, type: 2}
-  e_release: {fileID: 11400000, guid: 4d534e67c0ac9174090ae77afb340815, type: 2}
+  e_press: {fileID: 0}
+  e_release: {fileID: 0}
   macineFab: {fileID: 2672428733364277927}
   _newcon: {fileID: 4238245566111952662}
 --- !u!1 &7618388985437156450
@@ -13546,8 +13548,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.44715944, y: 0.9180193, z: 0.7186292}
-  m_Center: {x: 0.327228, y: 0.6141501, z: 0.08799916}
+  m_Size: {x: 0.5068986, y: 0.9180193, z: 1.177313}
+  m_Center: {x: 0.35709834, y: 0.6141501, z: 0.3866117}
 --- !u!114 &466088701469474084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14377,7 +14379,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &712949114617588403
 Transform:
   m_ObjectHideFlags: 0

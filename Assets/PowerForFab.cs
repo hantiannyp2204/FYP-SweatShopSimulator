@@ -10,7 +10,8 @@ public class PowerForFab : MonoBehaviour
     public bool _IsTherePower = false;
     public NewController _NewController;
     public PowerPlug _PowerPlug;
-
+    public bool Isin = true;
+    public Rigidbody _Rigidbody;
     public BoxCollider boxCollider; // Reference to the BoxCollider component
 
 
@@ -23,7 +24,14 @@ public class PowerForFab : MonoBehaviour
         }
         if (_CurrentPower <= 1)
         {
-            DisableBoxColliderForDuration(2f);
+            if (Isin == true)
+            {
+                _Rigidbody.isKinematic = false;
+                Debug.Log("Isin");
+                DisableBoxColliderForDuration(2f);
+                PushPlugOut();
+                Isin = false;
+            }
         }
     }
 
@@ -31,6 +39,7 @@ public class PowerForFab : MonoBehaviour
 
     public void Start()
     {
+        Isin = true;
         UpdatePowerBar(_PowerForFab, _CurrentPower);
     }
     public void RandomPower()
@@ -62,7 +71,7 @@ public class PowerForFab : MonoBehaviour
     public void PushPlugOut()
     {
         Vector3 direction = (_PowerPlug.Start_Plug.position - _PowerPlug.End_Plug.position).normalized;
-        _PowerPlug.GetComponent<Rigidbody>().AddForce(-direction * 25, ForceMode.Impulse);
+        _PowerPlug.GetComponent<Rigidbody>().AddForce(-direction * 3, ForceMode.Impulse);
     }
 
     void DisableBoxColliderForDuration(float duration)

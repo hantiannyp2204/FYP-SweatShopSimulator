@@ -312,7 +312,7 @@ public class MachineShredder : MonoBehaviour
         }
         else
         {
-            Debug.Log("not shredding");
+            //Debug.Log("not shredding");
         }
     }
     void HandleFinishProcess()
@@ -360,7 +360,7 @@ public class MachineShredder : MonoBehaviour
         }
         else
         {
-            Debug.Log("h");
+            //Debug.Log("h");
         }
     }
     void UpdateProgressBar()

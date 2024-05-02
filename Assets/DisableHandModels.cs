@@ -11,12 +11,12 @@ public class DisableHandModels : MonoBehaviour
     public void DisableHandRender()
     {
         handModel.SetActive(false);
-        //rayInteractor.enabled = false;
+        rayInteractor.allowHover = false;
     }
     public void EnableHandRender()
     {
         handModel.SetActive(true);
-        //rayInteractor.enabled = true;
+        rayInteractor.allowHover = true;
     }
    public bool GetActive() => handModel.active;
 }

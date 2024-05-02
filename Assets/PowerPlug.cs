@@ -31,7 +31,7 @@ public class PowerPlug : MonoBehaviour
                 {
                     rb.isKinematic = true;
                 }
-
+                _powerForFab.Isin = true;
                 // Set the flag indicating that the plug is now stuck in a socket
                 isStuckInSocket = true;
                 if (_powerForFab._CurrentPower <= 0)

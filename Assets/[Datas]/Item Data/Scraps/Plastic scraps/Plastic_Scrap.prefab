@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 3054858910427420724}
   - component: {fileID: 3073447976738905411}
   - component: {fileID: 6060606707476547470}
-  - component: {fileID: 57543835301267783}
   - component: {fileID: 232376093728170486}
-  m_Layer: 0
+  - component: {fileID: 4708572514417318876}
+  m_Layer: 6
   m_Name: Plastic_Scrap
   m_TagString: Scraps
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &57543835301267783
+--- !u!114 &232376093728170486
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -114,7 +114,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 5915119357853501385}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ad34abafad169848a38072baa96cdb2, type: 3}
+  m_Script: {fileID: 11500000, guid: b35552b657ab5d448b8a5cf8a54d567a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rawMaterial: {fileID: 8275011640473543219, guid: 793651f75ab7fa2429e9c851a03858a9,
+    type: 3}
+--- !u!114 &4708572514417318876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5915119357853501385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f0e6f0608e336f4799743f12a098bda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
@@ -215,7 +229,7 @@ MonoBehaviour:
   m_SnapToColliderVolume: 1
   m_ReinitializeDynamicAttachEverySingleGrab: 1
   m_AttachEaseInTime: 0.15
-  m_MovementType: 2
+  m_MovementType: 0
   m_VelocityDamping: 1
   m_VelocityScale: 1
   m_AngularVelocityDamping: 1
@@ -257,20 +271,8 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
---- !u!114 &232376093728170486
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5915119357853501385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b35552b657ab5d448b8a5cf8a54d567a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rawMaterial: {fileID: 8275011640473543219, guid: 793651f75ab7fa2429e9c851a03858a9,
-    type: 3}
+  velocityThreshold: 2
+  jumpAngleInDegree: 60
 --- !u!1001 &5475698082449888828
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -358,6 +360,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: rubberScraps
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6be56c3eff7bd15419e8b0e05c8bcde3,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: 6be56c3eff7bd15419e8b0e05c8bcde3,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

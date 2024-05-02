@@ -199,11 +199,17 @@ public class MachineSmelter : MonoBehaviour
         if (fuelLeft == 0)
         {
             outOfFuel = false;
+            //enable coal render
+            coalRender.SetActive(true);
         }
         fuelLeft += addedFuelCount; // Reset fuel to this maximum
-
+        if(debugTxt != null)
+        {
+            debugTxt.text = fuelLeft.ToString();
+        }
+     
         //if exceed max percentage
-        if(fuelLeft > maxPercentageFuel)
+        if (fuelLeft > maxPercentageFuel)
         {
             fuelLeft = maxPercentageFuel;
             currentFuelMaxWarningCount--;
@@ -217,8 +223,7 @@ public class MachineSmelter : MonoBehaviour
                 //play warning ping
             }
         }
-        //enable coal render
-        coalRender.SetActive(true);
+
         smelterFuelPointer.UpdatePosition(fuelLeft);
         // Check if the machine was paused and resume operation if necessary
         if (smeltingCoroutineHandler != null)

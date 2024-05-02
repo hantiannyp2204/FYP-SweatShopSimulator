@@ -31,6 +31,7 @@ public class VRButton : MonoBehaviour
     {
         if (!isPressed && GetValue() + threshold >= 1)
         {
+            
             OnPressed();
         }
         else if (isPressed && GetValue() - threshold <= 0) 
@@ -44,7 +45,6 @@ public class VRButton : MonoBehaviour
         {
             button.transform.localPosition = new Vector3(button.transform.localPosition.x, startPos.y, button.transform.localPosition.z);
         }
-
     }
 
     private float GetValue()

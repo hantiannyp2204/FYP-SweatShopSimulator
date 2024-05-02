@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.XR.Content.Interaction;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -20,6 +21,7 @@ public class MachineSmelter : MonoBehaviour
     [Header("Machine Refrences")]
     [SerializeField] private SmelterInputHitbox smelterInputHitbox;
     [SerializeField] private TMP_Text timerText;
+    [SerializeField] private Image progressBar;
     [SerializeField] private TMP_Text coalPercentage;
     [SerializeField] private Collider outputCollider;
     [SerializeField] private SmelterFuelPointer smelterFuelPointer;
@@ -73,6 +75,7 @@ public class MachineSmelter : MonoBehaviour
     public int GetHealthPoints() => healthPoints;
     private void Awake()
     {
+        ResetProgressBar();
         AddFuel(100);
         currentFuelMaxWarningCount = fuelMaxCapacityWarningCount;
         timerText.text = "Ready";
@@ -111,7 +114,7 @@ public class MachineSmelter : MonoBehaviour
             smeltSpeed = 1;
         }
     }
-  
+    
     private IEnumerator SmeltCoroutine()
     {
         // Smelting process
@@ -119,9 +122,10 @@ public class MachineSmelter : MonoBehaviour
         {
             HandleSmeltingSpeed();
             UpdateTimer();
+            UpdateProgressBar();
             yield return null;
         }
-
+        elapsedTime = smeltTime;
         // Process and replace all scrap materials
         ProcessScrapMaterials();
         e_done?.InvokeEvent(transform.position, Quaternion.identity, smelterDoneSoundLocation);
@@ -203,10 +207,7 @@ public class MachineSmelter : MonoBehaviour
             coalRender.SetActive(true);
         }
         fuelLeft += addedFuelCount; // Reset fuel to this maximum
-        if(debugTxt != null)
-        {
-            debugTxt.text = fuelLeft.ToString();
-        }
+
      
         //if exceed max percentage
         if (fuelLeft > maxPercentageFuel)
@@ -223,6 +224,11 @@ public class MachineSmelter : MonoBehaviour
                 //play warning ping
             }
         }
+        if (debugTxt != null)
+        {
+            debugTxt.text = fuelLeft.ToString();
+        }
+        UpdateCoalPercentage();
 
         smelterFuelPointer.UpdatePosition(fuelLeft);
         // Check if the machine was paused and resume operation if necessary
@@ -256,7 +262,7 @@ public class MachineSmelter : MonoBehaviour
     }
     private void UpdateCoalPercentage()
     {
-        float percentage = (fuelLeft / defaultMaxFuel) * 100f; // Calculate fuel percentage
+        int percentage = (int)((fuelLeft / defaultMaxFuel) * 100); // Calculate fuel percentage
 
         //reset the warning count when it reaches back stable 100
         if (percentage <= 100 && currentFuelMaxWarningCount != fuelMaxCapacityWarningCount)
@@ -282,7 +288,7 @@ public class MachineSmelter : MonoBehaviour
             {
                 coalPercentage.color = Color.green;
             }
-            coalPercentage.text = $"Coal: {Mathf.Clamp(percentage, 0, 100):0}%"; // Clamp to ensure it's between 0% and 100%
+            coalPercentage.text = $"Coal: {Mathf.Clamp(percentage, 0, maxPercentageFuel):0}%"; // Clamp to ensure it's between 0% and 100%
 
         }
         else
@@ -317,6 +323,7 @@ public class MachineSmelter : MonoBehaviour
 
     private void DeactivateMachine()
     {
+        ResetProgressBar();
         ToggleMachineEmmision();
         smelterWheel.enabled= true;
         machineActive = false;
@@ -361,6 +368,22 @@ public class MachineSmelter : MonoBehaviour
         elapsedTime += Time.deltaTime * smeltSpeed;
         
         timerText.text = ((int)(smeltTime - elapsedTime) + 1).ToString();
+
+    }
+    private void UpdateProgressBar()
+    {
+        if(elapsedTime <= smeltTime)
+        {
+            progressBar.fillAmount = elapsedTime / smeltTime;
+        }
+        else
+        {
+            progressBar.fillAmount = 1;
+        }
+    }
+    private void ResetProgressBar()
+    {
+        progressBar.fillAmount = 0;
     }
     void ReduceFuel()
     {

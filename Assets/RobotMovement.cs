@@ -29,7 +29,7 @@ public class RobotMovement : MonoBehaviour
             {
                 _itemPlateRef.box.SetInsertedItem(_itemPlateRef.GetRobotHoldingItem().transform.gameObject);
                 Debug.Log("item:ahah" + _itemPlateRef.GetRobotHoldingItem().gameObject.name);
-                _itemPlateRef.table.ToggleOrder();
+                _itemPlateRef.table.ToggleOrder(false);
 
                 _refAgent.GetComponent<RobotAssistant>().SetState(ROBOT_STATE.PATROL);
             }

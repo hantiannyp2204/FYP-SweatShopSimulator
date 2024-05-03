@@ -26,7 +26,7 @@ public class VRGameManager : MonoBehaviour
     //[SerializeField] PlayerMovement playerMovement; 
     [SerializeField] GameObject VRPlayer;
     [SerializeField] List<VRHandManager> vrHandInteractionManagerList;
-    [SerializeField] List<VRPlayerInvenetory> vrPlayerInventoryList;
+    //[SerializeField] List<VRPlayerInvenetory> vrPlayerInventoryList;
     [SerializeField] List<HandPresencePhysics> vrPlayerHandPhysicsList;
     [SerializeField] List<HandColliders> vrPlayerHandColliderList;
     [SerializeField] GameFeedback gameFeedback;
@@ -71,10 +71,10 @@ public class VRGameManager : MonoBehaviour
         {
             handManager.Init();
         }
-        foreach (VRPlayerInvenetory handInv in vrPlayerInventoryList)
-        {
-            handInv.Init();
-        }
+        //foreach (VRPlayerInvenetory handInv in vrPlayerInventoryList)
+        //{
+        //    handInv.Init();
+        //}
         
         foreach (HandPresencePhysics handPhysics in vrPlayerHandPhysicsList)
         {
@@ -121,10 +121,10 @@ public class VRGameManager : MonoBehaviour
             {
                 hand.UpdateInteractions();
             }
-            foreach (var handInv in vrPlayerInventoryList)
-            {
-                handInv.UpdateItemPositions();
-            }
+            //foreach (var handInv in vrPlayerInventoryList)
+            //{
+            //    handInv.UpdateItemPositions();
+            //}
 
             //update table timer
             if (gameMode == GameMode.Levels)

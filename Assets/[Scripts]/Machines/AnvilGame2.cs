@@ -127,7 +127,10 @@ public class AnvilGame2 : MonoBehaviour
             canHit = false; // Reset canHit
             hitRegistered = false;
             Debug.Log("Coroutine exited normally");
-            break;
+            if (hitbox.ItemOnAnvil == false)
+            {
+                break;
+            }
         }
     }
 }

@@ -81,6 +81,7 @@ public class MachineAnvil : MonoBehaviour
             //destroy the input materials
             Destroy(currentRawType.gameObject);
             anvilHitbox.RMaterialList.Remove(currentRawType);
+            anvilHitbox.ItemOnAnvil = false;
             anvilItemCollider.ClearProductList();
         }
 

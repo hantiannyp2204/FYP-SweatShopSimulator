@@ -22,17 +22,17 @@ public class AnvilHitbox : MonoBehaviour
             ItemOnAnvil = true;
             Debug.Log("Item on anvil");
         }
-        else if (RMComponent != null || other.gameObject.tag == "Hammer")
-        {
-            ItemOnAnvil = true;
-            Debug.Log("Item/hammer on anvil");
-        }
-        else 
-        //if item is not a RM, burn it (destroy)
-        {
-            trashList.Add(other.gameObject);
-            ItemOnAnvil = false;
-        }
+        //else if (RMComponent != null || other.gameObject.tag == "Hammer")
+        //{
+        //    ItemOnAnvil = true;
+        //    Debug.Log("Item/hammer on anvil");
+        //}
+        //else 
+        ////if item is not a RM, burn it (destroy)
+        //{
+        //    trashList.Add(other.gameObject);
+        //    ItemOnAnvil = false;
+        //}
         
     }
     private void OnTriggerExit(Collider other)
@@ -43,12 +43,12 @@ public class AnvilHitbox : MonoBehaviour
             RMaterialList.Remove(RMComponent);
             ItemOnAnvil = false;
         }
-        else if (trashList.Contains(other.gameObject))
-        //if item is not a rawmater, burn it (destroy)
-        {
-            Debug.Log("Take it awayy");
-            ItemOnAnvil = false;
-        }
+        //else if (trashList.Contains(other.gameObject))
+        ////if item is not a rawmater, burn it (destroy)
+        //{
+        //    Debug.Log("Take it awayy");
+        //    ItemOnAnvil = false;
+        //}
     }
     public void ClearList()
     {

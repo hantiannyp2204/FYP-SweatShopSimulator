@@ -12,10 +12,6 @@ public class FadeScreen : MonoBehaviour
     void Start()
     {
         rend = GetComponent<Renderer>();
-        if (fadeOnStart)
-        {
-            FadeIn();
-        }
     }
     public void FadeIn()
     {

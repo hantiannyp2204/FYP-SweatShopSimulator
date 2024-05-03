@@ -375,8 +375,8 @@ public class MachineShredder : MonoBehaviour
                 {
                     float x = Random.Range(-_spawnPointBound.extents.x, _spawnPointBound.extents.x);
                     float z = Random.Range(-_spawnPointBound.extents.z, _spawnPointBound.extents.z);
-                    a.GetPrefab().GetComponent<Rigidbody>().isKinematic = false;
-                    a.GetPrefab().GetComponent<Rigidbody>().useGravity = true;
+                    //a.GetPrefab().GetComponent<Rigidbody>().isKinematic = false;
+                    //a.GetPrefab().GetComponent<Rigidbody>().useGravity = true;
 
                     Instantiate(a.GetPrefab(), _spawnPointBound.center + new Vector3(x, 0f, z), Quaternion.identity);
                 }

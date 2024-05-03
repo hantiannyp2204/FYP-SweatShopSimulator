@@ -136,12 +136,10 @@ public class KeyboardGameManager : MonoBehaviour, IKeyboardInteracted
     private void OnEnable()
     {
         playerInteraction.SubcribeEvents(this);
-        customerTable.SubcribeEvents();
     }
     private void OnDisable()
     {
         playerInteraction.UnsubcribeEvents(this);
-        customerTable.UnsubcribeEvents();
     }
     void TogglePauseMenu()
     {

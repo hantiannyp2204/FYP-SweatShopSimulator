@@ -9,7 +9,6 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class RequestBox : MonoBehaviour
 {
     //Request box
-    [SerializeField] private float pointsMax;
 
     bool boxOpened = false;
     ItemData requestedItem;
@@ -18,8 +17,6 @@ public class RequestBox : MonoBehaviour
     private float _pointsToReward;
     private float _tracker;
 
-    public delegate void OrderInteractionHandler();
-    public static event OrderInteractionHandler OnOrderProcessed;
 
     //Request box hitbox
     public GameObject insertedItem;
@@ -149,18 +146,20 @@ public class RequestBox : MonoBehaviour
             }
         }
     }
-    public int ShowTimerResult() => (int)_timer;
+    public int GetTimer() => (int)_timer;
     public int ShowScoreResult() => (int)_pointsToReward;
     public void ResetPointTracker()
     {
         _tracker = 0;
         _timer = 0;
-        _pointsToReward = pointsMax;
+        _pointsToReward = 0;
+        boxOpened = false;
     }
     public void SetRequestedItem(ItemData newRequestedItem)
     {
         requestedItem = newRequestedItem;
         boxOpened= true;
+        _pointsToReward = newRequestedItem.GetScoreGiven();
     }
 
     public ItemData GetRequestedItem()=>requestedItem;

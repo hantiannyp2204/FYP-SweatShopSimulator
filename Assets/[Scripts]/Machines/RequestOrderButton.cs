@@ -7,6 +7,6 @@ public class RequestOrderButton : VRButton
     [SerializeField] CustomerTable customerTable;
     public override void PressedFunction()
     {
-        customerTable.ToggleOrder();
+        customerTable.ToggleOrder(true);
     }
 }

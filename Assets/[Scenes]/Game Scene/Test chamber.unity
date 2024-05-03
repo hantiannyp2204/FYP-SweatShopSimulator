@@ -5435,6 +5435,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 842111050}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &876480324 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3126506224475904315, guid: 6aa70890968c5e74980c3f1995cd71ac,
+    type: 3}
+  m_PrefabInstance: {fileID: 325580059}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &885440460
 GameObject:
   m_ObjectHideFlags: 0
@@ -5983,6 +5995,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7737829243625249529, guid: 07abc8703fab37341b3960eb375f9bea,
         type: 3}
+      propertyPath: LeftHandTimerTxt
+      value: 
+      objectReference: {fileID: 876480324}
+    - target: {fileID: 7737829243625249529, guid: 07abc8703fab37341b3960eb375f9bea,
+        type: 3}
+      propertyPath: RightHandRequestTxt
+      value: 
+      objectReference: {fileID: 1131505033}
+    - target: {fileID: 7737829243625249529, guid: 07abc8703fab37341b3960eb375f9bea,
+        type: 3}
       propertyPath: posibleRequests.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -6503,26 +6525,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2513799067102045981, guid: b5465bcff680c254a813d90e3b68c206,
-        type: 3}
-      propertyPath: m_FillAmount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3837467528617833990, guid: b5465bcff680c254a813d90e3b68c206,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 3837467528617833990, guid: b5465bcff680c254a813d90e3b68c206,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 3837467528617833990, guid: b5465bcff680c254a813d90e3b68c206,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.75
-      objectReference: {fileID: 0}
     - target: {fileID: 3837467528617833990, guid: b5465bcff680c254a813d90e3b68c206,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6573,30 +6575,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3837467528617833990, guid: b5465bcff680c254a813d90e3b68c206,
-        type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4823101430222412463, guid: b5465bcff680c254a813d90e3b68c206,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
-      objectReference: {fileID: 0}
     - target: {fileID: 5005477706403541070, guid: b5465bcff680c254a813d90e3b68c206,
         type: 3}
       propertyPath: m_Name
       value: Fabricator 3D (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 6033599092885555743, guid: b5465bcff680c254a813d90e3b68c206,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
-      objectReference: {fileID: 0}
-    - target: {fileID: 8747572161759815026, guid: b5465bcff680c254a813d90e3b68c206,
-        type: 3}
-      propertyPath: threshold
-      value: 0.9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6847,6 +6829,18 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &1131505033 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5666330093351461436, guid: 6aa70890968c5e74980c3f1995cd71ac,
+    type: 3}
+  m_PrefabInstance: {fileID: 325580059}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1146059755
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10133,6 +10127,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -0.682
       objectReference: {fileID: 0}
+    - target: {fileID: 4850557747396006164, guid: 80d828f8ac4bd05428a6bbfab5dd1191,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -18.91
+      objectReference: {fileID: 0}
+    - target: {fileID: 4850557747396006164, guid: 80d828f8ac4bd05428a6bbfab5dd1191,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -10.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 4850557747396006164, guid: 80d828f8ac4bd05428a6bbfab5dd1191,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.4475277
+      objectReference: {fileID: 0}
+    - target: {fileID: 4850557747396006164, guid: 80d828f8ac4bd05428a6bbfab5dd1191,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4850557747396006164, guid: 80d828f8ac4bd05428a6bbfab5dd1191,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.89427006
+      objectReference: {fileID: 0}
+    - target: {fileID: 4850557747396006164, guid: 80d828f8ac4bd05428a6bbfab5dd1191,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4850557747396006164, guid: 80d828f8ac4bd05428a6bbfab5dd1191,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 126.83
+      objectReference: {fileID: 0}
     - target: {fileID: 5873482039223497162, guid: 80d828f8ac4bd05428a6bbfab5dd1191,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -11631,7 +11660,7 @@ PrefabInstance:
     - target: {fileID: 3500257825337269956, guid: 86d2a10a7dd741742b97e62426a4f71e,
         type: 3}
       propertyPath: AudioPooling.Array.data[0].audioPool.maxPool
-      value: 30
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 3500257825337269956, guid: 86d2a10a7dd741742b97e62426a4f71e,
         type: 3}

@@ -11,7 +11,11 @@ public class ItemData : ScriptableObject
     [SerializeField] private Quaternion holdingRotationOffset;
     [SerializeField] private GameObject itemPrefab;
     [SerializeField] private Quaternion requestBoxRotationOffset;
+    [SerializeField] private float timeGiven;
+    [SerializeField] private float scoreGiven;
 
+    public float GetTimeGiven() => timeGiven;
+    public float GetScoreGiven() => scoreGiven;
     public string GetName() => itemName;
     public GameObject GetPrefab() => itemPrefab;
 

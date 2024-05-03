@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using static VRGameManager;
 
 public class CustomerTable : MonoBehaviour
 {
+    public GameMode gameMode;
     //box things
     [SerializeField] RequestBox requestBox;
     [SerializeField] float boxRequestYPosition;
@@ -15,10 +17,16 @@ public class CustomerTable : MonoBehaviour
     [SerializeField] List<ItemData> posibleRequests;
     [SerializeField] TMP_Text orderText;
     Coroutine moveBoxCoroutineHandler;
+    bool gameStart = false;
+    float gameTimeLeft = 0;
     //Timer
-    float elapsedTime = 0;
+    float elapsedTimeToNextRequest = 0;
     float timeToNextRequest;
 
+    //Hand text refrences
+    [SerializeField] TMP_Text LeftHandTimerTxt;
+    [SerializeField] TMP_Text RightHandRequestTxt;
+    int totalScore = 0;
     void RandomiseNextRequestTimer()
     {
         timeToNextRequest = Random.Range(2, 5);
@@ -32,28 +40,77 @@ public class CustomerTable : MonoBehaviour
 
     public void UpdateTimer()
     {
-        //if time exceed return
-        if(elapsedTime >= timeToNextRequest)
+        if(!gameStart)
         {
-            ToggleOrder();
             return;
         }
-        elapsedTime += Time.deltaTime;
+        if(!isRequest)
+        {
+            float timeLeftForOrder = gameTimeLeft - requestBox.GetTimer();
+            //game ends if time ran out
+            if(gameTimeLeft <= 0)
+            {
+                EndGame();
+            }
+            else
+            {
+                // Calculate minutes and seconds
+                int minutes = Mathf.FloorToInt(timeLeftForOrder / 60);
+                int seconds = Mathf.FloorToInt(timeLeftForOrder % 60);
+
+                // Format the time as a string
+                string timeString = string.Format("{0:00}:{1:00}", minutes, seconds);
+                LeftHandTimerTxt.text = "Time left:\n" + timeString;
+            }
+           
+        }
+        else
+        {
+            elapsedTimeToNextRequest += Time.deltaTime;
+            //if time exceed return
+            if (elapsedTimeToNextRequest >= timeToNextRequest)
+            {
+                ToggleOrder(false);
+                return;
+            }
+        }
+
+     
+    }
+    private void Update()
+    {
+        UpdateTimer();
+
+
     }
 
-    public void ToggleOrder()
+    public void ToggleOrder(bool toggledByButton)
     {
         if (moveBoxCoroutineHandler != null) return;
         //request
         if(isRequest)
         {
+            //start game if first time pressing button
+            if(toggledByButton && !gameStart)
+            {
+                gameStart = true;
+            } 
+            //dont not get request manually if game already started
+            else if(toggledByButton && gameStart)
+            {
+                return;
+            }
             //randomise what to order
             int randomRequest = Random.Range(0, posibleRequests.Count);
             requestBox.SetRequestedItem(posibleRequests[randomRequest]);
             orderText.text = "Product needed: "+posibleRequests[randomRequest].itemName;
+            RightHandRequestTxt.text = posibleRequests[randomRequest].itemName;
+            gameTimeLeft += posibleRequests[randomRequest].GetTimeGiven();
+            LeftHandTimerTxt.text = "Time left:\n" + gameTimeLeft.ToString();
             //animate box upwards
             moveBoxCoroutineHandler = StartCoroutine(MoveBoxCoroutine());
             isRequest = false;
+         
         }
         //send
         else
@@ -68,8 +125,9 @@ public class CustomerTable : MonoBehaviour
 
             //reset all variable
             isRequest = true;
-            elapsedTime = 0;
-            orderText.text = $"Time taken: {requestBox.ShowTimerResult()}\nScore awarded: {requestBox.ShowScoreResult()}";
+            elapsedTimeToNextRequest = 0;
+            orderText.text = $"Time taken: {requestBox.GetTimer()}\n\nScore awarded:  {requestBox.ShowScoreResult()}";
+            totalScore += requestBox.ShowScoreResult();
             RandomiseNextRequestTimer();
         }
         
@@ -105,6 +163,11 @@ public class CustomerTable : MonoBehaviour
 
         // Ensure the RequestBox is exactly at the target position after the loop completes
         requestBox.transform.localPosition = targetPosition;
+        if(!isRequest)
+        {
+            LeftHandTimerTxt.text = "Awaiting order";
+            RightHandRequestTxt.text = "Awaiting order";
+        }
         //reset the items
         requestBox.ResetBox();
         requestBox.ResetPointTracker();
@@ -117,7 +180,26 @@ public class CustomerTable : MonoBehaviour
         Vector3 currentPosition = requestBox.transform.localPosition;
         currentPosition.y = boxSendYPosition;
         requestBox.transform.localPosition = currentPosition;
+
+        if(!gameStart)
+        {
+            LeftHandTimerTxt.text = "Awaiting game\nto start";
+            RightHandRequestTxt.text = "Awaiting game\nto start";
+        }
+        totalScore = 0;
     }
-    public void SubcribeEvents() => RequestBox.OnOrderProcessed += ToggleOrder;
-    public void UnsubcribeEvents() => RequestBox.OnOrderProcessed -= ToggleOrder;
+    void EndGame()
+    {
+        isRequest = true;
+        if (moveBoxCoroutineHandler != null)
+        {
+            StopCoroutine(moveBoxCoroutineHandler);
+            moveBoxCoroutineHandler = null;
+        }
+        gameStart = false;
+        gameTimeLeft = 0;
+        elapsedTimeToNextRequest = 0;
+        orderText.text = $"Total Score: {totalScore}";
+       ResetBox();
+    }
 }

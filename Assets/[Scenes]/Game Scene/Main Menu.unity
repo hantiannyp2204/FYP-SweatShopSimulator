@@ -401,6 +401,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 194890005966374514, guid: 6aa70890968c5e74980c3f1995cd71ac,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1636591624886963703, guid: 6aa70890968c5e74980c3f1995cd71ac,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -455,6 +460,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: VR Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4252786220186401297, guid: 6aa70890968c5e74980c3f1995cd71ac,
+        type: 3}
+      propertyPath: gameFeedback
+      value: 
+      objectReference: {fileID: 525749370}
+    - target: {fileID: 4252786220186401297, guid: 6aa70890968c5e74980c3f1995cd71ac,
+        type: 3}
+      propertyPath: platformChecker
+      value: 
+      objectReference: {fileID: 472898236}
+    - target: {fileID: 5528126335806970611, guid: 6aa70890968c5e74980c3f1995cd71ac,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1920,10 +1940,35 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1275161737}
     m_Modifications:
+    - target: {fileID: 3921280852582814397, guid: 11418b01ca086ad4f9c707e185a67fe0,
+        type: 3}
+      propertyPath: fadecolor.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3921280852582814397, guid: 11418b01ca086ad4f9c707e185a67fe0,
+        type: 3}
+      propertyPath: fadecolor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3921280852582814397, guid: 11418b01ca086ad4f9c707e185a67fe0,
+        type: 3}
+      propertyPath: fadecolor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3921280852582814397, guid: 11418b01ca086ad4f9c707e185a67fe0,
+        type: 3}
+      propertyPath: fadecolor.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5018958245257322831, guid: 11418b01ca086ad4f9c707e185a67fe0,
         type: 3}
       propertyPath: m_Name
       value: FaderScreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 5018958245257322831, guid: 11418b01ca086ad4f9c707e185a67fe0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8798730299091305908, guid: 11418b01ca086ad4f9c707e185a67fe0,
         type: 3}
@@ -2035,7 +2080,7 @@ PrefabInstance:
     - target: {fileID: 2058402078281344457, guid: 86d2a10a7dd741742b97e62426a4f71e,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3500257825337269956, guid: 86d2a10a7dd741742b97e62426a4f71e,
         type: 3}

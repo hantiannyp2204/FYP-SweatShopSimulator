@@ -8,24 +8,10 @@ public class XRRayHoverManager : MonoBehaviour
     [SerializeField] private XRRayInteractor rayInteractor;
     [SerializeField] private Material hoverMaterial;
 
-    [SerializeField] private FeedbackEventData e_hoverEnterSound;
-    [SerializeField] private FeedbackEventData e_selectEnterSound;
-    [SerializeField] private FeedbackEventData e_selectExitSound;
     // Assign the hover material in the inspector
     private List<Material[]> initialMaterials = new();
 
-    public void PlayHoverEnterSound()
-    {
-        e_hoverEnterSound?.InvokeEvent(transform.position, Quaternion.identity, transform);
-    }
-    public void PlaySelectEnterSound()
-    {
-        e_selectEnterSound?.InvokeEvent(transform.position, Quaternion.identity, transform);
-    }
-    public void PlaySelectExitSound()
-    {
-        e_selectExitSound?.InvokeEvent(transform.position, Quaternion.identity, transform);
-    }
+
     void OnEnable()
     {
         // Subscribe to the hover events
@@ -46,7 +32,6 @@ public class XRRayHoverManager : MonoBehaviour
     {
         if (args.interactableObject != null)
         {
-            e_hoverEnterSound?.InvokeEvent(transform.position, Quaternion.identity, transform);
             AddHoverMaterial(args.interactableObject.transform);
         }
     }
@@ -62,7 +47,6 @@ public class XRRayHoverManager : MonoBehaviour
     {
         if (args.interactableObject != null)
         {
-           PlaySelectEnterSound();
             RemoveHoverMaterial(args.interactableObject.transform);
         }
     }

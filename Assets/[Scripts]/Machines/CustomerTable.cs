@@ -47,8 +47,9 @@ public class CustomerTable : MonoBehaviour
         if(!isRequest)
         {
             float timeLeftForOrder = gameTimeLeft - requestBox.GetTimer();
+            //Debug.Log(timeLeftForOrder);
             //game ends if time ran out
-            if(gameTimeLeft <= 0)
+            if (gameTimeLeft <= 0)
             {
                 EndGame();
             }
@@ -64,7 +65,7 @@ public class CustomerTable : MonoBehaviour
             }
            
         }
-        else
+        else if(isRequest)
         {
             elapsedTimeToNextRequest += Time.deltaTime;
             //if time exceed return
@@ -109,14 +110,14 @@ public class CustomerTable : MonoBehaviour
             LeftHandTimerTxt.text = "Time left:\n" + gameTimeLeft.ToString();
             //animate box upwards
             moveBoxCoroutineHandler = StartCoroutine(MoveBoxCoroutine());
-            isRequest = false;
+  
          
         }
         //send
         else
         {
-            //if wrong item, ignore
-            if (requestBox.GetRequestedItem() != requestBox.GetInsertedItem()) return;
+            //if no item or wrong item, ignore
+            if (requestBox.GetInsertedItem() == null || requestBox.GetRequestedItem() != requestBox.GetInsertedItemData()) return;
 
             //correct item
             //animate box downwards
@@ -124,9 +125,8 @@ public class CustomerTable : MonoBehaviour
             //check item quality (how long it takes to complete)
 
             //reset all variable
-            isRequest = true;
             elapsedTimeToNextRequest = 0;
-            orderText.text = $"Time taken: {requestBox.GetTimer()}\n\nScore awarded:  {requestBox.ShowScoreResult()}";
+            orderText.text = $"Time taken: {(int)requestBox.GetTimer()}\n\nScore awarded:  {requestBox.ShowScoreResult()}";
             totalScore += requestBox.ShowScoreResult();
             RandomiseNextRequestTimer();
         }
@@ -167,10 +167,11 @@ public class CustomerTable : MonoBehaviour
         {
             LeftHandTimerTxt.text = "Awaiting order";
             RightHandRequestTxt.text = "Awaiting order";
+            //reset the items
+            requestBox.ResetBox();
+            requestBox.ResetPointTracker();
         }
-        //reset the items
-        requestBox.ResetBox();
-        requestBox.ResetPointTracker();
+        isRequest = !isRequest;
         moveBoxCoroutineHandler = null;
     }
 

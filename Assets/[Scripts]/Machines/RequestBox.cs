@@ -23,13 +23,31 @@ public class RequestBox : MonoBehaviour
     XRBaseInteractable interactable;
     private XRBaseInteractor interactorUsingThis;
 
+    //hitbox skin
+    [SerializeField] GameObject openedBox;
+    [SerializeField] GameObject closedBox;
+    private void Start()
+    {
+        OpenBox();
+    }
+    private void CloseBox()
+    {
+        openedBox.SetActive(false);
+        closedBox.SetActive(true);
+    }
+    private void OpenBox()
+    {
+        openedBox.SetActive(true);
+        closedBox.SetActive(false);
+    }
     public void ResetBox()
     {
-        if(insertedItem != null)
+        CloseBox();
+        if (insertedItem != null)
         {
             Destroy(insertedItem);
         }
-        insertedItem= null;
+        insertedItem = null;
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -60,6 +78,7 @@ public class RequestBox : MonoBehaviour
 
     public void SetInsertedItem(GameObject item) // when robot reaches table insert the item
     {
+        OpenBox();
         Item collisionItemComponent = item.gameObject.GetComponent<Item>();
         // Make sure there's no inserted item already, and the collided object is an Item
         if (insertedItem != null || collisionItemComponent == null)
@@ -130,8 +149,10 @@ public class RequestBox : MonoBehaviour
     {
         if (boxOpened)
         {
+
             // Start timer when receive requests
             _timer += Time.deltaTime;
+            Debug.Log(_timer);
             _tracker += Time.deltaTime;
 
             if (_tracker >= 5)
@@ -146,7 +167,7 @@ public class RequestBox : MonoBehaviour
             }
         }
     }
-    public int GetTimer() => (int)_timer;
+    public float GetTimer() => _timer;
     public int ShowScoreResult() => (int)_pointsToReward;
     public void ResetPointTracker()
     {
@@ -158,10 +179,11 @@ public class RequestBox : MonoBehaviour
     public void SetRequestedItem(ItemData newRequestedItem)
     {
         requestedItem = newRequestedItem;
-        boxOpened= true;
+        boxOpened = true;
         _pointsToReward = newRequestedItem.GetScoreGiven();
     }
 
-    public ItemData GetRequestedItem()=>requestedItem;
-    public ItemData GetInsertedItem() => insertedItem.GetComponent<Item>().Data;
+    public ItemData GetRequestedItem() => requestedItem;
+    public ItemData GetInsertedItemData() => insertedItem.GetComponent<Item>().Data;
+    public GameObject GetInsertedItem() => insertedItem;
 }

@@ -16,6 +16,7 @@ public class XRVelocityRayGrab : XRGrabInteractable
     private bool canJump = false;
     private bool grabbedByRay = false;
     private bool itemIsHovered = false;
+    private bool itemIsSelectHovered = false;
     private Vector3 raycastHitPoint;
     public bool IsGrabbedByRay() => grabbedByRay;
     public bool CanJump() => canJump;
@@ -47,10 +48,10 @@ public class XRVelocityRayGrab : XRGrabInteractable
     }
     private void FixedUpdate()
     {
-        if (itemIsHovered && rayInteractor != null)
+        if ((itemIsHovered || itemIsSelectHovered) && rayInteractor != null)
         {
             float distanceToItem = Vector3.Distance(rayInteractor.rayEndPoint, hoverInteractorTransform.position);
-            if (distanceToItem >= 1)
+            if (distanceToItem > 1)
             {
                 grabbedByRay = true;
                 trackPosition = false;
@@ -133,7 +134,7 @@ public class XRVelocityRayGrab : XRGrabInteractable
             //}
             Debug.Log("SELECTED by Ray");
 
-
+            itemIsSelectHovered = true;
             rayInteractor = (XRRayInteractor)args.interactorObject;
             previousPos = rayInteractor.transform.position;
             canJump = true;
@@ -146,22 +147,16 @@ public class XRVelocityRayGrab : XRGrabInteractable
             Debug.Log("SELECTED by Direct");
             //if too far and flying, ignore
 
+            base.OnSelectEntered(args);
+            DisableHandModels disableHandModelComponent = args.interactorObject.transform.GetComponent<DisableHandModels>();
+            if (!grabbedByRay && disableHandModelComponent != null)
+            {
+                //disable hand render
+                disableHandModelComponent.DisableHandRender();
+            }
+            itemIsHovered = false;
 
-            
         }
-
-        base.OnSelectEntered(args);
-        DisableHandModels disableHandModelComponent = args.interactorObject.transform.GetComponent<DisableHandModels>();
-        if (!grabbedByRay && disableHandModelComponent != null)
-        {
-            //disable hand render
-            disableHandModelComponent.DisableHandRender();
-        }
-         itemIsHovered = false;
-
-       
-
-
     }
     protected override void OnSelectExited(SelectExitEventArgs args)
     {

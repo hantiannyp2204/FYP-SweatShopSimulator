@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class ManualRequestText : MonoBehaviour
 {
-    public Camera playerCam;
+    private Vector3 cameraDir;
     private void Update()
     {
-        transform.LookAt(transform.position + playerCam.transform.rotation * Vector3.forward, playerCam.transform.rotation * Vector3.up);
+        cameraDir = Camera.main.transform.forward;
+        cameraDir.y = 0;
+
+        transform.rotation = Quaternion.LookRotation(cameraDir);
     }
 }

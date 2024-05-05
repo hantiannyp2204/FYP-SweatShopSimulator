@@ -6,7 +6,7 @@ using TMPro;
 using System.Runtime.CompilerServices;
 using UnityEngine.Events;
 
-public class RefillFuelManager : MonoBehaviour, Iinteractable
+public class RefillFuelManager : MonoBehaviour
 {
     [Range(0.1f, 0.5f)] public float fuelIncrease;
     [HideInInspector] public UnityEvent AddFuelEvent;
@@ -33,18 +33,6 @@ public class RefillFuelManager : MonoBehaviour, Iinteractable
     public string GetInteractName()
     {
         return "RefillFuelMachine";
-    }
-
-    public void Interact(KeyboardGameManager player)
-    {
-        if (!shredder.IsOutOfFuel() || player.playerInventory.GetCurrentItem() != refillCan)
-        {
-            return; // Dont do anything if shredder is not completely out of fuel
-        }
-        else 
-        {
-            activateRefill = true;
-        }
     }
 
     // Start is called before the first frame update

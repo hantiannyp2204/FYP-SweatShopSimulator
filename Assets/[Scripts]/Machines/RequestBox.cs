@@ -10,7 +10,7 @@ public class RequestBox : MonoBehaviour
 {
     //Request box
 
-    bool boxOpened = false;
+    private bool gameStarted = false;
     ItemData requestedItem;
 
     private float _timer;
@@ -40,7 +40,8 @@ public class RequestBox : MonoBehaviour
         openedBox.SetActive(true);
         closedBox.SetActive(false);
     }
-    public void ResetBox()
+    //to run at when sending order
+    public void SendRequestOver()
     {
         CloseBox();
         if (insertedItem != null)
@@ -48,6 +49,7 @@ public class RequestBox : MonoBehaviour
             Destroy(insertedItem);
         }
         insertedItem = null;
+        requestedItem = null;
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -147,39 +149,59 @@ public class RequestBox : MonoBehaviour
 
     private void Update()
     {
-        if (boxOpened)
+        if (gameStarted)
         {
 
             // Start timer when receive requests
             _timer += Time.deltaTime;
             Debug.Log(_timer);
-            _tracker += Time.deltaTime;
-
-            if (_tracker >= 5)
+            if(requestedItem != null)
             {
-                _pointsToReward -= 10;
-                if (_pointsToReward <= 0)
+                _tracker += Time.deltaTime;
+
+                if (_tracker >= 5)
                 {
-                    _pointsToReward = 0;
-                    return;
+                    _pointsToReward -= 10;
+                    if (_pointsToReward <= 0)
+                    {
+                        _pointsToReward = 0;
+                        return;
+                    }
+                    _tracker = 0;
                 }
-                _tracker = 0;
             }
+           
         }
     }
     public float GetTimer() => _timer;
     public int ShowScoreResult() => (int)_pointsToReward;
+    public void Init()
+    {
+        _timer = 0;
+        gameStarted = false;
+        ResetPointTracker();
+    }
+    public void StartGame()
+    {
+        if(gameStarted)
+        {
+            return; 
+        }
+        else
+        {
+            gameStarted = true;
+        }
+    }
     public void ResetPointTracker()
     {
         _tracker = 0;
-        _timer = 0;
+     
         _pointsToReward = 0;
-        boxOpened = false;
+ 
     }
     public void SetRequestedItem(ItemData newRequestedItem)
     {
         requestedItem = newRequestedItem;
-        boxOpened = true;
         _pointsToReward = newRequestedItem.GetScoreGiven();
     }
 

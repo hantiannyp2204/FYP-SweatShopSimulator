@@ -47,7 +47,8 @@ public class XRVelocityRayGrab : XRGrabInteractable
         if (itemIsHovered)
         {
             float distanceToItem = Vector3.Distance(this.transform.position, hoveredItemTransform.position);
-            if (distanceToItem >= 0.4f)
+            Debug.Log("distance to item: " + distanceToItem);
+            if (distanceToItem > 1)
             {
                 grabbedByRay = true;
                 trackPosition = false;
@@ -73,14 +74,26 @@ public class XRVelocityRayGrab : XRGrabInteractable
 
         float angleInRadian = jumpAngleInDegree * Mathf.Deg2Rad;
 
-        float jumpSpeed = Mathf.Sqrt(-Physics.gravity.y * Mathf.Pow(diffXZLength, 2)
-            / (2 * Mathf.Cos(angleInRadian) * Mathf.Cos(angleInRadian) * (diffXZ.magnitude * Mathf.Tan(angleInRadian) - diffYLength)));
+        // Ensure the denominator is never zero or negative which can result in NaN values
+        float denominator = 2 * Mathf.Cos(angleInRadian) * Mathf.Cos(angleInRadian) * (diffXZLength * Mathf.Tan(angleInRadian) - diffYLength);
+        if (denominator <= 0.001f) // A small epsilon value to avoid division by zero
+        {
+            Debug.LogError("Invalid denominator value: " + denominator);
+            return Vector3.zero; // Return zero velocity to avoid errors
+        }
+
+        float jumpSpeed = Mathf.Sqrt(-Physics.gravity.y * diffXZLength * diffXZLength / denominator);
+
+        // Ensure jumpSpeed is not NaN
+        if (float.IsNaN(jumpSpeed))
+        {
+            Debug.LogError("Computed jumpSpeed is NaN");
+            return Vector3.zero;
+        }
 
         Vector3 jumpVelocityVector = diffXZ.normalized * Mathf.Cos(angleInRadian) * jumpSpeed + Vector3.up * Mathf.Sin(angleInRadian) * jumpSpeed;
-
         return jumpVelocityVector;
     }
-
     protected override void OnHoverEntered(HoverEnterEventArgs args)
     {
 
@@ -130,7 +143,7 @@ public class XRVelocityRayGrab : XRGrabInteractable
 
             Debug.Log("SELECTED by Direct");
             //if too far and flying, ignore
-
+            interactableRigidbody.velocity= Vector3.zero;
             //disable hand render
             DisableHandModels disableHandModelComponent = args.interactorObject.transform.GetComponent<DisableHandModels>();
             if (disableHandModelComponent != null)

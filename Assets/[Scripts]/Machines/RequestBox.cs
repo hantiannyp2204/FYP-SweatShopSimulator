@@ -79,7 +79,7 @@ public class RequestBox : MonoBehaviour
 
     public void SetInsertedItem(GameObject item) // when robot reaches table insert the item
     {
-        OpenBox();
+
         Item collisionItemComponent = item.gameObject.GetComponent<Item>();
         // Make sure there's no inserted item already, and the collided object is an Item
         if (insertedItem != null || collisionItemComponent == null)
@@ -191,6 +191,7 @@ public class RequestBox : MonoBehaviour
     }
     public void SetRequestedItem(ItemData newRequestedItem)
     {
+        OpenBox();
         requestedItem = newRequestedItem;
         _pointsToReward = newRequestedItem.GetScoreGiven();
     }

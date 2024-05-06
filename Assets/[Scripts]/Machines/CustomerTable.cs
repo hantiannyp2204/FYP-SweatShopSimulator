@@ -201,6 +201,6 @@ public class CustomerTable : MonoBehaviour
         gameTimeLeft = 0;
         elapsedTimeToNextRequest = 0;
         orderText.text = $"Total Score: {totalScore}";
-       ResetBoxPosition();
+        ResetBoxPosition();
     }
 }

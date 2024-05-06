@@ -92,7 +92,7 @@ public class VRGameManager : MonoBehaviour
             handColliders.Init();
         }
         gameFeedback.InIt();
-        customerTable.Init(leftHandTimerText);
+        customerTable.Init(leftHandTimerText, gameMode);
        // playerObjective.Init();     
         //playerScore.Init();
         //pauseMenu.gameObject.SetActive(false);

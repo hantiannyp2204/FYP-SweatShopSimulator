@@ -17,6 +17,7 @@ public class MachineShredder : MonoBehaviour
 //    [SerializeField] private Transform spawnLocation;
 //  }
 
+
     public WheelStatus currWheelStatus;
 
     public UnityEvent finishedShreddingEvent;
@@ -348,6 +349,8 @@ public class MachineShredder : MonoBehaviour
     {
         if (_wheelPlug.value >= valueToComplete)
         {
+            finishedShreddingEvent.Invoke();
+
             ResetProgressBar();
 
             _leverPlug.SetHandleAngle(_leverPlug.maxAngle); // reset lever
@@ -378,7 +381,9 @@ public class MachineShredder : MonoBehaviour
                     //a.GetPrefab().GetComponent<Rigidbody>().isKinematic = false;
                     //a.GetPrefab().GetComponent<Rigidbody>().useGravity = true;
 
-                    Instantiate(a.GetPrefab(), _spawnPointBound.center + new Vector3(x, 0f, z), Quaternion.identity);
+                    //Instantiate(a.GetPrefab(), _spawnPointBound.center + new Vector3(x, 0f, z), Quaternion.identity);
+
+                    Instantiate(a.GetPrefab(), spawnPoint.transform.GetComponent<Collider>().bounds.center, Quaternion.identity);
                 }
             }
             //clear the list

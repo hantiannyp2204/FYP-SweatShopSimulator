@@ -43,8 +43,11 @@ public class RobotMovement : MonoBehaviour
             {
                 return;
             }
-        }   
-        SetNextDestinaton();
+        } 
+        else
+        {
+            SetNextDestinaton();
+        }
     }
 
     bool GetRandomPoint(Vector3 center, float range, out Vector3 output)

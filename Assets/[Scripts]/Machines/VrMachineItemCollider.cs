@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class VrMachineItemCollider : MonoBehaviour
 {
@@ -10,9 +11,11 @@ public class VrMachineItemCollider : MonoBehaviour
     public Item _tracker;
     private Item _saver;
     private bool _collided = false;
+    private Collider _collider;
 
     private void Start()
     {
+        _collider = GetComponent<Collider>();
         if (shredder != null)
         {
             shredder.finishedShreddingEvent.AddListener(DestroyProduct);
@@ -22,6 +25,8 @@ public class VrMachineItemCollider : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         _collided = true;
+        mouthHandler.GetComponent<Collider>().isTrigger = false;
+
         //check if it has Item Script, else ignore
         Item itemComponenet = other.GetComponent<Item>();
         if (itemComponenet == null)
@@ -35,6 +40,7 @@ public class VrMachineItemCollider : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         _collided = false;
+
         //check if it has Item Script, else ignore
         Item itemComponenet = other.GetComponent<Item>();
         if (itemComponenet == null) return;
@@ -45,7 +51,7 @@ public class VrMachineItemCollider : MonoBehaviour
     {
         _productList.Clear();
     }
-    public List<Item> GetProductList()
+    public List<Item> GetProductList()  
     {
         return _productList;
     }
@@ -59,13 +65,14 @@ public class VrMachineItemCollider : MonoBehaviour
     {
         if (_collided)
         {
-            if (mouthHandler.mouth1 == null || mouthHandler.mouth2 == null)
+            if (mouthHandler.mouth1 == null || mouthHandler.mouth2 == null) return;
             if (!mouthHandler.mouth1.GetComponent<Animator>().GetBool("isActivated") && !mouthHandler.mouth2.GetComponent<Animator>().GetBool("isActivated")) return; // check if mouth is open 
         }
     }
 
     public void DestroyProduct()
     {
+        mouthHandler.GetComponent<Collider>().isTrigger = true;
         Destroy(_saver);
     }
 }

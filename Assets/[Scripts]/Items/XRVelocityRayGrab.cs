@@ -28,19 +28,19 @@ public class XRVelocityRayGrab : XRGrabInteractable
 
     private void Update()
     {
-        if(isSelected && rayInteractor != null && canJump && grabbedByRay)
+        if (isSelected && rayInteractor != null && canJump && grabbedByRay)
         {
             Vector3 velocity = (rayInteractor.transform.position - previousPos) / Time.deltaTime;
             previousPos = rayInteractor.transform.position;
 
             //if hand velocity exceeds set value, enable item to fly towards said hand
-            if(velocity.magnitude > velocityThreshold)
+            if (velocity.magnitude > velocityThreshold)
             {
                 Drop();
                 interactableRigidbody.velocity = ComputeVelocity();
                 canJump = false;
 
-              
+
             }
         }
 
@@ -87,7 +87,7 @@ public class XRVelocityRayGrab : XRGrabInteractable
 
     protected override void OnHoverEntered(HoverEnterEventArgs args)
     {
-   
+
         if (args.interactorObject is XRRayInteractor)
         {
             grabbedByRay = true;
@@ -95,7 +95,7 @@ public class XRVelocityRayGrab : XRGrabInteractable
             hoverInteractorTransform = args.interactorObject.transform;
             rayInteractor = (XRRayInteractor)args.interactorObject;
         }
-        
+
         base.OnHoverEntered(args);
     }
 

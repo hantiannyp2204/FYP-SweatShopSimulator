@@ -50,12 +50,12 @@ public class XRRayHoverManager : MonoBehaviour
     private void HandleSelectEntered(SelectEnterEventArgs args)
     {
         // Optionally, you could handle this differently if you want the material to change or remain upon grabbing
-        AddHoverMaterial(args.interactableObject.transform, args.interactorObject);
+        //AddHoverMaterial(args.interactableObject.transform, args.interactorObject);
     }
 
     private void HandleSelectExited(SelectExitEventArgs args)
     {
-        RemoveHoverMaterial(args.interactableObject.transform, args.interactorObject);
+        //RemoveHoverMaterial(args.interactableObject.transform, args.interactorObject);
     }
 
     private void AddHoverMaterial(Transform target, IXRInteractor interactor)
@@ -102,13 +102,13 @@ public class XRRayHoverManager : MonoBehaviour
             List<Material> materials = new List<Material>(renderer.materials);
             foreach (var material in materials)
             {
-                if(material.name.Contains("Hologramhover"))
+                if(material.name.Contains("HologramHover"))
                 {
                     materials.Remove(material);
                     continue;
                 }
             }
-          
+            
             renderer.materials = materials.ToArray();
         }
     }

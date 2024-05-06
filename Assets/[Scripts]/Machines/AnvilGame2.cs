@@ -88,6 +88,7 @@ public class AnvilGame2 : MonoBehaviour
         if (currentProgress >= 100f)
         {
             Debug.Log("Item is fully crafted!");
+            timerText.text = "Item Crafted!";
             anvil.RunMachine();
             currentProgress = 0; // Reset currentProgress after crafting is complete
         }
@@ -107,8 +108,6 @@ public class AnvilGame2 : MonoBehaviour
             //int randomBeatInterval = Random.Range(minBeatInterval, maxBeatInterval); // Generate a random beat interval
             yield return new WaitForSeconds(BeatInterval - offset); // Wait for beat interval
             Debug.Log(BeatInterval);
-            timer = 0f; // Reset the timer
-
             // Display the timer countdown 
             for (int i = Mathf.RoundToInt(BeatInterval); i >= 0; i--)
             {
@@ -120,17 +119,15 @@ public class AnvilGame2 : MonoBehaviour
             canHit = true;
             yield return new WaitForSeconds(1f);
             timerText.text = ""; // Clear the timer display
-             // allows player to hit
+            // allows player to hit
+            timer = 0f; // Reset the timer
             timerRunning = false;//prevents coroutine from running agains
             // Reset canHit after a delay
             yield return new WaitForSeconds(2f); // Adjust delayTime as needed
             canHit = false; // Reset canHit
             hitRegistered = false;
             Debug.Log("Coroutine exited normally");
-            if (hitbox.ItemOnAnvil == false)
-            {
-                break;
-            }
+            break;
         }
     }
 }

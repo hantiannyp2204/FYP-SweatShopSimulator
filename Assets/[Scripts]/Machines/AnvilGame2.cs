@@ -88,6 +88,7 @@ public class AnvilGame2 : MonoBehaviour
         if (currentProgress >= 100f)
         {
             Debug.Log("Item is fully crafted!");
+            timerText.text = "Item Crafted!";
             anvil.RunMachine();
             currentProgress = 0; // Reset currentProgress after crafting is complete
         }
@@ -126,10 +127,7 @@ public class AnvilGame2 : MonoBehaviour
             canHit = false; // Reset canHit
             hitRegistered = false;
             Debug.Log("Coroutine exited normally");
-            //if (hitbox.ItemOnAnvil == false)
-            //{
-            //    break;
-            //}
+            break;
         }
     }
 }

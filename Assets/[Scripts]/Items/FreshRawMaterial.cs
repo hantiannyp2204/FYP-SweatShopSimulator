@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class FreshRawMaterial : MonoBehaviour
 {
-    [SerializeField] float timeToCool = 5;
     List<Material[]> initialMaterials = new();
     float timeLeft;
+    bool initialedTime = false;
     Coroutine coolDownHandler;
-    private void Start()
-    {
-        timeLeft = timeToCool;
-       
-    }
     public void ApplyHotTexture(Material hotMaterial)
     {
         // Retrieve all MeshRenderer components on the GameObject and its children
@@ -47,8 +42,13 @@ public class FreshRawMaterial : MonoBehaviour
             currentIndex++;
         }
     }
-    public void CoolMaterial()
+    public void CoolMaterial(float timeToCool)
     {
+        if(!initialedTime)
+        {
+            timeLeft = timeToCool;
+            initialedTime = true;
+        }
         coolDownHandler = StartCoroutine(CoolMaterialCoroutine());
     }
     public void CoolMaterialPause()
@@ -63,7 +63,8 @@ public class FreshRawMaterial : MonoBehaviour
         float currentElapsedTime = 0;
         while(currentElapsedTime < timeLeft)
         {
-            currentElapsedTime++;
+            //reduce the time so it will save the cooling progress
+            timeLeft -= Time.deltaTime;
             yield return null;
         }
         //return eveyone back to normal textures

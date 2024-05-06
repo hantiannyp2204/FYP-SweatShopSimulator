@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.UI.BodyUI;
 using static Item;
@@ -9,6 +10,7 @@ using static VRHandManager;
 
 public class VRGameManager : MonoBehaviour
 {
+    //to auto disable keyboard player if running on Andriod build (delted and removed)
     [SerializeField] PlatformChecker platformChecker;
     public enum GameMode
     {
@@ -31,8 +33,10 @@ public class VRGameManager : MonoBehaviour
     [SerializeField] List<HandColliders> vrPlayerHandColliderList;
     [SerializeField] GameFeedback gameFeedback;
     //public Objective playerObjective;
-    //[SerializeField] CustomerTable customerTable;
-    //[SerializeField] GameTimer gameTimer;
+    [SerializeField] CustomerTable customerTable;
+    [SerializeField] TMP_Text leftHandTimerText;
+    [SerializeField] TMP_Text leftHandGrabText;
+    [SerializeField] TMP_Text rightHandGrabText;
 
     ////Score system
     //[SerializeField] PlayerScore playerScore;
@@ -65,6 +69,9 @@ public class VRGameManager : MonoBehaviour
             DisableVRSystem();
         }
 #endif
+        if (leftHandTimerText == null) return; // null check
+        if (leftHandGrabText == null) return;
+        if (rightHandGrabText == null) return;
 
         //playerMovement.Init();
         foreach (VRHandManager handManager in vrHandInteractionManagerList)
@@ -85,11 +92,8 @@ public class VRGameManager : MonoBehaviour
             handColliders.Init();
         }
         gameFeedback.InIt();
+        customerTable.Init(leftHandTimerText, gameMode);
        // playerObjective.Init();     
-        if(gameMode == GameMode.Levels)
-        {
-            //gameTimer.SetTimer(SecondsGiven);
-        }
         //playerScore.Init();
         //pauseMenu.gameObject.SetActive(false);
         //endMenu.gameObject.SetActive(false);
@@ -127,15 +131,7 @@ public class VRGameManager : MonoBehaviour
             //}
 
             //update table timer
-            if (gameMode == GameMode.Levels)
-            {
-                //customerTable.UpdateTimer();
-                //gameEnded = gameTimer.UpdateTime();
-            }
-            else
-            {
-               // gameTimer.NoTime();
-            }
+            customerTable.UpdateTimer(leftHandTimerText);
         }
         //check for puase menu
         if (Input.GetKeyDown(KeyCode.Escape))

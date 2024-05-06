@@ -1,13 +1,17 @@
+using Oculus.Interaction;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Content.Interaction;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Transformers;
 
 public class SmelterWheel : XRKnob
 {
     [Header("References")]
     [SerializeField] MachineSmelter smelter;
     [SerializeField] XRDoor smelterDoor;
+    [SerializeField] XRBaseInteractable grabInteractable;
 
     [Header("Feedback Events")]
     [SerializeField] private FeedbackEventData e_lock;

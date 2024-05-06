@@ -10,10 +10,9 @@ public class RequestBox : MonoBehaviour
 {
     //Request box
 
-    bool boxOpened = false;
+    private bool gameStarted = false;
     ItemData requestedItem;
 
-    private float _timer;
     private float _pointsToReward;
     private float _tracker;
 
@@ -23,13 +22,33 @@ public class RequestBox : MonoBehaviour
     XRBaseInteractable interactable;
     private XRBaseInteractor interactorUsingThis;
 
-    public void ResetBox()
+    //hitbox skin
+    [SerializeField] GameObject openedBox;
+    [SerializeField] GameObject closedBox;
+    private void Start()
     {
-        if(insertedItem != null)
+        OpenBox();
+    }
+    private void CloseBox()
+    {
+        openedBox.SetActive(false);
+        closedBox.SetActive(true);
+    }
+    private void OpenBox()
+    {
+        openedBox.SetActive(true);
+        closedBox.SetActive(false);
+    }
+    //to run at when sending order
+    public void SendRequestOver()
+    {
+        CloseBox();
+        if (insertedItem != null)
         {
             Destroy(insertedItem);
         }
-        insertedItem= null;
+        insertedItem = null;
+        requestedItem = null;
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -60,6 +79,7 @@ public class RequestBox : MonoBehaviour
 
     public void SetInsertedItem(GameObject item) // when robot reaches table insert the item
     {
+        OpenBox();
         Item collisionItemComponent = item.gameObject.GetComponent<Item>();
         // Make sure there's no inserted item already, and the collided object is an Item
         if (insertedItem != null || collisionItemComponent == null)
@@ -128,10 +148,8 @@ public class RequestBox : MonoBehaviour
 
     private void Update()
     {
-        if (boxOpened)
+        if (gameStarted && requestedItem != null)
         {
-            // Start timer when receive requests
-            _timer += Time.deltaTime;
             _tracker += Time.deltaTime;
 
             if (_tracker >= 5)
@@ -144,24 +162,40 @@ public class RequestBox : MonoBehaviour
                 }
                 _tracker = 0;
             }
+
         }
     }
-    public int GetTimer() => (int)_timer;
     public int ShowScoreResult() => (int)_pointsToReward;
+    public void Init()
+    {
+        gameStarted = false;
+        ResetPointTracker();
+    }
+    public void StartGame()
+    {
+        if(gameStarted)
+        {
+            return; 
+        }
+        else
+        {
+            gameStarted = true;
+        }
+    }
     public void ResetPointTracker()
     {
         _tracker = 0;
-        _timer = 0;
+     
         _pointsToReward = 0;
-        boxOpened = false;
+ 
     }
     public void SetRequestedItem(ItemData newRequestedItem)
     {
         requestedItem = newRequestedItem;
-        boxOpened= true;
         _pointsToReward = newRequestedItem.GetScoreGiven();
     }
 
-    public ItemData GetRequestedItem()=>requestedItem;
-    public ItemData GetInsertedItem() => insertedItem.GetComponent<Item>().Data;
+    public ItemData GetRequestedItem() => requestedItem;
+    public ItemData GetInsertedItemData() => insertedItem.GetComponent<Item>().Data;
+    public GameObject GetInsertedItem() => insertedItem;
 }

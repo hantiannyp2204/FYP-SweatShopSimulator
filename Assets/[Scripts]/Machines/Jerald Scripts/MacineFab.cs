@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-public class MacineFab : MonoBehaviour, Iinteractable
+public class MacineFab : MonoBehaviour
 {
     [Header("Feedback")]
     [SerializeField] private FeedbackEventData Fabricator_run;
@@ -34,21 +34,7 @@ public class MacineFab : MonoBehaviour, Iinteractable
 
     public string GetInteractName() => "Use " + name;
 
-    public void Interact(KeyboardGameManager player)
-    {
-        
-        Item currentItem = player.playerInventory.GetCurrentItem();
-
-        if (currentItem == null)
-        {
-            return;
-        }
-        else
-        {
-           _TextHolder.SetActive(true);
-            Debug.Log("Interacting " + name + " with " + player.playerInventory.GetCurrentItem().Data.name);
-        }
-    }
+   
 
     public bool IsGameEnded() => gameEnd;
     public void RunActive()

@@ -171,19 +171,10 @@ public interface IVRRelease
     public void OnRelease(Vector3 handVelocity, HandType handType);
 }
 
-public interface IinteractableExtensionRetrieve
-{
-    public void OnEnter(Iinteractable interactable);
-    public void OnExit(Iinteractable interactable);
-}
 public interface IinteractableExtensionRetrieveObj
 {
     public void OnEnter(GameObject interactable);
     public void OnExit(GameObject interactable);
 }
-public interface IinteractableInteracting
-{
-    public void OnInteracting(Iinteractable interactable);
-    public void OnStopInteracting(Iinteractable interactable);
-}
+
 

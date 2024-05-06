@@ -1,26 +1,25 @@
-using Oculus.Interaction;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.Burst.Intrinsics;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using static VRHandManager;
+using System.Linq;
 
 public class HandPresencePhysics : MonoBehaviour
 {
     public Transform handXRController;
     private Rigidbody rb;
     [SerializeField] private float zRotationOffset;
-
     HandType handType = HandType.Left;
 
-    Coroutine collisionRecoverCoroutineHandler;
-    GameObject grabbedCollisionObject;
-    GameObject previousGrabbedCollisionObject;
-    Collider[] itemColliderArray;
-    [SerializeField] List<XRBaseInteractor> interactorList= new List<XRBaseInteractor>();
+    [SerializeField] List<XRBaseInteractor> interactorList = new List<XRBaseInteractor>();
     public TMP_Text DebugTxt;
+
+    private List<(Coroutine, GameObject)> collisionRecoverCoroutines = new List<(Coroutine, GameObject)>();
+    GameObject grabbedCollisionObject;
+    Collider[] itemColliderArray;
+
     public void Init()
     {
         // Set the hand type based on the object name
@@ -30,14 +29,16 @@ public class HandPresencePhysics : MonoBehaviour
         }
         rb = GetComponent<Rigidbody>();
     }
+
     private void OnEnable()
     {
-        foreach(XRBaseInteractor interactor in  interactorList)
+        foreach (XRBaseInteractor interactor in interactorList)
         {
             interactor.selectEntered.AddListener(HandleSelectEntered);
             interactor.selectExited.AddListener(HandleSelectExited);
         }
     }
+
     private void OnDisable()
     {
         foreach (XRBaseInteractor interactor in interactorList)
@@ -46,24 +47,23 @@ public class HandPresencePhysics : MonoBehaviour
             interactor.selectExited.RemoveListener(HandleSelectExited);
         }
     }
+
     private void HandleSelectEntered(SelectEnterEventArgs arg)
     {
-      
         IgnoreCollision(arg.interactableObject.transform.gameObject);
     }
 
     private void HandleSelectExited(SelectExitEventArgs arg)
     {
         Debug.Log(arg.interactor.name + ": Let go");
-        ResetIgnoreCollision();
+        ResetIgnoreCollision(arg.interactableObject.transform.gameObject);
     }
-
 
     public HandType GetHandType() => handType;
 
     public void HandPhysicsFixedUpdate()
     {
-
+        if (rb == null) return;
         rb.velocity = (handXRController.position - transform.position) / Time.fixedDeltaTime;
 
         Quaternion targetRotationWithOffset = handXRController.rotation * Quaternion.Euler(0, 0, zRotationOffset);
@@ -85,23 +85,34 @@ public class HandPresencePhysics : MonoBehaviour
             rb.angularVelocity = Vector3.zero;
         }
     }
-    public void IgnoreCollision  (GameObject itemToIgnore)
+
+    public void IgnoreCollision(GameObject itemToIgnore)
     {
-        //dont run if its a generator
+        // don't run if it's a generator
         if (itemToIgnore.GetComponent<Generators>()) return;
         if (DebugTxt != null)
         {
             DebugTxt.text = "IGNORE " + itemToIgnore.name;
         }
-        if (collisionRecoverCoroutineHandler != null && previousGrabbedCollisionObject == itemToIgnore)
+
+        // Stop and remove any ongoing coroutine for the item
+        var existingCoroutine = collisionRecoverCoroutines.FirstOrDefault(tuple => tuple.Item2 == itemToIgnore);
+        if (existingCoroutine != default)
         {
-            StopCoroutine(collisionRecoverCoroutineHandler);
-            collisionRecoverCoroutineHandler = null;
+            StopCoroutine(existingCoroutine.Item1);
+            collisionRecoverCoroutines.Remove(existingCoroutine);
         }
+
         grabbedCollisionObject = itemToIgnore;
 
-    
         itemColliderArray = itemToIgnore.GetComponentsInChildren<Collider>();
+        // add more colliders into the array if the item has LinkedColliders script
+        LinkedColliders linkedColliderScript = itemToIgnore.GetComponent<LinkedColliders>();
+        if (linkedColliderScript != null)
+        {
+            itemColliderArray = itemColliderArray.Concat(linkedColliderScript.GetAllLinkedColliders()).ToArray();
+        }
+
         foreach (Collider handCollider in GetComponent<HandColliders>().GetHandColliders())
         {
             foreach (Collider itemCollider in itemColliderArray)
@@ -111,19 +122,18 @@ public class HandPresencePhysics : MonoBehaviour
         }
     }
 
-    public void ResetIgnoreCollision()
+    public void ResetIgnoreCollision(GameObject itemToReset)
     {
         if (grabbedCollisionObject == null) return;
-       
-        previousGrabbedCollisionObject = grabbedCollisionObject;
+
         grabbedCollisionObject = null;
-        collisionRecoverCoroutineHandler = StartCoroutine(RecoverCollisionCoroutine(itemColliderArray));
+        var coroutine = StartCoroutine(RecoverCollisionCoroutine(itemColliderArray, itemToReset));
+        collisionRecoverCoroutines.Add((coroutine, itemToReset));
         itemColliderArray = null;
     }
 
-    IEnumerator RecoverCollisionCoroutine(Collider[] colliderToRecoverList)
+    IEnumerator RecoverCollisionCoroutine(Collider[] colliderToRecoverList, GameObject itemToReset)
     {
-      
         yield return new WaitForSeconds(GetComponent<HandColliders>().GetCollisionRecoverDelay());
 
         foreach (Collider handCollider in GetComponent<HandColliders>().GetHandColliders())
@@ -137,7 +147,6 @@ public class HandPresencePhysics : MonoBehaviour
             }
         }
 
-        previousGrabbedCollisionObject = null;
-        collisionRecoverCoroutineHandler = null;
+        collisionRecoverCoroutines.RemoveAll(tuple => tuple.Item2 == itemToReset);
     }
 }

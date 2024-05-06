@@ -22,6 +22,7 @@ public class CustomerTable : MonoBehaviour
     //Timer
     float elapsedTimeToNextRequest = 0;
     float timeToNextRequest;
+    float timeTaken = 0;
 
     int totalScore = 0;
     void RandomiseNextRequestTimer()
@@ -35,9 +36,16 @@ public class CustomerTable : MonoBehaviour
         requestBox.Init();
     }
 
-    public void Init(TMP_Text leftHandTimerText)
+    public void Init(TMP_Text leftHandTimerText, GameMode setGameMode)
     {
         leftHandTimerText.text = "Go start your shift";
+        gameMode = setGameMode;
+        if (gameMode == GameMode.Test_Chamber)
+        {
+            timeTaken = 0;
+        }
+       
+
     }
     public void UpdateTimer(TMP_Text lefthandTimerText)
     {
@@ -47,7 +55,7 @@ public class CustomerTable : MonoBehaviour
         }
         if(!isRequest)
         {
-            float timeLeftForOrder = gameTimeLeft - requestBox.GetTimer();
+            gameTimeLeft -= Time.deltaTime;
             //Debug.Log(timeLeftForOrder);
             //game ends if time ran out
             if (gameTimeLeft <= 0)
@@ -57,16 +65,22 @@ public class CustomerTable : MonoBehaviour
             else
             {
                 // Calculate minutes and seconds
-                int minutes = Mathf.FloorToInt(timeLeftForOrder / 60);
-                int seconds = Mathf.FloorToInt(timeLeftForOrder % 60);
+                int minutes = Mathf.FloorToInt(gameTimeLeft / 60);
+                int seconds = Mathf.FloorToInt(gameTimeLeft % 60);
 
                 // Format the time as a string
                 string timeString = string.Format("{0:00}:{1:00}", minutes, seconds);
                 lefthandTimerText.text = "Time left:\n" + timeString;
+
+                //add time elapsed if it is test chamber
+                if(gameMode == GameMode.Test_Chamber)
+                {
+                    timeTaken += Time.deltaTime;
+                }
             }
            
         }
-        else if(isRequest)
+        else
         {
             elapsedTimeToNextRequest += Time.deltaTime;
             //if time exceed return
@@ -90,6 +104,7 @@ public class CustomerTable : MonoBehaviour
             if(toggledByButton && !gameStart)
             {
                 gameStart = true;
+                requestBox.StartGame();
             } 
             //dont not get request manually if game already started
             else if(toggledByButton && gameStart)
@@ -119,7 +134,7 @@ public class CustomerTable : MonoBehaviour
 
             //reset all variable
             elapsedTimeToNextRequest = 0;
-            orderText.text = $"Time taken: {(int)requestBox.GetTimer()}\n\nScore awarded:  {requestBox.ShowScoreResult()}";
+            orderText.text = $"Time taken: {(int)timeTaken}\n\nScore awarded:  {requestBox.ShowScoreResult()}";
             totalScore += requestBox.ShowScoreResult();
             RandomiseNextRequestTimer();
         }

@@ -8,6 +8,7 @@ public class XRRayHoverManager : MonoBehaviour
     [SerializeField] private Material hoverMaterial;
 
     private Dictionary<Transform, HashSet<IXRInteractor>> activeInteractors = new();
+    private HashSet<Transform> selectedInteractables = new(); // Track selected interactables
 
     void OnEnable()
     {
@@ -33,7 +34,7 @@ public class XRRayHoverManager : MonoBehaviour
 
     private void HandleHoverEntered(HoverEnterEventArgs args)
     {
-        if (args.interactableObject != null)
+        if (args.interactableObject != null && !selectedInteractables.Contains(args.interactableObject.transform))
         {
             AddHoverMaterial(args.interactableObject.transform, args.interactorObject);
         }
@@ -41,7 +42,7 @@ public class XRRayHoverManager : MonoBehaviour
 
     private void HandleHoverExited(HoverExitEventArgs args)
     {
-        if (args.interactableObject != null)
+        if (args.interactableObject != null && !selectedInteractables.Contains(args.interactableObject.transform))
         {
             RemoveHoverMaterial(args.interactableObject.transform, args.interactorObject);
         }
@@ -49,13 +50,19 @@ public class XRRayHoverManager : MonoBehaviour
 
     private void HandleSelectEntered(SelectEnterEventArgs args)
     {
-        // Optionally, you could handle this differently if you want the material to change or remain upon grabbing
-        AddHoverMaterial(args.interactableObject.transform, args.interactorObject);
+        if (args.interactableObject != null)
+        {
+            selectedInteractables.Add(args.interactableObject.transform);
+            RemoveHoverMaterial(args.interactableObject.transform, args.interactorObject);
+        }
     }
 
     private void HandleSelectExited(SelectExitEventArgs args)
     {
-        RemoveHoverMaterial(args.interactableObject.transform, args.interactorObject);
+        if (args.interactableObject != null)
+        {
+            selectedInteractables.Remove(args.interactableObject.transform);
+        }
     }
 
     private void AddHoverMaterial(Transform target, IXRInteractor interactor)
@@ -63,36 +70,50 @@ public class XRRayHoverManager : MonoBehaviour
         if (!activeInteractors.ContainsKey(target))
         {
             activeInteractors[target] = new HashSet<IXRInteractor>();
-        }
-        if (activeInteractors[target].Count == 0)
-        {
-            MeshRenderer[] renderers = target.GetComponentsInChildren<MeshRenderer>();
-            foreach (var renderer in renderers)
-            {
-                List<Material> materials = new List<Material>(renderer.materials);
-                materials.Add(hoverMaterial);
-                renderer.materials = materials.ToArray();
-            }
+            ApplyHoverMaterial(target);
         }
         activeInteractors[target].Add(interactor);
     }
 
     private void RemoveHoverMaterial(Transform target, IXRInteractor interactor)
     {
-        if (activeInteractors.ContainsKey(target))
+        if (activeInteractors.TryGetValue(target, out var interactorsSet))
         {
-            activeInteractors[target].Remove(interactor);
-            if (activeInteractors[target].Count == 0)
+            interactorsSet.Remove(interactor);
+            if (interactorsSet.Count == 0)
             {
-                MeshRenderer[] renderers = target.GetComponentsInChildren<MeshRenderer>();
-                foreach (var renderer in renderers)
-                {
-                    List<Material> materials = new List<Material>(renderer.materials);
-                    materials.Remove(hoverMaterial);
-                    renderer.materials = materials.ToArray();
-                }
+                RemoveHoverMaterial(target);
                 activeInteractors.Remove(target);
             }
+        }
+    }
+
+    private void ApplyHoverMaterial(Transform target)
+    {
+        MeshRenderer[] renderers = target.GetComponentsInChildren<MeshRenderer>();
+        foreach (var renderer in renderers)
+        {
+            List<Material> materials = new List<Material>(renderer.materials);
+            materials.Add(hoverMaterial);
+            renderer.materials = materials.ToArray();
+        }
+    }
+
+    private void RemoveHoverMaterial(Transform target)
+    {
+        MeshRenderer[] renderers = target.GetComponentsInChildren<MeshRenderer>();
+        foreach (var renderer in renderers)
+        {
+            List<Material> materials = new List<Material>(renderer.materials);
+            foreach (var material in materials)
+            {
+                if (material.name.Contains("HologramHover"))
+                {
+                    materials.Remove(material);
+                    break;
+                }
+            }
+            renderer.materials = materials.ToArray();
         }
     }
 }

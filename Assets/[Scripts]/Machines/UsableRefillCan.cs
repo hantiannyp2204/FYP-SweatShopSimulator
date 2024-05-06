@@ -5,7 +5,6 @@ using UnityEngine;
 public class UsableRefillCan : VRItemUsable
 {
     [SerializeField] private GameObject gasolineParticle;
-    [SerializeField] private float saidDistance;
     [SerializeField] private MachineShredder shredder;
 
     [Header("References")]

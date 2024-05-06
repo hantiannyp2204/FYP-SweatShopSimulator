@@ -39,6 +39,8 @@ public class WheelManager : MonoBehaviour
             canStartShredding = new UnityEvent();
         }
 
+        if (shredder == null) return;
+
         shredder.lever.GetComponentInChildren<XRLever>().onLeverDeactivate.AddListener(ActivateWheel);
 
         _wheel = GetComponent<XRKnob>();

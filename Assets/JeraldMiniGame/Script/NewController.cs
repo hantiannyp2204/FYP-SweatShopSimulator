@@ -51,7 +51,7 @@ public class NewController : MonoBehaviour
 
         trueRange -= (Lnum - 1) * 10;
         speed *= 1 + ((float)(Lnum - 1) / 2);
-        levelText.text = "speed = " + speed + "    L E V E L " + Lnum + "    range = " + trueRange;
+        levelText.text =/* "speed = " + speed +*/ "    L E V E L " + Lnum + "    range = " + trueRange;
         SetRange();
     }
 
@@ -69,19 +69,12 @@ public class NewController : MonoBehaviour
         }
     }
     public void EndRotate()
-    {
-        //hold = false;
+    {      
         WinCheck(xRKnob.m_Value);
     }
 
     void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.I))
-        //{
-        //    // Move to the next product
-        //    EndRotate();
-        //}
-
         if (Input.GetKeyDown(KeyCode.O))
         {
             if (gameEnded && winORloseText.text == "WIN")
@@ -106,18 +99,6 @@ public class NewController : MonoBehaviour
             float newccPower = power._CurrentPower;
             power.UpdatePowerBar(power._PowerForFab, newccPower);
         }
-        
-
-
-        //if (gameEnded && Input.GetKeyDown(KeyCode.L) && winORloseText.text == "WIN")
-        //{
-        //    ChangeLevel();
-        //}
-        //StartRotate();
-        //if (hold == false)
-        //{
-        //    EndRotate();
-        //}
     }
     void SetRange()
     {
@@ -163,8 +144,6 @@ public class NewController : MonoBehaviour
     public void Next()
     {
         Lnum += 1;
-        PlayerPrefs.SetInt("Level num", Lnum);
-        SceneManager.LoadScene("Minigame");
     }
 
     public void ChangeLevel()
@@ -194,7 +173,7 @@ public class NewController : MonoBehaviour
     {
         trueRange -= (Lnum - 1) * 10;
         speed *= 1 + ((float)(Lnum - 1) / 2);
-        levelText.text = "speed = " + speed + "    L E V E L " + Lnum + "    range = " + trueRange;
+        levelText.text = /*"speed = " + speed +*/ "    L E V E L " + Lnum + "    range = " + trueRange;
     }
 
     public void NextButtonToggle()

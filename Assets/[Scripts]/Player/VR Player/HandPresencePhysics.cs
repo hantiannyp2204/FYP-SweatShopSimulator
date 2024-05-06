@@ -63,6 +63,7 @@ public class HandPresencePhysics : MonoBehaviour
 
     public void HandPhysicsFixedUpdate()
     {
+        if (rb == null) return;
         rb.velocity = (handXRController.position - transform.position) / Time.fixedDeltaTime;
 
         Quaternion targetRotationWithOffset = handXRController.rotation * Quaternion.Euler(0, 0, zRotationOffset);

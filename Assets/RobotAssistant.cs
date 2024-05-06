@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.AI;
 public enum ROBOT_STATE
 {
     DELIVERING,
@@ -10,6 +10,8 @@ public enum ROBOT_STATE
 
 public class RobotAssistant : MonoBehaviour
 {
+    [SerializeField] private float yOffset;
+
     [SerializeField] private GameObject player;
     [SerializeField] private float jumpHeight;
     [SerializeField] private float jumpDuration;
@@ -19,11 +21,19 @@ public class RobotAssistant : MonoBehaviour
     private Rigidbody _rb;
     private ZoneSaver _zoneSaver;
 
+    private NavMeshAgent _getAgent;
+
     [SerializeField] private ROBOT_STATE _currState;
     
     // Start is called before the first frame update
     void Start()
     {
+        _getAgent = GetComponent<NavMeshAgent>();
+        if (_getAgent != null)
+        {
+          //  _getAgent.baseOffset = 2;
+        }
+
         _rb = GetComponent<Rigidbody>();
         _currState = ROBOT_STATE.PATROL;
     }

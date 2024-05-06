@@ -69,6 +69,9 @@ public class VRGameManager : MonoBehaviour
             DisableVRSystem();
         }
 #endif
+        if (leftHandTimerText == null) return; // null check
+        if (leftHandGrabText == null) return;
+        if (rightHandGrabText == null) return;
 
         //playerMovement.Init();
         foreach (VRHandManager handManager in vrHandInteractionManagerList)

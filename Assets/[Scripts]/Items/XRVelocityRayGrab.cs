@@ -2,22 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
-using static OVRPlugin;
-
 public class XRVelocityRayGrab : XRGrabInteractable
 {
     public float velocityThreshold = 2;
     public float jumpAngleInDegree = 60;
 
     private XRRayInteractor rayInteractor;
-    private Transform hoverInteractorTransform;
+    private Transform hoveredItemTransform;
     private Vector3 previousPos;
     private Rigidbody interactableRigidbody;
     private bool canJump = false;
     private bool grabbedByRay = false;
     private bool itemIsHovered = false;
-    private bool itemIsSelectHovered = false;
-    private Vector3 raycastHitPoint;
     public bool IsGrabbedByRay() => grabbedByRay;
     public bool CanJump() => canJump;
     protected override void Awake()
@@ -28,19 +24,19 @@ public class XRVelocityRayGrab : XRGrabInteractable
 
     private void Update()
     {
-        if(isSelected && rayInteractor != null && canJump && grabbedByRay)
+        if (isSelected && rayInteractor != null && canJump && grabbedByRay)
         {
             Vector3 velocity = (rayInteractor.transform.position - previousPos) / Time.deltaTime;
             previousPos = rayInteractor.transform.position;
 
             //if hand velocity exceeds set value, enable item to fly towards said hand
-            if(velocity.magnitude > velocityThreshold)
+            if (velocity.magnitude > velocityThreshold)
             {
                 Drop();
                 interactableRigidbody.velocity = ComputeVelocity();
                 canJump = false;
 
-              
+
             }
         }
 
@@ -48,10 +44,10 @@ public class XRVelocityRayGrab : XRGrabInteractable
     }
     private void FixedUpdate()
     {
-        if ((itemIsHovered || itemIsSelectHovered) && rayInteractor != null)
+        if (itemIsHovered)
         {
-            float distanceToItem = Vector3.Distance(rayInteractor.rayEndPoint, hoverInteractorTransform.position);
-            if (distanceToItem > 1)
+            float distanceToItem = Vector3.Distance(this.transform.position, hoveredItemTransform.position);
+            if (distanceToItem >= 0.4f)
             {
                 grabbedByRay = true;
                 trackPosition = false;
@@ -87,15 +83,14 @@ public class XRVelocityRayGrab : XRGrabInteractable
 
     protected override void OnHoverEntered(HoverEnterEventArgs args)
     {
-   
+
         if (args.interactorObject is XRRayInteractor)
         {
             grabbedByRay = true;
             itemIsHovered = true;
-            hoverInteractorTransform = args.interactorObject.transform;
-            rayInteractor = (XRRayInteractor)args.interactorObject;
+            hoveredItemTransform = args.interactorObject.transform;
         }
-        
+
         base.OnHoverEntered(args);
     }
 
@@ -104,21 +99,9 @@ public class XRVelocityRayGrab : XRGrabInteractable
         if (args.interactorObject is XRRayInteractor)
         {
             itemIsHovered = false;
-            hoverInteractorTransform = null;
-            rayInteractor = null;
+            hoveredItemTransform = null;
         }
         base.OnHoverExited(args);
-    }
-    public override bool IsSelectableBy(IXRSelectInteractor interactor)
-    {
-        // Check if this object has the Fresh script
-        if (GetComponent<FreshRawMaterial>() != null && interactor.transform.name.Contains("Left"))
-        {
-            return false; // Prevent grabbing if the Fresh script is present
-        }
-
-        // Call the base method to preserve default behavior
-        return base.IsSelectableBy(interactor);
     }
     protected override void OnSelectEntered(SelectEnterEventArgs args)
     {
@@ -134,7 +117,7 @@ public class XRVelocityRayGrab : XRGrabInteractable
             //}
             Debug.Log("SELECTED by Ray");
 
-            itemIsSelectHovered = true;
+
             rayInteractor = (XRRayInteractor)args.interactorObject;
             previousPos = rayInteractor.transform.position;
             canJump = true;
@@ -144,19 +127,22 @@ public class XRVelocityRayGrab : XRGrabInteractable
         //if direct grab
         else
         {
+
             Debug.Log("SELECTED by Direct");
             //if too far and flying, ignore
 
-            base.OnSelectEntered(args);
+            //disable hand render
             DisableHandModels disableHandModelComponent = args.interactorObject.transform.GetComponent<DisableHandModels>();
-            if (!grabbedByRay && disableHandModelComponent != null)
+            if (disableHandModelComponent != null)
             {
-                //disable hand render
                 disableHandModelComponent.DisableHandRender();
             }
-            itemIsHovered = false;
-
         }
+
+        base.OnSelectEntered(args);
+        itemIsHovered = false;
+        //disable hand render
+
     }
     protected override void OnSelectExited(SelectExitEventArgs args)
     {

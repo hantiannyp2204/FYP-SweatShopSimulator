@@ -12,8 +12,13 @@ public class SmelterCoalManager : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //only accept if its coal and is not being grabbed
-        ItemData itemData = other.transform.GetComponent<Item>().Data;
-        if (itemData.itemName == "Coal fuel" && !other.GetComponent<XRBaseInteractable>().isSelected && other.gameObject.layer == LayerMask.NameToLayer("Item"))
+        Item item = other.transform.GetComponent<Item>();
+        if (item == null)
+        {
+            return;
+        }
+        ItemData itemData = item.Data;
+        if (itemData != null && itemData.itemName == "Coal fuel" && !other.GetComponent<XRBaseInteractable>().isSelected && other.gameObject.layer == LayerMask.NameToLayer("Item"))
         {
             //play fuel enter sound
             fuelAddedSound?.InvokeEvent(transform.position, Quaternion.identity, transform);

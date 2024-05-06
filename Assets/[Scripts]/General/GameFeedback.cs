@@ -83,6 +83,9 @@ public class GameFeedback : MonoBehaviour
             GameObject audioObj = AudioPooling[(int)data.audioType].GetAudio(data);
             // Get the audio source
             AudioSource audioS = audioObj.GetComponent<AudioSource>();
+            //set the audio's volume to max to reset if it uses fade volume
+            audioS.volume = 1;
+
             // play audio at random
             switch (data.audioType)
             {

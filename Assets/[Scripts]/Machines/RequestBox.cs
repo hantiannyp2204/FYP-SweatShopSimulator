@@ -13,7 +13,6 @@ public class RequestBox : MonoBehaviour
     private bool gameStarted = false;
     ItemData requestedItem;
 
-    private float _timer;
     private float _pointsToReward;
     private float _tracker;
 
@@ -149,35 +148,26 @@ public class RequestBox : MonoBehaviour
 
     private void Update()
     {
-        if (gameStarted)
+        if (gameStarted && requestedItem != null)
         {
+            _tracker += Time.deltaTime;
 
-            // Start timer when receive requests
-            _timer += Time.deltaTime;
-            Debug.Log(_timer);
-            if(requestedItem != null)
+            if (_tracker >= 5)
             {
-                _tracker += Time.deltaTime;
-
-                if (_tracker >= 5)
+                _pointsToReward -= 10;
+                if (_pointsToReward <= 0)
                 {
-                    _pointsToReward -= 10;
-                    if (_pointsToReward <= 0)
-                    {
-                        _pointsToReward = 0;
-                        return;
-                    }
-                    _tracker = 0;
+                    _pointsToReward = 0;
+                    return;
                 }
+                _tracker = 0;
             }
-           
+
         }
     }
-    public float GetTimer() => _timer;
     public int ShowScoreResult() => (int)_pointsToReward;
     public void Init()
     {
-        _timer = 0;
         gameStarted = false;
         ResetPointTracker();
     }

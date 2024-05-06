@@ -8,6 +8,7 @@ public class XRRayHoverManager : MonoBehaviour
     [SerializeField] private Material hoverMaterial;
 
     private Dictionary<Transform, HashSet<IXRInteractor>> activeInteractors = new();
+    private HashSet<Transform> selectedInteractables = new(); // Track selected interactables
 
     void OnEnable()
     {
@@ -33,7 +34,7 @@ public class XRRayHoverManager : MonoBehaviour
 
     private void HandleHoverEntered(HoverEnterEventArgs args)
     {
-        if (args.interactableObject != null)
+        if (args.interactableObject != null && !selectedInteractables.Contains(args.interactableObject.transform))
         {
             AddHoverMaterial(args.interactableObject.transform, args.interactorObject);
         }
@@ -41,7 +42,7 @@ public class XRRayHoverManager : MonoBehaviour
 
     private void HandleHoverExited(HoverExitEventArgs args)
     {
-        if (args.interactableObject != null)
+        if (args.interactableObject != null && !selectedInteractables.Contains(args.interactableObject.transform))
         {
             RemoveHoverMaterial(args.interactableObject.transform, args.interactorObject);
         }
@@ -49,13 +50,19 @@ public class XRRayHoverManager : MonoBehaviour
 
     private void HandleSelectEntered(SelectEnterEventArgs args)
     {
-        // Optionally, you could handle this differently if you want the material to change or remain upon grabbing
-        //AddHoverMaterial(args.interactableObject.transform, args.interactorObject);
+        if (args.interactableObject != null)
+        {
+            selectedInteractables.Add(args.interactableObject.transform);
+            RemoveHoverMaterial(args.interactableObject.transform, args.interactorObject);
+        }
     }
 
     private void HandleSelectExited(SelectExitEventArgs args)
     {
-        //RemoveHoverMaterial(args.interactableObject.transform, args.interactorObject);
+        if (args.interactableObject != null)
+        {
+            selectedInteractables.Remove(args.interactableObject.transform);
+        }
     }
 
     private void AddHoverMaterial(Transform target, IXRInteractor interactor)
@@ -63,7 +70,6 @@ public class XRRayHoverManager : MonoBehaviour
         if (!activeInteractors.ContainsKey(target))
         {
             activeInteractors[target] = new HashSet<IXRInteractor>();
-            // Apply the hover material only if this is the first interactor to hover over
             ApplyHoverMaterial(target);
         }
         activeInteractors[target].Add(interactor);
@@ -76,8 +82,6 @@ public class XRRayHoverManager : MonoBehaviour
             interactorsSet.Remove(interactor);
             if (interactorsSet.Count == 0)
             {
-                Debug.Log("nig");
-                // Remove the material only when the last interactor has exited
                 RemoveHoverMaterial(target);
                 activeInteractors.Remove(target);
             }
@@ -103,13 +107,12 @@ public class XRRayHoverManager : MonoBehaviour
             List<Material> materials = new List<Material>(renderer.materials);
             foreach (var material in materials)
             {
-                if(material.name.Contains("HologramHover"))
+                if (material.name.Contains("HologramHover"))
                 {
                     materials.Remove(material);
                     break;
                 }
             }
-            
             renderer.materials = materials.ToArray();
         }
     }

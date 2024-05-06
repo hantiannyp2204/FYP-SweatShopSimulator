@@ -66,7 +66,7 @@ public class CustomerTable : MonoBehaviour
             }
            
         }
-        else if(isRequest)
+        else
         {
             elapsedTimeToNextRequest += Time.deltaTime;
             //if time exceed return
@@ -90,6 +90,7 @@ public class CustomerTable : MonoBehaviour
             if(toggledByButton && !gameStart)
             {
                 gameStart = true;
+                requestBox.StartGame();
             } 
             //dont not get request manually if game already started
             else if(toggledByButton && gameStart)

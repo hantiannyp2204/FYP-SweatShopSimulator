@@ -23,6 +23,12 @@ public class RobotMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            SetNewWaypoint(_itemPlateRef.machineDestination);
+        }
+
+
         if (_refAgent.GetComponent<RobotAssistant>().GetCurrState() == ROBOT_STATE.DELIVERING)
         {
             if (CheckIsReachedDestination(_itemPlateRef.machineDestination))

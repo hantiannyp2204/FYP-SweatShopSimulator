@@ -59,6 +59,7 @@ public class VrMachineItemCollider : MonoBehaviour
     {
         if (_collided)
         {
+            if (mouthHandler.mouth1 == null || mouthHandler.mouth2 == null)
             if (!mouthHandler.mouth1.GetComponent<Animator>().GetBool("isActivated") && !mouthHandler.mouth2.GetComponent<Animator>().GetBool("isActivated")) return; // check if mouth is open 
         }
     }

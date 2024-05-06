@@ -20,7 +20,7 @@ public class FabricatorCrafting : MonoBehaviour
 
     private void Update()
     {
-        Debugging();
+        //Debugging();
     }
     public void CheckIfPresent()
     {
@@ -102,10 +102,6 @@ public class FabricatorCrafting : MonoBehaviour
         EnoughMaterials = false;
     }
 
-    //public void SpawnOBJ(GameObject spawnItem)
-    //{
-    //    Instantiate(spawnItem, SpawnPoint.transform.position,Quaternion.identity);
-    //}
 
     public void SpawnItemsFromList()
     {

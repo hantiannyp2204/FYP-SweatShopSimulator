@@ -76,6 +76,7 @@ public class XRRayHoverManager : MonoBehaviour
             interactorsSet.Remove(interactor);
             if (interactorsSet.Count == 0)
             {
+                Debug.Log("nig");
                 // Remove the material only when the last interactor has exited
                 RemoveHoverMaterial(target);
                 activeInteractors.Remove(target);
@@ -105,7 +106,7 @@ public class XRRayHoverManager : MonoBehaviour
                 if(material.name.Contains("HologramHover"))
                 {
                     materials.Remove(material);
-                    continue;
+                    break;
                 }
             }
             

@@ -7,6 +7,11 @@ using static VRGameManager;
 public class CustomerTable : MonoBehaviour
 {
     public GameMode gameMode;
+
+    [Header("Win and Lose")]
+    public GameObject _Win;
+    public GameObject _Lose;
+    public TMP_Text _PointsText;
     //box things
     [SerializeField] RequestBox requestBox;
     [SerializeField] float boxRequestYPosition;
@@ -32,6 +37,8 @@ public class CustomerTable : MonoBehaviour
     }
     void Start()
     {
+        _Win.SetActive(false);
+        _Lose.SetActive(false);
         ResetBoxPosition();
         RandomiseNextRequestTimer();
         requestBox.Init();
@@ -234,14 +241,19 @@ public class CustomerTable : MonoBehaviour
 
         //show the end level UI
         if(isWInGame)
-        {
-            //if I win UI
+        { 
+            _Win.SetActive(true);
+            _PointsText.text = "Score: " + totalScore;
         }
         else
         {
+            _Lose.SetActive(true);
+            _PointsText.text = "Score: " + totalScore;
             //if I lose UI (ran out of time)
         }
         //show score
     }
     public bool isEndGame() => gameStart;
+
+  
 }

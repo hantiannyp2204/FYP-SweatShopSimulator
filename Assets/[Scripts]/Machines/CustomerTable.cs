@@ -242,8 +242,6 @@ public class CustomerTable : MonoBehaviour
             //if I lose UI (ran out of time)
         }
         //show score
-
-        //disable player movement?
     }
     public bool isEndGame() => gameStart;
 }

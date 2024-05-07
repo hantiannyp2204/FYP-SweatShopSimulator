@@ -23,6 +23,7 @@ public class CustomerTable : MonoBehaviour
     float elapsedTimeToNextRequest = 0;
     float timeToNextRequest;
     float timeTaken = 0;
+    float timeNeededToWin;
 
     int totalScore = 0;
     void RandomiseNextRequestTimer()
@@ -35,6 +36,10 @@ public class CustomerTable : MonoBehaviour
         RandomiseNextRequestTimer();
         requestBox.Init();
     }
+    public void SetTimeNeededToWin(float timeNeeded)
+    {
+        timeNeededToWin = timeNeeded;
+    }
 
     public void Init(TMP_Text leftHandTimerText, GameMode setGameMode)
     {
@@ -44,43 +49,55 @@ public class CustomerTable : MonoBehaviour
         {
             timeTaken = 0;
         }
-       
+
 
     }
     public void UpdateTimer(TMP_Text lefthandTimerText)
     {
-        if(!gameStart)
+        if (!gameStart)
         {
             return;
         }
-        if(!isRequest)
+
+        //updates time left before "Ran out of time" end
+        gameTimeLeft -= Time.deltaTime;
+        //Debug.Log(timeLeftForOrder);
+        //if time needed to win is 0
+        if (timeNeededToWin <= 0 && gameMode == GameMode.Levels)
         {
-            gameTimeLeft -= Time.deltaTime;
-            //Debug.Log(timeLeftForOrder);
-            //game ends if time ran out
-            if (gameTimeLeft <= 0)
+            EndLevel(true);
+        }
+        //game ends if time ran out
+        else if (gameTimeLeft <= 0)
+        {
+            EndGame();
+            if(gameMode == GameMode.Levels)
             {
-                EndGame();
+                EndLevel(false);
             }
-            else
-            {
-                // Calculate minutes and seconds
-                int minutes = Mathf.FloorToInt(gameTimeLeft / 60);
-                int seconds = Mathf.FloorToInt(gameTimeLeft % 60);
-
-                // Format the time as a string
-                string timeString = string.Format("{0:00}:{1:00}", minutes, seconds);
-                lefthandTimerText.text = "Time left:\n" + timeString;
-
-                //add time elapsed if it is test chamber
-                if(gameMode == GameMode.Test_Chamber)
-                {
-                    timeTaken += Time.deltaTime;
-                }
-            }
-           
         }
         else
+        {
+            // Calculate minutes and seconds
+            int minutes = Mathf.FloorToInt(gameTimeLeft / 60);
+            int seconds = Mathf.FloorToInt(gameTimeLeft % 60);
+
+            // Format the time as a string
+            string timeString = string.Format("{0:00}:{1:00}", minutes, seconds);
+            lefthandTimerText.text = "Time left:\n" + timeString;
+
+            //add time elapsed if it is test chamber
+            if (gameMode == GameMode.Test_Chamber)
+            {
+                timeTaken += Time.deltaTime;
+            }
+            //remove time needed to win if levels mode
+            else
+            {
+                timeNeededToWin -= Time.deltaTime;
+            }
+        }
+        if (isRequest)
         {
             elapsedTimeToNextRequest += Time.deltaTime;
             //if time exceed return
@@ -91,35 +108,35 @@ public class CustomerTable : MonoBehaviour
             }
         }
 
-     
+
     }
 
     public void ToggleOrder(bool toggledByButton)
     {
         if (moveBoxCoroutineHandler != null) return;
         //request
-        if(isRequest)
+        if (isRequest)
         {
             //start game if first time pressing button
-            if(toggledByButton && !gameStart)
+            if (toggledByButton && !gameStart)
             {
                 gameStart = true;
                 requestBox.StartGame();
-            } 
+            }
             //dont not get request manually if game already started
-            else if(toggledByButton && gameStart)
+            else if (toggledByButton && gameStart)
             {
                 return;
             }
             //randomise what to order
             int randomRequest = Random.Range(0, posibleRequests.Count);
             requestBox.SetRequestedItem(posibleRequests[randomRequest]);
-            orderText.text = "Product needed: "+posibleRequests[randomRequest].itemName;
+            orderText.text = "Product needed: " + posibleRequests[randomRequest].itemName;
             gameTimeLeft += posibleRequests[randomRequest].GetTimeGiven();
             //animate box upwards
             moveBoxCoroutineHandler = StartCoroutine(MoveBoxCoroutine());
-  
-         
+
+
         }
         //send
         else
@@ -138,7 +155,7 @@ public class CustomerTable : MonoBehaviour
             totalScore += requestBox.ShowScoreResult();
             RandomiseNextRequestTimer();
         }
-        
+
     }
     public IEnumerator MoveBoxCoroutine()
     {
@@ -171,7 +188,7 @@ public class CustomerTable : MonoBehaviour
 
         // Ensure the RequestBox is exactly at the target position after the loop completes
         requestBox.transform.localPosition = targetPosition;
-        if(!isRequest)
+        if (!isRequest)
         {
             //reset the items
             requestBox.SendRequestOver();
@@ -200,7 +217,33 @@ public class CustomerTable : MonoBehaviour
         gameStart = false;
         gameTimeLeft = 0;
         elapsedTimeToNextRequest = 0;
-        orderText.text = $"Total Score: {totalScore}";
+        if (gameMode == GameMode.Test_Chamber)
+        {
+            orderText.text = $"Total Score: {totalScore} \n\nTime survived: {(int)timeTaken} seconds";
+        }
+        else
+        {
+            orderText.text = "Shift ended";
+        }
+
         ResetBoxPosition();
     }
+    private void EndLevel(bool isWInGame)
+    {
+        //Jerald edit here
+
+        //show the end level UI
+        if(isWInGame)
+        {
+            //if I win UI
+        }
+        else
+        {
+            //if I lose UI (ran out of time)
+        }
+        //show score
+
+        //disable player movement?
+    }
+    public bool isEndGame() => gameStart;
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.UI.BodyUI;
 using static Item;
@@ -20,10 +21,8 @@ public class VRGameManager : MonoBehaviour
     public GameMode gameMode;
 
     //Game variables
-    //time given to complete task
+    //survive until this time to win the level
     public float SecondsGiven;
-    //score needed to win
-    public float ScoreNeeded;
 
     //[SerializeField] PlayerMovement playerMovement; 
     [SerializeField] GameObject VRPlayer;
@@ -31,6 +30,9 @@ public class VRGameManager : MonoBehaviour
     //[SerializeField] List<VRPlayerInvenetory> vrPlayerInventoryList;
     [SerializeField] List<HandPresencePhysics> vrPlayerHandPhysicsList;
     [SerializeField] List<HandColliders> vrPlayerHandColliderList;
+    [SerializeField] List<VRHandRenderers> vrPlayerHandRenders;
+    [SerializeField] ContinuousMovementPhysics vrPlayerMovement;
+
     [SerializeField] GameFeedback gameFeedback;
     //public Objective playerObjective;
     [SerializeField] CustomerTable customerTable;
@@ -93,6 +95,10 @@ public class VRGameManager : MonoBehaviour
         }
         gameFeedback.InIt();
         customerTable.Init(leftHandTimerText, gameMode);
+        if(gameMode == GameMode.Levels)
+        {
+            customerTable.SetTimeNeededToWin(SecondsGiven);
+        }
        // playerObjective.Init();     
         //playerScore.Init();
         //pauseMenu.gameObject.SetActive(false);
@@ -105,11 +111,25 @@ public class VRGameManager : MonoBehaviour
         {
             handPhysics.HandPhysicsFixedUpdate();
         }
+        vrPlayerMovement.PlayerMovementFixedUpdate();
     }
     // Update is called once per frame
     void Update()
     {
-        // UNCOMMENT THIS LATER JERALD IS LESBIAN
+        gameEnded = customerTable.isEndGame();
+
+        //things that should not be affected by endgame/game paused
+        foreach (var hand in vrHandInteractionManagerList)
+        {
+            hand.UpdateInteractions();
+        }
+        //stop if its levels
+        if(!gameEnded && gameMode == GameMode.Levels)
+        {
+            vrPlayerMovement.PlayerMovementInputUpdate();
+        }
+
+
         if (gameEnded)
         {
            // endMenu.gameObject.SetActive(true);
@@ -121,10 +141,7 @@ public class VRGameManager : MonoBehaviour
         if (!isPaused)
         {
             //playerMovement.UpdateTransform();
-            foreach(var hand in vrHandInteractionManagerList)
-            {
-                hand.UpdateInteractions();
-            }
+
             //foreach (var handInv in vrPlayerInventoryList)
             //{
             //    handInv.UpdateItemPositions();
@@ -139,11 +156,14 @@ public class VRGameManager : MonoBehaviour
             TogglePauseMenu();
         }
     }
-    
     void DisableVRSystem()
     {
-        VRPlayer.SetActive(false);
-        this.gameObject.SetActive(false);
+        if(VRPlayer != null)
+        {
+            VRPlayer.SetActive(false);
+            this.gameObject.SetActive(false);
+        }
+
     }
 
 

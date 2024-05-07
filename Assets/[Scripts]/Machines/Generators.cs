@@ -48,7 +48,7 @@ public class Generators : MonoBehaviour
             ScrapInstance.AddComponent<GeneratorGeneratedItem>().SetHandInteractorAndAnimator(interactorUsingThis);
 
             //disable the hand
-            DisableHandModels interactorHandModel = interactorUsingThis.GetComponent<DisableHandModels>();
+            VRHandRenderers interactorHandModel = interactorUsingThis.GetComponent<VRHandRenderers>();
             if (interactorHandModel!=null && interactorHandModel.GetActive())
             {
                 interactorHandModel.DisableHandRender();

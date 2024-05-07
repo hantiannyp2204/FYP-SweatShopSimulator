@@ -21,13 +21,13 @@ public class ContinuousMovementPhysics : MonoBehaviour
     private float inputTurnAxis;
 
     // Update is called once per frame
-    void Update()
+    public void PlayerMovementInputUpdate()
     {
         inputMoveAxis = moveInputSource.action.ReadValue<Vector2>();
         inputTurnAxis = turnInputSource.action.ReadValue<Vector2>().x;
     }
 
-    private void FixedUpdate()
+    public  void PlayerMovementFixedUpdate()
     {
         Quaternion yaw = Quaternion.Euler(0, directionSource.eulerAngles.y, 0);
         Vector3 direction = yaw * new Vector3(inputMoveAxis.x, 0, inputMoveAxis.y);

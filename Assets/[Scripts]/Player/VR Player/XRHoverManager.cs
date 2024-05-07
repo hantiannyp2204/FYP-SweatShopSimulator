@@ -34,6 +34,8 @@ public class XRRayHoverManager : MonoBehaviour
 
     private void HandleHoverEntered(HoverEnterEventArgs args)
     {
+        //disable respective ray grab when hovered by direct
+
         if (args.interactableObject != null && !selectedInteractables.Contains(args.interactableObject.transform))
         {
             AddHoverMaterial(args.interactableObject.transform, args.interactorObject);

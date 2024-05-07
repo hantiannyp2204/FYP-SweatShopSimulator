@@ -6,7 +6,12 @@ using static VRGameManager;
 
 public class CustomerTable : MonoBehaviour
 {
-    public GameMode gameMode;
+    private GameMode gameMode;
+
+    [Header("Win and Lose")]
+    public GameObject _Win;
+    public GameObject _Lose;
+    public TMP_Text _PointsText;
     //box things
     [SerializeField] RequestBox requestBox;
     [SerializeField] float boxRequestYPosition;
@@ -32,6 +37,8 @@ public class CustomerTable : MonoBehaviour
     }
     void Start()
     {
+        _Win?.SetActive(false);
+        _Lose?.SetActive(false);
         ResetBoxPosition();
         RandomiseNextRequestTimer();
         requestBox.Init();
@@ -117,22 +124,24 @@ public class CustomerTable : MonoBehaviour
         //request
         if (isRequest)
         {
-            //start game if first time pressing button
-            if (toggledByButton && !gameStart)
-            {
-                gameStart = true;
-                requestBox.StartGame();
-            }
             //dont not get request manually if game already started
-            else if (toggledByButton && gameStart)
+            if (toggledByButton && gameStart)
             {
                 return;
             }
             //randomise what to order
             int randomRequest = Random.Range(0, posibleRequests.Count);
+            //play order came sound
             requestBox.SetRequestedItem(posibleRequests[randomRequest]);
             orderText.text = "Product needed: " + posibleRequests[randomRequest].itemName;
             gameTimeLeft += posibleRequests[randomRequest].GetTimeGiven();
+            //start game if first time pressing button
+            if (toggledByButton && !gameStart)
+            {
+                //game start sound
+                gameStart = true;
+                requestBox.StartGame();
+            }
             //animate box upwards
             moveBoxCoroutineHandler = StartCoroutine(MoveBoxCoroutine());
 
@@ -234,14 +243,19 @@ public class CustomerTable : MonoBehaviour
 
         //show the end level UI
         if(isWInGame)
-        {
-            //if I win UI
+        { 
+            _Win?.SetActive(true);
+            _PointsText.text = "Score: " + totalScore;
         }
         else
         {
+            _Lose?.SetActive(true);
+            _PointsText.text = "Score: " + totalScore;
             //if I lose UI (ran out of time)
         }
         //show score
     }
-    public bool isEndGame() => gameStart;
+    public bool isEndGame() => !gameStart;
+
+  
 }

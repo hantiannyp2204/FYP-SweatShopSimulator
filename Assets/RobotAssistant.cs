@@ -77,4 +77,9 @@ public class RobotAssistant : MonoBehaviour
     {
         return _currState;
     }
+
+    public GameObject GetRobotGameobject()
+    {
+        return gameObject;
+    }
 }

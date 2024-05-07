@@ -103,7 +103,12 @@ public class XRVelocityRayGrab : XRGrabInteractable
             itemIsHovered = true;
             hoveredItemTransform = args.interactorObject.transform;
         }
-
+        //update the hand text
+        VRHandRenderers disableHandModelComponent = args.interactorObject.transform.GetComponent<VRHandRenderers>();
+        if (disableHandModelComponent != null)
+        {
+            disableHandModelComponent.SetItemHoverName(args.interactableObject.transform.name);
+        }
         base.OnHoverEntered(args);
     }
 
@@ -113,6 +118,12 @@ public class XRVelocityRayGrab : XRGrabInteractable
         {
             itemIsHovered = false;
             hoveredItemTransform = null;
+        }
+        //update the hand text
+        VRHandRenderers disableHandModelComponent = args.interactorObject.transform.GetComponent<VRHandRenderers>();
+        if (disableHandModelComponent != null)
+        {
+            disableHandModelComponent.ResetItemHoverName();
         }
         base.OnHoverExited(args);
     }
@@ -142,10 +153,23 @@ public class XRVelocityRayGrab : XRGrabInteractable
         {
 
             Debug.Log("SELECTED by Direct");
-            //if too far and flying, ignore
-            interactableRigidbody.velocity= Vector3.zero;
+            //reset all variables
+            rayInteractor = null;
+            canJump = false;
+            grabbedByRay = false;
+            trackPosition = true;
+            trackRotation = true;
+            throwOnDetach = true;
+         
+            //if was flying, remove it's rb velocity
+            interactableRigidbody.velocity = Vector3.zero;
+
+            //snap the object's transfor to the player's hand incase if goes off
+            args.interactableObject.transform.position = args.interactorObject.transform.position;
+            args.interactableObject.transform.rotation = args.interactorObject.transform.rotation;
+
             //disable hand render
-            DisableHandModels disableHandModelComponent = args.interactorObject.transform.GetComponent<DisableHandModels>();
+            VRHandRenderers disableHandModelComponent = args.interactorObject.transform.GetComponent<VRHandRenderers>();
             if (disableHandModelComponent != null)
             {
                 disableHandModelComponent.DisableHandRender();
@@ -160,7 +184,7 @@ public class XRVelocityRayGrab : XRGrabInteractable
     protected override void OnSelectExited(SelectExitEventArgs args)
     {
 
-        DisableHandModels disableHandModelComponent = args.interactorObject.transform.GetComponent<DisableHandModels>();
+        VRHandRenderers disableHandModelComponent = args.interactorObject.transform.GetComponent<VRHandRenderers>();
         if (disableHandModelComponent != null && !disableHandModelComponent.GetActive())
         {
             disableHandModelComponent.EnableHandRender();

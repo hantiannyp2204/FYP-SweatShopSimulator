@@ -20,10 +20,10 @@ public class GeneratorGeneratedItem : MonoBehaviour
         if(interactedHandManager.GetGripValue() <= 0.4f)
         {
             interactedHandInteractor.EndManualInteraction();
-            DisableHandModels interactorHandModel = interactedHandInteractor.GetComponent<DisableHandModels>();
+            VRHandRenderers interactorHandModel = interactedHandInteractor.GetComponent<VRHandRenderers>();
             if (interactorHandModel != null &&!interactorHandModel.GetActive())
             {
-                interactedHandInteractor.GetComponent<DisableHandModels>().EnableHandRender();
+                interactedHandInteractor.GetComponent<VRHandRenderers>().EnableHandRender();
             }
          
             Destroy(this);

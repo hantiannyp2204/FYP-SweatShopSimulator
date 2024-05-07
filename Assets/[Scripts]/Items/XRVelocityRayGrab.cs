@@ -105,9 +105,10 @@ public class XRVelocityRayGrab : XRGrabInteractable
         }
         //update the hand text
         VRHandRenderers disableHandModelComponent = args.interactorObject.transform.GetComponent<VRHandRenderers>();
-        if (disableHandModelComponent != null)
+        Item item = args.interactableObject.transform.GetComponent<Item>();
+        if (disableHandModelComponent != null && item !=null)
         {
-            disableHandModelComponent.SetItemHoverName(args.interactableObject.transform.name);
+            disableHandModelComponent.SetItemHoverName(item.Data.itemName);
         }
         base.OnHoverEntered(args);
     }

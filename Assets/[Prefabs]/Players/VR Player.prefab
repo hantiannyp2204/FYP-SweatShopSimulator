@@ -1318,8 +1318,8 @@ GameObject:
   - component: {fileID: 8118326990811835951}
   - component: {fileID: 2120178023898960471}
   - component: {fileID: 6316116854221879645}
-  - component: {fileID: 5673796864150956158}
-  m_Layer: 9
+  - component: {fileID: 4710156283026174225}
+  m_Layer: 8
   m_Name: Right hand Ray Interactor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1687,7 +1687,7 @@ MonoBehaviour:
   m_ConeCastAngle: 6
   m_RaycastMask:
     serializedVersion: 2
-    m_Bits: 2144
+    m_Bits: 2145
   m_RaycastTriggerInteraction: 1
   m_RaycastSnapVolumeInteraction: 1
   m_HitClosestOnly: 1
@@ -1986,7 +1986,7 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 5
   m_SortAtRoot: 0
---- !u!114 &5673796864150956158
+--- !u!114 &4710156283026174225
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1995,11 +1995,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1280839470651407652}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 220eaa41eeb48224f8730e91857c6797, type: 3}
+  m_Script: {fileID: 11500000, guid: a3557ef3181725a469ab4711acb2a6c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   handModel: {fileID: 4665555723817521682}
   rayInteractor: {fileID: 6912303547938444132}
+  grabInteractor: {fileID: 3384155985097191541}
+  handHoverItemName: {fileID: 5666330093351461436}
 --- !u!1 &1301260983191981619
 GameObject:
   m_ObjectHideFlags: 0
@@ -2824,7 +2826,7 @@ GameObject:
   - component: {fileID: 460226591934495257}
   - component: {fileID: 2458116822009621793}
   - component: {fileID: 5105847949235537432}
-  - component: {fileID: 3082198221942067970}
+  - component: {fileID: 6456083402958463838}
   m_Layer: 7
   m_Name: Left Hand Direct Interactor
   m_TagString: Untagged
@@ -2956,9 +2958,9 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.1
+  m_Radius: 0.15
   m_Center: {x: -0.025, y: 0.025, z: 0}
---- !u!114 &3082198221942067970
+--- !u!114 &6456083402958463838
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2967,11 +2969,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2000483975955013795}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 220eaa41eeb48224f8730e91857c6797, type: 3}
+  m_Script: {fileID: 11500000, guid: a3557ef3181725a469ab4711acb2a6c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   handModel: {fileID: 1457445042737637985}
   rayInteractor: {fileID: 7484719097670331078}
+  grabInteractor: {fileID: 2458116822009621793}
+  handHoverItemName: {fileID: 3126506224475904315}
 --- !u!1 &2011783212836412245
 GameObject:
   m_ObjectHideFlags: 0
@@ -3162,8 +3166,8 @@ GameObject:
   - component: {fileID: 1230135395125420288}
   - component: {fileID: 5464940196991263553}
   - component: {fileID: 1979269889664301301}
-  - component: {fileID: 1521401873766668473}
-  m_Layer: 9
+  - component: {fileID: 4291508353322567532}
+  m_Layer: 7
   m_Name: Left hand Ray Interactor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3531,7 +3535,7 @@ MonoBehaviour:
   m_ConeCastAngle: 6
   m_RaycastMask:
     serializedVersion: 2
-    m_Bits: 2144
+    m_Bits: 2145
   m_RaycastTriggerInteraction: 1
   m_RaycastSnapVolumeInteraction: 1
   m_HitClosestOnly: 1
@@ -3830,7 +3834,7 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 5
   m_SortAtRoot: 0
---- !u!114 &1521401873766668473
+--- !u!114 &4291508353322567532
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3839,11 +3843,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2217104477716141234}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 220eaa41eeb48224f8730e91857c6797, type: 3}
+  m_Script: {fileID: 11500000, guid: a3557ef3181725a469ab4711acb2a6c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   handModel: {fileID: 1457445042737637985}
   rayInteractor: {fileID: 7484719097670331078}
+  grabInteractor: {fileID: 2458116822009621793}
+  handHoverItemName: {fileID: 3126506224475904315}
 --- !u!1 &2239102415714379443
 GameObject:
   m_ObjectHideFlags: 0
@@ -9217,7 +9223,7 @@ GameObject:
   - component: {fileID: 3895550675843974657}
   - component: {fileID: 3531994639887367255}
   - component: {fileID: 3126506224475904315}
-  m_Layer: 9
+  m_Layer: 7
   m_Name: Left hand current item grab text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11110,7 +11116,7 @@ GameObject:
   - component: {fileID: 4412978972419141982}
   - component: {fileID: 3384155985097191541}
   - component: {fileID: 8191575963390363866}
-  - component: {fileID: 5128240374070217072}
+  - component: {fileID: 2225103582308146399}
   m_Layer: 8
   m_Name: Right Hand Direct Interactor
   m_TagString: Untagged
@@ -11242,9 +11248,9 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.1
+  m_Radius: 0.15
   m_Center: {x: 0.025, y: 0.025, z: 0.05}
---- !u!114 &5128240374070217072
+--- !u!114 &2225103582308146399
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11253,11 +11259,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6844503761956514831}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 220eaa41eeb48224f8730e91857c6797, type: 3}
+  m_Script: {fileID: 11500000, guid: a3557ef3181725a469ab4711acb2a6c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   handModel: {fileID: 4665555723817521682}
   rayInteractor: {fileID: 6912303547938444132}
+  grabInteractor: {fileID: 3384155985097191541}
+  handHoverItemName: {fileID: 5666330093351461436}
 --- !u!1 &6871926913853476834
 GameObject:
   m_ObjectHideFlags: 0
@@ -11777,7 +11785,7 @@ GameObject:
   - component: {fileID: 276193702223522044}
   - component: {fileID: 329311904822772434}
   - component: {fileID: 7592645227094562564}
-  m_Layer: 9
+  m_Layer: 7
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11911,7 +11919,7 @@ GameObject:
   - component: {fileID: 5477297956954362578}
   - component: {fileID: 7837154195627276488}
   - component: {fileID: 2174618769092786026}
-  m_Layer: 9
+  m_Layer: 7
   m_Name: Left hand timer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11965,7 +11973,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 00:00
+  m_text: Go start your shift
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -12601,7 +12609,7 @@ GameObject:
   - component: {fileID: 5577919077371016098}
   - component: {fileID: 7435008714065069306}
   - component: {fileID: 9175710054102747142}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13319,7 +13327,7 @@ GameObject:
   - component: {fileID: 850989668888198559}
   - component: {fileID: 767200115684804569}
   - component: {fileID: 5666330093351461436}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Right hand current grab item text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14143,6 +14151,11 @@ PrefabInstance:
       propertyPath: leftHandGrabText
       value: 
       objectReference: {fileID: 3126506224475904315}
+    - target: {fileID: 1460341775023995373, guid: f69bbaccf3337fa4187f0a4b8d0b1bf7,
+        type: 3}
+      propertyPath: vrPlayerMovement
+      value: 
+      objectReference: {fileID: 5078783149796835445}
     - target: {fileID: 1460341775023995373, guid: f69bbaccf3337fa4187f0a4b8d0b1bf7,
         type: 3}
       propertyPath: leftHandTimerText

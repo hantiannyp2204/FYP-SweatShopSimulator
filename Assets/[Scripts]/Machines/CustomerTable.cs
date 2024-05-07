@@ -243,5 +243,5 @@ public class CustomerTable : MonoBehaviour
         }
         //show score
     }
-    public bool isEndGame() => gameStart;
+    public bool isEndGame() => !gameStart;
 }

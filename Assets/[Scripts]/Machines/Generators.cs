@@ -10,8 +10,6 @@ public class Generators : MonoBehaviour
 
     private XRBaseInteractor interactorUsingThis;
 
-    //public TMP_Text debugtxt;
-
     protected void OnEnable()
     {
         // Get the interactable component and subscribe to the select entered event

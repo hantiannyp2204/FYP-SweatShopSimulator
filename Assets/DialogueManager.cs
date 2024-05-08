@@ -94,4 +94,13 @@ public class DialogueManager : MonoBehaviour
     {
         return _queueTracker;
     }
+
+    // Add this method to your DialogueManager class
+    public DialogueLine PeekNextDialogueLine()
+    {
+        if (_lines.Count == 0)
+            return null; // Queue is empty
+
+        return _lines.Peek();
+    }
 }

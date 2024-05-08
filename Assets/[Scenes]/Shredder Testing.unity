@@ -580,7 +580,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   xButtonImage: {fileID: 520645216}
-  eventManager: {fileID: 1236877007}
   narratorIcon: {fileID: 1153864465}
   dialogueText: {fileID: 1575712156}
   isDialogueActive: 0
@@ -1577,27 +1576,38 @@ MonoBehaviour:
   diagManager: {fileID: 125880520}
   dialogue:
     dialogueLines:
-    - TriggerThisEvent:
+    - pathFindDestination: {fileID: 0}
+      TriggerThisEvent:
         m_PersistentCalls:
           m_Calls: []
       narrator:
         name: Robot
         obj: {fileID: 540382107}
       line: Welcome to the SweatShop Sim Tutorial!
-    - TriggerThisEvent:
+    - pathFindDestination: {fileID: 0}
+      TriggerThisEvent:
         m_PersistentCalls:
           m_Calls: []
       narrator:
         name: Robot
         obj: {fileID: 540382107}
       line: My name is Lesbian and I am here to guide you in this tutorial!
-    - TriggerThisEvent:
+    - pathFindDestination: {fileID: 0}
+      TriggerThisEvent:
         m_PersistentCalls:
           m_Calls: []
       narrator:
         name: Robot
         obj: {fileID: 540382107}
       line: Are you ready? Follow me!
+    - pathFindDestination: {fileID: 1275727018}
+      TriggerThisEvent:
+        m_PersistentCalls:
+          m_Calls: []
+      narrator:
+        name: Robot
+        obj: {fileID: 540382107}
+      line: Welcome to the Smelter! Made by Hantian!
 --- !u!4 &688887780 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7186830264723948108, guid: 07abc8703fab37341b3960eb375f9bea,
@@ -3116,8 +3126,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1fef2bf9ac34274eb2a4018be7fc763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  robotDiagManager: {fileID: 125880520}
-  PlayerDialogueEvents: []
 --- !u!114 &1236877017 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5632908192370461467, guid: 6aa70890968c5e74980c3f1995cd71ac,
@@ -3431,6 +3439,37 @@ MonoBehaviour:
   m_AddDefaultGrabTransformers: 1
   velocityThreshold: 2
   jumpAngleInDegree: 60
+--- !u!1 &1275727018
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1275727019}
+  m_Layer: 0
+  m_Name: PathfindTestAfterDialogue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1275727019
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1275727018}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.0084713, y: 2.957004, z: -1.7231898}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1324477683
 GameObject:
   m_ObjectHideFlags: 0
@@ -5439,3 +5478,4 @@ SceneRoots:
   - {fileID: 1959379494}
   - {fileID: 307928482}
   - {fileID: 117721207}
+  - {fileID: 1275727019}

@@ -76,27 +76,44 @@ public class DialogueTrigger : MonoBehaviour
     private void PerformNextDialogue(InputAction.CallbackContext context)
     {
         if (diagManager.GetIsTyping()) return;
-        DialogueLine temp = diagManager.GetDialogueList().Dequeue();
-        DialogueLine peekedElement = diagManager.GetDialogueList().Peek();
-        diagManager.GetDialogueList().Enqueue(temp);
-
-        // check if it has  a destination to go to 
-        if (diagManager.GetCurrentIterator().pathFindDestination != null) // means object needs to move somewhere
+        DialogueLine nextDialogueLine = diagManager.PeekNextDialogueLine();
+        if (nextDialogueLine != null && nextDialogueLine.pathFindDestination != null)
         {
-            _robotNavMesh.SetDestination(diagManager.GetCurrentIterator().pathFindDestination.transform.position);
-            // pathfind to the destination and set next dialogue only after finished
-            if (!_robotNavMesh.pathPending)
-            {
-                if (_robotNavMesh.remainingDistance <= _robotNavMesh.stoppingDistance)
-                {
-                    if  (!_robotNavMesh.hasPath || _robotNavMesh.velocity.sqrMagnitude == 0)
-                    {
-                        // done
-                    }
-                }
-            }
+            // there's a destination to go to
+            _robotNavMesh.SetDestination(nextDialogueLine.pathFindDestination.transform.position);
+
+            StartCoroutine(WaitForDestination(nextDialogueLine));
         }
         diagManager.SetNextDialogueLine();
     }
+
+    private IEnumerator WaitForDestination(DialogueLine dialogueLine)
+    {
+        while (_robotNavMesh.pathPending || _robotNavMesh.remainingDistance > _robotNavMesh.stoppingDistance)
+        {
+            yield return null;
+        }
+
+        // Destination reached, proceed to the next dialogue line
+        diagManager.SetNextDialogueLine();
+    }
 }
-    
+
+
+
+// check if it has  a destination to go to 
+//if (diagManager.GetCurrentIterator().pathFindDestination != null) // means object needs to move somewhere
+//{
+//    _robotNavMesh.SetDestination(diagManager.GetCurrentIterator().pathFindDestination.transform.position);
+//    // pathfind to the destination and set next dialogue only after finished
+//    if (!_robotNavMesh.pathPending)
+//    {
+//        if (_robotNavMesh.remainingDistance <= _robotNavMesh.stoppingDistance)
+//        {
+//            if (!_robotNavMesh.hasPath || _robotNavMesh.velocity.sqrMagnitude == 0)
+//            {
+//                // done
+//            }
+//        }
+//    }
+//}

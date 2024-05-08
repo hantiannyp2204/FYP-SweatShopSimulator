@@ -22,6 +22,7 @@ public class ClipboardSwitcher : MonoBehaviour
         {
             renderer.material = materials[currentIndex]; // Assign the material at the current index
             currentIndex = (currentIndex + 1) % materials.Count; // Increment the index, looping back to 0 if it exceeds the list size
+            Debug.Log("PagedChanged");
         }
     }
 }

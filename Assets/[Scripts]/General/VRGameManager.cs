@@ -124,10 +124,7 @@ public class VRGameManager : MonoBehaviour
             hand.UpdateInteractions();
         }
         //stop if its levels
-        if(!gameEnded && gameMode == GameMode.Levels)
-        {
-            vrPlayerMovement.PlayerMovementInputUpdate();
-        }
+        vrPlayerMovement.PlayerMovementInputUpdate();
 
 
         if (gameEnded)

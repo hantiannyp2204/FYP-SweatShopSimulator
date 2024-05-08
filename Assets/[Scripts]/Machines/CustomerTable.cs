@@ -37,7 +37,10 @@ public class CustomerTable : MonoBehaviour
     }
     void Start()
     {
-        _Win?.SetActive(false);
+        if (_Win != null)
+        {
+            _Win?.SetActive(false);
+        }
         _Lose?.SetActive(false);
         ResetBoxPosition();
         RandomiseNextRequestTimer();

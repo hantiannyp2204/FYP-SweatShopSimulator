@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 public class DialogueManager : MonoBehaviour
 {
-    [SerializeField] private PlayerEventManager eventManager;
+    [SerializeField] private Image xButtonImage;
     [SerializeField] private Image narratorIcon;
     [SerializeField] private TMP_Text dialogueText;
 
@@ -16,15 +16,16 @@ public class DialogueManager : MonoBehaviour
 
     public float wordSpeed = 0.2f;
 
-    private DialogueLine _firstElement;
-
-
     private DialogueLine _queueTracker;
+
+    private bool _isTyping = false;
 
     // Start is called before the first frame update
     void Start()
     {
         _lines = new Queue<DialogueLine>();
+
+        xButtonImage.gameObject.SetActive(false);
     }
 
     public void StartDialogue(Dialogue dialogue)
@@ -38,11 +39,6 @@ public class DialogueManager : MonoBehaviour
             lines.TriggerThisEvent.AddListener(SetNextDialogueLine);
             Debug.Log("size of:" + _lines.Count);
         }
-
-
-        _firstElement = _lines.Peek();
-
-       // eventManager.InitDialogueEvents();
     }
 
     public void SetNextDialogueLine()
@@ -62,6 +58,11 @@ public class DialogueManager : MonoBehaviour
 
     IEnumerator TypeDialogue(DialogueLine diagLine)
     {
+        if (xButtonImage.gameObject.activeSelf)
+        {
+            xButtonImage.gameObject.SetActive(false);   
+        }
+        _isTyping = true;
         dialogueText.text = "";
         foreach (char letter in diagLine.line.ToCharArray())
         {
@@ -70,6 +71,8 @@ public class DialogueManager : MonoBehaviour
         }
 
         _queueTracker = _lines.Dequeue();
+        _isTyping = false; // set to false
+        xButtonImage.gameObject.SetActive(true);
     }
 
     public void EndDialogue()
@@ -80,5 +83,15 @@ public class DialogueManager : MonoBehaviour
     public Queue<DialogueLine> GetDialogueList()
     {
         return _lines;
+    }
+    
+    public bool GetIsTyping()
+    {
+        return _isTyping;
+    }
+
+    public DialogueLine GetCurrentIterator()
+    {
+        return _queueTracker;
     }
 }

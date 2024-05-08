@@ -16,6 +16,11 @@ public class DialogueManager : MonoBehaviour
 
     public float wordSpeed = 0.2f;
 
+    private DialogueLine _firstElement;
+
+
+    private DialogueLine _queueTracker;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,29 +33,31 @@ public class DialogueManager : MonoBehaviour
         _lines.Clear();
         foreach (DialogueLine lines in dialogue.dialogueLines)
         {
+            _lines.Enqueue(lines);
             lines.TriggerThisEvent = new UnityEvent();
             lines.TriggerThisEvent.AddListener(SetNextDialogueLine);
-
-            _lines.Enqueue(lines);
             Debug.Log("size of:" + _lines.Count);
         }
 
-        eventManager.InitDialogueEvents();
+
+        _firstElement = _lines.Peek();
+
+       // eventManager.InitDialogueEvents();
     }
 
     public void SetNextDialogueLine()
     {
-        if (_lines.Count == 0)
+        if (_lines.Count <= 0)
         {
             EndDialogue();
             return;
         }
 
-        DialogueLine currLine = _lines.Dequeue();
+        _queueTracker = _lines.Peek();
 
         StopAllCoroutines();
 
-        StartCoroutine(TypeDialogue(currLine));
+        StartCoroutine(TypeDialogue(_queueTracker));
     }
 
     IEnumerator TypeDialogue(DialogueLine diagLine)
@@ -61,6 +68,8 @@ public class DialogueManager : MonoBehaviour
             dialogueText.text += letter;
             yield return new WaitForSeconds(wordSpeed);
         }
+
+        _queueTracker = _lines.Dequeue();
     }
 
     public void EndDialogue()

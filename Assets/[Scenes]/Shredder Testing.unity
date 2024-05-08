@@ -974,6 +974,73 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f69bbaccf3337fa4187f0a4b8d0b1bf7, type: 3}
+--- !u!1 &307928479
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 307928482}
+  - component: {fileID: 307928481}
+  - component: {fileID: 307928483}
+  m_Layer: 0
+  m_Name: test (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &307928481
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307928479}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.8064375, y: 3.0819237, z: 3.2892213}
+  m_Center: {x: -1.4032187, y: 1.8575906, z: -2.1670787}
+--- !u!4 &307928482
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307928479}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -9.69, y: 0, z: 5.04}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &307928483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307928479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ef0e9c4c7c8daf4591a441bcbaa5c3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue: {fileID: 125880520}
 --- !u!1001 &375664186
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1446,6 +1513,13 @@ MonoBehaviour:
         name: Robot
         obj: {fileID: 540382107}
       line: my name is bot and i am smellly
+    - TriggerThisEvent:
+        m_PersistentCalls:
+          m_Calls: []
+      narrator:
+        name: Robot
+        obj: {fileID: 540382107}
+      line: JJJ
 --- !u!4 &688887780 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7186830264723948108, guid: 07abc8703fab37341b3960eb375f9bea,
@@ -4951,8 +5025,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.7816677, y: 5.102246, z: 2.505039}
-  m_Center: {x: -0.39083385, y: 2.8677518, z: 0.054742932}
+  m_Size: {x: 3.8064375, y: 3.0819237, z: 3.2892213}
+  m_Center: {x: -1.4032187, y: 1.8575906, z: -2.1670787}
 --- !u!4 &1959379494
 Transform:
   m_ObjectHideFlags: 0
@@ -4962,7 +5036,7 @@ Transform:
   m_GameObject: {fileID: 1959379492}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.16, y: 0, z: -1.93}
+  m_LocalPosition: {x: -9.69, y: 0, z: -1.93}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5284,4 +5358,5 @@ SceneRoots:
   - {fileID: 1447321648}
   - {fileID: 1428702681}
   - {fileID: 1959379494}
+  - {fileID: 307928482}
   - {fileID: 117721207}

@@ -37,16 +37,14 @@ public class DialogueTrigger : MonoBehaviour
 
     private void Start()
     {
-        TriggerDialogue();
+        StartCoroutine(DelayedTrigger());
     }
 
-    private void Update()
+
+    private IEnumerator DelayedTrigger()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            Queue<DialogueLine> spare = diagManager.GetDialogueList();
-            var list = spare.ToArray();
-            list[0].TriggerThisEvent.Invoke();
-        }
+        yield return new WaitForSeconds(0.2f); // Adjust the delay time as needed
+        TriggerDialogue();
     }
 }
+    

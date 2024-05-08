@@ -12,6 +12,7 @@ public class Item : MonoBehaviour
     // Feedback
     [Header("FEEDBACK")]
     [SerializeField] private FeedbackEventData e_pickUp;
+    [SerializeField] private FeedbackEventData e_collisionNoise;
     [SerializeField] private FeedbackEventData e_drop;
 
     [SerializeField] private LayerMask groundLayer;
@@ -21,6 +22,8 @@ public class Item : MonoBehaviour
     public string GetInteractName() => "Interact with: " + data.GetName();
 
     private MeshRenderer _renderer;
+
+    
     private void Start()
     {
         //originalMaterial = GetComponentInChildren<Material>();
@@ -37,6 +40,15 @@ public class Item : MonoBehaviour
         }
     }
 
+    public void PlayEquipSound()
+    {
+        e_pickUp?.InvokeEvent(transform.position, Quaternion.identity, transform);
+    }
+    public void PlayCollisionSound()
+    {
+        Debug.Log("Item collided with something");
+        e_collisionNoise?.InvokeEvent(transform.position, Quaternion.identity, transform);
+    }
     public void SetMaterial(Material toSwitch)
     {
         _renderer.material = toSwitch;

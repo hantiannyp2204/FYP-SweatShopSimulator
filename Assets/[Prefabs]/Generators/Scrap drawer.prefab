@@ -263,9 +263,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minSlideValue: 0
   grabInteractable: {fileID: 8835473681222391083}
-  e_doorOpen: {fileID: 0}
-  e_doorClose: {fileID: 0}
-  slideDirection: 0
+  e_doorOpen: {fileID: 11400000, guid: ea498228f5f57a144a30483823cd851b, type: 2}
+  e_doorClose: {fileID: 11400000, guid: f09ce3787e35da44abf0c53140a83a04, type: 2}
+  slideDirectionType: 0
+  slideMagnitute: 0
   generator: {fileID: 8335725982500324553}
 --- !u!1 &1962599924409202935
 GameObject:
@@ -447,10 +448,64 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minSlideValue: 0
   grabInteractable: {fileID: 6498917518442381225}
-  e_doorOpen: {fileID: 0}
-  e_doorClose: {fileID: 0}
-  slideDirection: 0
+  e_doorOpen: {fileID: 11400000, guid: ea498228f5f57a144a30483823cd851b, type: 2}
+  e_doorClose: {fileID: 11400000, guid: f09ce3787e35da44abf0c53140a83a04, type: 2}
+  slideDirectionType: 0
+  slideMagnitute: 1
   generator: {fileID: 8333018842507298192}
+--- !u!1 &2157075726719885570
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 530228307901630925}
+  - component: {fileID: 5772373401595536822}
+  m_Layer: 0
+  m_Name: BackDrawer collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &530228307901630925
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2157075726719885570}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1104114037272725061}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5772373401595536822
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2157075726719885570}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.24912798, y: 5.5659895, z: 3.4132147}
+  m_Center: {x: 1.6323636, y: 3.3389606, z: 0.18016481}
 --- !u!1 &2924810711099480443
 GameObject:
   m_ObjectHideFlags: 0
@@ -833,9 +888,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minSlideValue: 0
   grabInteractable: {fileID: 9217572644132711934}
-  e_doorOpen: {fileID: 0}
-  e_doorClose: {fileID: 0}
-  slideDirection: 0
+  e_doorOpen: {fileID: 11400000, guid: ea498228f5f57a144a30483823cd851b, type: 2}
+  e_doorClose: {fileID: 11400000, guid: f09ce3787e35da44abf0c53140a83a04, type: 2}
+  slideDirectionType: 0
+  slideMagnitute: 0
   generator: {fileID: 3258012362803773211}
 --- !u!1 &5450594981495066942
 GameObject:
@@ -1245,7 +1301,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6745462358929397058}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.256, y: 0, z: -1.011}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 1
@@ -1254,6 +1310,7 @@ Transform:
   - {fileID: 3186645517867130941}
   - {fileID: 6672856931089378451}
   - {fileID: 7176499771137842694}
+  - {fileID: 530228307901630925}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5737397240918143888

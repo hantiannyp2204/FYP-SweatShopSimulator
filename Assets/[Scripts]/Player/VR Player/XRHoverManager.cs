@@ -36,11 +36,17 @@ public class XRRayHoverManager : MonoBehaviour
     {
         if (args.interactableObject != null)
         {
-            if (!selectedInteractableLayers.TryGetValue(args.interactableObject.transform, out var selectedLayer) ||
-                args.interactorObject.transform.gameObject.layer != LayerMask.NameToLayer(selectedLayer))
+            // Check if the interactable has a Generator script
+            bool hasGenerator = args.interactableObject.transform.GetComponent<Generators>() != null;
+
+            // Perform the layer check only if the interactable does not have a Generator script
+            if (!hasGenerator && selectedInteractableLayers.TryGetValue(args.interactableObject.transform, out var selectedLayer) &&
+                args.interactorObject.transform.gameObject.layer == LayerMask.NameToLayer(selectedLayer))
             {
-                AddHoverMaterial(args.interactableObject.transform, args.interactorObject);
+                // If it has the same layer and no Generator script, return early to avoid adding hover material
+                return;
             }
+            AddHoverMaterial(args.interactableObject.transform, args.interactorObject);
         }
     }
 

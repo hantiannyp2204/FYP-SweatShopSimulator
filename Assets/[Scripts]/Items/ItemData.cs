@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class ItemData : ScriptableObject
     [SerializeField] private Vector3 holdingPositionOffset;
     [SerializeField] private Quaternion holdingRotationOffset;
     [SerializeField] private GameObject itemPrefab;
+    [SerializeField] private Vector3 requestBoxPositionOffset;
     [SerializeField] private Quaternion requestBoxRotationOffset;
     [SerializeField] private float timeGiven;
     [SerializeField] private float scoreGiven;
@@ -22,6 +24,8 @@ public class ItemData : ScriptableObject
     public Vector3 GetPosOffset() => holdingPositionOffset;
     public Quaternion GetRotationOffset() => holdingRotationOffset;
     public Quaternion GetRequestBoxRotationOffset() => requestBoxRotationOffset;
+
+    public Vector3 GetRequestBoxPositionOffset() => requestBoxPositionOffset;
 
     [Header("Product Content")]
     public List<ItemData> productContainable; // If applicable

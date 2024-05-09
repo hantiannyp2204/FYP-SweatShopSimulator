@@ -37,10 +37,11 @@ public class CustomerTable : MonoBehaviour
     }
     void Start()
     {
-        if (_Win != null)
+        if(_Win!=null)
         {
             _Win?.SetActive(false);
         }
+        
         _Lose?.SetActive(false);
         ResetBoxPosition();
         RandomiseNextRequestTimer();
@@ -246,11 +247,13 @@ public class CustomerTable : MonoBehaviour
 
         //show the end level UI
         if(isWInGame)
-        { 
-            if (_Win != null) // null checks by joshua, delete if necessary
+        {
+            if (_Win != null)
             {
                 _Win?.SetActive(true);
             }
+
+       
             _PointsText.text = "Score: " + totalScore;
         }
         else

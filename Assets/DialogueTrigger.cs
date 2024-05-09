@@ -17,6 +17,7 @@ public class DialogueLine
 {
     [Header("Possible Pathfind Location after dialogue")]
     public GameObject pathFindDestination; // make robot pathfind if applicable
+    public GenericQuest questMarker;
 
     [Header("Events for each line")]
     public UnityEvent TriggerThisEvent;
@@ -58,7 +59,6 @@ public class DialogueTrigger : MonoBehaviour
             return; // null check js in case
         }
 
-
         StartCoroutine(DelayedTrigger());
     }
 
@@ -77,6 +77,7 @@ public class DialogueTrigger : MonoBehaviour
     {
         if (diagManager.GetIsTyping()) return;
         DialogueLine nextDialogueLine = diagManager.PeekNextDialogueLine();
+
         if (nextDialogueLine != null && nextDialogueLine.pathFindDestination != null)
         {
             // there's a destination to go to
@@ -84,7 +85,14 @@ public class DialogueTrigger : MonoBehaviour
 
             StartCoroutine(WaitForDestination(nextDialogueLine));
         }
-        diagManager.SetNextDialogueLine();
+        else if (diagManager.GetCurrentIterator().questMarker != null) // means that a quest needs to be completed
+        {
+            diagManager.GetCurrentIterator().questMarker.enabled = true;
+        }
+        else 
+        {
+            diagManager.SetNextDialogueLine();
+        }
     }
 
     private IEnumerator WaitForDestination(DialogueLine dialogueLine)

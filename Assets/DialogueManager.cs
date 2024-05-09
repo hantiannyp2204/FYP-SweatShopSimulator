@@ -26,6 +26,7 @@ public class DialogueManager : MonoBehaviour
         _lines = new Queue<DialogueLine>();
 
         xButtonImage.gameObject.SetActive(false);
+
     }
 
     public void StartDialogue(Dialogue dialogue)
@@ -35,6 +36,7 @@ public class DialogueManager : MonoBehaviour
         foreach (DialogueLine lines in dialogue.dialogueLines)
         {
             _lines.Enqueue(lines);
+             _queueTracker = _lines.Peek();
             lines.TriggerThisEvent = new UnityEvent();
             lines.TriggerThisEvent.AddListener(SetNextDialogueLine);
             Debug.Log("size of:" + _lines.Count);

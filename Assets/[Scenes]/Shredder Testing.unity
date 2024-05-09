@@ -760,7 +760,7 @@ PrefabInstance:
     - target: {fileID: 4092235088310078148, guid: c8bd6a25975b5d545bf9a9a2aa1545b6,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.7793999
+      value: -4.857
       objectReference: {fileID: 0}
     - target: {fileID: 4092235088310078148, guid: c8bd6a25975b5d545bf9a9a2aa1545b6,
         type: 3}
@@ -770,7 +770,7 @@ PrefabInstance:
     - target: {fileID: 4092235088310078148, guid: c8bd6a25975b5d545bf9a9a2aa1545b6,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.57027555
+      value: -3.085
       objectReference: {fileID: 0}
     - target: {fileID: 4092235088310078148, guid: c8bd6a25975b5d545bf9a9a2aa1545b6,
         type: 3}
@@ -1121,6 +1121,74 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 793651f75ab7fa2429e9c851a03858a9, type: 3}
+--- !u!1001 &419561948
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5878096181096733427, guid: 14d0875a5bc6bf64d80dbea8db793387,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.811
+      objectReference: {fileID: 0}
+    - target: {fileID: 5878096181096733427, guid: 14d0875a5bc6bf64d80dbea8db793387,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.6834328
+      objectReference: {fileID: 0}
+    - target: {fileID: 5878096181096733427, guid: 14d0875a5bc6bf64d80dbea8db793387,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5878096181096733427, guid: 14d0875a5bc6bf64d80dbea8db793387,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5878096181096733427, guid: 14d0875a5bc6bf64d80dbea8db793387,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5878096181096733427, guid: 14d0875a5bc6bf64d80dbea8db793387,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5878096181096733427, guid: 14d0875a5bc6bf64d80dbea8db793387,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5878096181096733427, guid: 14d0875a5bc6bf64d80dbea8db793387,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5878096181096733427, guid: 14d0875a5bc6bf64d80dbea8db793387,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 5878096181096733427, guid: 14d0875a5bc6bf64d80dbea8db793387,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5915119357853501385, guid: 14d0875a5bc6bf64d80dbea8db793387,
+        type: 3}
+      propertyPath: m_Name
+      value: Plastic_Scrap
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 14d0875a5bc6bf64d80dbea8db793387, type: 3}
 --- !u!114 &423762046 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8431079417170349971, guid: 07abc8703fab37341b3960eb375f9bea,
@@ -1588,7 +1656,8 @@ MonoBehaviour:
   diagManager: {fileID: 125880520}
   dialogue:
     dialogueLines:
-    - pathFindDestination: {fileID: 0}
+    - autoSkip: 0
+      pathFindDestination: {fileID: 0}
       questMarker: {fileID: 0}
       TriggerThisEvent:
         m_PersistentCalls:
@@ -1597,7 +1666,8 @@ MonoBehaviour:
         name: Robot
         obj: {fileID: 540382107}
       line: Welcome to the SweatShop Sim Tutorial!
-    - pathFindDestination: {fileID: 0}
+    - autoSkip: 0
+      pathFindDestination: {fileID: 0}
       questMarker: {fileID: 0}
       TriggerThisEvent:
         m_PersistentCalls:
@@ -1606,7 +1676,8 @@ MonoBehaviour:
         name: Robot
         obj: {fileID: 540382107}
       line: My name is Lesbian and I am here to guide you in this tutorial!
-    - pathFindDestination: {fileID: 0}
+    - autoSkip: 0
+      pathFindDestination: {fileID: 0}
       questMarker: {fileID: 0}
       TriggerThisEvent:
         m_PersistentCalls:
@@ -1615,7 +1686,8 @@ MonoBehaviour:
         name: Robot
         obj: {fileID: 540382107}
       line: Are you ready? Follow me!
-    - pathFindDestination: {fileID: 1275727018}
+    - autoSkip: 0
+      pathFindDestination: {fileID: 1275727018}
       questMarker: {fileID: 0}
       TriggerThisEvent:
         m_PersistentCalls:
@@ -1624,7 +1696,8 @@ MonoBehaviour:
         name: Robot
         obj: {fileID: 540382107}
       line: Welcome to the Smelter! Made by Hantian!
-    - pathFindDestination: {fileID: 0}
+    - autoSkip: 0
+      pathFindDestination: {fileID: 0}
       questMarker: {fileID: 0}
       TriggerThisEvent:
         m_PersistentCalls:
@@ -1633,7 +1706,8 @@ MonoBehaviour:
         name: Robot
         obj: {fileID: 540382107}
       line: The Smelter's main functionality is to convert scraps to raw materials!
-    - pathFindDestination: {fileID: 0}
+    - autoSkip: 0
+      pathFindDestination: {fileID: 0}
       questMarker: {fileID: 718860613}
       TriggerThisEvent:
         m_PersistentCalls:
@@ -1641,8 +1715,49 @@ MonoBehaviour:
       narrator:
         name: Robot
         obj: {fileID: 540382107}
-      line: Care to try it out? Rotate the wheel in an anti-clockwise manner!
-    - pathFindDestination: {fileID: 0}
+      line: Care to try it out? Pull out the Smelter's door!
+    - autoSkip: 0
+      pathFindDestination: {fileID: 0}
+      questMarker: {fileID: 665383255}
+      TriggerThisEvent:
+        m_PersistentCalls:
+          m_Calls: []
+      narrator:
+        name: Robot
+        obj: {fileID: 540382107}
+      line: Great! Now take 1  scrap and put it inside the smelter!
+    - autoSkip: 0
+      pathFindDestination: {fileID: 0}
+      questMarker: {fileID: 2015778296}
+      TriggerThisEvent:
+        m_PersistentCalls:
+          m_Calls: []
+      narrator:
+        name: Robot
+        obj: {fileID: 540382107}
+      line: Nice you fucker now close the door
+    - autoSkip: 0
+      pathFindDestination: {fileID: 0}
+      questMarker: {fileID: 676792472}
+      TriggerThisEvent:
+        m_PersistentCalls:
+          m_Calls: []
+      narrator:
+        name: Robot
+        obj: {fileID: 540382107}
+      line: You are doing well! Now rotate the wheel clockwise to lock the door!
+    - autoSkip: 0
+      pathFindDestination: {fileID: 0}
+      questMarker: {fileID: 587354242}
+      TriggerThisEvent:
+        m_PersistentCalls:
+          m_Calls: []
+      narrator:
+        name: Robot
+        obj: {fileID: 540382107}
+      line: Nice! Now press the red button on the top to start smelting!
+    - autoSkip: 0
+      pathFindDestination: {fileID: 0}
       questMarker: {fileID: 0}
       TriggerThisEvent:
         m_PersistentCalls:
@@ -1650,7 +1765,162 @@ MonoBehaviour:
       narrator:
         name: Robot
         obj: {fileID: 540382107}
-      line: Great! Now take 3 scraps and put inside!
+      line: The progression bar indicates the smelter's progress!
+    - autoSkip: 0
+      pathFindDestination: {fileID: 0}
+      questMarker: {fileID: 1067754810}
+      TriggerThisEvent:
+        m_PersistentCalls:
+          m_Calls: []
+      narrator:
+        name: Robot
+        obj: {fileID: 540382107}
+      line: Press the red button AGAIN to off the smelter!
+    - autoSkip: 0
+      pathFindDestination: {fileID: 0}
+      questMarker: {fileID: 0}
+      TriggerThisEvent:
+        m_PersistentCalls:
+          m_Calls: []
+      narrator:
+        name: Robot
+        obj: {fileID: 540382107}
+      line: Now unlock the wheel, open the door and take out the raw materials!
+--- !u!1 &587354240
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 587354241}
+  - component: {fileID: 587354242}
+  m_Layer: 0
+  m_Name: Activate Smelter Red Button Objective
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &587354241
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587354240}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1403606390}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &587354242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587354240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1732c47fc580354f9e72b104300f85b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smelter: {fileID: 1059016657}
+--- !u!1 &665383253
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 665383254}
+  - component: {fileID: 665383255}
+  m_Layer: 0
+  m_Name: Detect Smelter Scrap Collider Detection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &665383254
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 665383253}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1403606390}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &665383255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 665383253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd4d39b86ffd3f345a766fcb66448781, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitbox: {fileID: 845338413}
+--- !u!1 &676792470
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 676792471}
+  - component: {fileID: 676792472}
+  m_Layer: 0
+  m_Name: Fully Lock Smelter Wheel Objective
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &676792471
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 676792470}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1403606390}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &676792472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 676792470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd60d7db399394c48b0dfd1a88d757e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wheel: {fileID: 843494121}
 --- !u!4 &688887780 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7186830264723948108, guid: 07abc8703fab37341b3960eb375f9bea,
@@ -2021,6 +2291,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 688887780}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &843494121 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8593613170502515846, guid: 80d828f8ac4bd05428a6bbfab5dd1191,
+    type: 3}
+  m_PrefabInstance: {fileID: 845338412}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f801a659b2eefd43a778df341127088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &845338412
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2149,6 +2431,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80d828f8ac4bd05428a6bbfab5dd1191, type: 3}
+--- !u!114 &845338413 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8274934713080159160, guid: 80d828f8ac4bd05428a6bbfab5dd1191,
+    type: 3}
+  m_PrefabInstance: {fileID: 845338412}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bac03b210d5acfd42b77d6243e85478d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &855492245
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3118,6 +3412,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1022631600}
   m_CullTransparentMesh: 1
+--- !u!114 &1059016657 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7936502983207921324, guid: 80d828f8ac4bd05428a6bbfab5dd1191,
+    type: 3}
+  m_PrefabInstance: {fileID: 845338412}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58d9ae19aaf091a46a39505efecb486c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1067754808
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1067754809}
+  - component: {fileID: 1067754810}
+  m_Layer: 0
+  m_Name: Off Smelter Objective
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1067754809
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067754808}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1403606390}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1067754810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067754808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c74a5cf07d2c2054ba2ab2b3402cd671, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smelter: {fileID: 1059016657}
 --- !u!1 &1153864463
 GameObject:
   m_ObjectHideFlags: 0
@@ -3779,6 +4130,11 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 718860612}
+  - {fileID: 665383254}
+  - {fileID: 2015778295}
+  - {fileID: 676792471}
+  - {fileID: 587354241}
+  - {fileID: 1067754809}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1427192549
@@ -4174,8 +4530,8 @@ RectTransform:
   m_GameObject: {fileID: 1575712154}
   m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0.1}
-  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.04, y: 0.04, z: 0.04}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1494197476}
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
@@ -4231,12 +4587,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 15
+  m_fontSize: 12
   m_fontSizeBase: 10
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 10
-  m_fontSizeMax: 15
+  m_fontSizeMax: 12
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -5496,6 +5852,51 @@ MonoBehaviour:
   onExitZone:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &2015778294
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2015778295}
+  - component: {fileID: 2015778296}
+  m_Layer: 0
+  m_Name: Lock Smelter Door Objective
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2015778295
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015778294}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1403606390}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2015778296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015778294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b7ab7241cb87ed48a52bc29ed68a953, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  door: {fileID: 219649550}
 --- !u!1001 &2042855069
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5729,3 +6130,4 @@ SceneRoots:
   - {fileID: 1275727019}
   - {fileID: 1403606390}
   - {fileID: 845338412}
+  - {fileID: 419561948}

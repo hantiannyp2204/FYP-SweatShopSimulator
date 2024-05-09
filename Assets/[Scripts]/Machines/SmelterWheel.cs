@@ -17,7 +17,7 @@ public class SmelterWheel : XRKnob
     [Header("Feedback Events")]
     [SerializeField] private FeedbackEventData e_lock;
     [SerializeField] private FeedbackEventData e_unlock;
-
+    
     private bool fullyTurned = false;
 
     public bool GetTurnStatus()

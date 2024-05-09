@@ -15,6 +15,7 @@ public class DialogueNarrator
 [System.Serializable] 
 public class DialogueLine
 {
+    public bool autoSkip;
     [Header("Possible Pathfind Location after dialogue")]
     public GameObject pathFindDestination; // make robot pathfind if applicable
     public GenericQuest questMarker;
@@ -55,7 +56,6 @@ public class DialogueTrigger : MonoBehaviour
         _robotNavMesh = GetComponent<NavMeshAgent>();
         if (_robotNavMesh == null) 
         {
-            Debug.Break();
             return; // null check js in case
         }
 
@@ -76,6 +76,7 @@ public class DialogueTrigger : MonoBehaviour
     private void PerformNextDialogue(InputAction.CallbackContext context)
     {
         if (diagManager.GetIsTyping()) return;
+        if (diagManager.GetCurrentIterator().autoSkip) return;
         DialogueLine nextDialogueLine = diagManager.PeekNextDialogueLine();
 
         if (nextDialogueLine != null && nextDialogueLine.pathFindDestination != null)
@@ -106,22 +107,3 @@ public class DialogueTrigger : MonoBehaviour
         diagManager.SetNextDialogueLine();
     }
 }
-
-
-
-// check if it has  a destination to go to 
-//if (diagManager.GetCurrentIterator().pathFindDestination != null) // means object needs to move somewhere
-//{
-//    _robotNavMesh.SetDestination(diagManager.GetCurrentIterator().pathFindDestination.transform.position);
-//    // pathfind to the destination and set next dialogue only after finished
-//    if (!_robotNavMesh.pathPending)
-//    {
-//        if (_robotNavMesh.remainingDistance <= _robotNavMesh.stoppingDistance)
-//        {
-//            if (!_robotNavMesh.hasPath || _robotNavMesh.velocity.sqrMagnitude == 0)
-//            {
-//                // done
-//            }
-//        }
-//    }
-//}

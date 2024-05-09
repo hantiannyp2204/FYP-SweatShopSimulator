@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class FreshRawMaterial : MonoBehaviour
 {
+    public event Action<GameObject> OnMaterialDestroyed;
+
     List<Material[]> initialMaterials = new();
     float timeLeft;
     bool initialedTime = false;
@@ -61,15 +64,17 @@ public class FreshRawMaterial : MonoBehaviour
     IEnumerator CoolMaterialCoroutine()
     {
         float currentElapsedTime = 0;
-        while(currentElapsedTime < timeLeft)
+        while (currentElapsedTime < timeLeft)
         {
-            //reduce the time so it will save the cooling progress
             timeLeft -= Time.deltaTime;
+            currentElapsedTime += Time.deltaTime;
             yield return null;
         }
-        //return eveyone back to normal textures
-        MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
 
+        // Notify before destroying
+        OnMaterialDestroyed?.Invoke(gameObject);
+
+        MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
         int currentIndex = 0;
         foreach (MeshRenderer renderer in meshRenderers)
         {

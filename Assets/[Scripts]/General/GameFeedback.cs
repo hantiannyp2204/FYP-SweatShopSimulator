@@ -86,6 +86,15 @@ public class GameFeedback : MonoBehaviour
             //set the audio's volume to max to reset if it uses fade volume
             audioS.volume = 1;
 
+            //set pitch back to normal incase the pitch was edited previously
+            audioS.pitch = 1;
+
+            //randomise the pitch if avaliable
+            if (data.randomisePitch)
+            {
+                audioS.pitch = Random.Range(0.8f, 1.2f);
+            }
+
             // play audio at random
             switch (data.audioType)
             {

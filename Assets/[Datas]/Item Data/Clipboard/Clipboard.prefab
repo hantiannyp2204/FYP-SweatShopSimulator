@@ -41,6 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 34012760385246581}
+  - component: {fileID: 1389437356400379395}
   m_Layer: 0
   m_Name: PageRender
   m_TagString: Untagged
@@ -64,6 +65,24 @@ Transform:
   - {fileID: 2328662198578563037}
   m_Father: {fileID: 6418290210211103332}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1389437356400379395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1329143135777472044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdfacdf001fa58b43af7d6d0ff13c695, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  materials:
+  - {fileID: 2100000, guid: b73f358133b7a2d49ba9be91c1fccf45, type: 2}
+  - {fileID: 2100000, guid: eb3dcf80f33e29941a132cfa706d53f6, type: 2}
+  - {fileID: 2100000, guid: a29eced7c4a45a149b9464a637585b83, type: 2}
+  - {fileID: 2100000, guid: 35f0f8543e1629244bdb21dc676f0321, type: 2}
+  objectWithMaterial: {fileID: 6658950166673713158}
 --- !u!1 &1494150642608728875
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,7 +204,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1159757512262991009}
+      - m_Target: {fileID: 1389437356400379395}
         m_TargetAssemblyTypeName: ClipboardSwitcher, Assembly-CSharp
         m_MethodName: SwitchMaterial
         m_Mode: 1
@@ -508,7 +527,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -8913389405877943064, guid: b17dfe114a25fba4287d58facb9773b8, type: 3}
+  - {fileID: 2100000, guid: 67491f0bcad2af24a94859865945081d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -539,7 +558,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4860182545608204814}
-  - component: {fileID: 1159757512262991009}
   - component: {fileID: 7842743149364371297}
   - component: {fileID: 5320281681908410366}
   - component: {fileID: 668204164788056834}
@@ -568,24 +586,6 @@ Transform:
   - {fileID: 3542506724510372001}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1159757512262991009
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8044587697865314033}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdfacdf001fa58b43af7d6d0ff13c695, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  materials:
-  - {fileID: 2100000, guid: b73f358133b7a2d49ba9be91c1fccf45, type: 2}
-  - {fileID: 2100000, guid: eb3dcf80f33e29941a132cfa706d53f6, type: 2}
-  - {fileID: 2100000, guid: a29eced7c4a45a149b9464a637585b83, type: 2}
-  - {fileID: 2100000, guid: 35f0f8543e1629244bdb21dc676f0321, type: 2}
-  objectWithMaterial: {fileID: 1329143135777472044}
 --- !u!114 &7842743149364371297
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -86,12 +86,18 @@ public class RobotMovement : MonoBehaviour
 
     public void EnableNavMesh()
     {
-        _refAgent.enabled = true;
+        if (_refAgent != null)
+        {
+            _refAgent.enabled = true;
+        }
     }
 
     public void DisableNavMesh()
     {
-        _refAgent.enabled = false;
+        if (_refAgent != null)
+        {
+            _refAgent.enabled = false;
+        }
     }
 
     public void SetNewWaypoint(GameObject dest)

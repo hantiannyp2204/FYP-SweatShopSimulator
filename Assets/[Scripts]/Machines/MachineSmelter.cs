@@ -63,6 +63,7 @@ public class MachineSmelter : MonoBehaviour
     private bool aboutToBlow = false;
     private bool machineActive = false;
     private bool ableToStart = false;
+    private bool _deactivateButtonPressed = false;
     private Bounds outputSpawnBounds;
     private float defaultMaxFuel = 100;
     private int currentFuelMaxWarningCount;
@@ -74,6 +75,20 @@ public class MachineSmelter : MonoBehaviour
     }
     public bool HasBlownUp() => blewUp;
     public int GetHealthPoints() => healthPoints;
+
+    public bool GetMachineActive()
+    {
+        return machineActive;
+    }
+    public bool GetScrapConverted()
+    {
+        return scrapConverted;
+    }
+
+    public bool GetDeactivatedButtonStatus()
+    {
+        return _deactivateButtonPressed;
+    }
     private void Awake()
     {
         ResetProgressBar();
@@ -331,6 +346,7 @@ public class MachineSmelter : MonoBehaviour
 
     private void DeactivateMachine()
     {
+        _deactivateButtonPressed = true;
         ResetProgressBar();
         smelterWheel.enabled= true;
         machineActive = false;

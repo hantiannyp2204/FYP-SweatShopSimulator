@@ -98,6 +98,10 @@ public class XRVelocityRayGrab : XRGrabInteractable
         Vector3 jumpVelocityVector = diffXZ.normalized * Mathf.Cos(angleInRadian) * jumpSpeed + Vector3.up * Mathf.Sin(angleInRadian) * jumpSpeed;
         return jumpVelocityVector;
     }
+    protected override void OnHoverEntering(HoverEnterEventArgs args)
+    {
+        base.OnHoverEntering(args);
+    }
     protected override void OnHoverEntered(HoverEnterEventArgs args)
     {
 
@@ -110,7 +114,7 @@ public class XRVelocityRayGrab : XRGrabInteractable
         //update the hand text
         VRHandRenderers disableHandModelComponent = args.interactorObject.transform.GetComponent<VRHandRenderers>();
         Item item = args.interactableObject.transform.GetComponent<Item>();
-        if (disableHandModelComponent != null && item !=null)
+        if (disableHandModelComponent != null && item != null)
         {
             disableHandModelComponent.SetItemHoverName(item.Data.itemName);
         }
@@ -165,7 +169,7 @@ public class XRVelocityRayGrab : XRGrabInteractable
             trackPosition = true;
             trackRotation = true;
             throwOnDetach = true;
-         
+
             //if was flying, remove it's rb velocity
             interactableRigidbody.velocity = Vector3.zero;
 
@@ -188,7 +192,6 @@ public class XRVelocityRayGrab : XRGrabInteractable
 
         base.OnSelectEntered(args);
         itemIsHovered = false;
-        //disable hand render
 
     }
     protected override void OnSelectExited(SelectExitEventArgs args)

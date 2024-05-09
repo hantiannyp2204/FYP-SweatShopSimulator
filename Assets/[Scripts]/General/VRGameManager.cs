@@ -31,7 +31,7 @@ public class VRGameManager : MonoBehaviour
     [SerializeField] List<HandPresencePhysics> vrPlayerHandPhysicsList;
     [SerializeField] List<HandColliders> vrPlayerHandColliderList;
     [SerializeField] List<VRHandRenderers> vrPlayerHandRenders;
-    [SerializeField] ContinuousMovementPhysics vrPlayerMovement;
+    //[SerializeField] ContinuousMovementPhysics vrPlayerMovement;
 
     [SerializeField] GameFeedback gameFeedback;
     //public Objective playerObjective;
@@ -111,7 +111,7 @@ public class VRGameManager : MonoBehaviour
         {
             handPhysics.HandPhysicsFixedUpdate();
         }
-        vrPlayerMovement.PlayerMovementFixedUpdate();
+        //vrPlayerMovement.PlayerMovementFixedUpdate();
     }
     // Update is called once per frame
     void Update()
@@ -124,7 +124,7 @@ public class VRGameManager : MonoBehaviour
             hand.UpdateInteractions();
         }
         //stop if its levels
-        vrPlayerMovement.PlayerMovementInputUpdate();
+        //vrPlayerMovement.PlayerMovementInputUpdate();
 
 
         if (gameEnded)

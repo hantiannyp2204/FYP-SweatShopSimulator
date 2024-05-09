@@ -21,6 +21,7 @@ public class RequestBox : MonoBehaviour
     public GameObject insertedItem;
     XRBaseInteractable interactable;
     private XRBaseInteractor interactorUsingThis;
+    [SerializeField] XRBaseInteractable boxInteractable;
 
     //hitbox skin
     [SerializeField] GameObject openedBox;
@@ -31,11 +32,13 @@ public class RequestBox : MonoBehaviour
     }
     private void CloseBox()
     {
+        boxInteractable.enabled = false;
         openedBox.SetActive(false);
         closedBox.SetActive(true);
     }
     private void OpenBox()
     {
+        boxInteractable.enabled = false;
         openedBox.SetActive(true);
         closedBox.SetActive(false);
     }
@@ -52,6 +55,14 @@ public class RequestBox : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
+        SendItemIntoRequestBox(collision);
+    }
+    private void OnCollisionStay(Collision collision)
+    {
+        SendItemIntoRequestBox(collision);
+    }
+    private void SendItemIntoRequestBox(Collision collision)
+    {
         Item collisionItemComponent = collision.gameObject.GetComponent<Item>();
         // Make sure there's no inserted item already, and the collided object is an Item
         if (insertedItem != null || collisionItemComponent == null) return;
@@ -62,11 +73,12 @@ public class RequestBox : MonoBehaviour
         // If the item is interactable and not currently being held
         if (interactable != null && !interactable.isSelected)
         {
+            boxInteractable.enabled = true;
             insertedItem = collision.gameObject;
             // Teleport the item onto the box    
             //set the parent to this
             insertedItem.transform.SetParent(transform, false);
-            insertedItem.transform.localPosition = Vector3.zero;
+            insertedItem.transform.localPosition = collisionItemComponent.Data.GetRequestBoxPositionOffset();
             insertedItem.transform.localRotation = collisionItemComponent.Data.GetRequestBoxRotationOffset();
 
             insertedItem.GetComponent<Rigidbody>().isKinematic = true;
@@ -76,7 +88,6 @@ public class RequestBox : MonoBehaviour
             interactable.enabled = false;
         }
     }
-
     public void SetInsertedItem(GameObject item) // when robot reaches table insert the item
     {
 
@@ -143,6 +154,7 @@ public class RequestBox : MonoBehaviour
         args.interactor.StartManualInteraction(insertedItem.GetComponent<IXRSelectInteractable>());
 
         insertedItem = null;
+        boxInteractable.enabled = false;
     }
 
 

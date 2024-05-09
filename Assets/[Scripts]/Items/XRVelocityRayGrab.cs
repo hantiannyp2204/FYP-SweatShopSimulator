@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using static OVRPlugin;
+
 public class XRVelocityRayGrab : XRGrabInteractable
 {
     public float velocityThreshold = 2;
@@ -198,6 +200,18 @@ public class XRVelocityRayGrab : XRGrabInteractable
             disableHandModelComponent.EnableHandRender();
         }
 
+    }
+    //prevent fresh materail from being selected by left hand
+    public override bool IsSelectableBy(IXRSelectInteractor interactor)
+    {
+        // Check if this object has the Fresh script
+        if (GetComponent<FreshRawMaterial>() != null && interactor.transform.gameObject.layer == LayerMask.NameToLayer("Left hand interactors"))
+        {
+            return false; // Prevent grabbing if the Fresh script is present
+        }
+
+        // Call the base method to preserve default behavior
+        return base.IsSelectableBy(interactor);
     }
     private void OnCollisionEnter(Collision collision)
     {

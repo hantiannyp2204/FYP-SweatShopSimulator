@@ -8,7 +8,7 @@ public class XRRayHoverManager : MonoBehaviour
     [SerializeField] private Material hoverMaterial;
 
     private Dictionary<Transform, HashSet<IXRInteractor>> activeInteractors = new();
-    private HashSet<Transform> selectedInteractables = new(); // Track selected interactables
+    private Dictionary<Transform, string> selectedInteractableLayers = new(); // Track selected interactables and their layers
 
     void OnEnable()
     {
@@ -34,15 +34,19 @@ public class XRRayHoverManager : MonoBehaviour
 
     private void HandleHoverEntered(HoverEnterEventArgs args)
     {
-        if (args.interactableObject != null && !selectedInteractables.Contains(args.interactableObject.transform))
+        if (args.interactableObject != null)
         {
-            AddHoverMaterial(args.interactableObject.transform, args.interactorObject);
+            if (!selectedInteractableLayers.TryGetValue(args.interactableObject.transform, out var selectedLayer) ||
+                args.interactorObject.transform.gameObject.layer != LayerMask.NameToLayer(selectedLayer))
+            {
+                AddHoverMaterial(args.interactableObject.transform, args.interactorObject);
+            }
         }
     }
 
     private void HandleHoverExited(HoverExitEventArgs args)
     {
-        if (args.interactableObject != null && !selectedInteractables.Contains(args.interactableObject.transform))
+        if (args.interactableObject != null)
         {
             RemoveHoverMaterial(args.interactableObject.transform, args.interactorObject);
         }
@@ -52,7 +56,7 @@ public class XRRayHoverManager : MonoBehaviour
     {
         if (args.interactableObject != null)
         {
-            selectedInteractables.Add(args.interactableObject.transform);
+            selectedInteractableLayers[args.interactableObject.transform] = LayerMask.LayerToName(args.interactorObject.transform.gameObject.layer);
             ClearAllInteractors(args.interactableObject.transform);
         }
     }
@@ -61,7 +65,7 @@ public class XRRayHoverManager : MonoBehaviour
     {
         if (args.interactableObject != null)
         {
-            selectedInteractables.Remove(args.interactableObject.transform);
+            selectedInteractableLayers.Remove(args.interactableObject.transform);
         }
     }
 

@@ -34,8 +34,6 @@ public class XRRayHoverManager : MonoBehaviour
 
     private void HandleHoverEntered(HoverEnterEventArgs args)
     {
-        //disable respective ray grab when hovered by direct
-
         if (args.interactableObject != null && !selectedInteractables.Contains(args.interactableObject.transform))
         {
             AddHoverMaterial(args.interactableObject.transform, args.interactorObject);
@@ -55,7 +53,7 @@ public class XRRayHoverManager : MonoBehaviour
         if (args.interactableObject != null)
         {
             selectedInteractables.Add(args.interactableObject.transform);
-            RemoveHoverMaterial(args.interactableObject.transform, args.interactorObject);
+            ClearAllInteractors(args.interactableObject.transform);
         }
     }
 
@@ -90,6 +88,15 @@ public class XRRayHoverManager : MonoBehaviour
         }
     }
 
+    private void ClearAllInteractors(Transform target)
+    {
+        if (activeInteractors.ContainsKey(target))
+        {
+            RemoveHoverMaterial(target); // Remove hover material only once
+            activeInteractors.Remove(target); // Clear all interactors for this target
+        }
+    }
+
     private void ApplyHoverMaterial(Transform target)
     {
         MeshRenderer[] renderers = target.GetComponentsInChildren<MeshRenderer>();
@@ -107,14 +114,7 @@ public class XRRayHoverManager : MonoBehaviour
         foreach (var renderer in renderers)
         {
             List<Material> materials = new List<Material>(renderer.materials);
-            foreach (var material in materials)
-            {
-                if (material.name.Contains("HologramHover"))
-                {
-                    materials.Remove(material);
-                    break;
-                }
-            }
+            materials.RemoveAll(material => material.name.Contains("HologramHover"));
             renderer.materials = materials.ToArray();
         }
     }

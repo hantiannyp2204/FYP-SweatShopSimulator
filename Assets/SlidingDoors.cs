@@ -9,13 +9,23 @@ public class SlidingDoors : MonoBehaviour
     [SerializeField] private XRGrabInteractable grabInteractable;
     [SerializeField] private FeedbackEventData e_doorOpen;
     [SerializeField] private FeedbackEventData e_doorClose;
-    [SerializeField] private SlideDirection slideDirection;
-
+    [SerializeField] private SlideDirection slideDirectionType;
+    [SerializeField] private SlideMagnituteType slideMagnitute;
     private enum SlideDirection
     {
         X,
         Y,
         Z
+    }
+    //to differentiate between Up is lock or down is lock
+    //is Left lock or Right lock
+    //since x can be left or right
+    //y can be up or down
+    //we need this to tell the door should slide whcih direciton to open
+    private enum SlideMagnituteType
+    {
+        Negative,
+        Positive
     }
 
     private bool doorLocked = false;
@@ -35,9 +45,25 @@ public class SlidingDoors : MonoBehaviour
     void Update()
     {
         float currentSlideValue = GetCurrentSlideValue();
-        if (currentSlideValue <= minSlideValue && !doorLocked && !grabbed)
+        if (!doorLocked && !grabbed)
         {
-            OnDoorLocked();
+            switch (slideMagnitute)
+            {
+                case SlideMagnituteType.Positive:
+                    if(currentSlideValue >= minSlideValue)
+                    {
+                        OnDoorLocked();
+                    }
+                    break;
+                case SlideMagnituteType.Negative:
+                    if (currentSlideValue <= minSlideValue)
+                    {
+                        OnDoorLocked();
+                    }
+              
+                    break;
+            }
+          
         }
 
         doorRb.isKinematic = doorLocked;
@@ -45,7 +71,7 @@ public class SlidingDoors : MonoBehaviour
 
     private float GetCurrentSlideValue()
     {
-        switch (slideDirection)
+        switch (slideDirectionType)
         {
             case SlideDirection.X:
                 return transform.position.x - startingPosition.x;
@@ -67,7 +93,7 @@ public class SlidingDoors : MonoBehaviour
 
     private void ResetToStartingPosition()
     {
-        switch (slideDirection)
+        switch (slideDirectionType)
         {
             case SlideDirection.X:
                 transform.position = new Vector3(startingPosition.x, transform.position.y, transform.position.z);

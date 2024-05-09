@@ -126,6 +126,7 @@ public class RequestBox : MonoBehaviour
         var interactableComponent = GetComponent<XRBaseInteractable>();
         if (interactableComponent != null)
         {
+            interactableComponent.selectEntered.RemoveAllListeners();
             interactableComponent.selectEntered.AddListener(PickUpItemFromBox);
         }
     }
@@ -136,7 +137,7 @@ public class RequestBox : MonoBehaviour
         var interactableComponent = GetComponent<XRBaseInteractable>();
         if (interactableComponent != null)
         {
-            interactableComponent.selectEntered.RemoveListener(PickUpItemFromBox);
+            interactableComponent.selectEntered.RemoveAllListeners();
         }
     }
 

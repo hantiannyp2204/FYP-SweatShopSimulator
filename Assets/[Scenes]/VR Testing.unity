@@ -1750,6 +1750,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 6262120828855266392, guid: 80d828f8ac4bd05428a6bbfab5dd1191,
+        type: 3}
+      propertyPath: m_TagString
+      value: Don't Ignore Collision
+      objectReference: {fileID: 0}
     - target: {fileID: 6539111227647161568, guid: 80d828f8ac4bd05428a6bbfab5dd1191,
         type: 3}
       propertyPath: m_Layer
@@ -2032,18 +2037,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5859033559388778335}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1003031713 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2912092632488638699, guid: 6aa70890968c5e74980c3f1995cd71ac,
-    type: 3}
-  m_PrefabInstance: {fileID: 5859033559388778335}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1003031708}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 496880615cd240be960d436c1c8ae570, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1003031718 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5632908192370461467, guid: 6aa70890968c5e74980c3f1995cd71ac,
@@ -2447,6 +2440,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+--- !u!1 &1211847738 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4866868992486604387, guid: 07abc8703fab37341b3960eb375f9bea,
+    type: 3}
+  m_PrefabInstance: {fileID: 1860134446}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1346045429 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2796692818658185817, guid: 07abc8703fab37341b3960eb375f9bea,
@@ -2634,6 +2633,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 4866868992486604387, guid: 07abc8703fab37341b3960eb375f9bea,
+        type: 3}
+      propertyPath: m_TagString
+      value: Don't Ignore Collision
+      objectReference: {fileID: 0}
     - target: {fileID: 7186830264723948108, guid: 07abc8703fab37341b3960eb375f9bea,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2759,7 +2763,7 @@ PrefabInstance:
         type: 3}
       propertyPath: boxInteractable
       value: 
-      objectReference: {fileID: 1860134447}
+      objectReference: {fileID: 1860134452}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 4598451294966133347, guid: 07abc8703fab37341b3960eb375f9bea, type: 3}
@@ -2776,19 +2780,113 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 4866868992486604387, guid: 07abc8703fab37341b3960eb375f9bea,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1860134452}
   m_SourcePrefab: {fileID: 100100000, guid: 07abc8703fab37341b3960eb375f9bea, type: 3}
---- !u!114 &1860134447 stripped
+--- !u!114 &1860134452
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7756665120402354938, guid: 07abc8703fab37341b3960eb375f9bea,
-    type: 3}
-  m_PrefabInstance: {fileID: 1860134446}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1211847738}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a35f6cfbfba9b548aaa00d52cfe8a50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_InteractionManager: {fileID: 0}
+  m_Colliders: []
+  m_InteractionLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_InteractionLayers:
+    m_Bits: 1
+  m_DistanceCalculationMode: 1
+  m_SelectMode: 0
+  m_FocusMode: 1
+  m_CustomReticle: {fileID: 0}
+  m_AllowGazeInteraction: 0
+  m_AllowGazeSelect: 0
+  m_OverrideGazeTimeToSelect: 0
+  m_GazeTimeToSelect: 0.5
+  m_OverrideTimeToAutoDeselectGaze: 0
+  m_TimeToAutoDeselectGaze: 3
+  m_AllowGazeAssistance: 0
+  m_FirstHoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastHoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_HoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_HoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstSelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastSelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstFocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastFocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Activated:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Deactivated:
+    m_PersistentCalls:
+      m_Calls: []
+  m_StartingHoverFilters: []
+  m_StartingSelectFilters: []
+  m_StartingInteractionStrengthFilters: []
+  m_OnFirstHoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnLastHoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnHoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnHoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnSelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnSelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnSelectCanceled:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnActivate:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnDeactivate:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1890507249
 GameObject:
   m_ObjectHideFlags: 0
@@ -4410,7 +4508,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocomotionProvider
       value: 
-      objectReference: {fileID: 1003031713}
+      objectReference: {fileID: 1003031720}
     - target: {fileID: 2324035213948884905, guid: 6aa70890968c5e74980c3f1995cd71ac,
         type: 3}
       propertyPath: m_Name
@@ -4831,15 +4929,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5450594981495066942, guid: 217ac932038f04b438e8809ec5613a01,
+        type: 3}
+      propertyPath: m_TagString
+      value: Don't Ignore Collision
+      objectReference: {fileID: 0}
     - target: {fileID: 6745462358929397058, guid: 217ac932038f04b438e8809ec5613a01,
         type: 3}
       propertyPath: m_Name
       value: Scrap drawer
       objectReference: {fileID: 0}
+    - target: {fileID: 7494914212408050965, guid: 217ac932038f04b438e8809ec5613a01,
+        type: 3}
+      propertyPath: m_TagString
+      value: Don't Ignore Collision
+      objectReference: {fileID: 0}
     - target: {fileID: 8562255640278394263, guid: 217ac932038f04b438e8809ec5613a01,
         type: 3}
       propertyPath: slideMagnitute
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9214961563026282512, guid: 217ac932038f04b438e8809ec5613a01,
+        type: 3}
+      propertyPath: m_TagString
+      value: Don't Ignore Collision
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

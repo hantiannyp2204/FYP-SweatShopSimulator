@@ -89,7 +89,7 @@ public class HandPresencePhysics : MonoBehaviour
     public void IgnoreCollision(GameObject itemToIgnore)
     {
         // don't run if it's a generator
-        if (itemToIgnore.GetComponent<Generators>()) return;
+        if (itemToIgnore.CompareTag("Don't Ignore Collision") ) return;
         if (DebugTxt != null)
         {
             DebugTxt.text = "IGNORE " + itemToIgnore.name;

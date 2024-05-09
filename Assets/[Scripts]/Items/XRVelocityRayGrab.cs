@@ -10,7 +10,7 @@ public class XRVelocityRayGrab : XRGrabInteractable
     public float jumpAngleInDegree = 60;
 
     private XRRayInteractor rayInteractor;
-    private Transform hoveredItemTransform;
+    private XRBaseInteractor hoveringInteractor;
     private Vector3 previousPos;
     private Rigidbody interactableRigidbody;
     private bool canJump = false;
@@ -48,9 +48,10 @@ public class XRVelocityRayGrab : XRGrabInteractable
     }
     private void FixedUpdate()
     {
-        if (itemIsHovered)
+        if (isHovered && hoveringInteractor is XRRayInteractor)
         {
-            float distanceToItem = Vector3.Distance(this.transform.position, hoveredItemTransform.position);
+            Debug.Log("NIGGERS");
+            float distanceToItem = Vector3.Distance(this.transform.position, hoveringInteractor.transform.position);
             Debug.Log("distance to item: " + distanceToItem);
             if (distanceToItem > 1)
             {
@@ -104,12 +105,11 @@ public class XRVelocityRayGrab : XRGrabInteractable
     }
     protected override void OnHoverEntered(HoverEnterEventArgs args)
     {
-
+        hoveringInteractor = (XRBaseInteractor)args.interactorObject;
         if (args.interactorObject is XRRayInteractor)
         {
             grabbedByRay = true;
             itemIsHovered = true;
-            hoveredItemTransform = args.interactorObject.transform;
         }
         //update the hand text
         VRHandRenderers disableHandModelComponent = args.interactorObject.transform.GetComponent<VRHandRenderers>();
@@ -126,7 +126,6 @@ public class XRVelocityRayGrab : XRGrabInteractable
         if (args.interactorObject is XRRayInteractor)
         {
             itemIsHovered = false;
-            hoveredItemTransform = null;
         }
         //update the hand text
         VRHandRenderers disableHandModelComponent = args.interactorObject.transform.GetComponent<VRHandRenderers>();

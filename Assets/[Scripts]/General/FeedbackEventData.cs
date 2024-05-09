@@ -16,6 +16,7 @@ public class FeedbackEventData : ScriptableObject
     public bool sendToAll = false;
     public bool fadeoutAudio = false;
     public bool audioLoop = false;
+    public bool randomisePitch = false;
     public bool stopAudioInChildren = false;
     public bool stopLoopingInChildren = false;
     public int musicPosition = -1;

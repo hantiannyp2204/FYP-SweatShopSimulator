@@ -6,6 +6,13 @@ public class SmelterBlowUpHitbox : MonoBehaviour
 {
     [SerializeField] MachineSmelter smelter;
     int currentHitParticle = 0;
+    private bool _isFixed = false;
+
+    public bool IsSmelterFixed()
+    {
+        return _isFixed;
+    }
+
     private void OnParticleTrigger()
     {
         
@@ -14,6 +21,7 @@ public class SmelterBlowUpHitbox : MonoBehaviour
         currentHitParticle++;
         if(currentHitParticle >= smelter.GetHealthPoints())
         {
+            _isFixed = true;
             smelter.FixBlowUp();
             currentHitParticle= 0;
         }

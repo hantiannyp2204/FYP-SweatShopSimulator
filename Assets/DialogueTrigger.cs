@@ -15,9 +15,9 @@ public class DialogueNarrator
 [System.Serializable] 
 public class DialogueLine
 {
-    public bool autoSkip;
     [Header("Possible Pathfind Location after dialogue")]
     public GameObject pathFindDestination; // make robot pathfind if applicable
+    [Header("Quest that needs to be completed before going to next dialogue")]
     public GenericQuest questMarker;
 
     [Header("Events for each line")]
@@ -76,7 +76,6 @@ public class DialogueTrigger : MonoBehaviour
     private void PerformNextDialogue(InputAction.CallbackContext context)
     {
         if (diagManager.GetIsTyping()) return;
-        if (diagManager.GetCurrentIterator().autoSkip) return;
         DialogueLine nextDialogueLine = diagManager.PeekNextDialogueLine();
 
         if (nextDialogueLine != null && nextDialogueLine.pathFindDestination != null)

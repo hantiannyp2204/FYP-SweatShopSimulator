@@ -73,7 +73,10 @@ public class MachineShredder : MonoBehaviour
 
     public UnityEvent enableWheelEvent;
 
-
+    public void SetValueToComplete(float newValue)
+    {
+        valueToComplete = newValue;
+    }
     public bool AlreadyFull()
     {
         return secretHealth >= maxHealth;
@@ -138,6 +141,11 @@ public class MachineShredder : MonoBehaviour
         {
             _breakAtThisValue = 0;
         }
+    }
+
+    public void SetBreakValue(int value)
+    {
+        _breakAtThisValue = value;
     }
 
     // Start is called before the first frame update

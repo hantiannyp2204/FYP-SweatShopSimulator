@@ -7,6 +7,9 @@ public class ClipboardSwitcher : MonoBehaviour
     public List<Material> materials; // List of materials
     public GameObject objectWithMaterial; // GameObject with the material you want to switch
 
+    //Feedback
+    [Header("FEEDBACK")]
+    [SerializeField] private FeedbackEventData e_turnpage;
     private int currentIndex = 0; // Index of the current material in the list
 
     public void SwitchMaterial()
@@ -23,6 +26,8 @@ public class ClipboardSwitcher : MonoBehaviour
             renderer.material = materials[currentIndex]; // Assign the material at the current index
             currentIndex = (currentIndex + 1) % materials.Count; // Increment the index, looping back to 0 if it exceeds the list size
             Debug.Log("PagedChanged");
+            e_turnpage?.InvokeEvent(transform.position, Quaternion.identity, transform);
+
         }
     }
 }

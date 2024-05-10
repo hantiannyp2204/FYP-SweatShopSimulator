@@ -6,7 +6,12 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class BrokenWheelCollisionManager : MonoBehaviour
 {
     [SerializeField] private MachineShredder shredder;
+    private bool _wheelFixed = false;
 
+    public bool IsWheelFixed()
+    {
+        return _wheelFixed;
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.transform.tag != "Wheel")
@@ -20,6 +25,7 @@ public class BrokenWheelCollisionManager : MonoBehaviour
             return;
         }
 
+        _wheelFixed = true;
         shredder.SetWheelCurrState(WheelStatus.WORKING);
         shredder.enableWheelEvent.Invoke();
         Destroy(other.gameObject);

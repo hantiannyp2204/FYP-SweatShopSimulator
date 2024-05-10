@@ -2,14 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DetectionQuest : GenericQuest
+public class CheckWheelBreak : GenericQuest
 {
-    [SerializeField] private SmelterInputHitbox hitbox;
- 
+    [SerializeField] private MachineShredder shredder;
     // Update is called once per frame
     void Update()
     {
-        if (hitbox.GetScrapList() != null)
+        if (shredder.GetWheelHandler().GetWheelCurrState() == WheelStatus.BROKEN)
         {
             Destroy(gameObject);
         }

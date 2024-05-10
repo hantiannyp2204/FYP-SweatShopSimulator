@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DetectionQuest : GenericQuest
+public class CheckSmelterFIxed : GenericQuest
 {
-    [SerializeField] private SmelterInputHitbox hitbox;
- 
+    [SerializeField] private SmelterBlowUpHitbox blowUpHitbox;
+
     // Update is called once per frame
     void Update()
     {
-        if (hitbox.GetScrapList() != null)
+        if (blowUpHitbox.IsSmelterFixed())
         {
             Destroy(gameObject);
         }

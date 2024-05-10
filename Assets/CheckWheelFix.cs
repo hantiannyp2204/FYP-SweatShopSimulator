@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DetectionQuest : GenericQuest
+public class CheckWheelFix : GenericQuest
 {
-    [SerializeField] private SmelterInputHitbox hitbox;
- 
+    [SerializeField] private BrokenWheelCollisionManager collisionManager;
+
     // Update is called once per frame
     void Update()
     {
-        if (hitbox.GetScrapList() != null)
+        if (collisionManager.IsWheelFixed())
         {
             Destroy(gameObject);
         }

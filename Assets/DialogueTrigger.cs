@@ -2,17 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
+using UnityEngine.AI;
 
 [System.Serializable]
 public class DialogueNarrator
 {
-    public string name;
+    public string name; // name of the narrator talking
     public GameObject obj;
 }
 
 [System.Serializable] 
 public class DialogueLine
 {
+    public bool autoSkip;
+    [Header("Possible Pathfind Location after dialogue")]
+    public GameObject pathFindDestination; // make robot pathfind if applicable
+    public GenericQuest questMarker;
+
+    [Header("Events for each line")]
     public UnityEvent TriggerThisEvent;
     public DialogueNarrator narrator;
     [TextArea(3, 10)]
@@ -27,26 +35,75 @@ public class Dialogue
 
 public class DialogueTrigger : MonoBehaviour
 {
+    public InputActionReference toggleNextDialogue = null;
+
     [SerializeField] private DialogueManager diagManager;
     public Dialogue dialogue;
+
+    private NavMeshAgent _robotNavMesh;
+    private void Awake()
+    {
+        toggleNextDialogue.action.started += PerformNextDialogue;
+    }
+
+    private void OnDestroy()
+    {
+        toggleNextDialogue.action.started -= PerformNextDialogue;
+    }
+
+    private void Start()
+    {
+        _robotNavMesh = GetComponent<NavMeshAgent>();
+        if (_robotNavMesh == null) 
+        {
+            return; // null check js in case
+        }
+
+        StartCoroutine(DelayedTrigger());
+    }
 
     public void TriggerDialogue()
     {
         diagManager.StartDialogue(dialogue);
     }
 
-    private void Start()
+    private IEnumerator DelayedTrigger()
     {
+        yield return new WaitForSeconds(0.2f); // Adjust the delay time as needed
         TriggerDialogue();
     }
 
-    private void Update()
+    private void PerformNextDialogue(InputAction.CallbackContext context)
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (diagManager.GetIsTyping()) return;
+        if (diagManager.GetCurrentIterator().autoSkip) return;
+        DialogueLine nextDialogueLine = diagManager.PeekNextDialogueLine();
+
+        if (nextDialogueLine != null && nextDialogueLine.pathFindDestination != null)
         {
-            Queue<DialogueLine> spare = diagManager.GetDialogueList();
-            var list = spare.ToArray();
-            list[0].TriggerThisEvent.Invoke();
+            // there's a destination to go to
+            _robotNavMesh.SetDestination(nextDialogueLine.pathFindDestination.transform.position);
+
+            StartCoroutine(WaitForDestination(nextDialogueLine));
         }
+        else if (diagManager.GetCurrentIterator().questMarker != null) // means that a quest needs to be completed
+        {
+            diagManager.GetCurrentIterator().questMarker.enabled = true;
+        }
+        else 
+        {
+            diagManager.SetNextDialogueLine();
+        }
+    }
+
+    private IEnumerator WaitForDestination(DialogueLine dialogueLine)
+    {
+        while (_robotNavMesh.pathPending || _robotNavMesh.remainingDistance > _robotNavMesh.stoppingDistance)
+        {
+            yield return null;
+        }
+
+        // Destination reached, proceed to the next dialogue line
+        diagManager.SetNextDialogueLine();
     }
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.XR.Interaction.Toolkit;
+using System.Collections;
 public class PowerPlug : MonoBehaviour
 {
     [SerializeField] XRGrabInteractable _DropPlug;
@@ -9,6 +10,8 @@ public class PowerPlug : MonoBehaviour
     public Transform End_Plug;
     public bool isStuckInSocket;
     public PowerForFab _powerForFab;
+    public Transform _Socket_Point;
+    public Transform _Calble_Point;
 
     //public TMP_Text Text;
     public LayerMask socketLayer; // Set this in the inspector to the layer you want the plug to stick to
@@ -30,7 +33,12 @@ public class PowerPlug : MonoBehaviour
                 if (rb != null)
                 {
                     rb.isKinematic = true;
+                  
                 }
+                Start_Plug.position = new Vector3(_Socket_Point.position.x, _Socket_Point.position.y, _Socket_Point.position.z);
+                // Reset the rotation of Start_Plug to zero
+                StartCoroutine(ResetRotationAfterDelay(1f));
+                StartCoroutine(ResetRotationAfterDelays(1f));
                 _powerForFab.Isin = true;
                 // Set the flag indicating that the plug is now stuck in a socket
                 isStuckInSocket = true;
@@ -43,6 +51,25 @@ public class PowerPlug : MonoBehaviour
         }
     }
 
+    IEnumerator ResetRotationAfterDelay(float delay)
+    {
+        // Wait for the specified delay
+        yield return new WaitForSeconds(delay);
+
+        // Reset the rotation of Start_Plug to match _Socket_Point
+        Start_Plug.rotation = Quaternion.identity;
+       
+
+    }
+
+    IEnumerator ResetRotationAfterDelays(float delay)
+    {
+        // Wait for the specified delay
+        yield return new WaitForSeconds(delay);
+
+        _Calble_Point.rotation = Quaternion.Euler(0f, 90f, 0f);
+
+    }
     private void OnTriggerExit(Collider other)
     {
         // Check if the collided object is not on the specified socket layer

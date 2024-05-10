@@ -52,4 +52,9 @@ public class SmelterInputHitbox : MonoBehaviour
         destroyList.Clear();
         scrapList.Clear();
     }
+
+    public bool IsListEmpty()
+    {
+        return scrapList == null;
+    }
 }

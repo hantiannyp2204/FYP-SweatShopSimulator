@@ -111,7 +111,7 @@ public class VRGameManager : MonoBehaviour
         {
             handPhysics.HandPhysicsFixedUpdate();
         }
-        vrPlayerMovement.PlayerMovementFixedUpdate();
+        vrPlayerMovement?.PlayerMovementFixedUpdate();
     }
     // Update is called once per frame
     void Update()
@@ -124,7 +124,7 @@ public class VRGameManager : MonoBehaviour
             hand.UpdateInteractions();
         }
         //stop if its levels
-        vrPlayerMovement.PlayerMovementInputUpdate();
+        vrPlayerMovement?.PlayerMovementInputUpdate();
 
 
         if (gameEnded)

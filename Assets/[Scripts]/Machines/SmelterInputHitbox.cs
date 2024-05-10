@@ -15,6 +15,10 @@ public class SmelterInputHitbox : MonoBehaviour
     public List<GameObject> GetDestroyList() => destroyList;
     private void OnTriggerEnter(Collider other)
     {
+        if(other.GetComponent<Item>() == null)
+        {
+            return;
+        }
         //dont add player items
         // Check if the other collider's layer is in the ignoreLayers mask
         // Check if the other collider's layer is in the ignoreLayers mask
@@ -36,13 +40,16 @@ public class SmelterInputHitbox : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
+        if (other.GetComponent<Item>() == null)
+        {
+            return;
+        }
         Scrap scrapComponent = other.GetComponent<Scrap>();
         if (scrapComponent != null && scrapList.Contains(scrapComponent))
         {
             scrapList.Remove(scrapComponent);
         }
         else if(destroyList.Contains(other.gameObject))
-        //if item is not a scrap, burn it (destroy)
         {
             destroyList.Remove(other.gameObject);
         }

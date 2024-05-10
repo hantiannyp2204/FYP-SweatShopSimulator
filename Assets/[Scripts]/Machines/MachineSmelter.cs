@@ -454,9 +454,29 @@ public class MachineSmelter : MonoBehaviour
         {
             particle.Play();
         }
-       
+        
         e_explosion?.InvokeEvent(transform.position, Quaternion.identity, smelterSoundLocation);
         e_blewUpWarning?.InvokeEvent(transform.position, Quaternion.identity, smelterSoundLocation);
+
+
+        //delete items within the bounds
+        if(outputSpawnBounds!= null)
+        {
+            Vector3 center = outputSpawnBounds.center;
+            Vector3 extents = outputSpawnBounds.extents;
+
+            // Retrieve all colliders within the bounds
+            Collider[] hitColliders = Physics.OverlapBox(center, extents, Quaternion.identity);
+            foreach (Collider hitCollider in hitColliders)
+            {
+                Item itemScript = hitCollider.GetComponent<Item>();
+                if (itemScript != null)
+                {
+                    Destroy(hitCollider.gameObject); // Destroy the GameObject if it has the Item component
+                }
+            }
+        }
+
         timerText.text = "WARNING!!!";
         blewUp = true;
         aboutToBlow = false;

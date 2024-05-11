@@ -9,7 +9,7 @@ public class DetectionQuest : GenericQuest
     // Update is called once per frame
     void Update()
     {
-        if (hitbox != null)
+        if (hitbox.GetScrapList() != null)
         {
             Destroy(gameObject);
         }

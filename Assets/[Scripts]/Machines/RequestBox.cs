@@ -38,7 +38,10 @@ public class RequestBox : MonoBehaviour
     }
     private void OpenBox()
     {
-        boxInteractable.enabled = false;
+        if (boxInteractable != null) // null check, joshua
+        {
+            boxInteractable.enabled = false;
+        }
         openedBox.SetActive(true);
         closedBox.SetActive(false);
     }

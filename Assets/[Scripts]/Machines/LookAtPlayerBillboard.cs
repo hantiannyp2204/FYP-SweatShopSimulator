@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ManualRequestText : MonoBehaviour
+public class LookAtPlayerBillboard
+    : MonoBehaviour
 {
     private Vector3 cameraDir;
     private void Update()

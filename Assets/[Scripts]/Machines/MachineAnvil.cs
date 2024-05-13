@@ -11,7 +11,7 @@ public class MachineAnvil : MonoBehaviour
     //[SerializeField] private State currentState;
     //[SerializeField] private GameObject player;
     
-    public VrMachineItemCollider anvilItemCollider;
+    //public VrMachineItemCollider anvilItemCollider;
     
     //GameObject outputItem;
 
@@ -82,7 +82,7 @@ public class MachineAnvil : MonoBehaviour
             Destroy(currentRawType.gameObject);
             anvilHitbox.RMaterialList.Remove(currentRawType);
             anvilHitbox.ItemOnAnvil = false;
-            anvilItemCollider.ClearProductList();
+            ///anvilItemCollider.ClearProductList();
         }
 
        //ChangeState();

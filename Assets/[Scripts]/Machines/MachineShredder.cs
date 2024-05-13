@@ -8,6 +8,7 @@ using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
 //using UnityEngine.UIElements;
 using UnityEngine.XR.Content.Interaction;
+using UnityEngine.Rendering.Universal;
 
 public class MachineShredder : MonoBehaviour
 {
@@ -70,6 +71,37 @@ public class MachineShredder : MonoBehaviour
     private XRVelocityRayGrab _grabber;
 
     [SerializeField] private GameObject _attachedWheel;
+
+    [Header("FUEL POINTER SETTINGS")]
+    [SerializeField] private GameObject fuelPointer;
+    [SerializeField] private MeshRenderer fuelPointerRenderer;
+    [SerializeField] private Material greenGlow;
+    [SerializeField] private Material yellowGlow;
+    [SerializeField] private Material redGlow;
+
+    [SerializeField] private Vector3 OneHunderedPercentagePosition;
+    [SerializeField] private Quaternion OneHunderedPercentageRotation;
+
+    [SerializeField] private Vector3 SeventyFivePercentagePosition;
+    [SerializeField] private Quaternion SeventyFivePercentageRotation;
+
+    [SerializeField] private Vector3 FiftyPercentagePosition;
+    [SerializeField] private Quaternion FiftyPercentageRotation;
+
+    [SerializeField] private Vector3 TwentyFivePercentagePosition;
+    [SerializeField] private Quaternion TwentyFivePercentageRotation;
+
+    [SerializeField] private Vector3 ZeroPercentagePosition;
+    [SerializeField] private Quaternion ZeroPercentageRotation;
+    private enum fuelPercetnageType
+    {
+        Zero,
+        TwentyFive,
+        Fifty,
+        SeventyFive,
+        OneHundered
+    }
+    fuelPercetnageType currentFuelPercentageType;
 
     public UnityEvent enableWheelEvent;
 
@@ -311,14 +343,73 @@ public class MachineShredder : MonoBehaviour
         }
         else
         {
+            //update fuel pointer posision
             shredderFuelText.text = "Fuel: " + fuelPercentage.ToString("0") + "%";
             shredderFuelText.color = Color.white;
         }
-
+        HandleFuelPointerUpdate(fuelPercentage);
         HandleFinishProcess();
         HandleShreddingProcess();
     }
-   
+    void HandleFuelPointerUpdate(float currentFuelPercentage)
+    {
+        if (currentFuelPercentage <= 0)
+        {
+            UpdateFuelPointer(fuelPercetnageType.Zero);
+        }
+        else if (currentFuelPercentage > 0 && currentFuelPercentage <= 25)
+        {
+            UpdateFuelPointer(fuelPercetnageType.TwentyFive);
+        }
+        else if (currentFuelPercentage > 25 && currentFuelPercentage <= 50)
+        {
+            UpdateFuelPointer(fuelPercetnageType.Fifty);
+        }
+        else if (currentFuelPercentage > 50 && currentFuelPercentage <= 75)
+        {
+            UpdateFuelPointer(fuelPercetnageType.SeventyFive);
+        }
+        else
+        {
+            UpdateFuelPointer(fuelPercetnageType.OneHundered);
+        }
+    }
+    void UpdateFuelPointer(fuelPercetnageType newFuelPercentageType)
+    {
+        if (currentFuelPercentageType != newFuelPercentageType)
+        {
+            currentFuelPercentageType = newFuelPercentageType;
+            fuelPointerRenderer.material = null;
+            switch (newFuelPercentageType)
+            {
+                case fuelPercetnageType.Zero:
+                    fuelPointerRenderer.material = redGlow;
+                    fuelPointer.transform.localPosition = ZeroPercentagePosition;
+                    fuelPointer.transform.localRotation = ZeroPercentageRotation;
+                    break;
+                case fuelPercetnageType.TwentyFive:
+                    fuelPointerRenderer.material = yellowGlow;
+                    fuelPointer.transform.localPosition = TwentyFivePercentagePosition;
+                    fuelPointer.transform.localRotation = TwentyFivePercentageRotation;
+                    break;
+                case fuelPercetnageType.Fifty:
+                    fuelPointerRenderer.material = yellowGlow;
+                    fuelPointer.transform.localPosition = FiftyPercentagePosition;
+                    fuelPointer.transform.localRotation = FiftyPercentageRotation;
+                    break;
+                case fuelPercetnageType.SeventyFive:
+                    fuelPointerRenderer.material = greenGlow;
+                    fuelPointer.transform.localPosition = SeventyFivePercentagePosition;
+                    fuelPointer.transform.localRotation = SeventyFivePercentageRotation;
+                    break;
+                case fuelPercetnageType.OneHundered:
+                    fuelPointerRenderer.material = greenGlow;
+                    fuelPointer.transform.localPosition = OneHunderedPercentagePosition;
+                    fuelPointer.transform.localRotation = OneHunderedPercentageRotation;
+                    break;
+            }
+        }
+    }
     void HandleShreddingProcess()
     {
         if (initShredding)
@@ -483,4 +574,3 @@ public class MachineShredder : MonoBehaviour
         return Random.Range(150, 200);
     }
 }
-    

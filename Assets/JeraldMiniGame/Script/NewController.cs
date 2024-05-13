@@ -21,6 +21,8 @@ public class NewController : MonoBehaviour
     public CraftingRecepie _craftingRecepie;
     public GameObject _ConfirmUI;
     public Renderer arrowRenderer;
+    public bool finishedLevel = false;
+    public bool canSpawn = false;
 
 
 
@@ -113,6 +115,7 @@ public class NewController : MonoBehaviour
     {
         if (WinCheck <= maxWinD && WinCheck >= minWinD)
         {
+            finishedLevel = true;
             winORloseText.text = "WIN";
             gameEnded = true; // Set gameEnded to true when player wins
             arrowRenderer.material.color = Color.green;
@@ -161,6 +164,7 @@ public class NewController : MonoBehaviour
         }
         else //Win
         {
+            canSpawn = true;
             Debug.Log("It went here");
             //Spawn Item
             _fabricatorCrafting.SpawnItemsFromList();

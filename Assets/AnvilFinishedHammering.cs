@@ -2,14 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DetectionQuest : GenericQuest
+public class AnvilFinishedHammering : GenericQuest
 {
-    [SerializeField] private SmelterInputHitbox hitbox;
- 
+    [SerializeField] private AnvilGame2 game;
     // Update is called once per frame
     void Update()
     {
-        if (hitbox.GetScrapList().Count != 0)
+        if (game.finishedGame)
         {
             Destroy(gameObject);
         }

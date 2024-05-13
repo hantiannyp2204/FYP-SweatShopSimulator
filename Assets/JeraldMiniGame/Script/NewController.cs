@@ -169,7 +169,7 @@ public class NewController : MonoBehaviour
             //Spawn Item
             _fabricatorCrafting.SpawnItemsFromList();
             ResetEverything();
-            UpdateLevelParameters();
+            UpdateLevelParameters();    
             SetRange();
         }
     } 

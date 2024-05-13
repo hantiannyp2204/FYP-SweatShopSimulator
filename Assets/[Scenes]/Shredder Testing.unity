@@ -407,6 +407,51 @@ Transform:
   - {fileID: 1617324429}
   m_Father: {fileID: 1403606390}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &107511391
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 107511392}
+  - component: {fileID: 107511393}
+  m_Layer: 0
+  m_Name: Anvil Put Material On Table Objective
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &107511392
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107511391}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1817886802}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &107511393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107511391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1088484e79d89bf4ca68a3ebc01a7b0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitbox: {fileID: 1070125869}
 --- !u!1001 &117721207
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1824,6 +1869,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shredder: {fileID: 1665550273}
+--- !u!114 &643774794 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8191572116294068079, guid: b5667362ccad4a14a88cfdaeec4f56df,
+    type: 3}
+  m_PrefabInstance: {fileID: 1531930400}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c70e3baa89561d34a8e456434c1ae292, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &665383253
 GameObject:
   m_ObjectHideFlags: 0
@@ -2253,6 +2310,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &789564481 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7382429437219452544, guid: ccaf6860fa2f04245bd1d88f61ccd793,
+    type: 3}
+  m_PrefabInstance: {fileID: 872182455}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 968a84ea353a05746ab9f3ac70ce1b7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &803534671
 GameObject:
   m_ObjectHideFlags: 0
@@ -2703,6 +2772,99 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2897592db26be2848ae6d35cd137a668, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &872182455
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3418179283843006331, guid: ccaf6860fa2f04245bd1d88f61ccd793,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4392676117997830624, guid: ccaf6860fa2f04245bd1d88f61ccd793,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4757385008266643070, guid: ccaf6860fa2f04245bd1d88f61ccd793,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 7.83
+      objectReference: {fileID: 0}
+    - target: {fileID: 4757385008266643070, guid: ccaf6860fa2f04245bd1d88f61ccd793,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.28860283
+      objectReference: {fileID: 0}
+    - target: {fileID: 4757385008266643070, guid: ccaf6860fa2f04245bd1d88f61ccd793,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 4757385008266643070, guid: ccaf6860fa2f04245bd1d88f61ccd793,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.58049864
+      objectReference: {fileID: 0}
+    - target: {fileID: 4757385008266643070, guid: ccaf6860fa2f04245bd1d88f61ccd793,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.47101024
+      objectReference: {fileID: 0}
+    - target: {fileID: 4757385008266643070, guid: ccaf6860fa2f04245bd1d88f61ccd793,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.51578057
+      objectReference: {fileID: 0}
+    - target: {fileID: 4757385008266643070, guid: ccaf6860fa2f04245bd1d88f61ccd793,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.4184987
+      objectReference: {fileID: 0}
+    - target: {fileID: 4757385008266643070, guid: ccaf6860fa2f04245bd1d88f61ccd793,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 78.111
+      objectReference: {fileID: 0}
+    - target: {fileID: 4757385008266643070, guid: ccaf6860fa2f04245bd1d88f61ccd793,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 83.243
+      objectReference: {fileID: 0}
+    - target: {fileID: 4757385008266643070, guid: ccaf6860fa2f04245bd1d88f61ccd793,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7183140929836869341, guid: ccaf6860fa2f04245bd1d88f61ccd793,
+        type: 3}
+      propertyPath: m_Name
+      value: Hammer1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7183140929836869341, guid: ccaf6860fa2f04245bd1d88f61ccd793,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7382429437219452544, guid: ccaf6860fa2f04245bd1d88f61ccd793,
+        type: 3}
+      propertyPath: game
+      value: 
+      objectReference: {fileID: 643774794}
+    - target: {fileID: 7704888858288656769, guid: ccaf6860fa2f04245bd1d88f61ccd793,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ccaf6860fa2f04245bd1d88f61ccd793, type: 3}
 --- !u!198 &888090686 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 4316976495460962125, guid: 80d828f8ac4bd05428a6bbfab5dd1191,
@@ -2734,7 +2896,7 @@ Transform:
   m_GameObject: {fileID: 903524437}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.1, y: 2.3359303, z: 3.69}
+  m_LocalPosition: {x: 11.19, y: 2.3359303, z: 4.78}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3449,6 +3611,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   smelter: {fileID: 1059016657}
+--- !u!114 &1070125869 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3296940040780873853, guid: b5667362ccad4a14a88cfdaeec4f56df,
+    type: 3}
+  m_PrefabInstance: {fileID: 1531930400}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70add65141a03c94dbf66691ea182155, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1099061026
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4158,6 +4332,7 @@ Transform:
   - {fileID: 904299777}
   - {fileID: 2136706609}
   - {fileID: 94885488}
+  - {fileID: 1817886802}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1427192549
@@ -4439,6 +4614,84 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5afe661cc32e3c49ac4cf2b26ff3b02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &1531930400
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2566332028514222119, guid: b5667362ccad4a14a88cfdaeec4f56df,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3931527576275246440, guid: b5667362ccad4a14a88cfdaeec4f56df,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 7.877
+      objectReference: {fileID: 0}
+    - target: {fileID: 3931527576275246440, guid: b5667362ccad4a14a88cfdaeec4f56df,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3931527576275246440, guid: b5667362ccad4a14a88cfdaeec4f56df,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 3931527576275246440, guid: b5667362ccad4a14a88cfdaeec4f56df,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3931527576275246440, guid: b5667362ccad4a14a88cfdaeec4f56df,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3931527576275246440, guid: b5667362ccad4a14a88cfdaeec4f56df,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3931527576275246440, guid: b5667362ccad4a14a88cfdaeec4f56df,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3931527576275246440, guid: b5667362ccad4a14a88cfdaeec4f56df,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3931527576275246440, guid: b5667362ccad4a14a88cfdaeec4f56df,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3931527576275246440, guid: b5667362ccad4a14a88cfdaeec4f56df,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6812543773632557010, guid: b5667362ccad4a14a88cfdaeec4f56df,
+        type: 3}
+      propertyPath: m_Name
+      value: Machine_Anvil
+      objectReference: {fileID: 0}
+    - target: {fileID: 8191572116294068079, guid: b5667362ccad4a14a88cfdaeec4f56df,
+        type: 3}
+      propertyPath: hammer
+      value: 
+      objectReference: {fileID: 789564481}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b5667362ccad4a14a88cfdaeec4f56df, type: 3}
 --- !u!1 &1568032173
 GameObject:
   m_ObjectHideFlags: 0
@@ -4780,6 +5033,51 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 811a33b978ce2b142a81d0510f6ab345, type: 3}
+--- !u!1 &1653447249
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1653447250}
+  - component: {fileID: 1653447251}
+  m_Layer: 0
+  m_Name: Anvil Hammer Product til Flattened Objective
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1653447250
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1653447249}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1817886802}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1653447251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1653447249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fad74456117f6c4784a5da689ac0628, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  game: {fileID: 643774794}
 --- !u!1001 &1660354620
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5219,7 +5517,7 @@ PrefabInstance:
     - target: {fileID: 2408231106762921814, guid: 29afbefb2a6e0c84590b76bd37db49dc,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 5.771
+      value: 5.16
       objectReference: {fileID: 0}
     - target: {fileID: 2408231106762921814, guid: 29afbefb2a6e0c84590b76bd37db49dc,
         type: 3}
@@ -5231,6 +5529,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2408231106762921814, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3006559089587541567, guid: 29afbefb2a6e0c84590b76bd37db49dc,
         type: 3}
       propertyPath: player
@@ -5241,6 +5544,31 @@ PrefabInstance:
       propertyPath: machineDestination
       value: 
       objectReference: {fileID: 803534671}
+    - target: {fileID: 4506475674928123239, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4506475674928123239, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4506475674928123239, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4506475674928123239, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.98
+      objectReference: {fileID: 0}
+    - target: {fileID: 4506475674928123239, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5240126916219975176, guid: 29afbefb2a6e0c84590b76bd37db49dc,
         type: 3}
       propertyPath: m_Height
@@ -5253,8 +5581,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
         type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 616696968911160907}
+    - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
       propertyPath: dialogue.dialogueLines.Array.size
-      value: 49
+      value: 52
       objectReference: {fileID: 0}
     - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
         type: 3}
@@ -5279,56 +5612,87 @@ PrefabInstance:
     - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
         type: 3}
       propertyPath: dialogue.dialogueLines.Array.data[40].line
-      value: This machine should be easier to use, so lets try it out!
-      objectReference: {fileID: 0}
-    - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
-        type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[41].line
       value: Before we use the fabricator, we first need to connect the power plug
         on the right side of the machine!
       objectReference: {fileID: 0}
     - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
         type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[42].line
+      propertyPath: dialogue.dialogueLines.Array.data[41].line
       value: You see that menu over there! On top of the machine? Choose a product
         and hover over the "Confirm Selection" buttton and click it!
       objectReference: {fileID: 0}
     - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
         type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[43].line
+      propertyPath: dialogue.dialogueLines.Array.data[42].line
       value: Okay, nice! Now its time for us to be more hands on! On the menu there
         is a requirement for the product you chose! Find them somewhere and put them
         in the LEFT tube! After that, press the MIDDLE button to start a mini game!
       objectReference: {fileID: 0}
     - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
         type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[44].line
+      propertyPath: dialogue.dialogueLines.Array.data[43].line
       value: 'Welcome to the mini-game. To play this game, rotate the left button
         until the arrow in front of you is green color, then press the middle button
         to lock in! '
       objectReference: {fileID: 0}
     - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
         type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[45].line
+      propertyPath: dialogue.dialogueLines.Array.data[44].line
       value: Noice Daddy! Lets try and complete the second level! Good Luck!
       objectReference: {fileID: 0}
     - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
         type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[46].line
+      propertyPath: dialogue.dialogueLines.Array.data[45].line
       value: Congratulations, you fabricated your own product! You can collect it
         on the right tube!
       objectReference: {fileID: 0}
     - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
         type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[47].line
+      propertyPath: dialogue.dialogueLines.Array.data[46].line
       value: That is all for this machine! Hope you understood how to use the Fabricator!
         Let's go to the final machine, Anvil!
       objectReference: {fileID: 0}
     - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
         type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[47].line
+      value: Welcome to the Anvil, made by Raedea!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
       propertyPath: dialogue.dialogueLines.Array.data[48].line
-      value: That is all for this machine! Hope you understood how to use the Fabricator!
-        Let's go to the final machine, Anvil!
+      value: The Anvil converts raw materials to flattened materials!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[49].line
+      value: Lets try it! Put a raw material onto the anvil!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[50].line
+      value: The game has started, hammer the material when the text says "Hit!"
+        and hit it until the white part of the progress fills the bar up!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[51].line
+      value: Congratulations! We have finished the tutorial! It has been pleasure
+        teaching you how to use the machines! I hope what you learnt today can serve
+        you well in the future! But for now, you can suck deez cock
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[52].line
+      value: Congratulations! We have finished the tutorial! It has been pleasure
+        teaching you how to use the machines! I hope what you learnt today can serve
+        you well in the future! But for now, you can suck deez cock
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[53].line
+      value: Congratulations! We have finished the tutorial! It has been pleasure
+        teaching you how to use the machines! I hope what you learnt today can serve
+        you well in the future! But for now, you can suck deez cock
       objectReference: {fileID: 0}
     - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
         type: 3}
@@ -5407,32 +5771,62 @@ PrefabInstance:
       objectReference: {fileID: 1318279915}
     - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
         type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[41].questMarker
+      propertyPath: dialogue.dialogueLines.Array.data[40].questMarker
       value: 
       objectReference: {fileID: 1427619476}
     - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
         type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[42].questMarker
+      propertyPath: dialogue.dialogueLines.Array.data[41].questMarker
       value: 
       objectReference: {fileID: 1908526978}
     - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
         type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[43].questMarker
+      propertyPath: dialogue.dialogueLines.Array.data[42].questMarker
       value: 
       objectReference: {fileID: 2024077758}
     - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
         type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[44].questMarker
+      propertyPath: dialogue.dialogueLines.Array.data[43].questMarker
       value: 
       objectReference: {fileID: 498988561}
     - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
         type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[45].questMarker
+      propertyPath: dialogue.dialogueLines.Array.data[44].questMarker
       value: 
       objectReference: {fileID: 1617324430}
     - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
         type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[45].questMarker
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
       propertyPath: dialogue.dialogueLines.Array.data[46].questMarker
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[49].questMarker
+      value: 
+      objectReference: {fileID: 107511393}
+    - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[50].questMarker
+      value: 
+      objectReference: {fileID: 1653447251}
+    - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[51].questMarker
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[52].questMarker
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[53].questMarker
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
@@ -5492,6 +5886,31 @@ PrefabInstance:
       objectReference: {fileID: 1717140004}
     - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
         type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[49].narrator.obj
+      value: 
+      objectReference: {fileID: 1717140004}
+    - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[50].narrator.obj
+      value: 
+      objectReference: {fileID: 1717140004}
+    - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[51].narrator.obj
+      value: 
+      objectReference: {fileID: 1717140004}
+    - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[52].narrator.obj
+      value: 
+      objectReference: {fileID: 1717140004}
+    - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[53].narrator.obj
+      value: 
+      objectReference: {fileID: 1717140004}
+    - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
       propertyPath: dialogue.dialogueLines.Array.data[38].narrator.name
       value: Robot
       objectReference: {fileID: 0}
@@ -5547,6 +5966,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
         type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[49].narrator.name
+      value: Robot
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[50].narrator.name
+      value: Robot
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[51].narrator.name
+      value: Robot
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[52].narrator.name
+      value: Robot
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[53].narrator.name
+      value: Robot
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
       propertyPath: dialogue.dialogueLines.Array.data[2].pathFindDestination
       value: 
       objectReference: {fileID: 0}
@@ -5578,6 +6022,26 @@ PrefabInstance:
     - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
         type: 3}
       propertyPath: dialogue.dialogueLines.Array.data[38].pathFindDestination
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[47].pathFindDestination
+      value: 
+      objectReference: {fileID: 903524437}
+    - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[48].pathFindDestination
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[49].pathFindDestination
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[50].pathFindDestination
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6839311262673538839, guid: 29afbefb2a6e0c84590b76bd37db49dc,
@@ -5616,6 +6080,39 @@ PrefabInstance:
       addedObject: {fileID: 616696968911160906}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29afbefb2a6e0c84590b76bd37db49dc, type: 3}
+--- !u!1 &1817886801
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1817886802}
+  m_Layer: 0
+  m_Name: Anvil Quest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1817886802
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817886801}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 107511392}
+  - {fileID: 1653447250}
+  m_Father: {fileID: 1403606390}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1824576217
 GameObject:
   m_ObjectHideFlags: 0
@@ -7394,6 +7891,167 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1001 &2218331844239016239
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1406320048399535072, guid: d55a50e1424e1714894b2897c90c19fe,
+        type: 3}
+      propertyPath: m_Name
+      value: Robot
+      objectReference: {fileID: 0}
+    - target: {fileID: 1406320048399535072, guid: d55a50e1424e1714894b2897c90c19fe,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4396681111108682207, guid: d55a50e1424e1714894b2897c90c19fe,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4396681111108682207, guid: d55a50e1424e1714894b2897c90c19fe,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[3].line
+      value: Before we use the fabricator, we first need to connect the power plug
+        on the right side of the machine!
+      objectReference: {fileID: 0}
+    - target: {fileID: 4396681111108682207, guid: d55a50e1424e1714894b2897c90c19fe,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[4].line
+      value: You see that menu over there! On top of the machine? Choose a product
+        and hover over the "Confirm Selection" buttton and click it!
+      objectReference: {fileID: 0}
+    - target: {fileID: 4396681111108682207, guid: d55a50e1424e1714894b2897c90c19fe,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[5].line
+      value: Okay, nice! Now its time for us to be more hands on! On the menu there
+        is a requirement for the product you chose! Find them somewhere and put them
+        in the LEFT tube! After that, press the MIDDLE button to start a mini game!
+      objectReference: {fileID: 0}
+    - target: {fileID: 4396681111108682207, guid: d55a50e1424e1714894b2897c90c19fe,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[6].line
+      value: 'Welcome to the mini-game. To play this game, rotate the left button
+        until the arrow in front of you is green color, then press the middle button
+        to lock in! '
+      objectReference: {fileID: 0}
+    - target: {fileID: 4396681111108682207, guid: d55a50e1424e1714894b2897c90c19fe,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[7].line
+      value: Noice Daddy! Lets try and complete the second level! Good Luck!
+      objectReference: {fileID: 0}
+    - target: {fileID: 4396681111108682207, guid: d55a50e1424e1714894b2897c90c19fe,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[8].line
+      value: Congratulations, you fabricated your own product! You can collect it
+        on the right tube!
+      objectReference: {fileID: 0}
+    - target: {fileID: 4396681111108682207, guid: d55a50e1424e1714894b2897c90c19fe,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[9].line
+      value: That is all for this machine! Hope you understood how to use the Fabricator!
+        Let's go to the final machine, Anvil!
+      objectReference: {fileID: 0}
+    - target: {fileID: 4396681111108682207, guid: d55a50e1424e1714894b2897c90c19fe,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[3].questMarker
+      value: 
+      objectReference: {fileID: 1427619476}
+    - target: {fileID: 4396681111108682207, guid: d55a50e1424e1714894b2897c90c19fe,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[4].questMarker
+      value: 
+      objectReference: {fileID: 1908526978}
+    - target: {fileID: 4396681111108682207, guid: d55a50e1424e1714894b2897c90c19fe,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[5].questMarker
+      value: 
+      objectReference: {fileID: 2024077758}
+    - target: {fileID: 4396681111108682207, guid: d55a50e1424e1714894b2897c90c19fe,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[6].questMarker
+      value: 
+      objectReference: {fileID: 498988561}
+    - target: {fileID: 4396681111108682207, guid: d55a50e1424e1714894b2897c90c19fe,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[7].questMarker
+      value: 
+      objectReference: {fileID: 1617324430}
+    - target: {fileID: 4396681111108682207, guid: d55a50e1424e1714894b2897c90c19fe,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[8].questMarker
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4396681111108682207, guid: d55a50e1424e1714894b2897c90c19fe,
+        type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[0].pathFindDestination
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6563823523422984383, guid: d55a50e1424e1714894b2897c90c19fe,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 855492246}
+    - target: {fileID: 8999530724810148880, guid: d55a50e1424e1714894b2897c90c19fe,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 8999530724810148880, guid: d55a50e1424e1714894b2897c90c19fe,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 8999530724810148880, guid: d55a50e1424e1714894b2897c90c19fe,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 8999530724810148880, guid: d55a50e1424e1714894b2897c90c19fe,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8999530724810148880, guid: d55a50e1424e1714894b2897c90c19fe,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8999530724810148880, guid: d55a50e1424e1714894b2897c90c19fe,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8999530724810148880, guid: d55a50e1424e1714894b2897c90c19fe,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8999530724810148880, guid: d55a50e1424e1714894b2897c90c19fe,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8999530724810148880, guid: d55a50e1424e1714894b2897c90c19fe,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 8999530724810148880, guid: d55a50e1424e1714894b2897c90c19fe,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d55a50e1424e1714894b2897c90c19fe, type: 3}
 --- !u!1 &2299226855808067259
 GameObject:
   m_ObjectHideFlags: 0
@@ -10161,6 +10819,7 @@ SceneRoots:
   - {fileID: 1267825166}
   - {fileID: 483163956}
   - {fileID: 1738634574}
+  - {fileID: 2218331844239016239}
   - {fileID: 1824576221}
   - {fileID: 10191128}
   - {fileID: 766972289}
@@ -10197,3 +10856,5 @@ SceneRoots:
   - {fileID: 467904295}
   - {fileID: 1099061026}
   - {fileID: 176123903}
+  - {fileID: 1531930400}
+  - {fileID: 872182455}

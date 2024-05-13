@@ -21,6 +21,7 @@ public class AnvilGame2 : MonoBehaviour
     private float timer = 0f;
     public bool canHit = false;
     public bool timerRunning = false;
+    public bool finishedGame = false;
 
     [SerializeField] private float hitCooldown = 1f; // Cooldown period in seconds
     private bool hitRegistered = false; // Flag to track if a hit is registered
@@ -87,6 +88,7 @@ public class AnvilGame2 : MonoBehaviour
 
         if (currentProgress >= 100f)
         {
+            finishedGame = true;
             Debug.Log("Item is fully crafted!");
             timerText.text = "Item Crafted!";
             anvil.RunMachine();

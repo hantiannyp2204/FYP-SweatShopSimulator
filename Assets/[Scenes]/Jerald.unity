@@ -276,6 +276,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   insertedItem: {fileID: 0}
+  boxInteractable: {fileID: 0}
   openedBox: {fileID: 0}
   closedBox: {fileID: 0}
 --- !u!1001 &83712148
@@ -1644,6 +1645,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1592974121450076119, guid: b5465bcff680c254a813d90e3b68c206,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.027
+      objectReference: {fileID: 0}
     - target: {fileID: 3797643063808755650, guid: b5465bcff680c254a813d90e3b68c206,
         type: 3}
       propertyPath: m_InteractionManager
@@ -1699,11 +1705,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4002890189935725737, guid: b5465bcff680c254a813d90e3b68c206,
+        type: 3}
+      propertyPath: e_powerOutage
+      value: 
+      objectReference: {fileID: 11400000, guid: 30e74bb6eb6468c46b9750faf37a41bc,
+        type: 2}
     - target: {fileID: 5005477706403541070, guid: b5465bcff680c254a813d90e3b68c206,
         type: 3}
       propertyPath: m_Name
       value: Fabricator 3D
       objectReference: {fileID: 0}
+    - target: {fileID: 5159099008499899852, guid: b5465bcff680c254a813d90e3b68c206,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: af4079fa1a8fe804ea28c3fb3bb3654a, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

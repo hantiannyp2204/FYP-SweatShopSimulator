@@ -28,7 +28,7 @@ public class PowerForFab : MonoBehaviour
         {
             if (Isin == true)
             {
-              
+                e_powerOutage?.InvokeEvent(transform.position, Quaternion.identity, PowerOutageTransform);
                 _Rigidbody.isKinematic = false;
                 Debug.Log("Isin");
                 DisableBoxColliderForDuration(2f);
@@ -37,7 +37,7 @@ public class PowerForFab : MonoBehaviour
             }
         }
 
-        e_powerOutage?.InvokeEvent(transform.position, Quaternion.identity, PowerOutageTransform);
+        
     }
 
 

@@ -1392,12 +1392,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3591c16320fbbe54591ba669e46d1dd7, type: 3}
---- !u!4 &414873919 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7907120340337064047, guid: b5465bcff680c254a813d90e3b68c206,
-    type: 3}
-  m_PrefabInstance: {fileID: 1101876595}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &480759542
 GameObject:
   m_ObjectHideFlags: 0
@@ -3015,17 +3009,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4002890189935725737, guid: b5465bcff680c254a813d90e3b68c206,
-        type: 3}
-      propertyPath: PowerOutageTransform
-      value: 
-      objectReference: {fileID: 414873919}
-    - target: {fileID: 4173994034228001418, guid: b5465bcff680c254a813d90e3b68c206,
-        type: 3}
-      propertyPath: Wheel
-      value: 
-      objectReference: {fileID: 7558848516626091283, guid: 80dd18a9077c1e148b879e55328b0da9,
-        type: 3}
     - target: {fileID: 5005477706403541070, guid: b5465bcff680c254a813d90e3b68c206,
         type: 3}
       propertyPath: m_Name
@@ -5413,6 +5396,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameFeedback
       objectReference: {fileID: 0}
+    - target: {fileID: 3500257825337269956, guid: 86d2a10a7dd741742b97e62426a4f71e,
+        type: 3}
+      propertyPath: feedbackDatas.Array.size
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 3500257825337269956, guid: 86d2a10a7dd741742b97e62426a4f71e,
+        type: 3}
+      propertyPath: feedbackDatas.Array.data[33]
+      value: 
+      objectReference: {fileID: 11400000, guid: 89a138234c693394785da3caec8545d7,
+        type: 2}
     - target: {fileID: 8486184926785702905, guid: 86d2a10a7dd741742b97e62426a4f71e,
         type: 3}
       propertyPath: m_LocalPosition.x

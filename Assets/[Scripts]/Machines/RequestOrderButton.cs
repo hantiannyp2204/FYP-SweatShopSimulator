@@ -8,5 +8,6 @@ public class RequestOrderButton : VRButton
     public override void PressedFunction()
     {
         customerTable.ToggleOrder(true);
+        Destroy(gameObject);
     }
 }

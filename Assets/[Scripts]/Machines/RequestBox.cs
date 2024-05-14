@@ -27,10 +27,7 @@ public class RequestBox : MonoBehaviour
     [SerializeField] GameObject openedBox;
     [SerializeField] GameObject closedBox;
 
-    [Header("FEEDBACK")]
-    [SerializeField] private FeedbackEventData e_boxOpen;
-    [SerializeField] private FeedbackEventData e_boxClose;
-
+    [SerializeField] CustomerTable table;
     private void Start()
     {
         OpenBox();
@@ -40,8 +37,6 @@ public class RequestBox : MonoBehaviour
         boxInteractable.enabled = false;
         openedBox.SetActive(false);
         closedBox.SetActive(true);
-        e_boxClose?.InvokeEvent(transform.position, Quaternion.identity, transform);
-
     }
     private void OpenBox()
     {
@@ -51,7 +46,6 @@ public class RequestBox : MonoBehaviour
         }
         openedBox.SetActive(true);
         closedBox.SetActive(false);
-        e_boxOpen?.InvokeEvent(transform.position, Quaternion.identity, transform);
     }
     //to run at when sending order
     public void SendRequestOver()
@@ -78,30 +72,45 @@ public class RequestBox : MonoBehaviour
         // Make sure there's no inserted item already, and the collided object is an Item
         if (insertedItem != null || collisionItemComponent == null) return;
 
+        SetInsertedItem(collisionItemComponent);
+        
+    }
+    private void SetInsertedItem(Item newItem)
+    {
         // Attempt to get the XRBaseInteractable component of the collided item
-        interactable = collision.gameObject.GetComponent<XRBaseInteractable>();
+        interactable = newItem.gameObject.GetComponent<XRBaseInteractable>();
 
         // If the item is interactable and not currently being held
         if (interactable != null && !interactable.isSelected)
         {
             boxInteractable.enabled = true;
-            insertedItem = collision.gameObject;
+            insertedItem = newItem.gameObject;
             // Teleport the item onto the box    
             //set the parent to this
             insertedItem.transform.SetParent(transform, false);
-            insertedItem.transform.localPosition = collisionItemComponent.Data.GetRequestBoxPositionOffset();
-            insertedItem.transform.localRotation = collisionItemComponent.Data.GetRequestBoxRotationOffset();
+            insertedItem.transform.localPosition = newItem.Data.GetRequestBoxPositionOffset();
+            insertedItem.transform.localRotation = newItem.Data.GetRequestBoxRotationOffset();
 
             insertedItem.GetComponent<Rigidbody>().isKinematic = true;
 
 
             // Temporarily disable the XRBaseInteractable to prevent picking up
             interactable.enabled = false;
+
+            //if its the correct item send it, else run the not correct itme fucntion
+            if (GetRequestedItem() == GetInsertedItem())
+            {
+                //automatically instert the item
+                table.ToggleOrder(false);
+            }
+            else
+            {
+                WrongItemInserted();
+            }
         }
     }
     public void SetInsertedItem(GameObject item) // when robot reaches table insert the item
-    {
-
+    {                                                                                                                                                                                                   
         Item collisionItemComponent = item.gameObject.GetComponent<Item>();
         // Make sure there's no inserted item already, and the collided object is an Item
         if (insertedItem != null || collisionItemComponent == null)
@@ -127,9 +136,15 @@ public class RequestBox : MonoBehaviour
 
             // Temporarily disable the XRBaseInteractable to prevent picking up
             interactable.enabled = false;
+
+            
         }
     }
 
+    private void WrongItemInserted()
+    {
+        Debug.Log("WRONG ITEM LAH SHIBAL");
+    }
     protected void OnEnable()
     {
         // Assuming this component is also an XRBaseInteractable (based on the previous implementation),

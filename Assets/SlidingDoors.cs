@@ -66,7 +66,14 @@ public class SlidingDoors : MonoBehaviour
           
         }
 
-        doorRb.isKinematic = doorLocked;
+        if (doorLocked && !doorRb.isKinematic)
+        {
+            doorRb.isKinematic = true;
+        }
+        else if (!doorLocked && doorRb.isKinematic)
+        {
+            doorRb.isKinematic = false;
+        }
     }
 
     private float GetCurrentSlideValue()
@@ -93,18 +100,7 @@ public class SlidingDoors : MonoBehaviour
 
     private void ResetToStartingPosition()
     {
-        switch (slideDirectionType)
-        {
-            case SlideDirection.X:
-                transform.position = new Vector3(startingPosition.x, transform.position.y, transform.position.z);
-                break;
-            case SlideDirection.Y:
-                transform.position = new Vector3(transform.position.x, startingPosition.y, transform.position.z);
-                break;
-            case SlideDirection.Z:
-                transform.position = new Vector3(transform.position.x, transform.position.y, startingPosition.z);
-                break;
-        }
+        transform.position = startingPosition;
     }
 
     public virtual void OnDoorUnlocked()

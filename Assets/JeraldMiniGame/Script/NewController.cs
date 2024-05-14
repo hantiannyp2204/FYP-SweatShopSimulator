@@ -27,6 +27,7 @@ public class NewController : MonoBehaviour
     [Header("Feedback Events")]
     [SerializeField] private FeedbackEventData e_SpawnItem;
     [SerializeField] private Transform SpawnItemTransform;
+    [SerializeField] private FeedbackEventData e_stopAllSound;
 
     [Header("Game Variables")]
     public float speed = 50;
@@ -174,6 +175,7 @@ public class NewController : MonoBehaviour
             ResetEverything();
             UpdateLevelParameters();    
             SetRange();
+            e_stopAllSound?.InvokeEvent(transform.position, Quaternion.identity, SpawnItemTransform);
         }
     } 
     void UpdateLevelParameters()

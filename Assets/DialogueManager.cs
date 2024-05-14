@@ -26,7 +26,6 @@ public class DialogueManager : MonoBehaviour
         _lines = new Queue<DialogueLine>();
 
         xButtonImage.gameObject.SetActive(false);
-
     }
 
     public void StartDialogue(Dialogue dialogue)
@@ -74,7 +73,15 @@ public class DialogueManager : MonoBehaviour
 
         _queueTracker = _lines.Dequeue();
         _isTyping = false; // set to false
-        xButtonImage.gameObject.SetActive(true);
+        if (diagLine.questMarker != null)
+        {
+            if (!xButtonImage.gameObject.activeSelf)
+                xButtonImage.gameObject.SetActive(false);
+        }
+        else
+        {
+            xButtonImage.gameObject.SetActive(true);
+        }
     }
 
     public void EndDialogue()

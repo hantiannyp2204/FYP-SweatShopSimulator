@@ -8,16 +8,20 @@ public class RobotMovement : MonoBehaviour
     [SerializeField] private float rotationSpeed;
     [SerializeField] private Transform moveArea;
     [SerializeField] private float rangeToFindPoint;
+    [SerializeField] private ZoneSaver zoneSaver;
 
     private NavMeshAgent _refAgent;
 
     private RobotItemPlate _itemPlateRef;
+    private RobotAssistant _assistant;
     // Start is called before the first frame update
     void Start()
     {
         _refAgent = GetComponent<NavMeshAgent>();
+        if (_refAgent == null) Debug.Break();
 
         _itemPlateRef = _refAgent.GetComponentInChildren<RobotItemPlate>();
+        _assistant = GetComponent<RobotAssistant>();
     }
 
     // Update is called once per frame
@@ -46,7 +50,12 @@ public class RobotMovement : MonoBehaviour
         } 
         else
         {
-            SetNextDestinaton();
+            if (!_assistant.GetIsJumping())
+            {
+     
+                 SetNextDestinaton();
+
+            }
         }
     }
 

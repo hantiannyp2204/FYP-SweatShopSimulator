@@ -49,6 +49,8 @@ public class ZoneDetector : MonoBehaviour
             other.gameObject.GetComponentInParent<ZoneSaver>().SaveCurrentZone(_currZone);
             other.gameObject.GetComponentInParent<ZoneSaver>().SaveCurrentZoneGO(zoneGO);
             assistant.JumpToZone();
+            assistant.SetIsJumping(true);
+            //assistant.GetRobotNavMesh().enabled = false;
             onEnterZone.Invoke();
         }
     }
@@ -58,6 +60,8 @@ public class ZoneDetector : MonoBehaviour
         if (other.gameObject.layer != _playerLayer) return;
         else
         {
+            //assistant.GetRobotNavMesh().enabled = true;
+            assistant.SetIsJumping(false);
             onExitZone.Invoke();
         }
     }

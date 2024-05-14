@@ -23,7 +23,19 @@ public class RobotAssistant : MonoBehaviour
 
     private NavMeshAgent _getAgent;
 
+    public bool _isJumping = false;
+
     [SerializeField] private ROBOT_STATE _currState;
+
+    public bool GetIsJumping()
+    {
+        return _isJumping;
+    }
+
+    public void SetIsJumping(bool status)
+    {
+        _isJumping = status;
+    }
     
     // Start is called before the first frame update
     void Start()
@@ -49,7 +61,10 @@ public class RobotAssistant : MonoBehaviour
 
     public void JumpToZone()
     {
-        StartCoroutine(JumpCoroutine());
+        if (!GetIsJumping())
+        {
+            StartCoroutine(JumpCoroutine());
+        }
     }
 
     private IEnumerator JumpCoroutine()
@@ -82,5 +97,10 @@ public class RobotAssistant : MonoBehaviour
     public GameObject GetRobotGameobject()
     {
         return gameObject;
+    }
+
+    public NavMeshAgent GetRobotNavMesh()
+    {
+        return _getAgent;
     }
 }

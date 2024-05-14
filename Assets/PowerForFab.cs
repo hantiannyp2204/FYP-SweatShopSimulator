@@ -14,7 +14,9 @@ public class PowerForFab : MonoBehaviour
     public Rigidbody _Rigidbody;
     public BoxCollider boxCollider; // Reference to the BoxCollider component
 
-
+    [Header("Feedback Events")]
+    [SerializeField] private FeedbackEventData e_powerOutage;
+    [SerializeField] private Transform PowerOutageTransform;
     [SerializeField] private Image _PowerBar;
     public void Update()
     {
@@ -26,6 +28,7 @@ public class PowerForFab : MonoBehaviour
         {
             if (Isin == true)
             {
+                e_powerOutage?.InvokeEvent(transform.position, Quaternion.identity, PowerOutageTransform);
                 _Rigidbody.isKinematic = false;
                 Debug.Log("Isin");
                 DisableBoxColliderForDuration(2f);
@@ -33,6 +36,8 @@ public class PowerForFab : MonoBehaviour
                 Isin = false;
             }
         }
+
+        
     }
 
 

@@ -12,6 +12,9 @@ public class PowerPlug : MonoBehaviour
     public PowerForFab _powerForFab;
     public Transform _Socket_Point;
     public Transform _Calble_Point;
+    [Header("Feedback Events")]
+    [SerializeField] private FeedbackEventData e_PowerOn;
+    [SerializeField] private Transform PowerOnTransform;
 
     //public TMP_Text Text;
     public LayerMask socketLayer; // Set this in the inspector to the layer you want the plug to stick to
@@ -44,9 +47,11 @@ public class PowerPlug : MonoBehaviour
                 isStuckInSocket = true;
                 if (_powerForFab._CurrentPower <= 0)
                 {
+                    e_PowerOn?.InvokeEvent(transform.position, Quaternion.identity, PowerOnTransform);
                     _powerForFab.RandomPower();
                 }
                 _DropPlug.enabled = false;
+                
             }
         }
     }

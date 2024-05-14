@@ -159,7 +159,7 @@ public class CustomerTable : MonoBehaviour
 
             //correct item
             //animate box downwards
-            moveBoxCoroutineHandler = StartCoroutine(MoveBoxCoroutine());
+            moveBoxCoroutineHandler = StartCoroutine(MoveBoxCoroutine()); 
             //check item quality (how long it takes to complete)
 
             //reset all variable

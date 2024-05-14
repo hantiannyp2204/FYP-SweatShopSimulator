@@ -41,6 +41,7 @@ public class RobotAssistant : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        transform.LookAt(player.transform.position, Vector3.up);
         _zoneSaver = player.GetComponent<ZoneSaver>();
 
         DEBUGZONE = player.GetComponent<ZoneSaver>().GetCurrentZone();

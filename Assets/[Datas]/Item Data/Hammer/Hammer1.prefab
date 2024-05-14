@@ -72,9 +72,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5895d806f9cb464c8883d988f733d98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  originalMaterial: {fileID: 0}
   data: {fileID: 11400000, guid: 089a10760f418bf459bb1a8211b9c5be, type: 2}
   itemState: 0
   e_pickUp: {fileID: 0}
+  e_collisionNoise: {fileID: 0}
   e_drop: {fileID: 0}
   groundLayer:
     serializedVersion: 2
@@ -436,6 +438,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hammer1
       objectReference: {fileID: 0}
+    - target: {fileID: 1862660294918423803, guid: 40c311ab7e0a5184eb616922e5f16307,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e70de0a423f5f3e479da658f7a563630, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

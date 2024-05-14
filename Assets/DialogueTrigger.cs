@@ -41,6 +41,7 @@ public class DialogueTrigger : MonoBehaviour
     public Dialogue dialogue;
 
     private NavMeshAgent _robotNavMesh;
+    [SerializeField] private Animator anim;
     private void Awake()
     {
         toggleNextDialogue.action.started += PerformNextDialogue;
@@ -81,6 +82,7 @@ public class DialogueTrigger : MonoBehaviour
         if (nextDialogueLine != null && nextDialogueLine.pathFindDestination != null)
         {
             // there's a destination to go to
+            anim.SetBool("isMoving", true);
             _robotNavMesh.SetDestination(nextDialogueLine.pathFindDestination.transform.position);
 
             StartCoroutine(WaitForDestination(nextDialogueLine));
@@ -104,5 +106,6 @@ public class DialogueTrigger : MonoBehaviour
 
         // Destination reached, proceed to the next dialogue line
         diagManager.SetNextDialogueLine();
+        anim.SetBool("isMoving", false);
     }
 }

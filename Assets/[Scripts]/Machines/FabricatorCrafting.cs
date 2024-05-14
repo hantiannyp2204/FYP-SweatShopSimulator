@@ -37,6 +37,7 @@ public class FabricatorCrafting : MonoBehaviour
                     {
                         if (RawMat.GetRawMaterialType() == RawMat2.GetRawMaterialType())
                         {
+                            EnoughMaterials = true;
                             foundCount++; // Increment the counter for each found item
                             _ToDestroy.Add(availableItem.gameObject);
                             availableItem.GetComponent<Rigidbody>().isKinematic = true;

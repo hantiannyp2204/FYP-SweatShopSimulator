@@ -71,6 +71,8 @@ public class VRGameManager : MonoBehaviour
             DisableVRSystem();
         }
 #endif
+
+        Application.targetFrameRate = 120;
         if (leftHandTimerText == null) return; // null check
         if (leftHandGrabText == null) return;
         if (rightHandGrabText == null) return;

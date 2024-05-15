@@ -13,12 +13,12 @@ public class CustomClimbProvider : ClimbProvider
         if(locomotionPhase == LocomotionPhase.Moving)
         {
             playerRb.isKinematic = true;
-            playerMovement.enabled = false;
+            playerMovement.speed = 0;
         }
         else
         {
             playerRb.isKinematic = false;
-            playerMovement.enabled = true;
+            playerMovement.speed = 1;
         }
     }
 }

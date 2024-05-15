@@ -116,7 +116,7 @@ public class CustomerTable : MonoBehaviour
             //if time exceed return
             if (elapsedTimeToNextRequest >= timeToNextRequest)
             {
-                ToggleOrder(false);
+                ToggleOrder();
                 return;
             }
         }
@@ -124,7 +124,7 @@ public class CustomerTable : MonoBehaviour
 
     }
 
-    public void ToggleOrder(bool toggledByButton)
+    public void ToggleOrder(bool toggledByButton = false)
     {
         if (moveBoxCoroutineHandler != null) return;
         //request

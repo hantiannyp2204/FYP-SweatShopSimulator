@@ -36,10 +36,12 @@ public class RobotMovement : MonoBehaviour
 
         if (_refAgent.GetComponent<RobotAssistant>().GetCurrState() == ROBOT_STATE.PATROL)
         {
+            _assistant.GetAnimator().SetBool("isMoving", true);
             canvasLookAt.enabled = false;
         }
         else
         {
+            _assistant.GetAnimator().SetBool("isMoving", false);
             canvasLookAt.enabled = true;
         }
 

@@ -30,6 +30,11 @@ public class RobotAssistant : MonoBehaviour
 
     [SerializeField] private ROBOT_STATE _currState;
 
+    public Animator GetAnimator()
+    {
+        return _robotAnim;
+    }
+
     public bool GetIsJumping()
     {
         return _isJumping;
@@ -61,7 +66,7 @@ public class RobotAssistant : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.LookAt(player.transform.position, Vector3.up);
+        //transform.LookAt(player.transform.position, Vector3.up);
         _zoneSaver = player.GetComponent<ZoneSaver>();
 
         DEBUGZONE = player.GetComponent<ZoneSaver>().GetCurrentZone();

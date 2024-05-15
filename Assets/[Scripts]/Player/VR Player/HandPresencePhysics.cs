@@ -124,7 +124,8 @@ public class HandPresencePhysics : MonoBehaviour
 
     public void ResetIgnoreCollision(GameObject itemToReset)
     {
-        if (grabbedCollisionObject == null) return;
+        // Check if the item to reset exists in the list
+        if (!collisionRecoverCoroutines.Any(tuple => tuple.Item2 == itemToReset) || grabbedCollisionObject == null) return;
 
         grabbedCollisionObject = null;
         var coroutine = StartCoroutine(RecoverCollisionCoroutine(itemColliderArray, itemToReset));

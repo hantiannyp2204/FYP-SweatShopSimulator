@@ -8,29 +8,28 @@ public class RobotItemPlate : MonoBehaviour
     [SerializeField] private RobotMovement robotMovement;
     [SerializeField] private Item _itemToSend;
 
-
     public RequestBox box;
     private Transform _tableParent;
-    //private RequestBox _requestBox;
 
     public CustomerTable table;
 
+    private Collider _collider;
 
+    public Collider GetCollider()
+    {
+        return _collider;
+    }
     private void Start()
     {
         _tableParent = machineDestination.GetComponentInParent<Transform>(); // store gameobject
-        //_requestBox = _tableParent.GetComponentInChildren<RequestBox>();
-     
-        //if (_requestBox == null)
-        //{
-        //    Debug.Break();
-        //    return;
-        //}
 
         if (_tableParent == null)
         {
             return;
         }
+
+        _collider = GetComponent<Collider>();
+        _collider.enabled = false;
     }
     void OnTriggerEnter(Collider other)
     {
@@ -39,6 +38,7 @@ public class RobotItemPlate : MonoBehaviour
         {
             return;
         }
+
         _itemToSend = isItem;
         _itemToSend.gameObject.GetComponent<Rigidbody>().useGravity = false;
         _itemToSend.gameObject.GetComponent<Rigidbody>().isKinematic = true;
@@ -51,9 +51,4 @@ public class RobotItemPlate : MonoBehaviour
     {
         return _itemToSend;
     }
-
-    //public RequestBox GetRequestBox()
-    //{
-    //    return _requestBox;
-    //}
 }

@@ -8,20 +8,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1003037479093564346, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1029867070774919824, guid: 29afbefb2a6e0c84590b76bd37db49dc,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.68
+      value: -2.82
       objectReference: {fileID: 0}
     - target: {fileID: 1029867070774919824, guid: 29afbefb2a6e0c84590b76bd37db49dc,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.52
+      value: 2.09
       objectReference: {fileID: 0}
     - target: {fileID: 1029867070774919824, guid: 29afbefb2a6e0c84590b76bd37db49dc,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.98
+      value: -0.013
       objectReference: {fileID: 0}
     - target: {fileID: 1029867070774919824, guid: 29afbefb2a6e0c84590b76bd37db49dc,
         type: 3}
@@ -62,6 +67,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1422738139430316208, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: canvasLookAt
+      value: 
+      objectReference: {fileID: 1562864062430819326}
+    - target: {fileID: 1422738139430316208, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: rotationSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1422738139430316208, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: rangeToFindPoint
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3006559089587541567, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+        type: 3}
+      propertyPath: jumpHeight
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4506475674928123239, guid: 29afbefb2a6e0c84590b76bd37db49dc,
         type: 3}
@@ -141,7 +166,7 @@ PrefabInstance:
     - target: {fileID: 7001500404746929504, guid: 29afbefb2a6e0c84590b76bd37db49dc,
         type: 3}
       propertyPath: m_Name
-      value: Robot (1) Variant
+      value: ROBOT_NORMAL
       objectReference: {fileID: 0}
     - target: {fileID: 8454752398299214329, guid: 29afbefb2a6e0c84590b76bd37db49dc,
         type: 3}
@@ -163,3 +188,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29afbefb2a6e0c84590b76bd37db49dc, type: 3}
+--- !u!114 &1562864062430819326 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5780305986032117684, guid: 29afbefb2a6e0c84590b76bd37db49dc,
+    type: 3}
+  m_PrefabInstance: {fileID: 5010163595089777738}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8f3ba369ac3b544a9b0aa72f16f54f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

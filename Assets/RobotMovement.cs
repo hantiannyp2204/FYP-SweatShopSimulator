@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class RobotMovement : MonoBehaviour
 {
+    [SerializeField] private LookAtPlayerBillboard canvasLookAt;
     [SerializeField] private float rotationSpeed;
     [SerializeField] private Transform moveArea;
     [SerializeField] private float rangeToFindPoint;
@@ -14,6 +15,7 @@ public class RobotMovement : MonoBehaviour
 
     private RobotItemPlate _itemPlateRef;
     private RobotAssistant _assistant;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +34,14 @@ public class RobotMovement : MonoBehaviour
             SetNewWaypoint(_itemPlateRef.machineDestination);
         }
 
+        if (_refAgent.GetComponent<RobotAssistant>().GetCurrState() == ROBOT_STATE.PATROL)
+        {
+            canvasLookAt.enabled = false;
+        }
+        else
+        {
+            canvasLookAt.enabled = true;
+        }
 
         if (_refAgent.GetComponent<RobotAssistant>().GetCurrState() == ROBOT_STATE.DELIVERING)
         {
@@ -52,9 +62,7 @@ public class RobotMovement : MonoBehaviour
         {
             if (!_assistant.GetIsJumping())
             {
-     
                  SetNextDestinaton();
-
             }
         }
     }
@@ -123,5 +131,11 @@ public class RobotMovement : MonoBehaviour
     {
         Debug.Log("distance:" + Vector3.Distance(transform.position, dest.transform.position));
         return Vector3.Distance(transform.position, dest.transform.position) < 0.5f;
+    }
+
+    public bool DirectCheckIsReachedDestination(Vector3 dest) // overloaded functions with different parameters for direct checking of distance
+    {
+        Debug.Log("distance:" + Vector3.Distance(transform.position, dest));
+        return Vector3.Distance(transform.position, dest) < 3f;
     }
 }

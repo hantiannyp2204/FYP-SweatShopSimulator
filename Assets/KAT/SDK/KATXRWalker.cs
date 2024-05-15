@@ -76,7 +76,8 @@ public class KATXRWalker : MonoBehaviour
             return;
         }
 
-        transform.rotation = ws.bodyRotationRaw * Quaternion.Inverse( Quaternion.Euler(new Vector3(0,yawCorrection,0)));
+        UnityEngine.Debug.Log(transform.rotation.y + "|" + ws.bodyRotationRaw.y);
+        transform.rotation = ws.bodyRotationRaw;
 
         if (Input.GetKey(KeyCode.W))
         {

@@ -76,10 +76,7 @@ public class DialogueTrigger : MonoBehaviour
 
     private void PerformNextDialogue(InputAction.CallbackContext context)
     {
-        if (diagManager.GetIsTyping())
-        {
-            return;
-        }
+        if (diagManager.GetIsTyping()) return;
         DialogueLine nextDialogueLine = diagManager.PeekNextDialogueLine();
 
         if (nextDialogueLine != null && nextDialogueLine.pathFindDestination != null)
@@ -108,7 +105,7 @@ public class DialogueTrigger : MonoBehaviour
         }
 
         // Destination reached, proceed to the next dialogue line
-        anim.SetBool("isMoving", false);
         diagManager.SetNextDialogueLine();
+        anim.SetBool("isMoving", false);
     }
 }

@@ -12,11 +12,11 @@ public class CustomerTable : MonoBehaviour
     public GameObject _Win;
     public GameObject _Lose;
     public TMP_Text _PointsText;
-    //box things
+    //box settings
     [SerializeField] RequestBox requestBox;
     [SerializeField] float boxRequestYPosition;
     [SerializeField] float boxSendYPosition;
-
+    [SerializeField] Animator boxAnimator;
     //requests
     bool isRequest = true;
     [SerializeField] List<ItemData> posibleRequests;
@@ -31,6 +31,7 @@ public class CustomerTable : MonoBehaviour
     float timeNeededToWin;
 
     int totalScore = 0;
+
     void RandomiseNextRequestTimer()
     {
         timeToNextRequest = Random.Range(2, 5);
@@ -122,7 +123,7 @@ public class CustomerTable : MonoBehaviour
 
     }
 
-    public void ToggleOrder(bool toggledByButton)
+    public void ToggleOrder(bool toggledByButton = false)
     {
         if (moveBoxCoroutineHandler != null) return;
         //request
@@ -154,10 +155,6 @@ public class CustomerTable : MonoBehaviour
         //send
         else
         {
-            //if no item or wrong item, ignore
-            if (requestBox.GetInsertedItem() == null || requestBox.GetRequestedItem() != requestBox.GetInsertedItemData()) return;
-
-            //correct item
             //animate box downwards
             moveBoxCoroutineHandler = StartCoroutine(MoveBoxCoroutine()); 
             //check item quality (how long it takes to complete)
@@ -180,12 +177,14 @@ public class CustomerTable : MonoBehaviour
         {
             startPosition = new Vector3(requestBox.transform.localPosition.x, boxSendYPosition, requestBox.transform.localPosition.z);
             targetPosition = new Vector3(requestBox.transform.localPosition.x, boxRequestYPosition, requestBox.transform.localPosition.z);
+            boxAnimator.SetTrigger("Recieve");
         }
         else
-        {
+        {       
 
             startPosition = new Vector3(requestBox.transform.localPosition.x, boxRequestYPosition, requestBox.transform.localPosition.z);
             targetPosition = new Vector3(requestBox.transform.localPosition.x, boxSendYPosition, requestBox.transform.localPosition.z);
+            boxAnimator.SetTrigger("Send");
         }
 
         while (elapsedTime < duration)

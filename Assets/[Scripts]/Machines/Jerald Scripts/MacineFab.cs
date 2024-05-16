@@ -8,6 +8,9 @@ public class MacineFab : MonoBehaviour
 {
     [Header("Feedback")]
     [SerializeField] private FeedbackEventData Fabricator_run;
+    [SerializeField] private Transform SpawnItemTransform;
+    
+
     //public Power power;
     bool gameEnd = false;
     public bool HasGameStarted = false;
@@ -18,10 +21,14 @@ public class MacineFab : MonoBehaviour
     public FabricatorCrafting _Crafting;
     public PowerForFab _PowerFab;
     public GameObject _RedButton;
+    public bool _audioPlayed;
 
     public GameObject _WinORLose;
     public NewController newController; // Reference to the NewController script
-
+    private void Start()
+    {
+        _audioPlayed = false;
+    }
     public bool CanInteract()
     {
         return true;
@@ -47,12 +54,18 @@ public class MacineFab : MonoBehaviour
             if (_Crafting.HasChosenCraftingItem == true)
             {
                 _Crafting.CheckIfPresent();
+                _audioPlayed = true;
             }
             if (_Crafting.EnoughMaterials == true && _Crafting.HasChosenCraftingItem == true)
             {
+                if (_audioPlayed)
+                {
+                    Fabricator_run?.InvokeEvent(transform.position, Quaternion.identity, transform);
+                    _audioPlayed = false;
+                }
                 //Enalble here
                 _RedButton.SetActive(true);
-                Fabricator_run?.InvokeEvent(transform.position, Quaternion.identity, transform);
+                
                 IsGameRunning = true;
                 //_Crafting.foundCount = 0;
                 HasGameStarted = true;

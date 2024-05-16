@@ -24,7 +24,10 @@ public class NewController : MonoBehaviour
     public bool finishedLevel = false;
     public bool canSpawn = false;
 
-
+    [Header("Feedback Events")]
+    [SerializeField] private FeedbackEventData e_SpawnItem;
+    [SerializeField] private Transform SpawnItemTransform;
+    [SerializeField] private FeedbackEventData e_stopAllSound;
 
     [Header("Game Variables")]
     public float speed = 50;
@@ -168,9 +171,11 @@ public class NewController : MonoBehaviour
             Debug.Log("It went here");
             //Spawn Item
             _fabricatorCrafting.SpawnItemsFromList();
+            e_SpawnItem?.InvokeEvent(transform.position, Quaternion.identity, SpawnItemTransform);
             ResetEverything();
             UpdateLevelParameters();    
             SetRange();
+            e_stopAllSound?.InvokeEvent(transform.position, Quaternion.identity, SpawnItemTransform);
         }
     } 
     void UpdateLevelParameters()

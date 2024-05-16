@@ -56,13 +56,15 @@ public class ZoneDetector : MonoBehaviour
         if (other.gameObject.layer != _playerLayer) return;
         else
         {
+            //if (!assistant.lookAtMe.enabled)
+            //{
+            //    assistant.lookAtMe.enabled = true;
+            //}
             Debug.Log("inzone");
             Debug.Log("CURRENT ZONE:" + _currZone);
             _currZone = zoneType;
-            assistant.JumpToZone();
             other.gameObject.GetComponentInParent<ZoneSaver>().SaveCurrentZone(_currZone);
             other.gameObject.GetComponentInParent<ZoneSaver>().SaveCurrentZoneGO(zoneGO);
-            assistant.SetIsJumping(true);
             //assistant.GetRobotNavMesh().enabled = false;
             onEnterZone.Invoke();
         }
@@ -73,9 +75,12 @@ public class ZoneDetector : MonoBehaviour
         if (other.gameObject.layer != _playerLayer) return;
         else
         {
+            //if (assistant.lookAtMe.enabled)
+            //{
+            //    assistant.lookAtMe.enabled = false; 
+            //}
             //assistant.GetRobotNavMesh().enabled = true;
             assistant.SetState(ROBOT_STATE.PATROL);
-            assistant.SetIsJumping(false);
             _currZone = ZoneType.NONE;
             onExitZone.Invoke();    
         }

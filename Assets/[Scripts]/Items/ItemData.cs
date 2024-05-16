@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //Inspired by Raqib
 [CreateAssetMenu(fileName = "ItemData_")]
@@ -32,4 +33,7 @@ public class ItemData : ScriptableObject
 
     [Header("Material Change")]
     public Material mat; // if applicable
+
+    [Header("Relevant Robot Display Image")]
+    public Sprite imageToDisplay;
 }

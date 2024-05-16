@@ -15,8 +15,8 @@ public class RobotAssistant : MonoBehaviour
     [SerializeField] private float jumpDuration;
     [SerializeField] private RobotItemPlate itemPlate;
 
-
     public ZoneType DEBUGZONE;
+    //public LookAtPlayerBillboard lookAtMe;
     private Rigidbody _rb;
     private ZoneSaver _zoneSaver;
 
@@ -26,6 +26,7 @@ public class RobotAssistant : MonoBehaviour
 
     private Animator _robotAnim;
     private RobotMovement _robotMovement;
+    private RobotAssistant _assistant;
     private Vector3 _currentTarget;
 
     [SerializeField] private ROBOT_STATE _currState;
@@ -61,21 +62,41 @@ public class RobotAssistant : MonoBehaviour
         if (_robotAnim == null) return;
 
         _robotMovement = GetComponent<RobotMovement>();
+
+        _assistant = GetComponent<RobotAssistant>();
+
+        //lookAtMe.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //transform.LookAt(player.transform.position, Vector3.up);
         _zoneSaver = player.GetComponent<ZoneSaver>();
 
         DEBUGZONE = player.GetComponent<ZoneSaver>().GetCurrentZone();
+
+        if (_assistant.GetIsJumping())
+        {
+            LookAtWho(player);
+        }
+        else
+        {
+            if (_getAgent.hasPath)
+            {
+                // get the position of the next corner or waypoint along the path
+                Vector3 nextCorner = _getAgent.steeringTarget;
+
+                // ensure the robot is facing towards the next corner
+                LookAtWhoV3(nextCorner);
+            }
+        }
+
 
         if (GetIsJumping())
         {
             if (_robotMovement.DirectCheckIsReachedDestination(_currentTarget)) // reached target
             {
-               // itemPlate.GetCollider().enabled = true;
+                itemPlate.GetCollider().enabled = true;
                 _robotAnim.SetBool("isHandOut", true);
             }
         }
@@ -88,11 +109,28 @@ public class RobotAssistant : MonoBehaviour
         }
     }
 
+    public void LookAtWho(GameObject go)
+    {
+        transform.LookAt(go.transform.position, Vector3.up);
+    }
+
+    public void LookAtWhoV3(Vector3 dir)
+    {
+        // Create a rotation that looks along the direction vector
+        Quaternion rotation = Quaternion.LookRotation(dir);
+
+        // Apply the rotation to the robot
+        transform.rotation = rotation;
+    }
+
     public void JumpToZone()
     {
         if (!GetIsJumping())
         {
-            StartCoroutine(JumpCoroutine());
+            if (_zoneSaver.GetCurrentZoneGo() != null)
+            {
+                StartCoroutine(JumpCoroutine());
+            }
             //_robotAnim.SetBool("isJumping", false);
         }
     }
@@ -110,7 +148,8 @@ public class RobotAssistant : MonoBehaviour
             float t = elapsedTime / jumpDuration;
             float yOffset = Mathf.Sin(t * Mathf.PI) * jumpHeight;
             Vector3 jumpArc = Vector3.up * yOffset;
-            Vector3 targetPosition = _zoneSaver.GetCurrentZoneGo().transform.position;
+            //Vector3 targetPosition = _zoneSaver.GetCurrentZoneGo().transform.position;
+            Vector3 targetPosition = _zoneSaver.GetCurrentZoneGo().GetComponent<Collider>().bounds.center;
             _currentTarget = targetPosition;
             _rb.MovePosition(Vector3.Lerp(initialPosition, targetPosition + jumpArc, t));
             yield return null; // Wait for the next frame

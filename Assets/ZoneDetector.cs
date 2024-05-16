@@ -25,7 +25,6 @@ public class ZoneDetector : MonoBehaviour
     private int _playerLayer;
 
     private ZoneType _currZone;
-    private Collider _collider;
 
     private void Start()
     {
@@ -37,18 +36,6 @@ public class ZoneDetector : MonoBehaviour
         onEnterZone.AddListener(_robotFind.GetComponent<RobotMovement>().DisableNavMesh);
 
         onExitZone.AddListener(_robotFind.GetComponent<RobotMovement>().EnableNavMesh);
-
-        _collider = GetComponent<Collider>();
-        if (_collider == null) return;
-    }
-
-
-    private void Update()
-    {
-        if (assistant.GetCurrState() == ROBOT_STATE.DELIVERING)
-        {
-            _collider.enabled = false;
-        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -59,11 +46,9 @@ public class ZoneDetector : MonoBehaviour
             Debug.Log("inzone");
             Debug.Log("CURRENT ZONE:" + _currZone);
             _currZone = zoneType;
-            assistant.JumpToZone();
             other.gameObject.GetComponentInParent<ZoneSaver>().SaveCurrentZone(_currZone);
             other.gameObject.GetComponentInParent<ZoneSaver>().SaveCurrentZoneGO(zoneGO);
-            assistant.SetIsJumping(true);
-            //assistant.GetRobotNavMesh().enabled = false;
+            assistant.JumpToZone();
             onEnterZone.Invoke();
         }
     }
@@ -73,11 +58,7 @@ public class ZoneDetector : MonoBehaviour
         if (other.gameObject.layer != _playerLayer) return;
         else
         {
-            //assistant.GetRobotNavMesh().enabled = true;
-            assistant.SetState(ROBOT_STATE.PATROL);
-            assistant.SetIsJumping(false);
-            _currZone = ZoneType.NONE;
-            onExitZone.Invoke();    
+            onExitZone.Invoke();
         }
     }
 

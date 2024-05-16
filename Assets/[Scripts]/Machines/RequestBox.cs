@@ -50,7 +50,7 @@ public class RequestBox : MonoBehaviour
     //to run at when sending order
     public void SendRequestOver()
     {
-        CloseBox();
+
         if (insertedItem != null)
         {
             Destroy(insertedItem);
@@ -98,13 +98,15 @@ public class RequestBox : MonoBehaviour
             interactable.enabled = false;
 
             //if its the correct item send it, else run the not correct itme fucntion
-            if (GetRequestedItemData() == GetInsertedItem())
+            if (GetRequestedItemData() == newItem.Data)
             {
+                CloseBox();
                 //automatically instert the item
-                table.ToggleOrder(false);
+                table.ToggleOrder();
             }
             else
             {
+                Debug.Log("WRONG");
                 WrongItemInserted();
             }
         }

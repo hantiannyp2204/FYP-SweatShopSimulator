@@ -115,7 +115,7 @@ public class CustomerTable : MonoBehaviour
             //if time exceed return
             if (elapsedTimeToNextRequest >= timeToNextRequest)
             {
-                ToggleOrder(false);
+                ToggleOrder();
                 return;
             }
         }
@@ -139,13 +139,18 @@ public class CustomerTable : MonoBehaviour
             //play order came sound
             requestBox.SetRequestedItem(posibleRequests[randomRequest]);
             orderText.text = "Product needed: " + posibleRequests[randomRequest].itemName;
-            gameTimeLeft += posibleRequests[randomRequest].GetTimeGiven();
+
             //start game if first time pressing button
             if (toggledByButton && !gameStart)
             {
+                gameTimeLeft = posibleRequests[randomRequest].GetTimeGiven();
                 //game start sound
                 gameStart = true;
                 requestBox.StartGame();
+            }
+            else
+            {
+                gameTimeLeft += posibleRequests[randomRequest].GetTimeGiven();
             }
             //animate box upwards
             moveBoxCoroutineHandler = StartCoroutine(MoveBoxCoroutine());
@@ -253,12 +258,12 @@ public class CustomerTable : MonoBehaviour
             }
 
        
-            _PointsText.text = "Score: " + totalScore;
+            //_PointsText.text = "Score: " + totalScore;
         }
         else
         {
             _Lose?.SetActive(true);
-            _PointsText.text = "Score: " + totalScore;
+            //_PointsText.text = "Score: " + totalScore;
             //if I lose UI (ran out of time)
         }
         //show score

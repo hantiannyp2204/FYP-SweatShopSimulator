@@ -6,16 +6,15 @@ public class GeneratorDrawer : SlidingDoors
 {
     [SerializeField] Generators generator;
     [SerializeField] Rigidbody handleRb;
-    public override void OnDoorLocked()
+    public override void Onlocked()
     {
-        base.OnDoorLocked();
-        handleRb.isKinematic = true;
-        generator.enabled= false;
+        handleRb.constraints |= RigidbodyConstraints.FreezePositionX;
+        generator.enabled = false;
+
     }
-    public override void OnDoorUnlocked()
+    public override void OnUnlocked()
     {
-        base.OnDoorUnlocked();
-        handleRb.isKinematic = false;
-        generator.enabled= true;
+        handleRb.constraints &= ~RigidbodyConstraints.FreezePositionX;
+        generator.enabled = true;
     }
 }

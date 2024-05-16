@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 3443351206925204897}
   - component: {fileID: 609691946179056353}
   - component: {fileID: 2641690300277462805}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Right drawer render
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -246,8 +246,6 @@ MonoBehaviour:
   boxAnimator: {fileID: 5272124294856011215}
   posibleRequests:
   - {fileID: 11400000, guid: 683a9f1fc06d9524c858cdbf37013247, type: 2}
-  - {fileID: 11400000, guid: 0b2abc8bacdda5044b539f5c4cbaadef, type: 2}
-  - {fileID: 11400000, guid: 309cb06f17bf712448ba2e110fabd662, type: 2}
   orderText: {fileID: 5941903075867046605}
 --- !u!1 &763021314312566343
 GameObject:
@@ -442,7 +440,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5327237002689344066}
-  m_Layer: 10
+  m_Layer: 13
   m_Name: Middle Drawer Render and collisions
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -647,7 +645,7 @@ MonoBehaviour:
   grabInteractable: {fileID: 1241941442506593557}
   e_doorOpen: {fileID: 11400000, guid: ea498228f5f57a144a30483823cd851b, type: 2}
   e_doorClose: {fileID: 11400000, guid: f09ce3787e35da44abf0c53140a83a04, type: 2}
-  slideDirectionType: 0
+  slideDirectionType: 2
   slideMagnitute: 0
   generator: {fileID: 4905463509468026753}
   handleRb: {fileID: 1400849209551576558}
@@ -1000,7 +998,7 @@ GameObject:
   - component: {fileID: 4436264400385811167}
   - component: {fileID: 5142684824992351321}
   - component: {fileID: 5974800055920665510}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Middle drawer render
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1426,7 +1424,7 @@ GameObject:
   - component: {fileID: 6243179556029446571}
   - component: {fileID: 3103154015441734558}
   - component: {fileID: 3656298895148511076}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Middle handle render
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1509,7 +1507,7 @@ GameObject:
   - component: {fileID: 7381620324592321027}
   - component: {fileID: 7908783042629587531}
   - component: {fileID: 3838681218440659339}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Right handle render
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2098,7 +2096,7 @@ MonoBehaviour:
   grabInteractable: {fileID: 2586060513800573373}
   e_doorOpen: {fileID: 11400000, guid: ea498228f5f57a144a30483823cd851b, type: 2}
   e_doorClose: {fileID: 11400000, guid: f09ce3787e35da44abf0c53140a83a04, type: 2}
-  slideDirectionType: 0
+  slideDirectionType: 2
   slideMagnitute: 0
   generator: {fileID: 3803973700494665023}
   handleRb: {fileID: 4256231659675005789}
@@ -2116,7 +2114,7 @@ GameObject:
   - component: {fileID: 5752598433374604587}
   - component: {fileID: 4959170597061257929}
   - component: {fileID: 9186110977398370258}
-  m_Layer: 10
+  m_Layer: 13
   m_Name: Left Drawer Handle Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2470,7 +2468,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8969401716491445131}
-  m_Layer: 10
+  m_Layer: 13
   m_Name: Right Drawer Render and collisions
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2505,7 +2503,7 @@ GameObject:
   - component: {fileID: 7640646334278854710}
   - component: {fileID: 1978399104856233366}
   - component: {fileID: 6807725813744197678}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Left drawer render
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2672,9 +2670,7 @@ MonoBehaviour:
   boxInteractable: {fileID: 4567100554249913855}
   openedBox: {fileID: 3512576540614255034}
   closedBox: {fileID: 2796692818658185817}
-  table: {fileID: 0}
-  e_boxOpen: {fileID: 0}
-  e_boxClose: {fileID: 0}
+  table: {fileID: 7737829243625249529}
 --- !u!114 &4567100554249913855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3302,6 +3298,7 @@ MonoBehaviour:
   - {fileID: 7463059281498811859}
   - {fileID: 4981638579141540694}
   - {fileID: 7312424205014186022}
+  - {fileID: 6499200200150005561}
 --- !u!1 &5850698015343140252
 GameObject:
   m_ObjectHideFlags: 0
@@ -3316,7 +3313,7 @@ GameObject:
   - component: {fileID: 2586060513800573373}
   - component: {fileID: 5115300837653076315}
   - component: {fileID: 4327757329890268377}
-  m_Layer: 10
+  m_Layer: 13
   m_Name: Middle Door Handle Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3751,7 +3748,7 @@ MonoBehaviour:
   grabInteractable: {fileID: 5752598433374604587}
   e_doorOpen: {fileID: 11400000, guid: ea498228f5f57a144a30483823cd851b, type: 2}
   e_doorClose: {fileID: 11400000, guid: f09ce3787e35da44abf0c53140a83a04, type: 2}
-  slideDirectionType: 0
+  slideDirectionType: 2
   slideMagnitute: 0
   generator: {fileID: 8763180944142995240}
   handleRb: {fileID: 6858686443404673209}
@@ -4034,7 +4031,7 @@ GameObject:
   - component: {fileID: 5555389463047375046}
   - component: {fileID: 6289003244776862564}
   - component: {fileID: 7245862299705993264}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Left handle render
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4780,7 +4777,7 @@ GameObject:
   - component: {fileID: 1241941442506593557}
   - component: {fileID: 7283240185666252605}
   - component: {fileID: 2570019439739927501}
-  m_Layer: 10
+  m_Layer: 13
   m_Name: Right drawer Handle Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5212,7 +5209,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2665844216282188023}
-  m_Layer: 10
+  m_Layer: 13
   m_Name: Left Drawer Render and collisions
   m_TagString: Untagged
   m_Icon: {fileID: 0}

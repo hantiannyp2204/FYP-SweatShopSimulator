@@ -45,7 +45,7 @@ public class SlidingDoors : MonoBehaviour
     void Update()
     {
         float currentSlideValue = GetCurrentSlideValue();
-        Debug.Log(currentSlideValue);
+
         if (!doorLocked && !grabbed)
         {
             switch (slideMagnitute)
@@ -82,31 +82,42 @@ public class SlidingDoors : MonoBehaviour
         switch (slideDirectionType)
         {
             case SlideDirection.X:
-                return transform.position.x - startingPosition.x;
+                return transform.localPosition.x - startingPosition.x;
             case SlideDirection.Y:
-                return transform.position.y - startingPosition.y;
+                return transform.localPosition.y - startingPosition.y;
             case SlideDirection.Z:
-                return transform.position.z - startingPosition.z;
+                return transform.localPosition.z - startingPosition.z;
             default:
                 return 0f;
         }
     }
 
-    public virtual void OnDoorLocked()
+    public virtual void Onlocked()
+    {
+        
+    }
+    public virtual void OnUnlocked()
+    {
+       
+    }
+
+    public void OnDoorLocked()
     {
         doorLocked = true;
         e_doorClose?.InvokeEvent(transform.position, Quaternion.identity, transform);
+        Onlocked();
         ResetToStartingPosition();
     }
 
     private void ResetToStartingPosition()
     {
-        transform.position = startingPosition;
+        transform.localPosition = startingPosition;
     }
 
-    public virtual void OnDoorUnlocked()
+    public void OnDoorUnlocked()
     {
         e_doorOpen?.InvokeEvent(transform.position, Quaternion.identity, transform);
+        OnUnlocked();
     }
 
     private void OnDoorUnGrabbed(SelectExitEventArgs args)

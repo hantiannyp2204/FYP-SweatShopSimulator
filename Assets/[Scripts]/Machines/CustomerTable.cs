@@ -122,7 +122,7 @@ public class CustomerTable : MonoBehaviour
 
     }
 
-    public void ToggleOrder(bool toggledByButton)
+    public void ToggleOrder(bool toggledByButton = false)
     {
         if (moveBoxCoroutineHandler != null) return;
         //request

@@ -17,20 +17,8 @@ public class MachineAnvil : MonoBehaviour
 
     // Feedback
     [Header("FEEDBACK")]
-    [SerializeField] private FeedbackEventData e_inputItem;
-    [SerializeField] private FeedbackEventData e_takeOutputItem;
-    [SerializeField] private FeedbackEventData e_run;
     [SerializeField] private FeedbackEventData e_done;
 
-    //public enum State
-    //{
-    //    Empty,
-    //    HasItem
-    //}
-    void Start()
-    {
-        //currentState = State.Empty;
-    }
     public bool CanInteract()
     {
         return true;
@@ -76,6 +64,8 @@ public class MachineAnvil : MonoBehaviour
             outputItemData = OutputItemList[selectedFlatMaterial];
             //spawn the flattened material
             Instantiate(outputItemData.GetPrefab(), ItemSpawnLocation);
+            e_done.InvokeEvent(transform.position, Quaternion.identity, transform);
+
             Debug.Log(ItemSpawnLocation.position);
 
             //destroy the input materials

@@ -23,7 +23,8 @@ public class Hammer : MonoBehaviour
             // Increase the progress of the anvil
             hitting = true;
             Debug.Log("bam");
+
         }
-       
+
     }
 }

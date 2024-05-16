@@ -12,6 +12,11 @@ public class PowerPlug : MonoBehaviour
     public PowerForFab _powerForFab;
     public Transform _Socket_Point;
     public Transform _Calble_Point;
+    [Header("Feedback Events")]
+    [SerializeField] private FeedbackEventData e_PowerOn;
+    [SerializeField] private Transform PowerOnTransform;
+    [SerializeField] private ParticleSystem _Sparks;
+
 
     //public TMP_Text Text;
     public LayerMask socketLayer; // Set this in the inspector to the layer you want the plug to stick to
@@ -35,18 +40,22 @@ public class PowerPlug : MonoBehaviour
                     rb.isKinematic = true;
                   
                 }
-                Start_Plug.position = new Vector3(_Socket_Point.position.x, _Socket_Point.position.y, _Socket_Point.position.z);
+                //Start_Plug.position = new Vector3(_Socket_Point.position.x, _Socket_Point.position.y, _Socket_Point.position.z);
+                Start_Plug.position = _Socket_Point.position;
                 // Reset the rotation of Start_Plug to zero
                 StartCoroutine(ResetRotationAfterDelay(1f));
                 StartCoroutine(ResetRotationAfterDelays(1f));
                 _powerForFab.Isin = true;
+                _Sparks.Play();
                 // Set the flag indicating that the plug is now stuck in a socket
                 isStuckInSocket = true;
                 if (_powerForFab._CurrentPower <= 0)
                 {
+                    e_PowerOn?.InvokeEvent(transform.position, Quaternion.identity, PowerOnTransform);
                     _powerForFab.RandomPower();
                 }
                 _DropPlug.enabled = false;
+                
             }
         }
     }
@@ -85,6 +94,7 @@ public class PowerPlug : MonoBehaviour
             // Set the flag indicating that the plug is no longer stuck in a socket
             isStuckInSocket = false;
             _DropPlug.enabled = true;
+            _Sparks.Stop();
 
 
 
@@ -124,4 +134,9 @@ public class PowerPlug : MonoBehaviour
             }
         }
     }
+
+    
+
 }
+
+

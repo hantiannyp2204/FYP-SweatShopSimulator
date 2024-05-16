@@ -43,8 +43,6 @@ public class RobotItemPlate : MonoBehaviour
         _itemToSend.gameObject.GetComponent<Rigidbody>().useGravity = false;
         _itemToSend.gameObject.GetComponent<Rigidbody>().isKinematic = true;
         _itemToSend.transform.SetParent(transform , true);
-
-        robotMovement.SetNewWaypoint(machineDestination);
     }
 
     public Item GetRobotHoldingItem()

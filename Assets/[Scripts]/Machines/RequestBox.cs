@@ -11,7 +11,7 @@ public class RequestBox : MonoBehaviour
     //Request box
 
     private bool gameStarted = false;
-    ItemData requestedItem;
+    ItemData requestedItemData;
 
     private float _pointsToReward;
     private float _tracker;
@@ -56,7 +56,7 @@ public class RequestBox : MonoBehaviour
             Destroy(insertedItem);
         }
         insertedItem = null;
-        requestedItem = null;
+        requestedItemData = null;
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -98,7 +98,7 @@ public class RequestBox : MonoBehaviour
             interactable.enabled = false;
 
             //if its the correct item send it, else run the not correct itme fucntion
-            if (GetRequestedItem() == newItem.Data)
+            if (GetRequestedItemData() == newItem.Data)
             {
                 //automatically instert the item
                 table.ToggleOrder();
@@ -187,7 +187,7 @@ public class RequestBox : MonoBehaviour
 
     private void Update()
     {
-        if (gameStarted && requestedItem != null)
+        if (gameStarted && requestedItemData != null)
         {
             _tracker += Time.deltaTime;
 
@@ -231,11 +231,11 @@ public class RequestBox : MonoBehaviour
     public void SetRequestedItem(ItemData newRequestedItem)
     {
         OpenBox();
-        requestedItem = newRequestedItem;
+        requestedItemData = newRequestedItem;
         _pointsToReward = newRequestedItem.GetScoreGiven();
     }
 
-    public ItemData GetRequestedItem() => requestedItem;
+    public ItemData GetRequestedItemData() => requestedItemData;
     public ItemData GetInsertedItemData() => insertedItem.GetComponent<Item>().Data;
     public GameObject GetInsertedItem() => insertedItem;
 }

@@ -156,9 +156,6 @@ public class CustomerTable : MonoBehaviour
         //send
         else
         {
-            //if no item or wrong item, ignore
-            if (requestBox.GetInsertedItem() == null || requestBox.GetRequestedItem() != requestBox.GetInsertedItemData()) return;
-
             //correct item
             //animate box downwards
             moveBoxCoroutineHandler = StartCoroutine(MoveBoxCoroutine()); 

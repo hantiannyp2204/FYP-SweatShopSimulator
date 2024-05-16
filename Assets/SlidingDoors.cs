@@ -35,7 +35,7 @@ public class SlidingDoors : MonoBehaviour
 
     private void Start()
     {
-        startingPosition = transform.position;
+        startingPosition = transform.localPosition;
         doorRb = GetComponent<Rigidbody>();
 
         grabInteractable.selectEntered.AddListener(OnDoorGrabbed);
@@ -45,6 +45,7 @@ public class SlidingDoors : MonoBehaviour
     void Update()
     {
         float currentSlideValue = GetCurrentSlideValue();
+        Debug.Log(currentSlideValue);
         if (!doorLocked && !grabbed)
         {
             switch (slideMagnitute)

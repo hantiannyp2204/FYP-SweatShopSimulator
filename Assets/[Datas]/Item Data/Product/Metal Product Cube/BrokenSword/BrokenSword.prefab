@@ -31,7 +31,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.073, y: 0.458, z: 0}
   m_LocalScale: {x: 0.38128, y: 0.38128, z: 0.38128}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4176269064644159456}
   m_Father: {fileID: 0}
@@ -51,7 +51,8 @@ MonoBehaviour:
   originalMaterial: {fileID: 0}
   data: {fileID: 11400000, guid: e33e8f49980de1d4086a65c25cf3fcda, type: 2}
   itemState: 0
-  e_pickUp: {fileID: 0}
+  e_pickUp: {fileID: 11400000, guid: af3bb125f8997a94980b426e499367e1, type: 2}
+  e_collisionNoise: {fileID: 11400000, guid: b60ba12cf8d239d43be8400ff8dcac5d, type: 2}
   e_drop: {fileID: 0}
   groundLayer:
     serializedVersion: 2

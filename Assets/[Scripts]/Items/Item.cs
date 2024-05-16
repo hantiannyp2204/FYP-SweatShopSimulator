@@ -13,7 +13,7 @@ public class Item : MonoBehaviour
     [Header("FEEDBACK")]
     [SerializeField] private FeedbackEventData e_pickUp;
     [SerializeField] private FeedbackEventData e_collisionNoise;
-    //[SerializeField] private FeedbackEventData e_drop;
+    [SerializeField] private FeedbackEventData e_drop;
 
     [SerializeField] private LayerMask groundLayer;
 
@@ -66,7 +66,7 @@ public class Item : MonoBehaviour
         switch (itemState)
         {
             case ITEM_STATE.NOT_PICKED_UP:
-                //e_drop?.InvokeEvent(transform.position, Quaternion.identity, transform);
+                e_drop?.InvokeEvent(transform.position, Quaternion.identity, transform);
                 break;
             case ITEM_STATE.PICKED_UP:
                 e_pickUp?.InvokeEvent(transform.position, Quaternion.identity, transform);

@@ -12,7 +12,7 @@ public class CustomerTable : MonoBehaviour
     public GameObject _Win;
     public GameObject _Lose;
     public TMP_Text _PointsText;
-    //box settings
+    //box things
     [SerializeField] RequestBox requestBox;
     [SerializeField] float boxRequestYPosition;
     [SerializeField] float boxSendYPosition;
@@ -30,8 +30,6 @@ public class CustomerTable : MonoBehaviour
     float timeTaken = 0;
     float timeNeededToWin;
 
-    //box reciver aniamtion
-    [SerializeField] private Animator boxRecieverAnimator;
     int totalScore = 0;
     void RandomiseNextRequestTimer()
     {
@@ -116,7 +114,7 @@ public class CustomerTable : MonoBehaviour
             //if time exceed return
             if (elapsedTimeToNextRequest >= timeToNextRequest)
             {
-                ToggleOrder();
+                ToggleOrder(false);
                 return;
             }
         }
@@ -124,7 +122,7 @@ public class CustomerTable : MonoBehaviour
 
     }
 
-    public void ToggleOrder(bool toggledByButton = false)
+    public void ToggleOrder(bool toggledByButton)
     {
         if (moveBoxCoroutineHandler != null) return;
         //request
@@ -182,14 +180,12 @@ public class CustomerTable : MonoBehaviour
         {
             startPosition = new Vector3(requestBox.transform.localPosition.x, boxSendYPosition, requestBox.transform.localPosition.z);
             targetPosition = new Vector3(requestBox.transform.localPosition.x, boxRequestYPosition, requestBox.transform.localPosition.z);
-            boxRecieverAnimator.SetTrigger("Recieve");
         }
         else
         {
 
             startPosition = new Vector3(requestBox.transform.localPosition.x, boxRequestYPosition, requestBox.transform.localPosition.z);
             targetPosition = new Vector3(requestBox.transform.localPosition.x, boxSendYPosition, requestBox.transform.localPosition.z);
-            boxRecieverAnimator.SetTrigger("Send");
         }
 
         while (elapsedTime < duration)

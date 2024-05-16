@@ -30,6 +30,7 @@ public class XRDoor : MonoBehaviour
         // Subscribe to the selectEntered event to detect when the door is grabbed
         grabInteractable.selectEntered.AddListener(OnDoorGrabbed);
         grabInteractable.selectExited.AddListener(OnDoorUnGrabbed);
+        doorLocked = true;
     }
 
     public void SetAbilityToGrab(bool ability)

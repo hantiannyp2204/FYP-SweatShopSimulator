@@ -16,6 +16,7 @@ public class ContinuousMovementPhysics : MonoBehaviour
 
     public CapsuleCollider bodyCollider;
 
+
     private Vector2 inputMoveAxis;
     private float inputTurnAxis;
 

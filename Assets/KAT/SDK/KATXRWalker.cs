@@ -65,7 +65,7 @@ public class KATXRWalker : MonoBehaviour
             var hmdYaw = eye.transform.eulerAngles.y;
             var bodyYaw = ws.bodyRotationRaw.eulerAngles.y;
 
-            yawCorrection = bodyYaw - hmdYaw;
+            yawCorrection = (bodyYaw - hmdYaw) * (360/330);
 
             var pos = transform.position;
             var eyePos = eye.transform.position;
@@ -77,7 +77,7 @@ public class KATXRWalker : MonoBehaviour
         }
 
         UnityEngine.Debug.Log(transform.rotation.y + "|" + ws.bodyRotationRaw.y);
-        transform.rotation = ws.bodyRotationRaw;
+        transform.rotation = ws.bodyRotationRaw * Quaternion.Euler(0, 360 / 330,0);
 
         if (Input.GetKey(KeyCode.W))
         {

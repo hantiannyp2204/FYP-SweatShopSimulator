@@ -63,10 +63,8 @@ public class ZoneDetector : MonoBehaviour
             Debug.Log("inzone");
             Debug.Log("CURRENT ZONE:" + _currZone);
             _currZone = zoneType;
-            assistant.JumpToZone();
             other.gameObject.GetComponentInParent<ZoneSaver>().SaveCurrentZone(_currZone);
             other.gameObject.GetComponentInParent<ZoneSaver>().SaveCurrentZoneGO(zoneGO);
-            assistant.SetIsJumping(true);
             //assistant.GetRobotNavMesh().enabled = false;
             onEnterZone.Invoke();
         }
@@ -83,7 +81,6 @@ public class ZoneDetector : MonoBehaviour
             //}
             //assistant.GetRobotNavMesh().enabled = true;
             assistant.SetState(ROBOT_STATE.PATROL);
-            assistant.SetIsJumping(false);
             _currZone = ZoneType.NONE;
             onExitZone.Invoke();    
         }

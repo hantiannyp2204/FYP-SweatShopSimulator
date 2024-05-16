@@ -31,6 +31,7 @@ public class CustomerTable : MonoBehaviour
     float timeNeededToWin;
 
     int totalScore = 0;
+
     void RandomiseNextRequestTimer()
     {
         timeToNextRequest = Random.Range(2, 5);

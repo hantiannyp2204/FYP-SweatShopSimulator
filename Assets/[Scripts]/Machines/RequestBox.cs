@@ -28,10 +28,6 @@ public class RequestBox : MonoBehaviour
     [SerializeField] GameObject closedBox;
 
     [SerializeField] CustomerTable table;
-
-    [Header("FEEDBACK")]
-    [SerializeField] private FeedbackEventData e_boxOpen;
-    [SerializeField] private FeedbackEventData e_boxClose;
     private void Start()
     {
         OpenBox();
@@ -41,7 +37,6 @@ public class RequestBox : MonoBehaviour
         boxInteractable.enabled = false;
         openedBox.SetActive(false);
         closedBox.SetActive(true);
-        e_boxClose?.InvokeEvent(transform.position, Quaternion.identity, transform);
     }
     private void OpenBox()
     {
@@ -51,7 +46,6 @@ public class RequestBox : MonoBehaviour
         }
         openedBox.SetActive(true);
         closedBox.SetActive(false);
-        e_boxOpen?.InvokeEvent(transform.position, Quaternion.identity, transform);
     }
     //to run at when sending order
     public void SendRequestOver()

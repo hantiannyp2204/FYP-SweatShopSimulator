@@ -98,10 +98,10 @@ public class RequestBox : MonoBehaviour
             interactable.enabled = false;
 
             //if its the correct item send it, else run the not correct itme fucntion
-            if (GetRequestedItem() == GetInsertedItem())
+            if (GetRequestedItem() == newItem.Data)
             {
                 //automatically instert the item
-                table.ToggleOrder(false);
+                table.ToggleOrder();
             }
             else
             {

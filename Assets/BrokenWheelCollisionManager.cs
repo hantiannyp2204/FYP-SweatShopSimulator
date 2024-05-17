@@ -27,6 +27,7 @@ public class BrokenWheelCollisionManager : MonoBehaviour
 
         _wheelFixed = true;
         shredder.SetWheelCurrState(WheelStatus.WORKING);
+        shredder.SetUpWheelProbability();
         shredder.enableWheelEvent.Invoke();
         Destroy(other.gameObject);
     }

@@ -96,6 +96,8 @@ public class VRGameManager : MonoBehaviour
             handColliders.Init();
         }
         gameFeedback.InIt();
+        if (customerTable == null) return;
+
         customerTable.Init(leftHandTimerText, gameMode);
         if(gameMode == GameMode.Levels)
         {

@@ -6,14 +6,12 @@ public class SmelterCoalDoor : SlidingDoors
 {
     [SerializeField] private Collider coalHitbox;
     // Start is called before the first frame update
-    public override void OnDoorLocked()
-    {
-        base.OnDoorLocked();
-        coalHitbox.enabled = false;
-    }
-    public override void OnDoorUnlocked()
-    {
-        base.OnDoorUnlocked();
+    public override void OnUnlocked()
+    {   
         coalHitbox.enabled = true;
+    }
+    public override void Onlocked()
+    {
+        coalHitbox.enabled = false;
     }
 }

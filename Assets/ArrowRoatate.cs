@@ -10,7 +10,7 @@ public class ArrowRoatate : MonoBehaviour
 
     public void RoatateArrow()
     {
-        transform.rotation = Quaternion.Euler(-xRKnob.value/2, 0, 0);
+        transform.rotation = Quaternion.Euler(-xRKnob.value/2,180, 0);
     }
 
     private void Update()

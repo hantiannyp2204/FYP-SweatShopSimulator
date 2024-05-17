@@ -20,7 +20,7 @@ public class CustomerTable : MonoBehaviour
     [SerializeField] float boxSendYPosition;
     [SerializeField] Animator boxAnimator;
     //requests
-    bool isRequest = true;
+    public bool isRequest = true;
     [SerializeField] List<ItemData> posibleRequests;
     [SerializeField] TMP_Text orderText;
     Coroutine moveBoxCoroutineHandler;
@@ -60,6 +60,8 @@ public class CustomerTable : MonoBehaviour
         ResetBoxPosition();
         RandomiseNextRequestTimer();
         requestBox.Init();
+
+        if (robotDisplayOrder == null) return;
     }
     public void SetTimeNeededToWin(float timeNeeded)
     {
@@ -74,8 +76,6 @@ public class CustomerTable : MonoBehaviour
         {
             timeTaken = 0;
         }
-
-
     }
     public void UpdateTimer(TMP_Text lefthandTimerText)
     {
@@ -174,7 +174,6 @@ public class CustomerTable : MonoBehaviour
         //send
         else
         {
-            _isEnteredSuccess = true;
             //animate box downwards
             moveBoxCoroutineHandler = StartCoroutine(MoveBoxCoroutine()); 
             //check item quality (how long it takes to complete)
@@ -184,6 +183,9 @@ public class CustomerTable : MonoBehaviour
             orderText.text = $"Time taken: {(int)timeTaken}\n\nScore awarded:  {requestBox.ShowScoreResult()}";
             totalScore += requestBox.ShowScoreResult();
             RandomiseNextRequestTimer();
+
+
+            _isEnteredSuccess = true;
         }
 
     }

@@ -13,6 +13,8 @@ public class RobotDisplayOrder : MonoBehaviour
     [SerializeField] private GameObject displayOrder;
     private Image _displayOrder;
     private Image _greenTick;
+
+    private bool _coroutineStatus = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,27 +40,36 @@ public class RobotDisplayOrder : MonoBehaviour
             displayOrder.SetActive(true); // set true only if it is disabled at the start
         }
     }
+
     // Update is called once per frame
     void Update()
+    {
+        UpdateRequestedItemImage();
+
+        if (requestBox.GetCustomerTable().GetEnteredProductVerdict()) // if player successfully puts in product then we spawn an overlay
+        {
+            StartCoroutine(CorrectItemCoroutine());
+            UpdateRequestedItemImage();
+            requestBox.GetCustomerTable().SetProductVerdict(false);
+        }
+    }
+
+
+    void UpdateRequestedItemImage()
     {
         if (requestBox.GetRequestedItemData() != null)
         {
             _displayOrder.sprite = requestBox.GetRequestedItemData().imageToDisplay;
         }
-
-        if (requestBox.GetCustomerTable().GetEnteredProductVerdict()) // if player successfully puts in product then we spawn an overlay
+        else
         {
-            StartCoroutine(CorrectItemCoroutine());
-            requestBox.GetCustomerTable().SetProductVerdict(false);
+            Debug.Log("There is nothing to rq");
         }
     }
-
     IEnumerator CorrectItemCoroutine()
     {
-        displayOrder.SetActive(false); // disable the display image
-        // enable tick GO
-        correctItemTick.SetActive(true);
-        yield return new WaitForSeconds(1.5f);
-        displayOrder.SetActive(true);
+        _displayOrder.color = Color.green;
+        yield return new WaitForSeconds(1f);
+        _displayOrder.color = Color.white;
     }
 }

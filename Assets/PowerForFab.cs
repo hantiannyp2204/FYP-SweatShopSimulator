@@ -75,9 +75,11 @@ public class PowerForFab : MonoBehaviour
 
     public void PushPlugOut()
     {
-        Vector3 direction = (_PowerPlug.Start_Plug.position - _PowerPlug.End_Plug.position).normalized;
-        _PowerPlug.GetComponent<Rigidbody>().AddForce(-direction * 3, ForceMode.Impulse);
+        // Use the local forward direction of the PowerPlug to push it along the positive Z direction
+        Vector3 forwardDirection = _PowerPlug.transform.forward; // Assuming forward is the positive Z direction in local space
+        _PowerPlug.GetComponent<Rigidbody>().AddForce(forwardDirection * 5, ForceMode.Impulse);
     }
+
 
     void DisableBoxColliderForDuration(float duration)
     {

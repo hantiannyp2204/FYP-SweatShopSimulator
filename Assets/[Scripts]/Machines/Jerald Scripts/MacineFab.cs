@@ -16,8 +16,6 @@ public class MacineFab : MonoBehaviour
     public bool HasGameStarted = false;
     public bool IsGameRunning = false;
     public GameObject _TextHolder;
-    public GameObject _StartButton;
-    public GameObject _NextButton;
     public FabricatorCrafting _Crafting;
     public PowerForFab _PowerFab;
     public GameObject _RedButton;
@@ -72,8 +70,6 @@ public class MacineFab : MonoBehaviour
                 newController.hold = true;
                 gameEnd = true;
                 _TextHolder.SetActive(true);
-                _NextButton.SetActive(true);
-                _StartButton.SetActive(true);
             }
         }
     }

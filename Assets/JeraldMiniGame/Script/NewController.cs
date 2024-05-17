@@ -32,7 +32,6 @@ public class NewController : MonoBehaviour
     [Header("Game Variables")]
     public float speed = 50;
     public int trueRange = 50;
-    Vector3 rotationPoint = Vector3.zero;
     float temp;
     int maxWinD;
     int minWinD;
@@ -208,8 +207,6 @@ public class NewController : MonoBehaviour
         _ConfirmUI.SetActive(true);
         macine._WinORLose.SetActive(false);
         macine._TextHolder.SetActive(false);
-        macine._NextButton.SetActive(false);
-        macine._StartButton.SetActive(false);
         macine.HasGameStarted = false;
         hold = false;
         temp = 0;

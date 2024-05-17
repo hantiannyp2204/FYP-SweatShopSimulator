@@ -5,26 +5,29 @@ using UnityEngine.XR.Interaction.Toolkit;
 using System.Collections;
 public class PowerPlug : MonoBehaviour
 {
+    
+    [Header("Plug References")]
     [SerializeField] XRGrabInteractable _DropPlug;
     public Transform Start_Plug;
     public Transform End_Plug;
-    public bool isStuckInSocket;
-    public PowerForFab _powerForFab;
     public Transform _Socket_Point;
     public Transform _Calble_Point;
+    public PowerForFab _powerForFab;
+    public bool isStuckInSocket;
     [Header("Feedback Events")]
     [SerializeField] private FeedbackEventData e_PowerOn;
     [SerializeField] private Transform PowerOnTransform;
     [SerializeField] private ParticleSystem _Sparks;
+    [SerializeField] private ParticleSystem _ElectricityHolder;
+    [SerializeField] private ParticleSystem _ElectricityHolder2;
+    public GameObject _WarningSign;
+    public GameObject _CraftingHolder;
+    public GameObject _Selections;
 
 
     //public TMP_Text Text;
     public LayerMask socketLayer; // Set this in the inspector to the layer you want the plug to stick to
 
-    public void Start()
-    {
-       
-    }
     private void OnTriggerEnter(Collider other)
     {
         // Check if the collided object is on the specified socket layer
@@ -44,9 +47,11 @@ public class PowerPlug : MonoBehaviour
                 Start_Plug.position = _Socket_Point.position;
                 // Reset the rotation of Start_Plug to zero
                 StartCoroutine(ResetRotationAfterDelay(1f));
-                StartCoroutine(ResetRotationAfterDelays(1f));
+                //StartCoroutine(ResetRotationAfterDelays(1f));
                 _powerForFab.Isin = true;
                 _Sparks.Play();
+                _ElectricityHolder.Play();
+                _ElectricityHolder2.Play();
                 // Set the flag indicating that the plug is now stuck in a socket
                 isStuckInSocket = true;
                 if (_powerForFab._CurrentPower <= 0)
@@ -55,7 +60,11 @@ public class PowerPlug : MonoBehaviour
                     _powerForFab.RandomPower();
                 }
                 _DropPlug.enabled = false;
-                
+                _WarningSign.SetActive(false);
+                _Selections.SetActive(true);
+                _CraftingHolder.SetActive(true);
+
+
             }
         }
     }
@@ -66,8 +75,8 @@ public class PowerPlug : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         // Reset the rotation of Start_Plug to match _Socket_Point
-        Start_Plug.rotation = Quaternion.identity;
-       
+        Start_Plug.rotation = Quaternion.Euler(0f, 90f, 0f);
+
 
     }
 
@@ -76,7 +85,7 @@ public class PowerPlug : MonoBehaviour
         // Wait for the specified delay
         yield return new WaitForSeconds(delay);
 
-        _Calble_Point.rotation = Quaternion.Euler(0f, 90f, 0f);
+        _Calble_Point.rotation = Quaternion.Euler(0f, 0f, 0f);
 
     }
     private void OnTriggerExit(Collider other)
@@ -95,12 +104,34 @@ public class PowerPlug : MonoBehaviour
             isStuckInSocket = false;
             _DropPlug.enabled = true;
             _Sparks.Stop();
+            _ElectricityHolder.Stop();
+            _ElectricityHolder2.Stop();
+            _WarningSign.SetActive(true);
+            //StartCoroutine(FlashWarningSign()); // Start the flashing coroutine
+            _Selections.SetActive(false);
+            _CraftingHolder.SetActive(false);
 
 
 
         }
     }
 
+    private IEnumerator FlashWarningSign()
+    {
+        float flashDuration = 5f;
+        float flashInterval = 0.1f; // Shorter interval for smoother blinking
+        float elapsedTime = 0f;
+
+        while (elapsedTime < flashDuration)
+        {
+            _WarningSign.SetActive(!_WarningSign.activeSelf);
+            yield return new WaitForSeconds(flashInterval);
+            elapsedTime += flashInterval;
+        }
+
+        // Ensure the warning sign ends up in the active state
+        _WarningSign.SetActive(true);
+    }
 
 
     public bool IsStuckInSocket()

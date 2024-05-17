@@ -6,6 +6,8 @@ using static VRGameManager;
 
 public class CustomerTable : MonoBehaviour
 {
+    public RobotDisplayOrder robotDisplayOrder;
+
     private GameMode gameMode;
 
     [Header("Win and Lose")]
@@ -22,7 +24,7 @@ public class CustomerTable : MonoBehaviour
     [SerializeField] List<ItemData> posibleRequests;
     [SerializeField] TMP_Text orderText;
     Coroutine moveBoxCoroutineHandler;
-    bool gameStart = false;
+    public bool gameStart = false;
     float gameTimeLeft = 0;
     //Timer
     float elapsedTimeToNextRequest = 0;
@@ -31,11 +33,22 @@ public class CustomerTable : MonoBehaviour
     float timeNeededToWin;
 
     int totalScore = 0;
+    private bool _isEnteredSuccess = false;
+    public bool GetEnteredProductVerdict()
+    {
+        return _isEnteredSuccess;
+    }
+
+    public void SetProductVerdict(bool status)
+    {
+        _isEnteredSuccess = status;
+    }
 
     void RandomiseNextRequestTimer()
     {
         timeToNextRequest = Random.Range(2, 5);
     }
+    
     void Start()
     {
         if(_Win!=null)
@@ -143,6 +156,7 @@ public class CustomerTable : MonoBehaviour
             //start game if first time pressing button
             if (toggledByButton && !gameStart)
             {
+                robotDisplayOrder.EnableDisplay.Invoke();
                 gameTimeLeft = posibleRequests[randomRequest].GetTimeGiven();
                 //game start sound
                 gameStart = true;
@@ -160,6 +174,7 @@ public class CustomerTable : MonoBehaviour
         //send
         else
         {
+            _isEnteredSuccess = true;
             //animate box downwards
             moveBoxCoroutineHandler = StartCoroutine(MoveBoxCoroutine()); 
             //check item quality (how long it takes to complete)

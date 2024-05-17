@@ -73,15 +73,17 @@ public class DialogueManager : MonoBehaviour
 
         _queueTracker = _lines.Dequeue();
         _isTyping = false; // set to false
-        if (diagLine.questMarker != null)
-        {
-            if (!xButtonImage.gameObject.activeSelf)
-                xButtonImage.gameObject.SetActive(false);
-        }
-        else
-        {
-            xButtonImage.gameObject.SetActive(true);
-        }
+        //if (diagLine.questMarker != null)
+        //{
+        //    if (!xButtonImage.gameObject.activeSelf)
+        //        xButtonImage.gameObject.SetActive(false);
+        //}
+        //else
+        //{
+        //    xButtonImage.gameObject.SetActive(true);
+        //}
+
+        xButtonImage.gameObject.SetActive(true);
     }
 
     public void EndDialogue()

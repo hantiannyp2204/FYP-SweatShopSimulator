@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-using TMPro;
 public class DialogueManager : MonoBehaviour
 {
     [SerializeField] private Image xButtonImage;

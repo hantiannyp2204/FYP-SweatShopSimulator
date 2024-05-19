@@ -11,6 +11,7 @@ public class CheckShredderFinished : GenericQuest
     {
         if (!shredder.initShredding)
         {
+            shredder.GetWheelHandler().chance.SetChance(2);
             Destroy(gameObject);
         }
     }

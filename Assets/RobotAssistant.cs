@@ -10,6 +10,8 @@ public enum ROBOT_STATE
 
 public class RobotAssistant : MonoBehaviour
 {
+    [SerializeField] private ParticleSystem fireBelowFootLeft;
+    [SerializeField] private ParticleSystem fireBelowFootRight;
     [SerializeField] private GameObject player;
 
     public ZoneType DEBUGZONE;
@@ -36,6 +38,9 @@ public class RobotAssistant : MonoBehaviour
 
         _robotAnim = GetComponentInChildren<Animator>();
         if (_robotAnim == null) return;
+
+        fireBelowFootLeft.Play();
+        fireBelowFootRight.Play();
     }
 
     // Update is called once per frame

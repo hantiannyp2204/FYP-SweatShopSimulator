@@ -32,6 +32,9 @@ public class KeyItemSpawn : MonoBehaviour
         }
         Vector3 randomPosition = GetRandomPositionWithinBounds(spawnCollider.bounds);
         currentSpawnedKeyItem = Instantiate(KeyItemPrefab, randomPosition, Quaternion.identity);
+
+        //do dissolve effect
+        currentSpawnedKeyItem.GetComponent<KeyItemDissolve>().StartReverseDissolve();
     }
 
     private Vector3 GetRandomPositionWithinBounds(Bounds bounds)

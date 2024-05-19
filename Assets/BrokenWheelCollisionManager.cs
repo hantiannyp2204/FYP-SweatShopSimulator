@@ -5,8 +5,14 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class BrokenWheelCollisionManager : MonoBehaviour
 {
+    [SerializeField] private DialogueManager dialogue;
     [SerializeField] private MachineShredder shredder;
     private bool _wheelFixed = false;
+
+    public MachineShredder GetShredder()
+    {
+        return shredder;
+    }
 
     public bool IsWheelFixed()
     {
@@ -27,7 +33,12 @@ public class BrokenWheelCollisionManager : MonoBehaviour
 
         _wheelFixed = true;
         shredder.SetWheelCurrState(WheelStatus.WORKING);
-        shredder.SetUpWheelProbability();
+
+
+        if (!dialogue.isDialogueActive && dialogue != null) // dont enable in tutorial
+        { 
+            shredder.SetUpWheelProbability();
+        }
         shredder.enableWheelEvent.Invoke();
         Destroy(other.gameObject);
     }

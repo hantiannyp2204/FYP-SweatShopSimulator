@@ -11,7 +11,6 @@ public class CheckWheelFix : GenericQuest
     {
         if (collisionManager.IsWheelFixed())
         {
-            collisionManager.GetShredder().GetWheelHandler().chance.SetChance(0);
             Destroy(gameObject);
         }
     }

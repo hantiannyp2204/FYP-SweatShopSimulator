@@ -13,6 +13,7 @@ public class CheckShredderRefill : GenericQuest
 
         if (shredder.IsOutOfFuel())
         {
+            shredder.SetBreakValue(shredder.GetRandomValueToBreak());
             Destroy(gameObject);
         }
     }

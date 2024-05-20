@@ -35,7 +35,7 @@ public class BrokenWheelCollisionManager : MonoBehaviour
         shredder.SetWheelCurrState(WheelStatus.WORKING);
 
 
-        if (!dialogue.isDialogueActive && dialogue != null) // dont enable in tutorial
+        if (!dialogue.isDialogueActive) // dont enable in tutorial
         { 
             shredder.SetUpWheelProbability();
         }

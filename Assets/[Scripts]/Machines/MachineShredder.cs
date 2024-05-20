@@ -320,6 +320,7 @@ public class MachineShredder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("WHEEL VALUE:" + _wheelPlug.value);
         currWheelStatus = _wheelManager.GetWheelCurrState();
         float fuelPercentage = (secretHealth / maxHealth) * 100f;
         //Debug.Log("percent is: " + fuelPercentage);

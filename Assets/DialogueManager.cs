@@ -6,6 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 public class DialogueManager : MonoBehaviour
 {
+    public BarrierBase barriers;
     [SerializeField] private Image xButtonImage;
     [SerializeField] private Image narratorIcon;
     [SerializeField] private TMP_Text dialogueText;

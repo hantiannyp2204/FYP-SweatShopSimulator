@@ -14,6 +14,7 @@ public class PowerForFab : MonoBehaviour
     public Rigidbody _Rigidbody;
     public BoxCollider boxCollider; // Reference to the BoxCollider component
 
+
     [Header("Feedback Events")]
     [SerializeField] private FeedbackEventData e_powerOutage;
     [SerializeField] private Transform PowerOutageTransform;

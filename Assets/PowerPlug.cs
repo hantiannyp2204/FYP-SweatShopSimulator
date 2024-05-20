@@ -23,6 +23,7 @@ public class PowerPlug : MonoBehaviour
     public GameObject _WarningSign;
     public GameObject _CraftingHolder;
     public GameObject _Selections;
+    public GameObject _HoloGram;
 
 
     //public TMP_Text Text;
@@ -63,6 +64,7 @@ public class PowerPlug : MonoBehaviour
                 _WarningSign.SetActive(false);
                 _Selections.SetActive(true);
                 _CraftingHolder.SetActive(true);
+                _HoloGram.SetActive(false );
 
 
             }
@@ -110,6 +112,7 @@ public class PowerPlug : MonoBehaviour
             //StartCoroutine(FlashWarningSign()); // Start the flashing coroutine
             _Selections.SetActive(false);
             _CraftingHolder.SetActive(false);
+            _HoloGram.SetActive(true);
 
 
 

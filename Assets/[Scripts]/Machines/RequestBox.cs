@@ -28,6 +28,15 @@ public class RequestBox : MonoBehaviour
     [SerializeField] GameObject closedBox;
 
     [SerializeField] CustomerTable table;
+
+    public bool GetGameStarted()
+    {
+        return gameStarted;
+    }
+    public CustomerTable GetCustomerTable()
+    {
+        return table;
+    }
     private void Start()
     {
         OpenBox();

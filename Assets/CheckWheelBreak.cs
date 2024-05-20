@@ -8,9 +8,10 @@ public class CheckWheelBreak : GenericQuest
     // Update is called once per frame
     void Update()
     {
+        //shredder.SetBreakValue(shredder.GetRandomValueToBreak());
         if (shredder.GetWheelHandler().GetWheelCurrState() == WheelStatus.BROKEN)
         {
             Destroy(gameObject);
         }
-    }
+    }   
 }

@@ -12,13 +12,6 @@ using UnityEngine.Rendering.Universal;
 
 public class MachineShredder : MonoBehaviour
 {
-    // unused variables // keep just in case
-
-//   {
-//    [SerializeField] private Transform spawnLocation;
-//  }
-
-
     public WheelStatus currWheelStatus;
 
     public UnityEvent finishedShreddingEvent;

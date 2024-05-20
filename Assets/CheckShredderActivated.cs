@@ -8,6 +8,8 @@ public class CheckShredderActivated : GenericQuest
     // Update is called once per frame
     void Update()
     {
+        shredder.SetBreakValue(500);
+
         if (shredder.initShredding)
         {
             Destroy(gameObject);

@@ -43,11 +43,15 @@ public class RobotMovement : MonoBehaviour
 
     void HandleWaypointMovement()
     {
-        if (robotWaypoints.Count == 0) return;
+        if (robotWaypoints.Count == 0)
+        {
+            Debug.Break();
+            return;
+        }
 
         float distToWaypoint = Vector3.Distance(robotWaypoints[_waypointIndex].position, transform.position);
 
-        if (distToWaypoint <= 1f)
+        if (distToWaypoint <= 1.5f)
         {
             _waypointIndex = (_waypointIndex + 1) % robotWaypoints.Count;
         }

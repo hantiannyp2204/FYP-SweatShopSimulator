@@ -2986,7 +2986,7 @@ Transform:
   m_GameObject: {fileID: 6464385661303136020}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0.09}
+  m_LocalPosition: {x: -0, y: -0, z: 0.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3159,6 +3159,7 @@ GameObject:
   - component: {fileID: 6839311262673538839}
   - component: {fileID: 1422738139430316208}
   - component: {fileID: 5740458995334844255}
+  - component: {fileID: 8202045213454585338}
   m_Layer: 16
   m_Name: ROBOT_EVERY_MACHINE
   m_TagString: Untagged
@@ -3176,11 +3177,13 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -4, y: 3.37, z: 5.74}
-  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2408231106762921814}
   - {fileID: 8454752398299214329}
+  - {fileID: 7828206410459815159}
+  - {fileID: 4884421714557774435}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!136 &5240126916219975176
@@ -3218,10 +3221,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2c7af6b9c5a12c4b80a87c290adbe9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yOffset: 0
+  fireBelowFootLeft: {fileID: 7931465988782979217}
+  fireBelowFootRight: {fileID: 4717988597210238469}
   player: {fileID: 0}
-  jumpHeight: 8
-  jumpDuration: 3
   DEBUGZONE: 0
   _currState: 0
 --- !u!54 &1080380180158860973
@@ -3270,7 +3272,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 2
+  m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &1422738139430316208
@@ -3285,9 +3287,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 812bfad3fc1ed7146a442a86c8b3fb28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  robotWaypoints: []
   rotationSpeed: 5
   moveArea: {fileID: 1029867070774919824}
   rangeToFindPoint: 5
+  zoneSaver: {fileID: 0}
+  patrolRadius: 0
+  patrolSpeed: 0
+  _waypointIndex: 0
 --- !u!114 &5740458995334844255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3322,7 +3329,7 @@ MonoBehaviour:
       narrator:
         name: Robot
         obj: {fileID: 7001500404746929504}
-      line: My name is Lesbian and I am here to guide you in this tutorial!
+      line: My name is Robot and I am here to guide you in this tutorial!
     - pathFindDestination: {fileID: 0}
       questMarker: {fileID: 0}
       TriggerThisEvent:
@@ -3376,7 +3383,7 @@ MonoBehaviour:
       narrator:
         name: Robot
         obj: {fileID: 7001500404746929504}
-      line: Nice! Close the door kan!
+      line: Nice! Close the door!
     - pathFindDestination: {fileID: 0}
       questMarker: {fileID: 0}
       TriggerThisEvent:
@@ -3421,7 +3428,7 @@ MonoBehaviour:
       narrator:
         name: Robot
         obj: {fileID: 7001500404746929504}
-      line: Now try it yourself! Take out the raw materials from the smelter!
+      line: Now try it yourself! Take out the raw materials from the smelter! (Optional)
     - pathFindDestination: {fileID: 0}
       questMarker: {fileID: 0}
       TriggerThisEvent:
@@ -3458,7 +3465,7 @@ MonoBehaviour:
       narrator:
         name: Robot
         obj: {fileID: 7001500404746929504}
-      line: Lets fill the petrol! Lift the door up and lets put 5 coal into the generator
+      line: Lets fill the petrol! Lift the door up and lets put 5 coal into the generator!
     - pathFindDestination: {fileID: 0}
       questMarker: {fileID: 0}
       TriggerThisEvent:
@@ -3545,8 +3552,7 @@ MonoBehaviour:
         name: Robot
         obj: {fileID: 7001500404746929504}
       line: To use the Shredder, lets put a product into the jaw of the shredder!
-        It opens and closes so don't catch your hand in it! I don't want my black
-        nigga master to scold me..
+        It opens and closes so don't catch your hand in it!
     - pathFindDestination: {fileID: 0}
       questMarker: {fileID: 0}
       TriggerThisEvent:
@@ -3595,8 +3601,8 @@ MonoBehaviour:
       narrator:
         name: Robot
         obj: {fileID: 7001500404746929504}
-      line: Fuck la! What is happening? The wheel broke! Okay, lets try finding a
-        replacement wheel and place at where the wheel was..
+      line: Oh no! The wheel broke! Okay, lets try finding a replacement wheel and
+        place at where the wheel was..
     - pathFindDestination: {fileID: 0}
       questMarker: {fileID: 0}
       TriggerThisEvent:
@@ -3663,7 +3669,7 @@ MonoBehaviour:
       narrator:
         name: Robot
         obj: {fileID: 7001500404746929504}
-      line: Welcome to the Fabricator! Made by my counter-part lesbian number 2!
+      line: Welcome to the Fabricator! Made by Jerald!
     - pathFindDestination: {fileID: 0}
       questMarker: {fileID: 0}
       TriggerThisEvent:
@@ -3710,9 +3716,9 @@ MonoBehaviour:
       narrator:
         name: Robot
         obj: {fileID: 7001500404746929504}
-      line: Okay, nice! Now its time for us to be more hands on! On the menu there
-        is a requirement for the product you chose! Find them somewhere and put them
-        in the LEFT tube! After that, press the MIDDLE button to start a mini game!
+      line: Nice! Hands on time! On the menu there is a requirement for the product
+        you chose! Find them somewhere and put them in the LEFT tube! After that,
+        press the MIDDLE button to start a mini game!
     - pathFindDestination: {fileID: 0}
       questMarker: {fileID: 0}
       TriggerThisEvent:
@@ -3732,7 +3738,7 @@ MonoBehaviour:
       narrator:
         name: Robot
         obj: {fileID: 7001500404746929504}
-      line: Noice Daddy! Lets try and complete the second level! Good Luck!
+      line: Noice! Lets try and complete the second level! Good Luck!
     - pathFindDestination: {fileID: 0}
       questMarker: {fileID: 0}
       TriggerThisEvent:
@@ -3800,8 +3806,20 @@ MonoBehaviour:
         obj: {fileID: 7001500404746929504}
       line: Congratulations! We have finished the tutorial! It has been pleasure
         teaching you how to use the machines! I hope what you learnt today can serve
-        you well in the future! But for now, you can suck deez cock
+        you well in the future! Good Luck!
   anim: {fileID: 4077943465927303553}
+--- !u!114 &8202045213454585338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7001500404746929504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8f3ba369ac3b544a9b0aa72f16f54f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7008993745627047215
 GameObject:
   m_ObjectHideFlags: 0
@@ -4680,7 +4698,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 5.16, y: 0.48}
+  m_AnchoredPosition: {x: 4.401, y: 0.257}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.45, y: 0.5}
 --- !u!223 &8132098197012688432
@@ -4758,6 +4776,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cad79c8e39dace34c8774fe4462f78e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  barriers: {fileID: 0}
   xButtonImage: {fileID: 131679408223238457}
   narratorIcon: {fileID: 8372203037868076092}
   dialogueText: {fileID: 713280481136423265}
@@ -4860,3 +4879,228 @@ Transform:
   - {fileID: 4009308520018869264}
   m_Father: {fileID: 7252973273557846328}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &4883808924284926307
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1029867070774919824}
+    m_Modifications:
+    - target: {fileID: 1000010823978654, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+      propertyPath: m_Name
+      value: FlamesParticleEffect (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010409153280, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010409153280, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010409153280, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010409153280, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.1419999
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010409153280, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.34499994
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010409153280, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.27900004
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010409153280, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010409153280, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010409153280, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010409153280, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010409153280, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010409153280, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010409153280, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010409153280, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198000012351162682, guid: 3228a22491941734bb83ad691d17fcb9,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198000013227194214, guid: 3228a22491941734bb83ad691d17fcb9,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198000013621194436, guid: 3228a22491941734bb83ad691d17fcb9,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 199000010346745340, guid: 3228a22491941734bb83ad691d17fcb9,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 199000010346745340, guid: 3228a22491941734bb83ad691d17fcb9,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 199000010792666018, guid: 3228a22491941734bb83ad691d17fcb9,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 199000013425100488, guid: 3228a22491941734bb83ad691d17fcb9,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+--- !u!198 &4717988597210238469 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 198000013227194214, guid: 3228a22491941734bb83ad691d17fcb9,
+    type: 3}
+  m_PrefabInstance: {fileID: 4883808924284926307}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4884421714557774435 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4000010409153280, guid: 3228a22491941734bb83ad691d17fcb9,
+    type: 3}
+  m_PrefabInstance: {fileID: 4883808924284926307}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7831009600734072823
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1029867070774919824}
+    m_Modifications:
+    - target: {fileID: 1000010823978654, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+      propertyPath: m_Name
+      value: FlamesParticleEffect (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010409153280, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010409153280, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010409153280, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010409153280, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.21384606
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010409153280, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.34499994
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010409153280, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.27900004
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010409153280, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010409153280, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010409153280, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010409153280, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010409153280, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010409153280, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010409153280, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000010409153280, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 199000010346745340, guid: 3228a22491941734bb83ad691d17fcb9,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 199000010346745340, guid: 3228a22491941734bb83ad691d17fcb9,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 199000010792666018, guid: 3228a22491941734bb83ad691d17fcb9,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 199000013425100488, guid: 3228a22491941734bb83ad691d17fcb9,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
+--- !u!4 &7828206410459815159 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4000010409153280, guid: 3228a22491941734bb83ad691d17fcb9,
+    type: 3}
+  m_PrefabInstance: {fileID: 7831009600734072823}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &7931465988782979217 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 198000013227194214, guid: 3228a22491941734bb83ad691d17fcb9,
+    type: 3}
+  m_PrefabInstance: {fileID: 7831009600734072823}
+  m_PrefabAsset: {fileID: 0}

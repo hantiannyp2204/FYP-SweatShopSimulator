@@ -80,6 +80,7 @@ public class DialogueTrigger : MonoBehaviour
         {
             return;
         }
+
         DialogueLine nextDialogueLine = diagManager.PeekNextDialogueLine();
 
         if (nextDialogueLine != null && nextDialogueLine.pathFindDestination != null)
@@ -93,9 +94,10 @@ public class DialogueTrigger : MonoBehaviour
         else if (diagManager.GetCurrentIterator().questMarker != null) // means that a quest needs to be completed
         {
             diagManager.GetCurrentIterator().questMarker.enabled = true;
+            //diagManager.barriers.DisableBarrier();
         }
         else 
-        {
+        {   
             diagManager.SetNextDialogueLine();
         }
     }

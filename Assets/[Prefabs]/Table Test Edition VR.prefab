@@ -237,6 +237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b6fe6bd9db17b04aa4b00356cd80b34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  robotDisplayOrder: {fileID: 0}
   _Win: {fileID: 0}
   _Lose: {fileID: 0}
   _PointsText: {fileID: 0}
@@ -244,9 +245,11 @@ MonoBehaviour:
   boxRequestYPosition: 0.33
   boxSendYPosition: -0.6
   boxAnimator: {fileID: 5272124294856011215}
+  isRequest: 1
   posibleRequests:
   - {fileID: 11400000, guid: 683a9f1fc06d9524c858cdbf37013247, type: 2}
   orderText: {fileID: 5941903075867046605}
+  gameStart: 0
 --- !u!1 &763021314312566343
 GameObject:
   m_ObjectHideFlags: 0

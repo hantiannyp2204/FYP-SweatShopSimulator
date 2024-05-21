@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CheckSmelterFixed : GenericQuest
+public class CheckSmelterRegen : GenericQuest
 {
     [SerializeField] private SmelterBlowUpHitbox blowUpHitbox;
 

@@ -2487,6 +2487,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Smelter Machine 3D
       objectReference: {fileID: 0}
+    - target: {fileID: 1712248997094562958, guid: 80d828f8ac4bd05428a6bbfab5dd1191,
+        type: 3}
+      propertyPath: _isFixed
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2853608829612221330, guid: 80d828f8ac4bd05428a6bbfab5dd1191,
         type: 3}
       propertyPath: TriggerModule.primitives.Array.data[0]
@@ -2572,6 +2577,11 @@ PrefabInstance:
       propertyPath: healthPoints
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 7936502983207921324, guid: 80d828f8ac4bd05428a6bbfab5dd1191,
+        type: 3}
+      propertyPath: smelterBlowupHitbox
+      value: 
+      objectReference: {fileID: 162351838}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5503,7 +5513,7 @@ PrefabInstance:
         type: 3}
       propertyPath: dialogue.dialogueLines.Array.data[18].questMarker
       value: 
-      objectReference: {fileID: 2006493866}
+      objectReference: {fileID: 0}
     - target: {fileID: 5740458995334844255, guid: 29afbefb2a6e0c84590b76bd37db49dc,
         type: 3}
       propertyPath: dialogue.dialogueLines.Array.data[25].questMarker
@@ -6074,7 +6084,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2006493864}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3fc63c0c0c5431488f14cdea7bf52be, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ba2789d2f1645b47a577a24c7290e9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   blowUpHitbox: {fileID: 162351838}

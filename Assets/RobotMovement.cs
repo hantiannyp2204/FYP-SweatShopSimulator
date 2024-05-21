@@ -45,7 +45,6 @@ public class RobotMovement : MonoBehaviour
     {
         if (robotWaypoints.Count == 0)
         {
-            Debug.Break();
             return;
         }
 

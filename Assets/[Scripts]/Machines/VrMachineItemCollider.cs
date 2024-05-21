@@ -7,9 +7,9 @@ public class VrMachineItemCollider : MonoBehaviour
 {
     [SerializeField] private MachineShredder shredder;
     public ShredderMouthCollision mouthHandler;
-    public List<Item> _productList = new();
-    public Item _tracker;
-    private Item _saver;
+    public List<GeneralItem> _productList = new();
+    public GeneralItem _tracker;
+    private GeneralItem _saver;
     private bool _collided = false;
     private Collider _collider;
 
@@ -28,7 +28,7 @@ public class VrMachineItemCollider : MonoBehaviour
         mouthHandler.GetComponent<Collider>().isTrigger = false;
 
         //check if it has Item Script, else ignore
-        Item itemComponenet = other.GetComponent<Item>();
+        GeneralItem itemComponenet = other.GetComponent<GeneralItem>();
         if (itemComponenet == null)
         {
             return;
@@ -42,7 +42,7 @@ public class VrMachineItemCollider : MonoBehaviour
         _collided = false;
 
         //check if it has Item Script, else ignore
-        Item itemComponenet = other.GetComponent<Item>();
+        GeneralItem itemComponenet = other.GetComponent<GeneralItem>();
         if (itemComponenet == null) return;
         _productList.Remove(itemComponenet);
     }
@@ -51,7 +51,7 @@ public class VrMachineItemCollider : MonoBehaviour
     {
         _productList.Clear();
     }
-    public List<Item> GetProductList()  
+    public List<GeneralItem> GetProductList()  
     {
         return _productList;
     }

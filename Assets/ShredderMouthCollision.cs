@@ -19,7 +19,7 @@ public class ShredderMouthCollision : MonoBehaviour
         _itemsOnJaw.Add(other.gameObject);
         if (_itemsOnJaw.Count == 1)
         {
-            if (_itemsOnJaw[0].TryGetComponent<Item>(out Item item))
+            if (_itemsOnJaw[0].TryGetComponent<GeneralItem>(out GeneralItem item))
             {
                 if (item.gameObject.CompareTag("Product"))
                 {
@@ -42,7 +42,7 @@ public class ShredderMouthCollision : MonoBehaviour
         _itemsOnJaw.Remove(other.gameObject);
         if (_itemsOnJaw.Count == 1)
         {
-            if (_itemsOnJaw[0].TryGetComponent<Item>(out Item item))
+            if (_itemsOnJaw[0].TryGetComponent<GeneralItem>(out GeneralItem item))
             {
                 if (item.gameObject.CompareTag("Product"))
                 {

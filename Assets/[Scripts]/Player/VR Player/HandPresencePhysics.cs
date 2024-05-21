@@ -89,7 +89,7 @@ public class HandPresencePhysics : MonoBehaviour
     public void IgnoreCollision(GameObject itemToIgnore)
     {
         // don't run if it's a generator
-        if (itemToIgnore.CompareTag("Don't Ignore Collision") ) return;
+        if (itemToIgnore.CompareTag("Don't Ignore Collision")) return;
         if (DebugTxt != null)
         {
             DebugTxt.text = "IGNORE " + itemToIgnore.name;
@@ -125,7 +125,7 @@ public class HandPresencePhysics : MonoBehaviour
     public void ResetIgnoreCollision(GameObject itemToReset)
     {
         // Check if the item to reset exists in the list
-        //if (!collisionRecoverCoroutines.Any(tuple => tuple.Item2 == itemToReset) || grabbedCollisionObject == null) return;
+        if (itemColliderArray == null || !itemColliderArray.Any(c => c.gameObject == itemToReset) || grabbedCollisionObject == null) return;
 
         grabbedCollisionObject = null;
         var coroutine = StartCoroutine(RecoverCollisionCoroutine(itemColliderArray, itemToReset));
@@ -136,6 +136,13 @@ public class HandPresencePhysics : MonoBehaviour
     IEnumerator RecoverCollisionCoroutine(Collider[] colliderToRecoverList, GameObject itemToReset)
     {
         yield return new WaitForSeconds(GetComponent<HandColliders>().GetCollisionRecoverDelay());
+
+        // Check if the itemToReset has been destroyed
+        if (itemToReset == null)
+        {
+            collisionRecoverCoroutines.RemoveAll(tuple => tuple.Item2 == itemToReset);
+            yield break;
+        }
 
         foreach (Collider handCollider in GetComponent<HandColliders>().GetHandColliders())
         {

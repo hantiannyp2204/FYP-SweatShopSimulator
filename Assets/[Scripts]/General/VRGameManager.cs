@@ -40,6 +40,9 @@ public class VRGameManager : MonoBehaviour
     [SerializeField] TMP_Text leftHandGrabText;
     [SerializeField] TMP_Text rightHandGrabText;
 
+    [Header("Watch logic")]
+    [SerializeField] HandWatch leftHandWatch;
+
     ////Score system
     //[SerializeField] PlayerScore playerScore;
     //public static event Action<float> OnScoreAdded;
@@ -73,9 +76,6 @@ public class VRGameManager : MonoBehaviour
 #endif
 
         Application.targetFrameRate = 120;
-        if (leftHandTimerText == null) return; // null check
-        if (leftHandGrabText == null) return;
-        if (rightHandGrabText == null) return;
 
         //playerMovement.Init();
         foreach (VRHandManager handManager in vrHandInteractionManagerList)
@@ -127,10 +127,11 @@ public class VRGameManager : MonoBehaviour
         {
             hand.UpdateInteractions();
         }
-        //stop if its levels
+        leftHandWatch.UpdateWatchAlpha();
+     
         vrPlayerMovement?.PlayerMovementInputUpdate();
 
-
+        //stop if its levels
         if (gameEnded)
         {
            // endMenu.gameObject.SetActive(true);

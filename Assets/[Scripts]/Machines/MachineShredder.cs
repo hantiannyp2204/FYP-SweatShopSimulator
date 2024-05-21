@@ -459,7 +459,7 @@ public class MachineShredder : MonoBehaviour
             e_shredderFinish?.InvokeEvent(particleSpawnLocation.position, Quaternion.identity, transform);
 
             initShredding = false;
-
+            
             //check who is in the list
             foreach (GeneralItem itemsToDelete in shredderItemCollider.GetProductList())
             {

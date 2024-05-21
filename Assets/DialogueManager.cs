@@ -6,6 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 public class DialogueManager : MonoBehaviour
 {
+    [SerializeField] private RobotAssistant assistant;
     public BarrierBase barriers;
     [SerializeField] private Image xButtonImage;
     [SerializeField] private Image narratorIcon;
@@ -60,6 +61,7 @@ public class DialogueManager : MonoBehaviour
 
     IEnumerator TypeDialogue(DialogueLine diagLine)
     {
+        assistant.robotTalking.InvokeEvent(assistant.transform.position, Quaternion.identity, transform);
         if (xButtonImage.gameObject.activeSelf)
         {
             xButtonImage.gameObject.SetActive(false);   

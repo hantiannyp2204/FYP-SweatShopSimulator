@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SmelterBlowUpHitbox : MonoBehaviour
 {
@@ -15,15 +16,19 @@ public class SmelterBlowUpHitbox : MonoBehaviour
 
     private void OnParticleTrigger()
     {
-        
         if (!smelter.HasBlownUp()) return;
         Debug.Log("HIT");
+        Debug.Log("PARTICLE: " + currentHitParticle);
         currentHitParticle++;
         if(currentHitParticle >= smelter.GetHealthPoints())
         {
-            _isFixed = true;
             smelter.FixBlowUp();
             currentHitParticle= 0;
         }
+    }
+
+    public void SetFixedBool(bool status)
+    {
+        _isFixed = status;
     }
 }

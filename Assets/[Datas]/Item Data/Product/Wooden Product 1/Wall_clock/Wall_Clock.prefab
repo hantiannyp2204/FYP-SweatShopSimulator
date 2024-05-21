@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6736906448306202839}
   - component: {fileID: 6653306302488183370}
   - component: {fileID: 8798221450179789455}
-  - component: {fileID: 3982769316734388327}
+  - component: {fileID: 2735312915710538688}
   m_Layer: 0
   m_Name: Wall_Clock
   m_TagString: Product
@@ -69,13 +69,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5895d806f9cb464c8883d988f733d98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  e_pickUp: {fileID: 0}
+  e_collisionNoise: {fileID: 0}
+  originalMaterial: {fileID: 0}
   data: {fileID: 0}
   itemState: 0
-  e_pickUp: {fileID: 0}
-  e_drop: {fileID: 0}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!54 &8798221450179789455
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -103,7 +101,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3982769316734388327
+--- !u!114 &2735312915710538688
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -112,7 +110,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4613530001364467712}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ad34abafad169848a38072baa96cdb2, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f0e6f0608e336f4799743f12a098bda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
@@ -255,6 +253,8 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
+  velocityThreshold: 2
+  jumpAngleInDegree: 60
 --- !u!1001 &4033207873713194061
 PrefabInstance:
   m_ObjectHideFlags: 0

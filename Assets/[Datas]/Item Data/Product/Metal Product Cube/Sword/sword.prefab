@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4135431897813817368}
   - component: {fileID: 1916957456048701052}
   - component: {fileID: -9176614975908427743}
-  - component: {fileID: -3631229325212111139}
+  - component: {fileID: 4372890701766708528}
   m_Layer: 0
   m_Name: sword
   m_TagString: Product
@@ -69,15 +69,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5895d806f9cb464c8883d988f733d98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  e_pickUp: {fileID: 11400000, guid: af3bb125f8997a94980b426e499367e1, type: 2}
+  e_collisionNoise: {fileID: 11400000, guid: b60ba12cf8d239d43be8400ff8dcac5d, type: 2}
   originalMaterial: {fileID: 0}
   data: {fileID: 11400000, guid: 9fe3f8a1065b1cf47af283f664dddbcb, type: 2}
   itemState: 0
-  e_pickUp: {fileID: 11400000, guid: af3bb125f8997a94980b426e499367e1, type: 2}
-  e_collisionNoise: {fileID: 11400000, guid: b60ba12cf8d239d43be8400ff8dcac5d, type: 2}
-  e_drop: {fileID: 0}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!54 &-9176614975908427743
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -105,7 +101,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-3631229325212111139
+--- !u!114 &4372890701766708528
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -114,7 +110,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1810148939050266268}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ad34abafad169848a38072baa96cdb2, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f0e6f0608e336f4799743f12a098bda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
@@ -257,6 +253,8 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
+  velocityThreshold: 2
+  jumpAngleInDegree: 60
 --- !u!1001 &7634871006153146835
 PrefabInstance:
   m_ObjectHideFlags: 0

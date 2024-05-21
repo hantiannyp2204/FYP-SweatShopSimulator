@@ -14,6 +14,11 @@ public class CustomerTable : MonoBehaviour
     public GameObject _Win;
     public GameObject _Lose;
     public TMP_Text _PointsText;
+
+    [Header("Feedback")]
+    [SerializeField] FeedbackEventData e_requestRecieve;
+    [SerializeField] FeedbackEventData e_requestSend;
+
     //box settings
     [SerializeField] RequestBox requestBox;
     [SerializeField] float boxRequestYPosition;
@@ -199,6 +204,7 @@ public class CustomerTable : MonoBehaviour
         {
             startPosition = new Vector3(requestBox.transform.localPosition.x, boxSendYPosition, requestBox.transform.localPosition.z);
             targetPosition = new Vector3(requestBox.transform.localPosition.x, boxRequestYPosition, requestBox.transform.localPosition.z);
+            e_requestRecieve?.InvokeEvent(transform.position, Quaternion.identity, transform);
             boxAnimator.SetTrigger("Recieve");
         }
         else
@@ -206,6 +212,7 @@ public class CustomerTable : MonoBehaviour
 
             startPosition = new Vector3(requestBox.transform.localPosition.x, boxRequestYPosition, requestBox.transform.localPosition.z);
             targetPosition = new Vector3(requestBox.transform.localPosition.x, boxSendYPosition, requestBox.transform.localPosition.z);
+            e_requestSend?.InvokeEvent(transform.position, Quaternion.identity, transform);
             boxAnimator.SetTrigger("Send");
         }
 

@@ -9,7 +9,6 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class RequestBox : MonoBehaviour
 {
     //Request box
-
     private bool gameStarted = false;
     ItemData requestedItemData;
 
@@ -28,6 +27,10 @@ public class RequestBox : MonoBehaviour
     [SerializeField] GameObject closedBox;
 
     [SerializeField] CustomerTable table;
+
+    [SerializeField] FeedbackEventData e_requestBoxItemPlace;
+    [SerializeField] FeedbackEventData e_requestBoxItemPickUp;
+    [SerializeField] FeedbackEventData e_requestBoxItemSubmit;
 
     public bool GetGameStarted()
     {
@@ -110,6 +113,7 @@ public class RequestBox : MonoBehaviour
             if (GetRequestedItemData() == newItem.Data)
             {
                 CloseBox();
+                e_requestBoxItemSubmit?.InvokeEvent(transform.position, Quaternion.identity, transform);
                 //automatically instert the item
                 table.ToggleOrder();
             }
@@ -154,7 +158,7 @@ public class RequestBox : MonoBehaviour
 
     private void WrongItemInserted()
     {
-        Debug.Log("WRONG ITEM LAH SHIBAL");
+        e_requestBoxItemPlace?.InvokeEvent(transform.position, Quaternion.identity, transform);
     }
     protected void OnEnable()
     {
@@ -193,6 +197,8 @@ public class RequestBox : MonoBehaviour
 
         insertedItem = null;
         boxInteractable.enabled = false;
+
+        e_requestBoxItemPickUp?.InvokeEvent(transform.position, Quaternion.identity, transform);
     }
 
 

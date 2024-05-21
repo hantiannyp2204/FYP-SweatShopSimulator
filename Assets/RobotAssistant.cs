@@ -10,6 +10,11 @@ public enum ROBOT_STATE
 
 public class RobotAssistant : MonoBehaviour
 {
+    [Header("FEEDBACK")]
+    public FeedbackEventData robotMoving;
+    public FeedbackEventData robotTalking;
+
+    [Header("Particle Systems")]
     [SerializeField] private ParticleSystem fireBelowFootLeft;
     [SerializeField] private ParticleSystem fireBelowFootRight;
     [SerializeField] private GameObject player;

@@ -35,6 +35,7 @@ public class Dialogue
 
 public class DialogueTrigger : MonoBehaviour
 {
+    [SerializeField] private RobotAssistant assistant;
     public InputActionReference toggleNextDialogue = null;
 
     [SerializeField] private DialogueManager diagManager;
@@ -101,9 +102,10 @@ public class DialogueTrigger : MonoBehaviour
             diagManager.SetNextDialogueLine();
         }
     }
-
+    //  e_shredderFinish?.InvokeEvent(particleSpawnLocation.position, Quaternion.identity, transform);
     private IEnumerator WaitForDestination(DialogueLine dialogueLine)
     {
+        assistant.robotMoving.InvokeEvent(assistant.transform.position, Quaternion.identity, transform);
         while (_robotNavMesh.pathPending || _robotNavMesh.remainingDistance > _robotNavMesh.stoppingDistance)
         {
             yield return null;

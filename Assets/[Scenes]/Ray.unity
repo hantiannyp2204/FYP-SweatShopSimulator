@@ -3277,17 +3277,17 @@ PrefabInstance:
     - target: {fileID: 4734527371560397061, guid: 33acc6a045b3fe74c93ceaf971b34d59,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.222
+      value: 6.207
       objectReference: {fileID: 0}
     - target: {fileID: 4734527371560397061, guid: 33acc6a045b3fe74c93ceaf971b34d59,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.306
+      value: 0.212
       objectReference: {fileID: 0}
     - target: {fileID: 4734527371560397061, guid: 33acc6a045b3fe74c93ceaf971b34d59,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.894
+      value: -9.41
       objectReference: {fileID: 0}
     - target: {fileID: 4734527371560397061, guid: 33acc6a045b3fe74c93ceaf971b34d59,
         type: 3}
@@ -5273,7 +5273,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   KeyItemPrefab: {fileID: 1344332983}
   KeyItemButton: {fileID: 2001920528}
-  spawnCollider: {fileID: 5922649065147924563}
+  spawnCollider: {fileID: 0}
 --- !u!23 &60067287111236971
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5541,21 +5541,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Clipboard_Attachment
       objectReference: {fileID: 0}
-    - target: {fileID: 6851299975986601555, guid: 9ce7e6ba0b7601c41bcccb9797466908,
-        type: 3}
-      propertyPath: m_Size.z
-      value: 4.0103526
-      objectReference: {fileID: 0}
-    - target: {fileID: 6851299975986601555, guid: 9ce7e6ba0b7601c41bcccb9797466908,
-        type: 3}
-      propertyPath: m_Center.x
-      value: -1.463637e-10
-      objectReference: {fileID: 0}
-    - target: {fileID: 6851299975986601555, guid: 9ce7e6ba0b7601c41bcccb9797466908,
-        type: 3}
-      propertyPath: m_Center.z
-      value: -1.5051894
-      objectReference: {fileID: 0}
     - target: {fileID: 8524941650023137562, guid: 9ce7e6ba0b7601c41bcccb9797466908,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5611,6 +5596,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ce7e6ba0b7601c41bcccb9797466908, type: 3}
+--- !u!114 &677662318196584874 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6927091825616897076, guid: 9ce7e6ba0b7601c41bcccb9797466908,
+    type: 3}
+  m_PrefabInstance: {fileID: 677662318196584873}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60523e0647cc6ab43acc73cb266a32a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &693645723969648252
 GameObject:
   m_ObjectHideFlags: 0
@@ -7562,7 +7559,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2001920529}
-  - {fileID: 8556017769250807729}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 87.973, z: 0}
 --- !u!33 &4164743901778102582
@@ -8287,9 +8283,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4129936237570164390}
   - component: {fileID: 32283141265817198}
+  - component: {fileID: 8600520834483071475}
   - component: {fileID: 8600520834483071474}
   m_Layer: 0
-  m_Name: Spawn KeyItem (1)
+  m_Name: SpawnClipboard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8808,27 +8805,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2137710183}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &5922649065147924563
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7869243037832009290}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.84567475, y: 0.967849, z: 1}
-  m_Center: {x: -0.51441824, y: -0.3182962, z: 0}
 --- !u!1 &5933134356266219687
 GameObject:
   m_ObjectHideFlags: 0
@@ -9468,23 +9444,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7eec52470264174abac453ead130393, type: 3}
---- !u!1 &7869243037832009290
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8556017769250807729}
-  - component: {fileID: 5922649065147924563}
-  m_Layer: 0
-  m_Name: SpawnItemBounds
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &7936792661431816447
 GameObject:
   m_ObjectHideFlags: 0
@@ -9687,21 +9646,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 535858564}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &8556017769250807729
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7869243037832009290}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4129936237570164390}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8600520834483071474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9716,6 +9660,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameObjectList:
   - {fileID: 2001920527}
+--- !u!114 &8600520834483071475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4890379870315128285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6f204f21cec1ad4493730335039e78a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ClipboardPrefab: {fileID: 1344332983}
+  KeyItemButton: {fileID: 2001920528}
+  socket: {fileID: 677662318196584874}
 --- !u!23 &8625348098857511949
 MeshRenderer:
   m_ObjectHideFlags: 0

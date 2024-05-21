@@ -7,6 +7,7 @@ using UnityEngine;
 public class GameTimer : MonoBehaviour
 {
     [SerializeField] TMP_Text timerTxt;
+    [SerializeField] Transform controllerRotation;
     private float timer;
 
     public void SetTimer(float newTime)=>timer = newTime;

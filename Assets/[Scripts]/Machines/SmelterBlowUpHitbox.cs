@@ -6,7 +6,7 @@ public class SmelterBlowUpHitbox : MonoBehaviour
 {
     [SerializeField] MachineSmelter smelter;
     int currentHitParticle = 0;
-    private bool _isFixed = false;
+    [SerializeField] private bool _isFixed = false;
 
     public bool IsSmelterFixed()
     {

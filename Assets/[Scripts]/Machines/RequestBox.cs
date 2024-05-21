@@ -123,8 +123,8 @@ public class RequestBox : MonoBehaviour
     public void SetInsertedItem(GameObject item) // when robot reaches table insert the item
     {                                                                                                                                                                                                   
         Item collisionItemComponent = item.gameObject.GetComponent<Item>();
-        // Make sure there's no inserted item already, and the collided object is an Item
-        if (insertedItem != null || collisionItemComponent == null)
+        // Make sure there's no inserted item already, and the collided object is an Item or item inseted is not a fresh material
+        if (insertedItem != null || collisionItemComponent == null || item.gameObject.GetComponent<FreshRawMaterial>() != null)
         {
             return;
         }

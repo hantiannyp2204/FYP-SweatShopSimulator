@@ -768,12 +768,12 @@ PrefabInstance:
     - target: {fileID: 500855883275727880, guid: 128744b1a54d42c44b2c003428a55510,
         type: 3}
       propertyPath: m_Size.x
-      value: 6.885764
+      value: 6.8857646
       objectReference: {fileID: 0}
     - target: {fileID: 500855883275727880, guid: 128744b1a54d42c44b2c003428a55510,
         type: 3}
       propertyPath: m_Size.y
-      value: 5.1769013
+      value: 4.6655993
       objectReference: {fileID: 0}
     - target: {fileID: 500855883275727880, guid: 128744b1a54d42c44b2c003428a55510,
         type: 3}
@@ -783,17 +783,17 @@ PrefabInstance:
     - target: {fileID: 500855883275727880, guid: 128744b1a54d42c44b2c003428a55510,
         type: 3}
       propertyPath: m_Center.x
-      value: -0.098062426
+      value: -0.09806233
       objectReference: {fileID: 0}
     - target: {fileID: 500855883275727880, guid: 128744b1a54d42c44b2c003428a55510,
         type: 3}
       propertyPath: m_Center.y
-      value: -2.430365
+      value: -2.1747155
       objectReference: {fileID: 0}
     - target: {fileID: 500855883275727880, guid: 128744b1a54d42c44b2c003428a55510,
         type: 3}
       propertyPath: m_Center.z
-      value: -0.009266202
+      value: -0.009266195
       objectReference: {fileID: 0}
     - target: {fileID: 997208029530715710, guid: 128744b1a54d42c44b2c003428a55510,
         type: 3}
@@ -803,7 +803,7 @@ PrefabInstance:
     - target: {fileID: 997208029530715710, guid: 128744b1a54d42c44b2c003428a55510,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.312
+      value: 1.476
       objectReference: {fileID: 0}
     - target: {fileID: 997208029530715710, guid: 128744b1a54d42c44b2c003428a55510,
         type: 3}
@@ -891,7 +891,8 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 3335413489512866540, guid: 128744b1a54d42c44b2c003428a55510, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 997208029530715710, guid: 128744b1a54d42c44b2c003428a55510,
         type: 3}
@@ -5771,7 +5772,7 @@ PrefabInstance:
     - target: {fileID: 1636591624886963703, guid: 6aa70890968c5e74980c3f1995cd71ac,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.4879942
+      value: 1.212
       objectReference: {fileID: 0}
     - target: {fileID: 1636591624886963703, guid: 6aa70890968c5e74980c3f1995cd71ac,
         type: 3}
@@ -5833,6 +5834,11 @@ PrefabInstance:
       propertyPath: platformChecker
       value: 
       objectReference: {fileID: 685641657}
+    - target: {fileID: 5977662777902815660, guid: 6aa70890968c5e74980c3f1995cd71ac,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6346,15 +6352,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5895d806f9cb464c8883d988f733d98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  e_pickUp: {fileID: 0}
+  e_collisionNoise: {fileID: 0}
   originalMaterial: {fileID: 0}
   data: {fileID: 0}
   itemState: 0
-  e_pickUp: {fileID: 0}
-  e_collisionNoise: {fileID: 0}
-  e_drop: {fileID: 0}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!4 &1749654578
 Transform:
   m_ObjectHideFlags: 0
@@ -8014,6 +8016,7 @@ GameObject:
   - component: {fileID: 5640649133342035741}
   - component: {fileID: 3667476746723150186}
   - component: {fileID: 8980328913826388635}
+  - component: {fileID: 8980328913826388636}
   m_Layer: 0
   m_Name: water bucket render
   m_TagString: Untagged
@@ -8224,6 +8227,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &8980328913826388636
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4512917210300783372}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -9216545192861852589, guid: 99995c58b32ab9d4eae370c3db8941cd, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

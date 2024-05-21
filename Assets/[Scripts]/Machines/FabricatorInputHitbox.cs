@@ -5,16 +5,16 @@ using UnityEngine;
 
 public class FabricatorInputHitbox : MonoBehaviour
 {
-    public List<Item> scrapList = new();
+    public List<GeneralItem> scrapList = new();
     List<GameObject> destroyList = new();
 
     public FabricatorCrafting fabricator;
-    public List<Item> GetScrapList() => scrapList;
+    public List<GeneralItem> GetScrapList() => scrapList;
     public List<GameObject> GetDestroyList() => destroyList;
     private void OnTriggerEnter(Collider other)
     {
         //check all gameobject in collider containing Scrap.cs
-        Item scrapComponent = other.GetComponent<Item>();
+        GeneralItem scrapComponent = other.GetComponent<GeneralItem>();
         if (scrapComponent != null)
         {
             scrapList.Add(scrapComponent);
@@ -29,7 +29,7 @@ public class FabricatorInputHitbox : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        Item scrapComponent = other.GetComponent<Item>();
+        GeneralItem scrapComponent = other.GetComponent<GeneralItem>();
         if (scrapComponent != null && scrapList.Contains(scrapComponent))
         {
             scrapList.Remove(scrapComponent);
@@ -51,7 +51,7 @@ public class FabricatorInputHitbox : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("Scrap List:");
-            foreach (Item Item in scrapList)
+            foreach (GeneralItem Item in scrapList)
             {
                 Debug.Log(Item.name);
             }

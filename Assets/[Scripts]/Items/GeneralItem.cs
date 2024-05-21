@@ -3,19 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Item : MonoBehaviour
+public class GeneralItem : BaseItem
 {
     [HideInInspector] public Material originalMaterial;
     [SerializeField] private ItemData data;
     public ItemData Data => data;
     [SerializeField] private ITEM_STATE itemState;
-    // Feedback
-    [Header("FEEDBACK")]
-    [SerializeField] private FeedbackEventData e_pickUp;
-    [SerializeField] private FeedbackEventData e_collisionNoise;
-    [SerializeField] private FeedbackEventData e_drop;
 
-    [SerializeField] private LayerMask groundLayer;
+    //[SerializeField] private FeedbackEventData e_drop;
+
+   // [SerializeField] private LayerMask groundLayer;
 
     List<Collider> ignoredColliderList = new();
 
@@ -40,15 +37,7 @@ public class Item : MonoBehaviour
         }
     }
 
-    public void PlayEquipSound()
-    {
-        e_pickUp?.InvokeEvent(transform.position, Quaternion.identity, transform);
-    }
-    public void PlayCollisionSound()
-    {
-        Debug.Log("Item collided with something");
-        e_collisionNoise?.InvokeEvent(transform.position, Quaternion.identity, transform);
-    }
+   
     public void SetMaterial(Material toSwitch)
     {
         _renderer.material = toSwitch;
@@ -66,10 +55,10 @@ public class Item : MonoBehaviour
         switch (itemState)
         {
             case ITEM_STATE.NOT_PICKED_UP:
-                e_drop?.InvokeEvent(transform.position, Quaternion.identity, transform);
+                //e_drop?.InvokeEvent(transform.position, Quaternion.identity, transform);
                 break;
             case ITEM_STATE.PICKED_UP:
-                e_pickUp?.InvokeEvent(transform.position, Quaternion.identity, transform);
+                //e_pickUp?.InvokeEvent(transform.position, Quaternion.identity, transform);
                 break;
             default:
                 break;

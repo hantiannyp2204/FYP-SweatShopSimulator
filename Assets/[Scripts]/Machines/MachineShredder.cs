@@ -116,7 +116,7 @@ public class MachineShredder : MonoBehaviour
     public void RunActive()
     {
         //lock the items, so they can no longer be picked up
-        foreach(Item itemToShred in shredderItemCollider.GetProductList())
+        foreach(GeneralItem itemToShred in shredderItemCollider.GetProductList())
         {
             XRBaseInteractable baseInteractable = itemToShred.GetComponent<XRBaseInteractable>();
             baseInteractable.enabled= false;
@@ -461,7 +461,7 @@ public class MachineShredder : MonoBehaviour
             initShredding = false;
 
             //check who is in the list
-            foreach (Item itemsToDelete in shredderItemCollider.GetProductList())
+            foreach (GeneralItem itemsToDelete in shredderItemCollider.GetProductList())
             {
                 ItemData deletedItemData = itemsToDelete.Data;
                 //delete the product

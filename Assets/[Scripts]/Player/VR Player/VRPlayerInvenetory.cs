@@ -2,12 +2,12 @@ using Oculus.Interaction.HandGrab;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Item;
+using static GeneralItem;
 using static VRHandManager;
 
 public class VRPlayerInvenetory : MonoBehaviour
 {
-    [SerializeField] Item currentHoldingItem;
+    [SerializeField] GeneralItem currentHoldingItem;
     HandType handType = HandType.Left;
 
 
@@ -23,8 +23,8 @@ public class VRPlayerInvenetory : MonoBehaviour
 
 
     }
-    Item grabbedCollisionItem;
-    public void AddItem(Item item, Transform handTransform)
+    GeneralItem grabbedCollisionItem;
+    public void AddItem(GeneralItem item, Transform handTransform)
     {
         //if theres item, ignore
         if (currentHoldingItem != null) return;
@@ -78,8 +78,8 @@ public class VRPlayerInvenetory : MonoBehaviour
         }
         currentHoldingItem = null;
     }
-    public Item GetCurrentHeldItem() => currentHoldingItem;
-    IEnumerator RecoverCollisionCoroutine(Item itemToRecover)
+    public GeneralItem GetCurrentHeldItem() => currentHoldingItem;
+    IEnumerator RecoverCollisionCoroutine(GeneralItem itemToRecover)
     {
         yield return new WaitForSeconds(GetComponent<HandColliders>().GetCollisionRecoverDelay());
         itemToRecover.ResetIgnoreCollisions();

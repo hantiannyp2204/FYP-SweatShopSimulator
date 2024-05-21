@@ -7,9 +7,9 @@ public class FabricatorCrafting : MonoBehaviour
     public bool EnoughMaterials = false;
     public bool HasChosenCraftingItem = false;
     public FabricatorInputHitbox inputHitbox;
-    public Item item;
+    public GeneralItem item;
     //public Item Plasticitem;
-    public List<Item> _WhatINeed = new List<Item>();
+    public List<GeneralItem> _WhatINeed = new List<GeneralItem>();
     public List<GameObject> _ToDestroy = new List<GameObject>();
     public int foundCount = 0; // Counter to track the number of found items
     public Collider _SpawnPlace;
@@ -25,13 +25,13 @@ public class FabricatorCrafting : MonoBehaviour
     public void CheckIfPresent()
     {
 
-        List<Item> AvailableItems = inputHitbox.GetScrapList();
+        List<GeneralItem> AvailableItems = inputHitbox.GetScrapList();
         
-        foreach (Item neededItem in _WhatINeed)
+        foreach (GeneralItem neededItem in _WhatINeed)
         {
             if (neededItem.TryGetComponent(out RawMaterial RawMat))
             {
-                foreach (Item availableItem in AvailableItems)
+                foreach (GeneralItem availableItem in AvailableItems)
                 {
                     if (availableItem.TryGetComponent(out RawMaterial RawMat2))
                     {
@@ -111,10 +111,10 @@ public class FabricatorCrafting : MonoBehaviour
             Instantiate(objPrefab, SpawnPoint.transform.position, Quaternion.identity);
         }
     }
-    public void LogMissingItems(List<Item> missingItems)
+    public void LogMissingItems(List<GeneralItem> missingItems)
     {
         Debug.Log("Missing items:");
-        foreach (Item missingItem in missingItems)
+        foreach (GeneralItem missingItem in missingItems)
         {
             Debug.Log(missingItem.name);
         }
@@ -135,7 +135,7 @@ public class FabricatorCrafting : MonoBehaviour
                                   //_WhatINeed.Add(Plasticitem);
         }
 
-        foreach (Item Item in _WhatINeed)
+        foreach (GeneralItem Item in _WhatINeed)
         {
             Debug.Log(Item.name);
         }
@@ -156,7 +156,7 @@ public class FabricatorCrafting : MonoBehaviour
                 //_WhatINeed.Add(Plasticitem);
             }
 
-            foreach (Item Item in _WhatINeed)
+            foreach (GeneralItem Item in _WhatINeed)
             {
                 Debug.Log(Item.name);
             }
@@ -167,7 +167,7 @@ public class FabricatorCrafting : MonoBehaviour
         {
             Debug.Log("Number of items in _WhatINeed: " + _WhatINeed.Count);
             Debug.Log("Number of items found: " + foundCount);
-            foreach (Item Item in _WhatINeed)
+            foreach (GeneralItem Item in _WhatINeed)
             {
                 Debug.Log(Item.name);
             }

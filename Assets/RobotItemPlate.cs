@@ -6,7 +6,7 @@ public class RobotItemPlate : MonoBehaviour
 {
     public GameObject machineDestination;
     [SerializeField] private RobotMovement robotMovement;
-    [SerializeField] private Item _itemToSend;
+    [SerializeField] private GeneralItem _itemToSend;
 
     public RequestBox box;
     private Transform _tableParent;
@@ -33,7 +33,7 @@ public class RobotItemPlate : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
-        Item isItem = other.transform.GetComponent<Item>();
+        GeneralItem isItem = other.transform.GetComponent<GeneralItem>();
         if (isItem == null)
         {
             return;
@@ -45,7 +45,7 @@ public class RobotItemPlate : MonoBehaviour
         _itemToSend.transform.SetParent(transform , true);
     }
 
-    public Item GetRobotHoldingItem()
+    public GeneralItem GetRobotHoldingItem()
     {
         return _itemToSend;
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MachineAnvil : MonoBehaviour
 {
-    Item inputItem;
+    GeneralItem inputItem;
     [SerializeField] List<ItemData> OutputItemList;    
     [SerializeField] Transform ItemSpawnLocation;
     [SerializeField] AnvilHitbox anvilHitbox;

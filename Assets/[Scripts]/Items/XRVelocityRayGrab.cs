@@ -16,14 +16,14 @@ public class XRVelocityRayGrab : XRGrabInteractable
     private bool canJump = false;
     private bool grabbedByRay = false;
     private bool itemIsHovered = false;
-    private Item item;
+    private GeneralItem item;
     public bool IsGrabbedByRay() => grabbedByRay;
     public bool CanJump() => canJump;
     protected override void Awake()
     {
         base.Awake();
         interactableRigidbody = GetComponent<Rigidbody>();
-        item = GetComponent<Item>();
+        item = GetComponent<GeneralItem>();
     }
 
     private void Update()
@@ -113,7 +113,7 @@ public class XRVelocityRayGrab : XRGrabInteractable
         }
         //update the hand text
         VRHandRenderers disableHandModelComponent = args.interactorObject.transform.GetComponent<VRHandRenderers>();
-        Item item = args.interactableObject.transform.GetComponent<Item>();
+        GeneralItem item = args.interactableObject.transform.GetComponent<GeneralItem>();
         if (disableHandModelComponent != null && item != null)
         {
             disableHandModelComponent.SetItemHoverName(item.Data.itemName);
@@ -186,7 +186,7 @@ public class XRVelocityRayGrab : XRGrabInteractable
             }
 
             //play pick up sound
-            item?.PlayEquipSound();
+            item?.GetComponent<BaseItem>().PlayEquipSound();
         }
 
         base.OnSelectEntered(args);
@@ -217,6 +217,6 @@ public class XRVelocityRayGrab : XRGrabInteractable
     }
     private void OnCollisionEnter(Collision collision)
     {
-        item?.PlayCollisionSound();
+        item?.GetComponent<BaseItem>().PlayCollisionSound();
     }
 }

@@ -470,7 +470,7 @@ public class MachineSmelter : MonoBehaviour
             Collider[] hitColliders = Physics.OverlapBox(center, extents, Quaternion.identity);
             foreach (Collider hitCollider in hitColliders)
             {
-                Item itemScript = hitCollider.GetComponent<Item>();
+                GeneralItem itemScript = hitCollider.GetComponent<GeneralItem>();
                 if (itemScript != null)
                 {
                     Destroy(hitCollider.gameObject); // Destroy the GameObject if it has the Item component

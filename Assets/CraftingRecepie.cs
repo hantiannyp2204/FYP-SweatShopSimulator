@@ -10,14 +10,14 @@ public class CraftingRecepie : MonoBehaviour
     public FabricatorCrafting fabricatorCrafting;
 
     [Header("Raw Material")]
-    [SerializeField] private Item RawMetalMaterial;
-    [SerializeField] private Item RawPlasticMaterial;
-    [SerializeField] private Item RawWoodMaterial;
+    [SerializeField] private GeneralItem RawMetalMaterial;
+    [SerializeField] private GeneralItem RawPlasticMaterial;
+    [SerializeField] private GeneralItem RawWoodMaterial;
 
     [Header("Scraps")]
-    [SerializeField] private Item MetalScap;
-    [SerializeField] private Item PlasticScrap;
-    [SerializeField] private Item WoodenScrap;
+    [SerializeField] private GeneralItem MetalScap;
+    [SerializeField] private GeneralItem PlasticScrap;
+    [SerializeField] private GeneralItem WoodenScrap;
 
     [Header("Broken Sword Crafting Recipe")]
     [SerializeField] private int RequiredMetal_Broken_Sword;

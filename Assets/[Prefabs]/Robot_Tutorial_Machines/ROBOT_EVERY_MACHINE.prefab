@@ -594,6 +594,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8f3ba369ac3b544a9b0aa72f16f54f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationOffset: {x: 0, y: 0, z: 0, w: 1}
 --- !u!1 &1047263654033279085
 GameObject:
   m_ObjectHideFlags: 0
@@ -3696,8 +3697,8 @@ MonoBehaviour:
       narrator:
         name: Robot
         obj: {fileID: 7001500404746929504}
-      line: Before we use the fabricator, we first need to connect the power plug
-        on the right side of the machine!
+      line: The fabricator has no power, so let's climb up the ladder behind you
+        and plug the power plug into the electrical box on the wall
     - pathFindDestination: {fileID: 0}
       questMarker: {fileID: 0}
       TriggerThisEvent:
@@ -3706,7 +3707,7 @@ MonoBehaviour:
       narrator:
         name: Robot
         obj: {fileID: 7001500404746929504}
-      line: You see that menu over there! On top of the machine? Choose a product
+      line: Nice! You see that menu over there! On top of the machine? Choose a product
         and hover over the "Confirm Selection" buttton and click it!
     - pathFindDestination: {fileID: 0}
       questMarker: {fileID: 0}
@@ -3820,6 +3821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8f3ba369ac3b544a9b0aa72f16f54f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationOffset: {x: 0, y: 0, z: 0, w: 1}
 --- !u!1 &7008993745627047215
 GameObject:
   m_ObjectHideFlags: 0

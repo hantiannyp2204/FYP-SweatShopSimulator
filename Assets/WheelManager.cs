@@ -64,7 +64,6 @@ public class WheelManager : MonoBehaviour
 
         if (shredder.GetWheelHandler().GetWheelCurrState() != WheelStatus.WORKING)
         {
-            Debug.Break();
             return;
         }
         if (_check.CheckIsProduct())

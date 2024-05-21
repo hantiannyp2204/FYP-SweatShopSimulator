@@ -15,7 +15,7 @@ public class SmelterInputHitbox : MonoBehaviour
     public List<GameObject> GetDestroyList() => destroyList;
     private void OnTriggerEnter(Collider other)
     {
-        if(other.GetComponent<Item>() == null)
+        if(other.GetComponent<GeneralItem>() == null)
         {
             return;
         }
@@ -40,7 +40,7 @@ public class SmelterInputHitbox : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.GetComponent<Item>() == null)
+        if (other.GetComponent<GeneralItem>() == null)
         {
             return;
         }

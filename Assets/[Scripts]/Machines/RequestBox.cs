@@ -77,14 +77,14 @@ public class RequestBox : MonoBehaviour
     }
     private void SendItemIntoRequestBox(Collision collision)
     {
-        Item collisionItemComponent = collision.gameObject.GetComponent<Item>();
+        GeneralItem collisionItemComponent = collision.gameObject.GetComponent<GeneralItem>();
         // Make sure there's no inserted item already, and the collided object is an Item
         if (insertedItem != null || collisionItemComponent == null) return;
 
         SetInsertedItem(collisionItemComponent);
         
     }
-    private void SetInsertedItem(Item newItem)
+    private void SetInsertedItem(GeneralItem newItem)
     {
         // Attempt to get the XRBaseInteractable component of the collided item
         interactable = newItem.gameObject.GetComponent<XRBaseInteractable>();
@@ -122,9 +122,9 @@ public class RequestBox : MonoBehaviour
     }
     public void SetInsertedItem(GameObject item) // when robot reaches table insert the item
     {                                                                                                                                                                                                   
-        Item collisionItemComponent = item.gameObject.GetComponent<Item>();
-        // Make sure there's no inserted item already, and the collided object is an Item
-        if (insertedItem != null || collisionItemComponent == null)
+        GeneralItem collisionItemComponent = item.gameObject.GetComponent<GeneralItem>();
+        // Make sure there's no inserted item already, and the collided object is an Item or item inseted is not a fresh material
+        if (insertedItem != null || collisionItemComponent == null || item.gameObject.GetComponent<FreshRawMaterial>() != null)
         {
             return;
         }
@@ -247,6 +247,6 @@ public class RequestBox : MonoBehaviour
     }
 
     public ItemData GetRequestedItemData() => requestedItemData;
-    public ItemData GetInsertedItemData() => insertedItem.GetComponent<Item>().Data;
+    public ItemData GetInsertedItemData() => insertedItem.GetComponent<GeneralItem>().Data;
     public GameObject GetInsertedItem() => insertedItem;
 }

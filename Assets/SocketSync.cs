@@ -30,7 +30,7 @@ public class SocketSync : MonoBehaviour
         if (b != null)
         { 
             Debug.Log("jj:" + b.transform.gameObject.name);
-            Item c = b.transform.GetComponent<Item>();
+            GeneralItem c = b.transform.GetComponent<GeneralItem>();
             if (c != null)
             {
                 _interactor.enabled = false;
@@ -41,7 +41,7 @@ public class SocketSync : MonoBehaviour
         {
             _interactor.enabled = true;
             //// object is not null
-            Item d = b.transform.GetComponent<Item>();
+            GeneralItem d = b.transform.GetComponent<GeneralItem>();
             if (d != null)
             {
                 //d.DisableItemPhysics();

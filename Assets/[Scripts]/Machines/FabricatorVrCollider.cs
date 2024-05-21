@@ -8,7 +8,7 @@ public class FabricatorVrCollider : MonoBehaviour
     public string layerCheck;
     private int _layer;
     public bool isCollided = false;
-    private Item _product;
+    private GeneralItem _product;
 
     public Collider _collider;
     private void Start()
@@ -23,7 +23,7 @@ public class FabricatorVrCollider : MonoBehaviour
             if (other.gameObject.layer == _layer)
             {
                 isCollided = true;
-                _product = other.GetComponent<Item>();
+                _product = other.GetComponent<GeneralItem>();
                 Rigidbody rb = _product.GetComponent<Rigidbody>();
                 if (rb != null)
                 {
@@ -46,7 +46,7 @@ public class FabricatorVrCollider : MonoBehaviour
         }
     }
 
-    public Item GetProduct()
+    public GeneralItem GetProduct()
     {
         return _product;
     }

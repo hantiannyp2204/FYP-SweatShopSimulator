@@ -17,7 +17,7 @@ public class ShredderButton : VRButton
         }
         machineCollider.mouthHandler.DisableJaw();
 
-        foreach (Item product in machineCollider.GetProductList())
+        foreach (GeneralItem product in machineCollider.GetProductList())
         {
             product.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.up * productReleaseForce, ForceMode.Impulse);
         }

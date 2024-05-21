@@ -13,7 +13,7 @@ public class RefillFuelManager : MonoBehaviour
     [HideInInspector] public bool activateRefill;
 
     public MachineShredder shredder;
-    [SerializeField] private Item refillCan;
+    [SerializeField] private GeneralItem refillCan;
 
     //private TMP_Text _textAboveStation;
 

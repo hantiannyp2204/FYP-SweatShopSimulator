@@ -28,6 +28,8 @@ public class DialogueManager : MonoBehaviour
         _lines = new Queue<DialogueLine>();
 
         xButtonImage.gameObject.SetActive(false);
+
+        dialogueText.text = "Press A Button on right controller to Start!";
     }
 
     public void StartDialogue(Dialogue dialogue)

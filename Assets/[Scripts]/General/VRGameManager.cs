@@ -120,7 +120,11 @@ public class VRGameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        gameEnded = customerTable.isEndGame();
+        if(customerTable != null)
+        {
+            gameEnded = customerTable.isEndGame();
+        }
+   
 
         //things that should not be affected by endgame/game paused
         foreach (var hand in vrHandInteractionManagerList)
@@ -150,7 +154,7 @@ public class VRGameManager : MonoBehaviour
             //}
 
             //update table timer
-            customerTable.UpdateTimer(leftHandTimerText);
+            customerTable?.UpdateTimer(leftHandTimerText);
         }
         //check for puase menu
         if (Input.GetKeyDown(KeyCode.Escape))

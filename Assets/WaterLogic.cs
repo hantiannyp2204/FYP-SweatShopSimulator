@@ -6,6 +6,7 @@ public class WaterLogic : MonoBehaviour
 {
     [SerializeField] private float timeToCool = 5;
     [SerializeField] private FeedbackEventData e_materialSizzleSound;
+    [SerializeField] private FeedbackEventData e_waterSplash;
     [SerializeField] private int poolAmount;
     [SerializeField] private ParticleSystem bubbleParticleEffectPrefab;
     [SerializeField] private Transform bubblePoolTransform;
@@ -64,6 +65,7 @@ public class WaterLogic : MonoBehaviour
             // Register for the destroy event
             freshRawMaterialScript.OnMaterialDestroyed += HandleMaterialDestroyed;
         }
+        e_waterSplash?.InvokeEvent(transform.position, Quaternion.identity);
     }
 
     private void OnTriggerExit(Collider other)

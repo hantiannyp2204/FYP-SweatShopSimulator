@@ -169,7 +169,16 @@ public class CustomerTable : MonoBehaviour
             }
             else
             {
-                gameTimeLeft += posibleRequests[randomRequest].GetTimeGiven();
+                //hard lock time given to 20 sec if alr exceed 5 mins
+                if (gameTimeLeft > (60 * 5))
+                {
+                    gameTimeLeft += 20;
+                }
+                else
+                {
+                    gameTimeLeft += posibleRequests[randomRequest].GetTimeGiven();
+                }
+              
             }
             //animate box upwards
             moveBoxCoroutineHandler = StartCoroutine(MoveBoxCoroutine());

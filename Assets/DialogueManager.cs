@@ -29,7 +29,7 @@ public class DialogueManager : MonoBehaviour
 
         xButtonImage.gameObject.SetActive(false);
 
-        dialogueText.text = "Press A Button on right controller to Start!";
+        dialogueText.text = "A Button On Right Controller To Start Tutorial.";
     }
 
     public void StartDialogue(Dialogue dialogue)

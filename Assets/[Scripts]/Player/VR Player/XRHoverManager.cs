@@ -70,6 +70,7 @@ public class XRRayHoverManager : MonoBehaviour
         if (args.interactableObject != null)
         {
             selectedInteractableLayers[args.interactableObject.transform] = LayerMask.LayerToName(args.interactorObject.transform.gameObject.layer);
+            Debug.Log("cunt:" + args.interactorObject.transform.gameObject.layer);
             ClearAllInteractors(args.interactableObject.transform);
 
             // Additional check for Clipboard tag

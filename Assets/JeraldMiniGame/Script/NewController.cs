@@ -5,11 +5,14 @@ using TMPro; // Import the TMPro namespace
 using System.Collections;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Content.Interaction;
+using System.Collections.Generic;
+
 
 
 
 public class NewController : MonoBehaviour
 {
+
     [Header("References")]
     public MacineFab macine;
     public FabricatorXRKnob xRKnob;
@@ -40,6 +43,8 @@ public class NewController : MonoBehaviour
     public int Lnum = 1;
     public float CCL;
     public bool gameEnded = false;
+
+    public List<(int min, int max)> previousRanges = new List<(int min, int max)>();
 
     [Header("Display texts")]
     [SerializeField] public TMP_Text minT, maxT, currentText, winORloseText, levelText;
@@ -104,6 +109,36 @@ public class NewController : MonoBehaviour
             power.UpdatePowerBar(power._PowerForFab, newccPower);
         }
     }
+
+    //void SetRange()
+    //{
+    //    int winD;
+    //    bool overlap;
+
+    //    do
+    //    {
+    //        overlap = false;
+    //        winD = Random.Range((trueRange / 2), 360 - (trueRange / 2));
+    //        maxWinD = winD + (trueRange / 2);
+    //        minWinD = winD - (trueRange / 2);
+
+    //        foreach (var range in previousRanges)
+    //        {
+    //            if ((minWinD >= range.min && minWinD <= range.max) || (maxWinD >= range.min && maxWinD <= range.max))
+    //            {
+    //                overlap = true;
+    //                break;
+    //            }
+    //        }
+    //    }
+    //    while (minWinD < 0 || maxWinD > 360 || overlap);
+
+    //    minT.text = "Min = " + minWinD;
+    //    maxT.text = "Max = " + maxWinD;
+
+    //    previousRanges.Add((minWinD, maxWinD));
+    //}
+
     void SetRange()
     {
         int winD = Random.Range((trueRange / 2), 360 - (trueRange / 2));
@@ -213,7 +248,8 @@ public class NewController : MonoBehaviour
         Lnum = 1;
         trueRange = 50;
         speed = 50;
-        
+        previousRanges.Clear();  // Clear the list of previous ranges
+
     }
 
 

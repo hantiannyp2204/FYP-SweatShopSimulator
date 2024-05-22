@@ -27,7 +27,6 @@ public class XRGrabDistanceDetection : MonoBehaviour
         {
             Vector3 interactablePosition = GetInteractablePosition();
             float distanceBetweenObjects = Vector3.Distance(interactablePosition, interactorTransform.position);
-            Debug.Log(distanceBetweenObjects);
             if (distanceBetweenObjects > distanceThreshold)
             {
                 directGrabInteractor.interactionManager.CancelInteractableSelection(baseInteractable);

@@ -356,6 +356,8 @@ MonoBehaviour:
   _Win: {fileID: 0}
   _Lose: {fileID: 0}
   _PointsText: {fileID: 0}
+  e_requestRecieve: {fileID: 0}
+  e_requestSend: {fileID: 0}
   requestBox: {fileID: 8431079417170349971}
   boxRequestYPosition: 0.33
   boxSendYPosition: -0.6
@@ -632,6 +634,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8f3ba369ac3b544a9b0aa72f16f54f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationOffset: {x: 0, y: 0, z: 0, w: 1}
 --- !u!1 &771387085328009476
 GameObject:
   m_ObjectHideFlags: 0
@@ -3052,6 +3055,7 @@ GameObject:
   - component: {fileID: 5752598433374604587}
   - component: {fileID: 4959170597061257929}
   - component: {fileID: 9186110977398370258}
+  - component: {fileID: 8129373990517596631}
   m_Layer: 13
   m_Name: Left Drawer Handle Collider
   m_TagString: Untagged
@@ -3305,6 +3309,20 @@ MonoBehaviour:
   linkedColliderParentsList:
   - {fileID: 9137692821760587931}
   - {fileID: 7463059281498811859}
+--- !u!114 &8129373990517596631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4088867311616274391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 827f5dba72b3ddc4baced062b1f40363, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseInteractable: {fileID: 5752598433374604587}
+  distanceThreshold: 0.15
 --- !u!1 &4258677907505621772
 GameObject:
   m_ObjectHideFlags: 0
@@ -3980,6 +3998,9 @@ MonoBehaviour:
   openedBox: {fileID: 3512576540614255034}
   closedBox: {fileID: 2796692818658185817}
   table: {fileID: 7737829243625249529}
+  e_requestBoxItemPlace: {fileID: 0}
+  e_requestBoxItemPickUp: {fileID: 0}
+  e_requestBoxItemSubmit: {fileID: 0}
 --- !u!114 &4567100554249913855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4830,6 +4851,7 @@ GameObject:
   - component: {fileID: 2586060513800573373}
   - component: {fileID: 5115300837653076315}
   - component: {fileID: 4327757329890268377}
+  - component: {fileID: 8779155787328884927}
   m_Layer: 13
   m_Name: Middle Door Handle Collider
   m_TagString: Untagged
@@ -5083,6 +5105,20 @@ MonoBehaviour:
   linkedColliderParentsList:
   - {fileID: 771387085328009476}
   - {fileID: 4981638579141540694}
+--- !u!114 &8779155787328884927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5850698015343140252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 827f5dba72b3ddc4baced062b1f40363, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseInteractable: {fileID: 2586060513800573373}
+  distanceThreshold: 0.15
 --- !u!1 &5868988105246770787
 GameObject:
   m_ObjectHideFlags: 0
@@ -6868,6 +6904,7 @@ GameObject:
   - component: {fileID: 1241941442506593557}
   - component: {fileID: 7283240185666252605}
   - component: {fileID: 2570019439739927501}
+  - component: {fileID: 5301341057709863462}
   m_Layer: 13
   m_Name: Right drawer Handle Collider
   m_TagString: Untagged
@@ -7121,6 +7158,20 @@ MonoBehaviour:
   linkedColliderParentsList:
   - {fileID: 4584081380535006088}
   - {fileID: 7312424205014186022}
+--- !u!114 &5301341057709863462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7973583278247022196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 827f5dba72b3ddc4baced062b1f40363, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseInteractable: {fileID: 1241941442506593557}
+  distanceThreshold: 0.15
 --- !u!1 &7977932189715619810
 GameObject:
   m_ObjectHideFlags: 0

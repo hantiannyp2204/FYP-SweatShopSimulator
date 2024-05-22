@@ -266,10 +266,18 @@ public class MachineShredder : MonoBehaviour
         _wheelManager.SetWheelCurrState(WheelStatus.WORKING);
     }
 
+    float currentValue = 0;
     public void ValueChangeCheck()
     {
         //e_interactShredder?.InvokeEvent(particleSpawnLocation.position, Quaternion.identity, transform);
-        _wheelManager.e_wheelturning?.InvokeEvent(transform.position, Quaternion.identity, transform);
+        //play sound when player grind wheel
+        if (Mathf.Abs(_wheelPlug.value - currentValue) >= 0.1)
+        {
+            Debug.Log("PLAY");
+            _wheelManager.e_wheelturning?.InvokeEvent(transform.position, Quaternion.identity, transform);
+            currentValue = _wheelPlug.value;
+        }
+    
         if (_save)
         {
             if (_wheelPlug.value >= _breakAtThisValue)

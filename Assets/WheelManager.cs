@@ -61,7 +61,7 @@ public class WheelManager : MonoBehaviour
         //if (_status != WheelStatus.WORKING) return;
 
         e_pulledLever?.InvokeEvent(transform.position, Quaternion.identity, transform);
-
+        Debug.Log("wheel");
         if (shredder.GetWheelHandler().GetWheelCurrState() != WheelStatus.WORKING)
         {
             return;

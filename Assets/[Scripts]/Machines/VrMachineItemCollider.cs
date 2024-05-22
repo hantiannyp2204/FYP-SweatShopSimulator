@@ -58,6 +58,10 @@ public class VrMachineItemCollider : MonoBehaviour
 
     public bool CheckIsProduct()
     {
+        if(_tracker == null)
+        {
+            return false;
+        }
         return _tracker.Data.productContainable.Count == 0;
     }
 

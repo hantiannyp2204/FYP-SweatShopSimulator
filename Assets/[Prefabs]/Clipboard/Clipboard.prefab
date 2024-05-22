@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 1019638337835652634}
   - component: {fileID: 2920943287007785261}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Next Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -631,15 +631,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5895d806f9cb464c8883d988f733d98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  e_pickUp: {fileID: 11400000, guid: 82b3fe5c3cc8d1744a4bbe7a0daf3482, type: 2}
+  e_collisionNoise: {fileID: 11400000, guid: 171121512f6b2c347879a607143f2638, type: 2}
   originalMaterial: {fileID: 0}
   data: {fileID: 11400000, guid: 495d5d7629486e649a89089f6c7fc54d, type: 2}
   itemState: 0
-  e_pickUp: {fileID: 11400000, guid: 82b3fe5c3cc8d1744a4bbe7a0daf3482, type: 2}
-  e_collisionNoise: {fileID: 0}
-  e_drop: {fileID: 11400000, guid: 171121512f6b2c347879a607143f2638, type: 2}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!54 &5320281681908410366
 Rigidbody:
   m_ObjectHideFlags: 0

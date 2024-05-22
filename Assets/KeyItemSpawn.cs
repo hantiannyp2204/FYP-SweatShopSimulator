@@ -7,10 +7,15 @@ public class KeyItemSpawn : MonoBehaviour
     [SerializeField] private GameObject KeyItemPrefab;
     [SerializeField] private KeyItemSpawnButton KeyItemButton;
     [SerializeField] private BoxCollider spawnCollider;
+    [SerializeField] private bool spawnOnStart = true;
     private GameObject currentSpawnedKeyItem;
     private void Start()
     {
-        SpawnKeyItem();
+        if(spawnOnStart)
+        {
+            SpawnKeyItem();
+        }
+      
     }
 
     private void OnEnable()
@@ -23,7 +28,7 @@ public class KeyItemSpawn : MonoBehaviour
         KeyItemButton.OnButtonPressed -= SpawnKeyItem;
     }
 
-    private void SpawnKeyItem()
+    public void SpawnKeyItem()
     {
         //play spawn sound
         if (currentSpawnedKeyItem != null)

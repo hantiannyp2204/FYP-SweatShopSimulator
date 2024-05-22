@@ -427,6 +427,11 @@ public class MachineShredder : MonoBehaviour
             {
                 _refillManager.activateRefill = false;
 
+                // Consistently decrease progress bar fill amount over time
+                progressBar.fillAmount -= decreaseMultiplier * Time.deltaTime;
+                progressBar.fillAmount = Mathf.Clamp(progressBar.fillAmount, 0f, 1f);
+
+
                 if (_wheelPlug.value > 0.1f)
                 {
                     secretHealth -= fuelDecrease * Time.deltaTime;

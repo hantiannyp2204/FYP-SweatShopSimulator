@@ -3721,8 +3721,8 @@ MonoBehaviour:
         name: Robot
         obj: {fileID: 7001500404746929504}
       line: Nice! Hands on time! On the menu there is a requirement for the product
-        you chose! Find them somewhere and put them in the LEFT tube! After that,
-        press the MIDDLE button to start a mini game!
+        you chose! Find them and put them in the LEFT tube! Then press the MIDDLE
+        button!
     - pathFindDestination: {fileID: 0}
       questMarker: {fileID: 0}
       TriggerThisEvent:
@@ -3798,8 +3798,7 @@ MonoBehaviour:
       narrator:
         name: Robot
         obj: {fileID: 7001500404746929504}
-      line: The game has started, hammer the material when the text says "Hit!" and
-        hit it until the white part of the progress fills the bar up!
+      line: Hammer the material when the text says "Hit", and try to be consistent!
     - pathFindDestination: {fileID: 0}
       questMarker: {fileID: 0}
       TriggerThisEvent:
@@ -4963,6 +4962,11 @@ PrefabInstance:
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 198000013227194214, guid: 3228a22491941734bb83ad691d17fcb9,
+        type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 198000013621194436, guid: 3228a22491941734bb83ad691d17fcb9,
         type: 3}
       propertyPath: playOnAwake
@@ -5072,6 +5076,11 @@ PrefabInstance:
     - target: {fileID: 4000010409153280, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198000013227194214, guid: 3228a22491941734bb83ad691d17fcb9,
+        type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 199000010346745340, guid: 3228a22491941734bb83ad691d17fcb9,
         type: 3}

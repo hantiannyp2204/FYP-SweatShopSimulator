@@ -46,6 +46,13 @@ public class XRRayHoverManager : MonoBehaviour
                 // If it has the same layer and no Generator script, return early to avoid adding hover material
                 return;
             }
+
+            // Additional check for Clipboard tag
+            if (args.interactableObject.transform.CompareTag("Clipboard") && selectedInteractableLayers.ContainsKey(args.interactableObject.transform))
+            {
+                return;
+            }
+
             AddHoverMaterial(args.interactableObject.transform, args.interactorObject);
         }
     }
@@ -64,6 +71,12 @@ public class XRRayHoverManager : MonoBehaviour
         {
             selectedInteractableLayers[args.interactableObject.transform] = LayerMask.LayerToName(args.interactorObject.transform.gameObject.layer);
             ClearAllInteractors(args.interactableObject.transform);
+
+            // Additional check for Clipboard tag
+            if (args.interactableObject.transform.CompareTag("Clipboard"))
+            {
+                RemoveHoverMaterial(args.interactableObject.transform);
+            }
         }
     }
 

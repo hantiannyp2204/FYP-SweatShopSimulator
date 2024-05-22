@@ -2661,6 +2661,7 @@ GameObject:
   m_Component:
   - component: {fileID: 468795099311953517}
   - component: {fileID: 5182016050977731524}
+  - component: {fileID: 2416308949594843443}
   m_Layer: 9
   m_Name: Left hand Controller
   m_TagString: Untagged
@@ -2925,6 +2926,21 @@ MonoBehaviour:
       m_Flags: 0
     m_Reference: {fileID: 0}
   m_ButtonPressPoint: 0.5
+--- !u!114 &2416308949594843443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1971808185950515735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34adc12da9bc1f64da2bc4dda6aa6df4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boxCastCenterOffset: {x: -0.035, y: -0.03, z: -0.02}
+  boxCastHalfExtents: {x: 0.03, y: -0.09, z: -0.15}
+  boxCastOrientation: {x: 0, y: 0, z: 0, w: 1}
 --- !u!1 &2000483975955013795
 GameObject:
   m_ObjectHideFlags: 0
@@ -4155,6 +4171,8 @@ MonoBehaviour:
   - {fileID: 7484719097670331078}
   - {fileID: 2458116822009621793}
   DebugTxt: {fileID: 0}
+  maxDistanceFromController: 0.5
+  boxCastChecker: {fileID: 2416308949594843443}
 --- !u!114 &1967862848949519315
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4195,7 +4213,6 @@ MonoBehaviour:
       type: 3}
   handAnimator: {fileID: 1029002196698866118}
   DebugText: {fileID: 0}
-  sphereRadius: 0.5
   e_interactError: {fileID: 0}
 --- !u!114 &1577881346341833699
 MonoBehaviour:
@@ -5911,7 +5928,6 @@ MonoBehaviour:
       type: 3}
   handAnimator: {fileID: 4873536401087226007}
   DebugText: {fileID: 3126506224475904315}
-  sphereRadius: 0.1
   e_interactError: {fileID: 0}
 --- !u!1 &3573136101979107059
 GameObject:
@@ -6317,6 +6333,7 @@ GameObject:
   - component: {fileID: 6320909590653122245}
   - component: {fileID: 256904150576817618}
   - component: {fileID: 4574902679946979703}
+  - component: {fileID: 1089488663957680101}
   m_Layer: 9
   m_Name: Right hand Controller
   m_TagString: Untagged
@@ -6603,6 +6620,21 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.15
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1089488663957680101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3911838000187275852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34adc12da9bc1f64da2bc4dda6aa6df4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boxCastCenterOffset: {x: 0, y: 0.02, z: -0.03}
+  boxCastHalfExtents: {x: 0.09, y: 0.06, z: 0.15}
+  boxCastOrientation: {x: 0, y: 0, z: 0, w: 1}
 --- !u!1 &3994900074800456864
 GameObject:
   m_ObjectHideFlags: 0
@@ -7329,6 +7361,8 @@ MonoBehaviour:
   - {fileID: 6912303547938444132}
   - {fileID: 3384155985097191541}
   DebugTxt: {fileID: 0}
+  maxDistanceFromController: 0.5
+  boxCastChecker: {fileID: 1089488663957680101}
 --- !u!114 &2743089636799692799
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7382,7 +7416,6 @@ MonoBehaviour:
       type: 3}
   handAnimator: {fileID: 1011372782307795650}
   DebugText: {fileID: 0}
-  sphereRadius: 0.5
   e_interactError: {fileID: 0}
 --- !u!1 &4613088499690983805
 GameObject:
@@ -11941,7 +11974,6 @@ MonoBehaviour:
       type: 3}
   handAnimator: {fileID: 6978652267366024127}
   DebugText: {fileID: 5666330093351461436}
-  sphereRadius: 0.1
   e_interactError: {fileID: 0}
 --- !u!114 &8766462611283087805
 MonoBehaviour:

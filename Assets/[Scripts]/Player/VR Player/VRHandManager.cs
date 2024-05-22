@@ -19,9 +19,6 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<IVRInteracted>, ISu
     private Vector3 lastHandPosition;
     private Vector3 handVelocity;
 
-    //for sphere cast
-    Vector3 sphereCenter;
-    [SerializeField]float sphereRadius = 0.5f;
 
     //Physics movement
  
@@ -59,9 +56,6 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<IVRInteracted>, ISu
     // Update is called once per frame
     public void UpdateInteractions()
     {
-        // Define sphere center and radius
-        sphereCenter = transform.position;
-
         // Update hand animations
         triggerValue = pinchAnimationAction.action.ReadValue<float>();
         gripValue = gripAnimationAction.action.ReadValue<float>();
@@ -100,47 +94,42 @@ public class VRHandManager : MonoBehaviour, ISubscribeEvents<IVRInteracted>, ISu
     }
 
 
+    //Custom made VR physics manager
 
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow; // Set gizmo color
-   
-        Gizmos.DrawWireSphere(transform.position, sphereRadius);
-    }
-    public Vector3 GetHandVelocity()
-    {
-        return handVelocity;
-    }
-    void FindNearestObject()
-    {
-        float closestDistance = float.MaxValue;
-        GameObject closestObject = null;
+    //public Vector3 GetHandVelocity()
+    //{
+    //    return handVelocity;
+    //}
+    //void FindNearestObject()
+    //{
+    //    float closestDistance = float.MaxValue;
+    //    GameObject closestObject = null;
 
-        // Find the closest object to grab
-        foreach (GameObject go in currentlyTouching)
-        {
-            if (go.name == "VR Player") continue;
-            float distance = Vector3.Distance(go.transform.position, transform.position);
-            if (distance < closestDistance)
-            {
-                closestDistance = distance;
-                closestObject = go;
-            }
-        }
-        if (closestObject != null)
-        {
-            grabbedObject = closestObject;
-            OnGrabbed?.Invoke(grabbedObject,handType);
-        }
-    }
+    //    // Find the closest object to grab
+    //    foreach (GameObject go in currentlyTouching)
+    //    {
+    //        if (go.name == "VR Player") continue;
+    //        float distance = Vector3.Distance(go.transform.position, transform.position);
+    //        if (distance < closestDistance)
+    //        {
+    //            closestDistance = distance;
+    //            closestObject = go;
+    //        }
+    //    }
+    //    if (closestObject != null)
+    //    {
+    //        grabbedObject = closestObject;
+    //        OnGrabbed?.Invoke(grabbedObject,handType);
+    //    }
+    //}
 
-    void Release()
-    {
-        if (grabbedObject != null)
-        {
-            OnRelease?.Invoke(handVelocity,handType);
-        }
-    }
+    //void Release()
+    //{
+    //    if (grabbedObject != null)
+    //    {
+    //        OnRelease?.Invoke(handVelocity,handType);
+    //    }
+    //}
 
     public void SubcribeEvents(IVRInteracted action)
     {

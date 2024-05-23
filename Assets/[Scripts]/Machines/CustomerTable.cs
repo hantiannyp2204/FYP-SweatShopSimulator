@@ -73,13 +73,6 @@ public class CustomerTable : MonoBehaviour
     {
         timeNeededToWin = timeNeeded;
     }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            EndLevel();
-        }
-    }
     public void Init(TMP_Text leftHandTimerText, GameMode setGameMode)
     {
         leftHandTimerText.text = "Go start your shift";

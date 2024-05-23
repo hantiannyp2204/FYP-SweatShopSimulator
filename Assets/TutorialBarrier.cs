@@ -15,25 +15,25 @@ public class TutorialBarrier : MonoBehaviour
     }
     public void EnableSmelter()
     {
-        smelterTutorialBarrier.SetActive(true);
+        smelterTutorialBarrier.SetActive(false);
     }
     public void EnableAnvil()
     {
-        anvilTutorialBarrier.SetActive(true);
+        anvilTutorialBarrier.SetActive(false);
     }
     public void EnableShredder()
     {
-        shredderTutorialBarrier.SetActive(true);
+        shredderTutorialBarrier.SetActive(false);
     }
     public void EnableFabricator()
     {
-        fabricatorTutorialBarrier.SetActive(true);
+        fabricatorTutorialBarrier.SetActive(false);
     }
     public void DisableAll()
     {
-        smelterTutorialBarrier.SetActive(false);
-        anvilTutorialBarrier.SetActive(false);
-        shredderTutorialBarrier.SetActive(false);
-        fabricatorTutorialBarrier.SetActive(false);
+        smelterTutorialBarrier.SetActive(true);
+        anvilTutorialBarrier.SetActive(true);
+        shredderTutorialBarrier.SetActive(true);
+        fabricatorTutorialBarrier.SetActive(true);
     }
 }

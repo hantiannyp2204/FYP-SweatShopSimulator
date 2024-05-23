@@ -1796,7 +1796,7 @@ MonoBehaviour:
   m_ConeCastAngle: 6
   m_RaycastMask:
     serializedVersion: 2
-    m_Bits: 2145
+    m_Bits: 18551
   m_RaycastTriggerInteraction: 1
   m_RaycastSnapVolumeInteraction: 1
   m_HitClosestOnly: 1
@@ -3661,7 +3661,7 @@ MonoBehaviour:
   m_ConeCastAngle: 6
   m_RaycastMask:
     serializedVersion: 2
-    m_Bits: 2145
+    m_Bits: 18551
   m_RaycastTriggerInteraction: 1
   m_RaycastSnapVolumeInteraction: 1
   m_HitClosestOnly: 1
@@ -4347,6 +4347,9 @@ GameObject:
   - component: {fileID: 9000522850706738690}
   - component: {fileID: 5379366778493714510}
   - component: {fileID: 3257709364904667818}
+  - component: {fileID: 2956604096075128700}
+  - component: {fileID: 1603087536505534771}
+  - component: {fileID: 7164094230812636304}
   m_Layer: 9
   m_Name: VR Player
   m_TagString: Untagged
@@ -4434,9 +4437,9 @@ MonoBehaviour:
   xr: {fileID: 2324035213948884905}
   eye: {fileID: 194890005966374514}
   executeMethod: 0
-  speedMul: 2.61
+  speedMul: 3.74
   speedMode: 0
-  constantSpeed: 2
+  constantSpeed: 0.57
   constantSpeedThreshold: 1
 --- !u!54 &1437578005793969195
 Rigidbody:
@@ -4775,6 +4778,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _zoneGO: {fileID: 0}
+--- !u!114 &2956604096075128700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2324035213948884905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57902a2e669e50e4bb04900cd40fcc40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _zoneGO: {fileID: 0}
+--- !u!114 &1603087536505534771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2324035213948884905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1fef2bf9ac34274eb2a4018be7fc763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7164094230812636304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2324035213948884905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03a5df2202a8b96488c744be3bd0c33e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Timeout: 10
+  m_XROrigin: {fileID: 5632908192370461467}
 --- !u!1 &2366862650859957813
 GameObject:
   m_ObjectHideFlags: 0
@@ -13360,6 +13402,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8197911911647170298}
     m_Modifications:
+    - target: {fileID: 1876399464593147352, guid: 0fcad9fad9e36ae41b9901a0b763f2a6,
+        type: 3}
+      propertyPath: m_text
+      value: Game Ended
+      objectReference: {fileID: 0}
+    - target: {fileID: 1876399464593147352, guid: 0fcad9fad9e36ae41b9901a0b763f2a6,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3909555124085042432, guid: 0fcad9fad9e36ae41b9901a0b763f2a6,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -158.1
+      objectReference: {fileID: 0}
     - target: {fileID: 3963133098247329420, guid: 0fcad9fad9e36ae41b9901a0b763f2a6,
         type: 3}
       propertyPath: m_Pivot.x
@@ -13443,7 +13500,7 @@ PrefabInstance:
     - target: {fileID: 3963133098247329420, guid: 0fcad9fad9e36ae41b9901a0b763f2a6,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.465
+      value: 0.46
       objectReference: {fileID: 0}
     - target: {fileID: 3963133098247329420, guid: 0fcad9fad9e36ae41b9901a0b763f2a6,
         type: 3}
@@ -13464,6 +13521,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: VR World Canvas Lose
+      objectReference: {fileID: 0}
+    - target: {fileID: 5750177023181342980, guid: 0fcad9fad9e36ae41b9901a0b763f2a6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8426864981314881102, guid: 0fcad9fad9e36ae41b9901a0b763f2a6,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8426864981314881102, guid: 0fcad9fad9e36ae41b9901a0b763f2a6,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13767,6 +13839,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: VR World Canvas Pause Screen
+      objectReference: {fileID: 0}
+    - target: {fileID: 7638235232863381373, guid: d6816c1d89976834e950c35e34d6a4f6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

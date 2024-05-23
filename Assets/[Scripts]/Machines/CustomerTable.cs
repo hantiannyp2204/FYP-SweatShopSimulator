@@ -12,7 +12,7 @@ public class CustomerTable : MonoBehaviour
 
     [Header("Win and Lose")]
     public GameObject _Win;
-    public GameObject _Lose;
+    public GameObject _EndGameUI;
     public TMP_Text _PointsText;
 
     [Header("Feedback")]
@@ -61,7 +61,7 @@ public class CustomerTable : MonoBehaviour
             _Win?.SetActive(false);
         }
         
-        _Lose?.SetActive(false);
+        _EndGameUI?.SetActive(false);
         ResetBoxPosition();
         RandomiseNextRequestTimer();
         requestBox.Init();
@@ -93,18 +93,19 @@ public class CustomerTable : MonoBehaviour
         gameTimeLeft -= Time.deltaTime;
         //Debug.Log(timeLeftForOrder);
         //if time needed to win is 0
-        if (timeNeededToWin <= 0 && gameMode == GameMode.Levels)
-        {
-            EndLevel(true);
-        }
+        //if (timeNeededToWin <= 0 && gameMode == GameMode.Levels)
+        //{
+        //    EndLevel(true);
+        //}
         //game ends if time ran out
-        else if (gameTimeLeft <= 0)
+        /*else */if (gameTimeLeft <= 0)
         {
             EndGame();
-            if(gameMode == GameMode.Levels)
-            {
-                EndLevel(false);
-            }
+            EndLevel();
+            //if (gameMode == GameMode.Levels)
+            //{
+            //    EndLevel(false);
+            //}
         }
         else
         {
@@ -278,27 +279,12 @@ public class CustomerTable : MonoBehaviour
 
         ResetBoxPosition();
     }
-    private void EndLevel(bool isWInGame)
+    private void EndLevel()
     {
         //Jerald edit here
 
         //show the end level UI
-        if(isWInGame)
-        {
-            if (_Win != null)
-            {
-                _Win?.SetActive(true);
-            }
-
-       
-            //_PointsText.text = "Score: " + totalScore;
-        }
-        else
-        {
-            _Lose?.SetActive(true);
-            //_PointsText.text = "Score: " + totalScore;
-            //if I lose UI (ran out of time)
-        }
+        _EndGameUI?.SetActive(true);
         //show score
     }
     public bool isEndGame() => !gameStart;

@@ -65,7 +65,7 @@ public class DialogueManager : MonoBehaviour
 
     IEnumerator TypeDialogue(DialogueLine diagLine)
     {
-        assistant.robotTalking.InvokeEvent(assistant.transform.position, Quaternion.identity, transform);
+        assistant.robotTalking?.InvokeEvent(assistant.transform.position, Quaternion.identity, transform);
         if (xButtonImage.gameObject.activeSelf)
         {
             xButtonImage.gameObject.SetActive(false);   

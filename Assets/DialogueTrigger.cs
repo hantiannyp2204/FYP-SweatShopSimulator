@@ -105,7 +105,7 @@ public class DialogueTrigger : MonoBehaviour
     //  e_shredderFinish?.InvokeEvent(particleSpawnLocation.position, Quaternion.identity, transform);
     private IEnumerator WaitForDestination(DialogueLine dialogueLine)
     {
-        assistant.robotMoving.InvokeEvent(assistant.transform.position, Quaternion.identity, transform);
+        assistant.robotMoving?.InvokeEvent(assistant.transform.position, Quaternion.identity, transform);
         while (_robotNavMesh.pathPending || _robotNavMesh.remainingDistance > _robotNavMesh.stoppingDistance)
         {
             yield return null;

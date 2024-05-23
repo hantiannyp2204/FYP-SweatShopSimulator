@@ -131,7 +131,11 @@ public class VRGameManager : MonoBehaviour
         {
             hand.UpdateInteractions();
         }
-        leftHandWatch.UpdateWatchAlpha();
+        if(customerTable != null)
+        {
+            leftHandWatch.UpdateWatchAlpha();
+        }
+
      
         vrPlayerMovement?.PlayerMovementInputUpdate();
 

@@ -51,7 +51,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (_lines.Count <= 0)
         {
-            transition.GoToScene(2);
+            transition.GoToScene(0);
             EndDialogue();
             return;
         }

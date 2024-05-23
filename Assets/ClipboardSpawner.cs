@@ -34,13 +34,8 @@ public class ClipboardSpawner : MonoBehaviour
         }
 
         currentSpawnedKeyItem = Instantiate(ClipboardPrefab, socket.transform.position, socket.transform.rotation);
-        // Ensure the item is interactable and can be placed in the socket
-        XRGrabInteractable grabInteractable = currentSpawnedKeyItem.GetComponent<XRGrabInteractable>();
-        if (grabInteractable != null)
-        {
-            // Directly place the item in the socket
-            socket.StartManualInteraction(grabInteractable);
-        }
+      
+        
 
         //do dissolve effect
         currentSpawnedKeyItem.GetComponent<KeyItemDissolve>()?.StartReverseDissolve();

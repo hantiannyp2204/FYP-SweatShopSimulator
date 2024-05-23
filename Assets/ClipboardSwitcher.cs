@@ -12,22 +12,39 @@ public class ClipboardSwitcher : MonoBehaviour
     [SerializeField] private FeedbackEventData e_turnpage;
     private int currentIndex = 0; // Index of the current material in the list
 
-    public void SwitchMaterial()
+    public void SwitchNextMaterial()
     {
         if (materials.Count == 0) // Check if the list is empty
         {
             Debug.LogWarning("No pages");
             return;
         }
+        ApplyMaterial();
+        
+    }
+    public void SwitchToPreviousMaterial()
+    {
+        if (materials.Count == 0) // Check if the list is empty
+        {
+            Debug.LogWarning("No materials available.");
+            return;
+        }
 
+        currentIndex = (currentIndex - 1 + materials.Count) % materials.Count; // Decrement the index, looping back to the last material if it goes below 0
+        ApplyMaterial();
+    }
+    private void ApplyMaterial()
+    {
         Renderer renderer = objectWithMaterial.GetComponent<Renderer>();
         if (renderer != null)
         {
             renderer.material = materials[currentIndex]; // Assign the material at the current index
-            currentIndex = (currentIndex + 1) % materials.Count; // Increment the index, looping back to 0 if it exceeds the list size
-            Debug.Log("PagedChanged");
+            Debug.Log("Material changed to: " + materials[currentIndex].name);
             e_turnpage?.InvokeEvent(transform.position, Quaternion.identity, transform);
-
+        }
+        else
+        {
+            Debug.LogWarning("Renderer not found on the target object.");
         }
     }
 }

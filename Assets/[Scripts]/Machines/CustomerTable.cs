@@ -56,7 +56,8 @@ public class CustomerTable : MonoBehaviour
     
     void Start()
     {
-        if(_Win!=null)
+        Time.timeScale = 1.0f;
+        if (_Win!=null)
         {
             _Win?.SetActive(false);
         }
@@ -72,7 +73,6 @@ public class CustomerTable : MonoBehaviour
     {
         timeNeededToWin = timeNeeded;
     }
-
     public void Init(TMP_Text leftHandTimerText, GameMode setGameMode)
     {
         leftHandTimerText.text = "Go start your shift";
@@ -285,6 +285,7 @@ public class CustomerTable : MonoBehaviour
 
         //show the end level UI
         _EndGameUI?.SetActive(true);
+        Time.timeScale = 0f;
         //show score
     }
     public bool isEndGame() => !gameStart;

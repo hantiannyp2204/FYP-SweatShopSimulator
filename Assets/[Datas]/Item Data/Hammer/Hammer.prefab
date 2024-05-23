@@ -72,15 +72,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5895d806f9cb464c8883d988f733d98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  e_pickUp: {fileID: 11400000, guid: d4294dcf8f185204e93f960fe5bb6bd3, type: 2}
+  e_collisionNoise: {fileID: 11400000, guid: f05ac1da3596bb54d9471243f28031af, type: 2}
   originalMaterial: {fileID: 0}
   data: {fileID: 11400000, guid: 089a10760f418bf459bb1a8211b9c5be, type: 2}
   itemState: 0
-  e_pickUp: {fileID: 11400000, guid: d4294dcf8f185204e93f960fe5bb6bd3, type: 2}
-  e_collisionNoise: {fileID: 11400000, guid: f05ac1da3596bb54d9471243f28031af, type: 2}
-  e_drop: {fileID: 0}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!54 &372506680773588478
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -218,7 +214,7 @@ MonoBehaviour:
   m_SnapToColliderVolume: 1
   m_ReinitializeDynamicAttachEverySingleGrab: 1
   m_AttachEaseInTime: 0.15
-  m_MovementType: 2
+  m_MovementType: 0
   m_VelocityDamping: 1
   m_VelocityScale: 1
   m_AngularVelocityDamping: 1

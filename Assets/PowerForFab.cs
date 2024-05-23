@@ -65,7 +65,7 @@ public class PowerForFab : MonoBehaviour
         {
             _IsTherePower = false;
             _NewController.ResetEverything();
-            Debug.Log("No power");
+            //Debug.Log("No power");
         }
     }
 

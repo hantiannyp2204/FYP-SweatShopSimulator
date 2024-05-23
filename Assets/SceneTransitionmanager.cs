@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,12 +10,16 @@ public class SceneTransitionmanager : MonoBehaviour
 
     public void GoToScene(int sceneIndex)
     {
-        StartCoroutine(GoToSceneRoutineAsy(sceneIndex));
+        StartCoroutine(GoToSceneRoutine(sceneIndex));
         
     }
-
+    
     IEnumerator GoToSceneRoutine(int sceneIndex)
     {
+        if(fadeScreen.gameObject.activeSelf == false)
+        {
+            fadeScreen.gameObject.SetActive(true);
+        }
         fadeScreen.FadeOut();
         yield return new WaitForSeconds(fadeScreen.fadeDuration);
 
@@ -37,6 +42,10 @@ public class SceneTransitionmanager : MonoBehaviour
 
     IEnumerator GoToSceneRoutineAsy(int sceneIndex)
     {
+        if (fadeScreen.gameObject.activeSelf == false)
+        {
+            fadeScreen.gameObject.SetActive(true);
+        }
         fadeScreen.FadeOut();
 
         //Launch New Scene

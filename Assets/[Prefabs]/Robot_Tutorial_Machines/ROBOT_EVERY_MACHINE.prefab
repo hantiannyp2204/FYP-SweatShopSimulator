@@ -3347,7 +3347,31 @@ MonoBehaviour:
       questMarker: {fileID: 0}
       TriggerThisEvent:
         m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 0}
+            m_TargetAssemblyTypeName: TutorialBarrier, Assembly-CSharp
+            m_MethodName: EnableSmelter
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 0}
+            m_TargetAssemblyTypeName: KeyItemSpawn, Assembly-CSharp
+            m_MethodName: SpawnKeyItem
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
       narrator:
         name: Robot
         obj: {fileID: 7001500404746929504}
@@ -3522,7 +3546,31 @@ MonoBehaviour:
       questMarker: {fileID: 0}
       TriggerThisEvent:
         m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 0}
+            m_TargetAssemblyTypeName: TutorialBarrier, Assembly-CSharp
+            m_MethodName: EnableShredder
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 0}
+            m_TargetAssemblyTypeName: KeyItemSpawn, Assembly-CSharp
+            m_MethodName: SpawnKeyItem
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
       narrator:
         name: Robot
         obj: {fileID: 7001500404746929504}
@@ -3669,7 +3717,19 @@ MonoBehaviour:
       questMarker: {fileID: 0}
       TriggerThisEvent:
         m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 0}
+            m_TargetAssemblyTypeName: TutorialBarrier, Assembly-CSharp
+            m_MethodName: EnableFabricator
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
       narrator:
         name: Robot
         obj: {fileID: 7001500404746929504}
@@ -3767,7 +3827,31 @@ MonoBehaviour:
       questMarker: {fileID: 0}
       TriggerThisEvent:
         m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 0}
+            m_TargetAssemblyTypeName: TutorialBarrier, Assembly-CSharp
+            m_MethodName: EnableAnvil
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 0}
+            m_TargetAssemblyTypeName: KeyItemSpawn, Assembly-CSharp
+            m_MethodName: SpawnKeyItem
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
       narrator:
         name: Robot
         obj: {fileID: 7001500404746929504}
@@ -4780,6 +4864,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cad79c8e39dace34c8774fe4462f78e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transition: {fileID: 0}
   assistant: {fileID: 3006559089587541567}
   barriers: {fileID: 0}
   xButtonImage: {fileID: 131679408223238457}

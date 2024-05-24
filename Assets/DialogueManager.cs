@@ -6,6 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 public class DialogueManager : MonoBehaviour
 {
+    public SceneTransitionmanager transition;
     [SerializeField] private RobotAssistant assistant;
     public BarrierBase barriers;
     [SerializeField] private Image xButtonImage;
@@ -50,6 +51,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (_lines.Count <= 0)
         {
+            transition.GoToScene(0);
             EndDialogue();
             return;
         }
@@ -63,7 +65,7 @@ public class DialogueManager : MonoBehaviour
 
     IEnumerator TypeDialogue(DialogueLine diagLine)
     {
-        assistant.robotTalking.InvokeEvent(assistant.transform.position, Quaternion.identity, transform);
+        assistant.robotTalking?.InvokeEvent(assistant.transform.position, Quaternion.identity, transform);
         if (xButtonImage.gameObject.activeSelf)
         {
             xButtonImage.gameObject.SetActive(false);   

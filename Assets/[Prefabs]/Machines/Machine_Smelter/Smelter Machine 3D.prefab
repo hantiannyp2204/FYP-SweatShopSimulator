@@ -529,7 +529,6 @@ MonoBehaviour:
   smelterFuelPointer: {fileID: 5073830588288415282}
   smelterRenderer: {fileID: 8553462373049663409}
   smelterWarningLED: {fileID: 7801426924622861934}
-  smelterBlowupHitbox: {fileID: 0}
   smelterSoundLocation: {fileID: 6750918584844629625}
   smelterDoneSoundLocation: {fileID: 8087659816926142272}
   e_run: {fileID: 11400000, guid: 3832a50ebd4f6504089197b858ffa64f, type: 2}
@@ -1231,8 +1230,8 @@ MonoBehaviour:
   threshold: 0.5
   deadZone: 0.025
   usesToggle: 0
-  e_press: {fileID: 0}
-  e_release: {fileID: 0}
+  e_press: {fileID: 11400000, guid: 26870696413565244bb29a5dc72e30d9, type: 2}
+  e_release: {fileID: 11400000, guid: 1a48a4d2065bc27478857501208b49d8, type: 2}
   smelter: {fileID: 7936502983207921324}
 --- !u!1 &2388059698738743606
 GameObject:
@@ -5090,6 +5089,16 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 1837398731655338030, guid: 85fdbabf02f516347951c310bf5edd82,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.27
+      objectReference: {fileID: 0}
+    - target: {fileID: 1837398731655338030, guid: 85fdbabf02f516347951c310bf5edd82,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.06
+      objectReference: {fileID: 0}
     - target: {fileID: 2236825961577571676, guid: 85fdbabf02f516347951c310bf5edd82,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -5099,7 +5108,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: c4ad57aab7d9fc0489c54f2a379a006d, type: 2}
+      objectReference: {fileID: 2100000, guid: f781cff2ed388bd42925901fd1f4a4dc, type: 2}
     - target: {fileID: 3351280375180835383, guid: 85fdbabf02f516347951c310bf5edd82,
         type: 3}
       propertyPath: m_Layer
@@ -5109,6 +5118,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4216708763177243744, guid: 85fdbabf02f516347951c310bf5edd82,
+        type: 3}
+      propertyPath: m_MovementType
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5436829439006090213, guid: 85fdbabf02f516347951c310bf5edd82,
         type: 3}
@@ -5218,7 +5232,15 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 659082748436542065}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9086953652062560352, guid: 85fdbabf02f516347951c310bf5edd82,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2312419389499262081}
+    - targetCorrespondingSourceObject: {fileID: 6669578391772841187, guid: 85fdbabf02f516347951c310bf5edd82,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5143573145482223751}
   m_SourcePrefab: {fileID: 100100000, guid: 85fdbabf02f516347951c310bf5edd82, type: 3}
 --- !u!4 &500270820790250765 stripped
 Transform:
@@ -5226,12 +5248,52 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5309766618526285492}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1530958541672790615 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6669578391772841187, guid: 85fdbabf02f516347951c310bf5edd82,
+    type: 3}
+  m_PrefabInstance: {fileID: 5309766618526285492}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5143573145482223751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530958541672790615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71d174f7c712fe54880f853623bc119d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  e_pickUp: {fileID: 11400000, guid: bae7fbcc2cb1e4046801bdd9357447dc, type: 2}
+  e_collisionNoise: {fileID: 11400000, guid: 80f71ba5ef3ed724a8da6f95623b1a87, type: 2}
 --- !u!4 &3405447029507297531 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7418132946928627279, guid: 85fdbabf02f516347951c310bf5edd82,
     type: 3}
   m_PrefabInstance: {fileID: 5309766618526285492}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4011384181180128980 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9086953652062560352, guid: 85fdbabf02f516347951c310bf5edd82,
+    type: 3}
+  m_PrefabInstance: {fileID: 5309766618526285492}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2312419389499262081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4011384181180128980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71d174f7c712fe54880f853623bc119d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  e_pickUp: {fileID: 11400000, guid: eb44b1f91f083e24d96c7a19730ae728, type: 2}
+  e_collisionNoise: {fileID: 11400000, guid: adc96ab78f46ef342a02117b477d992f, type: 2}
 --- !u!1 &4873332587186760790 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 725531097615979234, guid: 85fdbabf02f516347951c310bf5edd82,
@@ -5562,6 +5624,18 @@ PrefabInstance:
       propertyPath: KeyItemPrefab
       value: 
       objectReference: {fileID: 4873332587186760790}
+    - target: {fileID: 3222065100911648566, guid: 599af99066947f44f8627fca049e5753,
+        type: 3}
+      propertyPath: e_press
+      value: 
+      objectReference: {fileID: 11400000, guid: 26870696413565244bb29a5dc72e30d9,
+        type: 2}
+    - target: {fileID: 3222065100911648566, guid: 599af99066947f44f8627fca049e5753,
+        type: 3}
+      propertyPath: e_release
+      value: 
+      objectReference: {fileID: 11400000, guid: 1a48a4d2065bc27478857501208b49d8,
+        type: 2}
     - target: {fileID: 6333141421730523275, guid: 599af99066947f44f8627fca049e5753,
         type: 3}
       propertyPath: m_Size.x
@@ -5738,6 +5812,18 @@ PrefabInstance:
       propertyPath: smelterDoor
       value: 
       objectReference: {fileID: 8803861449823032337}
+    - target: {fileID: 1861740564654539867, guid: 80dd18a9077c1e148b879e55328b0da9,
+        type: 3}
+      propertyPath: e_fullyUnlocked
+      value: 
+      objectReference: {fileID: 11400000, guid: e2e3573dc3343564083c3e649707a015,
+        type: 2}
+    - target: {fileID: 1861740564654539867, guid: 80dd18a9077c1e148b879e55328b0da9,
+        type: 3}
+      propertyPath: e_wheelTurnSound
+      value: 
+      objectReference: {fileID: 11400000, guid: 4da604319612d644ba10f87845b2c871,
+        type: 2}
     - target: {fileID: 2367026780456384577, guid: 80dd18a9077c1e148b879e55328b0da9,
         type: 3}
       propertyPath: m_LocalScale.x

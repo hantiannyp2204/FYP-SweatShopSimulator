@@ -12,42 +12,46 @@ public class PowerForFab : MonoBehaviour
     public PowerPlug _PowerPlug;
     public bool Isin = true;
     public Rigidbody _Rigidbody;
-    public BoxCollider boxCollider; // Reference to the BoxCollider component
-
+    public BoxCollider boxCollider;
 
     [Header("Feedback Events")]
     [SerializeField] private FeedbackEventData e_powerOutage;
     [SerializeField] private Transform PowerOutageTransform;
     [SerializeField] private Image _PowerBar;
-    public void Update()
+
+    private void Start()
     {
+        Isin = true;
+        RandomPower();
+        UpdatePowerBar(_PowerForFab, _CurrentPower);
+    }
+
+    private void Update()
+    {
+        if (_PowerPlug == null || _Rigidbody == null || boxCollider == null)
+        {
+            Debug.LogError("One or more required components are not assigned.");
+            return;
+        }
+
         if (_PowerPlug.isStuckInSocket == false)
         {
             _CurrentPower = 0;
         }
-        if (_CurrentPower <= 1)
+
+        if (_CurrentPower <= 1 && Isin)
         {
-            if (Isin == true)
-            {
-                e_powerOutage?.InvokeEvent(transform.position, Quaternion.identity, PowerOutageTransform);
-                _Rigidbody.isKinematic = false;
-                Debug.Log("Isin");
-                DisableBoxColliderForDuration(2f);
-                PushPlugOut();
-                Isin = false;
-            }
+            e_powerOutage?.InvokeEvent(transform.position, Quaternion.identity, PowerOutageTransform);
+            _Rigidbody.isKinematic = false;
+            Debug.Log("Power outage occurred");
+            DisableBoxColliderForDuration(2f);
+            PushPlugOut();
+            Isin = false;
         }
 
-        
-    }
-
-
-
-    public void Start()
-    {
-        Isin = true;
         UpdatePowerBar(_PowerForFab, _CurrentPower);
     }
+
     public void RandomPower()
     {
         _PowerForFab = Random.Range(50f, 100f);
@@ -59,45 +63,82 @@ public class PowerForFab : MonoBehaviour
     {
         if (_CurrentPower > 0)
         {
-            _IsTherePower = true; 
+            _IsTherePower = true;
         }
         else
         {
             _IsTherePower = false;
-            _NewController.ResetEverything();
+            _NewController?.ResetEverything();
             Debug.Log("No power");
         }
     }
 
     public void UpdatePowerBar(float MaxPower, float CurrentPower)
     {
-        _PowerBar.fillAmount = CurrentPower / MaxPower;
+        if (_PowerBar != null)
+        {
+            if (MaxPower > 0)
+            {
+                _PowerBar.fillAmount = Mathf.Clamp01(CurrentPower / MaxPower);
+            }
+            else
+            {
+                Debug.LogWarning("MaxPower is zero or negative.");
+                _PowerBar.fillAmount = 0;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("PowerBar Image reference is not set.");
+        }
     }
 
     public void PushPlugOut()
     {
-        // Use the local forward direction of the PowerPlug to push it along the positive Z direction
-        Vector3 forwardDirection = _PowerPlug.transform.forward; // Assuming forward is the positive Z direction in local space
-        _PowerPlug.GetComponent<Rigidbody>().AddForce(forwardDirection * 5, ForceMode.Impulse);
+        if (_PowerPlug != null)
+        {
+            Vector3 forwardDirection = _PowerPlug.transform.forward;
+            Rigidbody plugRigidbody = _PowerPlug.GetComponent<Rigidbody>();
+
+            if (plugRigidbody != null)
+            {
+                plugRigidbody.AddForce(forwardDirection * 5, ForceMode.Impulse);
+            }
+            else
+            {
+                Debug.LogWarning("PowerPlug Rigidbody is not found.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("PowerPlug reference is not set.");
+        }
     }
 
-
-    void DisableBoxColliderForDuration(float duration)
+    private void DisableBoxColliderForDuration(float duration)
     {
-        
-        // Disable the BoxCollider
-        boxCollider.enabled = false;
-
-        // Start a coroutine to re-enable the collider after the specified duration
-        StartCoroutine(EnableBoxColliderAfterDelay(duration));
+        if (boxCollider != null)
+        {
+            boxCollider.enabled = false;
+            StartCoroutine(EnableBoxColliderAfterDelay(duration));
+        }
+        else
+        {
+            Debug.LogWarning("BoxCollider reference is not set.");
+        }
     }
 
-    IEnumerator EnableBoxColliderAfterDelay(float delay)
+    private IEnumerator EnableBoxColliderAfterDelay(float delay)
     {
-        // Wait for the specified duration
         yield return new WaitForSeconds(delay);
 
-        // Re-enable the BoxCollider
-        boxCollider.enabled = true;
+        if (boxCollider != null)
+        {
+            boxCollider.enabled = true;
+        }
+        else
+        {
+            Debug.LogWarning("BoxCollider reference is not set.");
+        }
     }
 }

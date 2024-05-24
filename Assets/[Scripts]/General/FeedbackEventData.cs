@@ -3,16 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-//Inspired by Raqib
+// Inspired by Raqib
 [CreateAssetMenu(menuName = "Event Data", fileName = "E_")]
 public class FeedbackEventData : ScriptableObject
 {
     public string feedbackName;
     public AUDIO_TYPE audioType;
+
     [Header("AUDIO SETTINGS")]
     [SerializeField] private List<AudioClip> audios;
     public List<AudioClip> Audios => audios;
+
     public bool sendToAll = false;
     public bool fadeoutAudio = false;
     public bool audioLoop = false;
@@ -32,6 +33,7 @@ public class FeedbackEventData : ScriptableObject
 
     public bool stopEffectsInChildren = false;
     public bool stopEffectsLoopingInChildren = false;
+
     public void InvokeEvent()
     {
         eventToInvoke?.Invoke();
@@ -63,6 +65,7 @@ public class FeedbackEventData : ScriptableObject
     {
         eventToInvoke += action;
     }
+
     public void UnsubscribeEvent(System.Action action)
     {
         eventToInvoke -= action;
@@ -82,6 +85,27 @@ public class FeedbackEventData : ScriptableObject
     {
         return parentData;
     }
+
+    // Safe access methods
+    public AudioClip GetAudioClip(int index)
+    {
+        if (index >= 0 && index < audios.Count)
+        {
+            return audios[index];
+        }
+        Debug.LogWarning("Audio clip index out of range.");
+        return null;
+    }
+
+    public EFFECT_TYPE GetEffect(int index)
+    {
+        if (index >= 0 && index < effects.Count)
+        {
+            return effects[index];
+        }
+        Debug.LogWarning("Effect index out of range.");
+        return EFFECT_TYPE.NONE;
+    }
 }
 
 public enum AUDIO_TYPE
@@ -91,6 +115,7 @@ public enum AUDIO_TYPE
     GLOBAL,
     NONE,
 }
+
 public enum EFFECT_TYPE
 {
     // Add effects here

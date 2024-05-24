@@ -36,7 +36,7 @@ public class CraftingRecepie : MonoBehaviour
     public GameObject Wheel;
 
     [Header("Robot Crafting Recipe")]
-    [SerializeField] private int RequiredToyRobotMetal;
+    //[SerializeField] private int RequiredToyRobotMetal;
     [SerializeField] private int RequiredToyRobotPlastic;
     public GameObject ToyRobot;
 
@@ -84,10 +84,6 @@ public class CraftingRecepie : MonoBehaviour
                 
                 break;
             case 4:
-                for (int i = 0; i < RequiredToyRobotMetal; i++)
-                {
-                    fabricatorCrafting._WhatINeed.Add(RawMetalMaterial);            
-                }
                 for (int i = 0; i < RequiredToyRobotPlastic; i++)
                 {
                     fabricatorCrafting._WhatINeed.Add(RawPlasticMaterial);

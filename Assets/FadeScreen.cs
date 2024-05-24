@@ -46,5 +46,10 @@ public class FadeScreen : MonoBehaviour
         newColor2.a = alphaOut;
         rend.material.SetColor("_Color", newColor2);
 
+        if(alphaOut == 0)
+        {
+            gameObject.SetActive(false);
+        }
+
     }
 }

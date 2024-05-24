@@ -63,8 +63,8 @@ public class ZoneDetector : MonoBehaviour
             Debug.Log("inzone");
             Debug.Log("CURRENT ZONE:" + _currZone);
             _currZone = zoneType;
-            other.gameObject.GetComponentInParent<ZoneSaver>().SaveCurrentZone(_currZone);
-            other.gameObject.GetComponentInParent<ZoneSaver>().SaveCurrentZoneGO(zoneGO);
+            //other.gameObject.GetComponentInParent<ZoneSaver>().SaveCurrentZone(_currZone);
+           // other.gameObject.GetComponentInParent<ZoneSaver>().SaveCurrentZoneGO(zoneGO);
             //assistant.GetRobotNavMesh().enabled = false;
             onEnterZone.Invoke();
         }

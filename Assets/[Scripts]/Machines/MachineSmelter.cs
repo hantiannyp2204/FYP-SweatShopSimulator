@@ -27,6 +27,7 @@ public class MachineSmelter : MonoBehaviour
     [SerializeField] private SmelterFuelPointer smelterFuelPointer;
     [SerializeField] private Renderer smelterRenderer;
     [SerializeField] private SmelterWarningLED smelterWarningLED;
+    [SerializeField] private SmelterBlowUpHitbox smelterBloWp;
 
     [Header("Feedback Events")]
     [SerializeField] private Transform smelterSoundLocation;
@@ -488,7 +489,7 @@ public class MachineSmelter : MonoBehaviour
         {
             particle.Stop();
         }
-
+        smelterBloWp?.SetFixedBool(true);
         blewUp = false;
         currentFuelMaxWarningCount = fuelMaxCapacityWarningCount;
         smelterWarningLED.WarningLEDOff();

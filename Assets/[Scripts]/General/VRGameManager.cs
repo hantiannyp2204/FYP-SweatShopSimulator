@@ -3,14 +3,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit.UI.BodyUI;
-using static GeneralItem;
-using static VRHandManager;
 
 public class VRGameManager : MonoBehaviour
 {
+    [SerializeField] private FeedbackEventData e_startingBGM;
     //to auto disable keyboard player if running on Andriod build (delted and removed)
     [SerializeField] PlatformChecker platformChecker;
     public enum GameMode
@@ -95,7 +92,8 @@ public class VRGameManager : MonoBehaviour
         {
             handColliders.Init();
         }
-        gameFeedback.InIt();
+        gameFeedback?.InIt();
+        e_startingBGM?.InvokeEvent(transform.position, Quaternion.identity, transform);
         if (customerTable == null) return;
 
         customerTable.Init(leftHandTimerText, gameMode);
@@ -158,7 +156,12 @@ public class VRGameManager : MonoBehaviour
             //}
 
             //update table timer
-            customerTable?.UpdateTimer(leftHandTimerText);
+            if(customerTable != null)
+            {
+                customerTable.UpdateTimer(leftHandTimerText);
+            }
+           
+
         }
         //check for puase menu
         if (Input.GetKeyDown(KeyCode.Escape))

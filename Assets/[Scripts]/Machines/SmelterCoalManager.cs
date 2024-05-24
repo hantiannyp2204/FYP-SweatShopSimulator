@@ -20,7 +20,7 @@ public class SmelterCoalManager : MonoBehaviour
     {
         return _counter;
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         //only accept if its coal and is not being grabbed
         GeneralItem item = other.transform.GetComponent<GeneralItem>();

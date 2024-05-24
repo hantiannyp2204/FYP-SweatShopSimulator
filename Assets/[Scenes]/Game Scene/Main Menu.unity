@@ -514,7 +514,7 @@ PrefabInstance:
     - target: {fileID: 1636591624886963703, guid: 6aa70890968c5e74980c3f1995cd71ac,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.817
+      value: 1.207
       objectReference: {fileID: 0}
     - target: {fileID: 1636591624886963703, guid: 6aa70890968c5e74980c3f1995cd71ac,
         type: 3}
@@ -566,6 +566,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: VR Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4239973062650880273, guid: 6aa70890968c5e74980c3f1995cd71ac,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4252786220186401297, guid: 6aa70890968c5e74980c3f1995cd71ac,
         type: 3}
       propertyPath: gameFeedback
@@ -601,7 +606,11 @@ PrefabInstance:
     - {fileID: 3257709364904667818, guid: 6aa70890968c5e74980c3f1995cd71ac, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5455165765853750437, guid: 6aa70890968c5e74980c3f1995cd71ac,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2105677104}
   m_SourcePrefab: {fileID: 100100000, guid: 6aa70890968c5e74980c3f1995cd71ac, type: 3}
 --- !u!1001 &402294595
 PrefabInstance:
@@ -2267,6 +2276,25 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9bc33149fb6a294d8cedfc1df969125, type: 3}
+--- !u!1 &2105677098 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5455165765853750437, guid: 6aa70890968c5e74980c3f1995cd71ac,
+    type: 3}
+  m_PrefabInstance: {fileID: 325580059}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2105677104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105677098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e61459892e617e4b93798f7761e4308, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _EndGameUI: {fileID: 2105677098}
 --- !u!222 &77240398384820746
 CanvasRenderer:
   m_ObjectHideFlags: 0

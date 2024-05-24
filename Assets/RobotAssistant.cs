@@ -19,9 +19,9 @@ public class RobotAssistant : MonoBehaviour
     [SerializeField] private ParticleSystem fireBelowFootRight;
     [SerializeField] private GameObject player;
 
-    public ZoneType DEBUGZONE;
+    //public ZoneType DEBUGZONE;
     private Rigidbody _rb;
-    private ZoneSaver _zoneSaver;
+   // private ZoneSaver _zoneSaver;
 
     private NavMeshAgent _getAgent;
 
@@ -51,9 +51,9 @@ public class RobotAssistant : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _zoneSaver = player.GetComponent<ZoneSaver>();
+        //_zoneSaver = player.GetComponent<ZoneSaver>();
 
-        DEBUGZONE = player.GetComponent<ZoneSaver>().GetCurrentZone();
+        //DEBUGZONE = player.GetComponent<ZoneSaver>().GetCurrentZone();
     }
 
     public void SetState(ROBOT_STATE state)

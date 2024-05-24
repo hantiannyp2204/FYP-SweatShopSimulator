@@ -10,7 +10,7 @@ public class RobotMovement : MonoBehaviour
     [SerializeField] private float rotationSpeed;
     [SerializeField] private Transform moveArea;
     [SerializeField] private float rangeToFindPoint;
-    //[SerializeField] private ZoneSaver zoneSaver;
+    [SerializeField] private ZoneSaver zoneSaver;
     [SerializeField] private float patrolRadius;
     [SerializeField] private float patrolSpeed;
 

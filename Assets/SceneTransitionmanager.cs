@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class SceneTransitionmanager : MonoBehaviour
 {
     public FadeScreen fadeScreen;
+
     public void GoToScene(int sceneIndex)
     {
         StartCoroutine(GoToSceneRoutine(sceneIndex));
